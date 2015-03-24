@@ -1,0 +1,82 @@
+# depslib dependency file v1.0
+1423579874 source:/home/fredrik/Documents/projects/SDL/PickingSticks/main.cpp
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<iostream>
+	<string>
+	<sstream>
+	<stdlib.h>
+	"LTimer.hpp"
+	"Character.hpp"
+	"Tile.hpp"
+	"Item.hpp"
+	"LuaInterface.hpp"
+
+1423393112 source:/home/fredrik/Documents/projects/SDL/PickingSticks/Character.cpp
+	"Character.hpp"
+
+1423060952 /home/fredrik/Documents/projects/SDL/PickingSticks/Character.h
+
+1423060975 source:/home/fredrik/Documents/projects/SDL/PickingSticks/Renderer.cpp
+	"Renderer.hpp"
+
+1423393443 /home/fredrik/Documents/projects/SDL/PickingSticks/Renderer.hpp
+
+1423260489 source:/home/fredrik/Documents/projects/SDL/PickingSticks/Tile.cpp
+	"Tile.hpp"
+
+1423422618 /home/fredrik/Documents/projects/SDL/PickingSticks/Tile.hpp
+	"Texture.hpp"
+
+1423245331 source:/home/fredrik/Documents/projects/SDL/PickingSticks/LTimer.cpp
+	"LTimer.hpp"
+
+1423506863 /home/fredrik/Documents/projects/SDL/PickingSticks/LTimer.hpp
+	<SDL2/SDL.h>
+
+1423422237 source:/home/fredrik/Documents/projects/SDL/PickingSticks/Texture.cpp
+	"Texture.hpp"
+
+1423423030 /home/fredrik/Documents/projects/SDL/PickingSticks/Texture.hpp
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<string>
+	<iostream>
+
+1423391743 /home/fredrik/Documents/projects/SDL/PickingSticks/Character.hpp
+	"Texture.hpp"
+
+1423394865 source:/home/fredrik/Documents/projects/SDL/PickingSticks/Item.cpp
+	"Item.hpp"
+
+1423394929 /home/fredrik/Documents/projects/SDL/PickingSticks/Item.hpp
+	"Texture.hpp"
+
+1423394154 source:/home/fredrik/Documents/projects/SDL/PickingSticks/LoadMapData.cpp
+	"LoadMapData.hpp"
+
+1423408532 /home/fredrik/Documents/projects/SDL/PickingSticks/LoadMapData.hpp
+
+1423394719 source:/home/fredrik/Documents/projects/SDL/PickingSticks/MapCreator.cpp
+	"MapCreator.hpp"
+
+1423394937 /home/fredrik/Documents/projects/SDL/PickingSticks/MapCreator.hpp
+
+1423422496 source:/home/fredrik/Documents/projects/SDL/PickingSticks/MapClass.cpp
+	"MapClass.hpp"
+
+1423423892 /home/fredrik/Documents/projects/SDL/PickingSticks/MapClass.hpp
+	<map>
+	"Tile.hpp"
+
+1423594094 source:/home/fredrik/Documents/projects/SDL/PickingSticks/LuaInterface.cpp
+	"LuaInterface.hpp"
+
+1423594864 /home/fredrik/Documents/projects/SDL/PickingSticks/LuaInterface.hpp
+	<iostream>
+	"lua.h"
+	"lualib.h"
+	"lauxlib.h"
+
