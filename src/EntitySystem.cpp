@@ -111,7 +111,7 @@ namespace EntitySystem
 
         entities.erase(
             std::remove_if(std::begin(entities),std::end(entities),
-            [](const std::unique_ptr<Entity>& mEnitity)
+            [](const std::unique_ptr<Entity>& mEntity)
             {
                 return !mEntity->isAlive();
             }),
