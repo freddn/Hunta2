@@ -190,11 +190,7 @@ namespace game
         for(auto iter = game::getTexture_map()->begin(); iter != game::getTexture_map()->end();iter++)
         {
             ((Texture*)iter->second)->free();
-           // delete ((Texture*)iter->second);
         }
-
-
-        //grass_T.free();
 
         SDL_DestroyTexture(buffer);
 

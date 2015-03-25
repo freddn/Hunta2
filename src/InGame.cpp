@@ -55,8 +55,6 @@ void InGame::render()
     {
         inv.render();
     }
-
-
     Screen::renderEnd();
 }
 
@@ -75,16 +73,10 @@ void InGame::checkForInput()
         game::getOffset()->y = player.getY() - game::getHeight()/2;
     }
 
-
-
-
-
-
     /* Inventory input */
     if(game::inventoryIsDisplayed())
     {
         inv.checkForInput();
     }
-
     Screen::checkForInput();
 }
