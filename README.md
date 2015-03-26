@@ -1,2 +1,10 @@
 # Hunta2
-Game in early stages. SDL/C++/(Lua)
+Game in very early stages. SDL/C++/(Lua)
+
+Leveleditor, press 4
+Back to game/save, press 1
+
+Using 
+  -Lua 5.1 (liblua5.1-0 liblua5.1-dev)
+  -SDL 2.0 (libsdl2-2.0-0 libsdl2-dev libsdl2-image-2.0-0 libsdl2-image-dev libsdl-ttf2.0-0 libsdl-ttf2.0-dev ..)
+
