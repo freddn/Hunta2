@@ -39,7 +39,7 @@ Editor::~Editor()
 
 
 
-void Editor::render()
+void Editor::draw()
 {
     Screen::renderStart();
 
@@ -90,7 +90,7 @@ void Editor::render()
     Screen::renderEnd();
 }
 
-void Editor::checkForInput()
+void Editor::update()
 {
     key = SDL_GetKeyboardState(NULL);
     if(key[SDL_SCANCODE_UP])
@@ -149,7 +149,7 @@ void Editor::checkForInput()
         }
     }
 
-    Screen::checkForInput();
+    Screen::update();
 }
 
 

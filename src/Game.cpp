@@ -55,8 +55,7 @@ namespace game
         in_game.init();
         texture_map = textureMap.getMap();
 
-        buffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
-                                    SDL_TEXTUREACCESS_TARGET, width*2, height*2);
+
 
         fpsTimer.start();
         while(running)
@@ -69,24 +68,24 @@ namespace game
             {
             case(MAINMENU):
                 /* Show the main menu */
-                screen.checkForInput();
+                screen.update();
                 break;
             case(INGAME):
-                in_game.checkForInput();
-                in_game.render();
+                in_game.update();
+                in_game.draw();
                 break;
             case(PAUSED):
-                screen.checkForInput();
+                screen.update();
                 /* GAME IS PAUSED */
                 /* Show menu */
                 break;
             case(GAMEOVER):
-                screen.checkForInput();
+                screen.update();
                 /* Show a menu */
                 break;
             case(EDITOR):
-                editor.checkForInput();
-                editor.render(); // SELECTED
+                editor.update();
+                editor.draw(); // SELECTED
                 break;
             }
 
@@ -166,6 +165,10 @@ namespace game
                 }
             }
         }
+
+        buffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
+                                    SDL_TEXTUREACCESS_TARGET, width*2, height*2);
+
         return success;
     }
 

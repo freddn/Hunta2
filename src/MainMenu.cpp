@@ -1,18 +1,15 @@
 #include "MainMenu.hpp"
 
-MainMenu::MainMenu()
-{
-    //ctor
-}
-
 MainMenu::~MainMenu()
 {
-    //dtor
+
+}
+void MainMenu::init()
+{
+
 }
 
-
-
-void MainMenu::render()
+void MainMenu::draw()
 {
     Screen::renderStart();
     /* Render the menu */
@@ -23,12 +20,12 @@ void MainMenu::render()
 
 }
 
-void MainMenu::checkForInput()
+void MainMenu::update()
 {
 
 
 
-    Screen::checkForInput();
+    Screen::update();
 }
 
 

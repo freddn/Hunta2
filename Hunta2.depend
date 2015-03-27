@@ -192,14 +192,14 @@
 	<string>
 	<iostream>
 
-1427278615 source:/home/fredrik/Documents/projects/Hunta2/src/Editor.cpp
+1427311549 source:/home/fredrik/Documents/projects/Hunta2/src/Editor.cpp
 	"Editor.hpp"
 
-1427278627 /home/fredrik/Documents/projects/Hunta2/src/Editor.hpp
+1427314243 /home/fredrik/Documents/projects/Hunta2/src/Editor.hpp
 	"Screen.hpp"
 	"Game.hpp"
 
-1425241652 /home/fredrik/Documents/projects/Hunta2/src/Screen.hpp
+1427314364 /home/fredrik/Documents/projects/Hunta2/src/Screen.hpp
 	<sstream>
 	"Texture.hpp"
 
@@ -225,16 +225,17 @@
 1424184458 /home/fredrik/Documents/projects/Hunta2/src/Tile.hpp
 	"Texture.hpp"
 
-1425846658 /home/fredrik/Documents/projects/Hunta2/src/InGame.hpp
+1427315091 /home/fredrik/Documents/projects/Hunta2/src/InGame.hpp
 	"Inventory.hpp"
 	"Screen.hpp"
 	"Game.hpp"
 	"Item.hpp"
 	"Character.hpp"
 
-1425846884 /home/fredrik/Documents/projects/Hunta2/src/Inventory.hpp
+1427317688 /home/fredrik/Documents/projects/Hunta2/src/Inventory.hpp
 	<SDL2/SDL.h>
 	"Texture.hpp"
+	"EntitySystem.hpp"
 
 1424184420 /home/fredrik/Documents/projects/Hunta2/src/Item.hpp
 	"Texture.hpp"
@@ -264,13 +265,13 @@
 	"Texture.hpp"
 	"LuaInterface.hpp"
 
-1427277051 source:/home/fredrik/Documents/projects/Hunta2/src/Game.cpp
+1427311158 source:/home/fredrik/Documents/projects/Hunta2/src/Game.cpp
 	"Game.hpp"
 
-1425843560 source:/home/fredrik/Documents/projects/Hunta2/src/InGame.cpp
+1427315107 source:/home/fredrik/Documents/projects/Hunta2/src/InGame.cpp
 	"InGame.hpp"
 
-1426950494 source:/home/fredrik/Documents/projects/Hunta2/src/Inventory.cpp
+1427317198 source:/home/fredrik/Documents/projects/Hunta2/src/Inventory.cpp
 	"Inventory.hpp"
 	"Game.hpp"
 
@@ -295,7 +296,7 @@
 	"Game.hpp"
 	"EntitySystem.hpp"
 
-1427189685 /home/fredrik/Documents/projects/Hunta2/src/EntitySystem.hpp
+1427315634 /home/fredrik/Documents/projects/Hunta2/src/EntitySystem.hpp
 	<vector>
 	<memory>
 	<algorithm>
@@ -304,10 +305,10 @@
 	<cassert>
 	<type_traits>
 
-1425224234 source:/home/fredrik/Documents/projects/Hunta2/src/MainMenu.cpp
+1427313938 source:/home/fredrik/Documents/projects/Hunta2/src/MainMenu.cpp
 	"MainMenu.hpp"
 
-1425219380 /home/fredrik/Documents/projects/Hunta2/src/MainMenu.hpp
+1427314243 /home/fredrik/Documents/projects/Hunta2/src/MainMenu.hpp
 	"Screen.hpp"
 
 1424180160 source:/home/fredrik/Documents/projects/Hunta2/src/MapClass.cpp
@@ -323,7 +324,7 @@
 	<map>
 	"Tile.hpp"
 
-1425842164 source:/home/fredrik/Documents/projects/Hunta2/src/Screen.cpp
+1427313256 source:/home/fredrik/Documents/projects/Hunta2/src/Screen.cpp
 	"Screen.hpp"
 	"Game.hpp"
 
@@ -333,6 +334,6 @@
 1424184406 source:/home/fredrik/Documents/projects/Hunta2/src/Tile.cpp
 	"Tile.hpp"
 
-1427276360 source:/home/fredrik/Documents/projects/Hunta2/src/EntitySystem.cpp
+1427311974 source:/home/fredrik/Documents/projects/Hunta2/src/EntitySystem.cpp
 	"EntitySystem.hpp"
 

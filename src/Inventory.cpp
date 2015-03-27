@@ -1,17 +1,16 @@
-
 #include "Inventory.hpp"
 
 #include "Game.hpp"
 
-Inventory::Inventory()
-{
-    //ctor
-}
 
-Inventory::~Inventory()
+using namespace EntitySystem;
+
+/*Inventory::~Inventory()
 {
-    //dtor
+
 }
+*/
+
 
 void Inventory::init()
 {
@@ -42,17 +41,15 @@ void Inventory::loadInventory()
 
 }
 
-void Inventory::render()
+void Inventory::draw()
 {
     frame.render(game::getRenderer(),(SDL_Rect*)NULL,0,NULL,SDL_FLIP_NONE);
 }
 
-void Inventory::checkForInput()
+void Inventory::update()
 {
 
 }
-
-
 
 
 

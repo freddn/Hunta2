@@ -35,7 +35,7 @@ namespace EntitySystem
     {
         Entity* entity;
         virtual void init();
-        virtual void update(float m);
+        virtual void update();
         virtual void draw();
 
         virtual ~Component();
@@ -46,7 +46,7 @@ namespace EntitySystem
         public:
             Entity(EntityManager &mManager) : manager(mManager){};
             void draw();
-            void update(float m);
+            void update();
             bool isAlive() const;
             void destroy();
             template<typename T, typename... TArgs>
@@ -69,7 +69,7 @@ namespace EntitySystem
     struct EntityManager
     {
         public:
-            void update(float m);
+            void update();
             void draw();
             void addToGroup(Entity *mEntity,Group mGroup);
             std::vector<Entity*>& getEntitiesByGroup(Group mGroup);
@@ -79,6 +79,21 @@ namespace EntitySystem
             std::vector<std::unique_ptr<Entity>> entities;
 
             std::array<std::vector<Entity*>, maxGroups> groupedEntities;
+    };
+
+
+    struct asddd : Component
+    {
+        public:
+        //Inventory() ;
+        void init() override;
+        void draw() override;
+        void update() override;
+        void loadInventory();
+        //virtual ~Inventory() override;
+    protected:
+    private:
+
     };
 }
 

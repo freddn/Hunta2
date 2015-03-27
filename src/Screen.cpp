@@ -2,11 +2,6 @@
 #include "Game.hpp"
 
 
-Screen::Screen()
-{
-    //ctor
-}
-
 Screen::~Screen()
 {
     //dtor
@@ -14,7 +9,11 @@ Screen::~Screen()
     timerText.free();
 }
 
-void Screen::checkForInput()
+void Screen::init()
+{
+}
+
+void Screen::update()
 {
     key = SDL_GetKeyboardState(NULL);
     while(SDL_PollEvent(game::getEvent()) != 0)
@@ -90,6 +89,11 @@ void Screen::checkForInput()
         }
     }
 
+
+}
+
+void Screen::draw()
+{
 
 }
 

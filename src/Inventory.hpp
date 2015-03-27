@@ -8,22 +8,26 @@
 #include "Texture.hpp"
 
 
-class Inventory
+#include "EntitySystem.hpp"
+
+using namespace EntitySystem;
+
+struct Inventory : Component
 {
     public:
-        Inventory();
-
+        //Inventory() {};
         void init();
-        void render();
-        void checkForInput();
+        void update();
+        void draw();
+
         void loadInventory();
-        virtual ~Inventory();
+        //~Inventory() override;
     protected:
     private:
-    SDL_Texture *inv_bg;
-    Texture frame;
-    int sizeX = 6;
-    int sizeY = 6;
+        SDL_Texture *inv_bg;
+        Texture frame;
+        int sizeX = 6;
+        int sizeY = 6;
 };
 
 #endif // INVENTORY_H

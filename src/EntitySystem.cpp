@@ -22,7 +22,7 @@ namespace EntitySystem
     }
 
     void Entity::draw()    { for(auto& c : components) c->draw(); }
-    void Entity::update(float m)    { for(auto& c : components) c->update(m); }
+    void Entity::update()    { for(auto& c : components) c->update(); }
     bool Entity::isAlive() const { return alive; }
     void Entity::destroy() { alive = false; }
     template<typename T, typename... TArgs>
@@ -65,7 +65,7 @@ namespace EntitySystem
         groupBitset[mGroup] = false;
     }
 
-    void EntityManager::update(float m)
+    void EntityManager::update()
     {
         entities.erase(
             std::remove_if(std::begin(entities), std::end(entities),
@@ -75,7 +75,7 @@ namespace EntitySystem
             }),
             std::end(entities));
 
-        for(auto& e : entities) e->update(m);
+        for(auto& e : entities) e->update();
     }
 
     void EntityManager::draw()    { for(auto& e : entities) e->draw(); }

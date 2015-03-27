@@ -1,9 +1,5 @@
 #include "InGame.hpp"
 
-InGame::InGame()
-{
-    //ctor
-}
 
 InGame::~InGame()
 {
@@ -22,7 +18,7 @@ void InGame::init()
     stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
 }
 
-void InGame::render()
+void InGame::draw()
 {
     Screen::renderStart();
 
@@ -53,12 +49,12 @@ void InGame::render()
     /* Display inventory */
     if(game::inventoryIsDisplayed())
     {
-        inv.render();
+        //inv.draw();
     }
     Screen::renderEnd();
 }
 
-void InGame::checkForInput()
+void InGame::update()
 {
     key = SDL_GetKeyboardState(NULL);
     player.moveChar(4,key);
@@ -76,7 +72,7 @@ void InGame::checkForInput()
     /* Inventory input */
     if(game::inventoryIsDisplayed())
     {
-        inv.checkForInput();
+        //inv.update();
     }
-    Screen::checkForInput();
+    Screen::update();
 }

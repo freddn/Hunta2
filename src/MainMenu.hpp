@@ -3,15 +3,15 @@
 
 #include "Screen.hpp"
 
-class MainMenu : public Screen
+struct MainMenu : public Screen
 {
     public:
         MainMenu();
+        void init() override;
+        void update() override;
+        void draw() override;
 
-        void checkForInput();
-        void render();
-
-        virtual ~MainMenu();
+        ~MainMenu() override;
     protected:
     private:
 };

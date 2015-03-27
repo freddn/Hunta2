@@ -8,24 +8,22 @@
 #include "Item.hpp"
 #include "Character.hpp"
 
-class Inventory;
-
-class InGame : public Screen
+struct InGame : public Screen
 {
     public:
-        InGame();
-        void init();
-        void checkForInput();
-        void render();
+        //InGame();
+        void init() override;
+        void update() override;
+        void draw() override;
         void displayInventory(bool);
-        virtual ~InGame();
+        ~InGame() override;
     protected:
     private:
-    bool showInventory = false;
-    Inventory inv;
-    Item stick_T;
-    Character player;
-    const Uint8 *key;
+        bool showInventory = false;
+        //Inventory inv;
+        Item stick_T;
+        Character player;
+        const Uint8 *key;
 };
 
 #endif // INGAME_H

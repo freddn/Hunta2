@@ -7,16 +7,14 @@
 
 
 
-class Editor : public Screen
+struct Editor : public Screen
 {
     public:
         Editor();
-
-        void checkForInput();
-        void render(); /* TODO put selected in Editor. */
-
-
-        virtual ~Editor();
+        void init() override{};
+        void update() override;// override;
+        void draw() override;// override; /* TODO put selected in Editor. */
+        ~Editor() override;
     protected:
     private:
     SDL_Rect rground;
