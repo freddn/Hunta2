@@ -1,19 +1,23 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 #include "Texture.hpp"
+#include "EntitySystem.hpp"
 
-class Character: public Texture
+class Character: public Texture, EntitySystem::Component
 {
     public:
         Character();
-
+        void init();
+        void draw();
+        void update();
         void moveChar(int vel, const Uint8 *key);
+
+        void setVelocity(int vel);
 
         bool checkCollision(int DIR);
 
         void loadSaveFile(std::string char_name);
         virtual ~Character();
-
     protected:
     private:
 
@@ -25,8 +29,6 @@ class Character: public Texture
         SOUTH = 3,
         WEST = 4
     };
-    int width = 640;
-    int height = 480;
     int coins;
     int xPos;
     int yPos;

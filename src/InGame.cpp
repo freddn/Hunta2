@@ -1,5 +1,7 @@
 #include "InGame.hpp"
+#include "EntitySystem.hpp"
 
+using namespace EntitySystem;
 
 InGame::~InGame()
 {
@@ -9,11 +11,8 @@ InGame::~InGame()
 
 void InGame::init()
 {
-    player.loadFromFile(game::getRenderer(),"data/gubbe.png");
-    player.setXPos(game::getWidth());
-    player.setYPos(game::getHeight());
-    player.setXRect(game::getWidth()/2);
-    player.setYRect(game::getHeight()/2);
+
+    player.init();
 
     stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
 }
@@ -43,8 +42,7 @@ void InGame::draw()
                     game::getRect()->y-game::getOffset()->y,
                     (SDL_Rect*)NULL, (double)0.0,NULL,SDL_FLIP_NONE);
 
-    player.render(game::getRenderer(),(SDL_Rect*)NULL,
-                    (double)0.0,NULL,SDL_FLIP_NONE);
+    player.draw();
 
     /* Display inventory */
     if(game::inventoryIsDisplayed())

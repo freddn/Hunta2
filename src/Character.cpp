@@ -1,13 +1,34 @@
 
 #include "Character.hpp"
 
+#include "Game.hpp"
 
-Character::Character() : Texture()
+Character::Character() //: Texture()
 {
 
 }
 
 Character::~Character()
+{
+
+}
+
+void Character::init()
+{
+    loadFromFile(game::getRenderer(),"data/gubbe.png");
+    setXPos(game::getWidth());
+    setYPos(game::getHeight());
+    setXRect(game::getWidth()/2);
+    setYRect(game::getHeight()/2);
+}
+
+void Character::draw()
+{
+    render(game::getRenderer(),(SDL_Rect*)NULL,
+                    (double)0.0,NULL,SDL_FLIP_NONE);
+}
+
+void Character::update()
 {
 
 }
@@ -21,10 +42,10 @@ void Character::moveChar(int vel, const Uint8 *key)
         if(!checkCollision(NORTH))
         {
             setYPos(getY()-vel);
-            if(getY() < (height/2))
+            if(getY() < (game::getHeight()/2))
                 setYRect(getY()); // screenheight
-            if(getY() > (height*2-(height/2)))
-                setYRect(getY()-height);
+            if(getY() > (game::getHeight()*2-(game::getHeight()/2)))
+                setYRect(getY()-game::getHeight());
         }
     }
     else if(key[SDL_SCANCODE_DOWN])
@@ -34,9 +55,9 @@ void Character::moveChar(int vel, const Uint8 *key)
         if(!checkCollision(SOUTH))
         {
             setYPos(getY()+vel);
-            if(getY() > (height*2-(height/2))) // Mapheight - screenheight
-                setYRect(getY()-height);
-            if(getY() < height/2)
+            if(getY() > (game::getHeight()*2-(game::getHeight()/2))) // Mapheight - screenheight
+                setYRect(getY()-game::getHeight());
+            if(getY() < game::getHeight()/2)
                 setYRect(getY());
         }
 
@@ -48,10 +69,10 @@ void Character::moveChar(int vel, const Uint8 *key)
         if(!checkCollision(WEST))
         {
             setXPos(getX()-vel);
-            if(getX() < width/2)
+            if(getX() < game::getWidth()/2)
                 setXRect(getX());
-            if(getX() > width*2-(width/2))
-                setXRect(getX() - width);
+            if(getX() > game::getWidth()*2-(game::getWidth()/2))
+                setXRect(getX() - game::getWidth());
         }
     }
     else if(key[SDL_SCANCODE_RIGHT])
@@ -61,9 +82,9 @@ void Character::moveChar(int vel, const Uint8 *key)
         if(!checkCollision(EAST))
         {
             setXPos(getX()+vel);
-            if(getX() > width*2-(width/2)) // Mapheight - screenheight
-                setXRect(getX()-width);
-            if(getX() < width/2)
+            if(getX() > game::getWidth()*2-(game::getWidth()/2)) // Mapheight - screenheight
+                setXRect(getX()-game::getWidth());
+            if(getX() < game::getWidth()/2)
                 setXRect(getX());
         }
     }

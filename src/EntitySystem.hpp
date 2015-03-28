@@ -34,11 +34,11 @@ namespace EntitySystem
     struct Component
     {
         Entity* entity;
-        virtual void init();
-        virtual void update();
-        virtual void draw();
+        virtual void init() = 0;
+        virtual void update() = 0;
+        virtual void draw() = 0;
 
-        virtual ~Component();
+        //virtual ~Component();
     };
 
     class Entity
@@ -79,21 +79,6 @@ namespace EntitySystem
             std::vector<std::unique_ptr<Entity>> entities;
 
             std::array<std::vector<Entity*>, maxGroups> groupedEntities;
-    };
-
-
-    struct asddd : Component
-    {
-        public:
-        //Inventory() ;
-        void init() override;
-        void draw() override;
-        void update() override;
-        void loadInventory();
-        //virtual ~Inventory() override;
-    protected:
-    private:
-
     };
 }
 

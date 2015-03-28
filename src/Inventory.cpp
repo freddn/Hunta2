@@ -5,12 +5,16 @@
 
 using namespace EntitySystem;
 
-/*Inventory::~Inventory()
+Inventory::Inventory(int x, int y) : sizeX(x), sizeY(y)
 {
 
 }
-*/
 
+
+Inventory::~Inventory()
+{
+
+}
 
 void Inventory::init()
 {
@@ -18,8 +22,9 @@ void Inventory::init()
     inv_bg = SDL_CreateTexture(game::getRenderer(), SDL_PIXELFORMAT_RGBA8888,
                                     SDL_TEXTUREACCESS_TARGET, sizeX*32, sizeY*32);
     SDL_SetRenderTarget(game::getRenderer(),inv_bg);
-    SDL_Rect clipRect = {0,0,32,32};
-    SDL_Rect destRect = {0,0,32,32};
+
+    //SDL_Rect clipRect = {0,0,32,32};
+    //SDL_Rect destRect = {0,0,32,32};
 
     for(int y = 0;y<sizeY;y++)
     {
@@ -48,7 +53,7 @@ void Inventory::draw()
 
 void Inventory::update()
 {
-
+    //check if item is dropped or if new items arrive
 }
 
 

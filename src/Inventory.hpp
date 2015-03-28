@@ -15,13 +15,12 @@ using namespace EntitySystem;
 struct Inventory : Component
 {
     public:
-        //Inventory() {};
+        Inventory(int x, int y);
         void init();
         void update();
         void draw();
-
         void loadInventory();
-        //~Inventory() override;
+        ~Inventory();
     protected:
     private:
         SDL_Texture *inv_bg;

@@ -85,10 +85,6 @@ namespace EntitySystem
         groupedEntities[mGroup].emplace_back(mEntity);
     }
 
-    //getEntitiesByGroup
-    //refresh
-    // https://github.com/SuperV1234/Tutorials/blob/master/DiveIntoC%2B%2B11/5_Entities/p8.cpp
-
     std::vector<Entity*>& EntityManager::getEntitiesByGroup(Group mGroup)
     {
         return groupedEntities[mGroup];

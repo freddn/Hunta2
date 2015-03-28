@@ -46,14 +46,12 @@ class Texture
     SDL_Texture *currentTexture = NULL;
     SDL_Rect rect;
     SDL_Rect tclip;
-    bool solid = 0;
+    bool solid = false; // texture is solid?
     std::string imageName = "image";
-    int width = 640;
-    int height = 480;
     int xPos;
     int yPos;
-    int tWidth;
-    int tHeight;
+    int tWidth; //texture width
+    int tHeight; //texture height
 };
 
 #endif // TEXTURE_H

@@ -21,6 +21,7 @@ struct InGame : public Screen
     private:
         bool showInventory = false;
         //Inventory inv;
+        EntityManager manager;
         Item stick_T;
         Character player;
         const Uint8 *key;
