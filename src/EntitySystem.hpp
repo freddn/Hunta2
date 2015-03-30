@@ -20,9 +20,21 @@ namespace EntitySystem
 
     namespace Internal
     {
-        inline ComponentID getUniqueComponentID() noexcept;
+        inline ComponentID getUniqueComponentID() noexcept
+        {
+            // Every call to this function returns an unique ID every time.
+            static ComponentID lastID{0u};
+            return lastID++;
+        }
     }
-    template<typename T> inline ComponentID getComponentTypeID() noexcept;
+
+    template<typename T> inline ComponentID getComponentTypeID() noexcept
+    {
+        static_assert(std::is_base_of<Component,T>::value,
+                        "T must inherit from Component");
+        static ComponentID typeID{Internal::getUniqueComponentID()};
+        return typeID;
+    }
 
     constexpr std::size_t maxComponents{300};
     using ComponentBitset = std::bitset<maxComponents>;
@@ -34,11 +46,11 @@ namespace EntitySystem
     struct Component
     {
         Entity* entity;
-        virtual void init() = 0;
-        virtual void update() = 0;
-        virtual void draw() = 0;
+        virtual void init() {};
+        virtual void update() {};
+        virtual void draw() {};
 
-        //virtual ~Component();
+        virtual ~Component() {};
     };
 
     class Entity
@@ -49,10 +61,33 @@ namespace EntitySystem
             void update();
             bool isAlive() const;
             void destroy();
-            template<typename T, typename... TArgs>
-            T& addComponent(TArgs&&... mArgs);
-            template<typename T> bool hasComponent() const;
-            template<typename T> T& getComponent() const;
+            template<typename T, typename... TArgs> T& addComponent(TArgs&&... mArgs)
+            {
+                assert(!hasComponent<T>());
+
+                T* c(new T(std::forward<TArgs>(mArgs)...));
+                c->entity = this;
+                std::unique_ptr<Component> uPtr{c};
+                components.emplace_back(std::move(uPtr));
+
+
+                componentArray[getComponentTypeID<T>()] = c;
+                componentBitset[getComponentTypeID<T>()] = true;
+
+                c->init();
+
+                return *c;
+            }
+            template<typename T> bool hasComponent() const
+            {
+                return componentBitset[getComponentTypeID<T>()];
+            }
+            template<typename T> T& getComponent() const
+            {
+                assert(hasComponent<T>());
+                auto ptr(componentArray[getComponentTypeID<T>()]);
+                return *reinterpret_cast<T*>(ptr);
+            }
             bool hasGroup(Group mGroup) const noexcept;
             void addGroup(Group mGroup) noexcept;
             void delGroup(Group mGroup) noexcept;

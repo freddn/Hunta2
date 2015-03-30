@@ -1,9 +1,10 @@
 #include "EntitySystem.hpp"
 
 
+
 namespace EntitySystem
 {
-    namespace Internal
+    /*namespace Internal
     {
         inline ComponentID getUniqueComponentID() noexcept
         {
@@ -11,21 +12,21 @@ namespace EntitySystem
             static ComponentID lastID{0u};
             return lastID++;
         }
-    }
+    }*/
 
-    template<typename T> inline ComponentID getComponentTypeID() noexcept
+    /*template<typename T> inline ComponentID getComponentTypeID() noexcept
     {
         static_assert(std::is_base_of<Component,T>::value,
                         "T must inherit from Component");
         static ComponentID typeID{Internal::getUniqueComponentID()};
         return typeID;
-    }
+    }*/
 
     void Entity::draw()    { for(auto& c : components) c->draw(); }
     void Entity::update()    { for(auto& c : components) c->update(); }
     bool Entity::isAlive() const { return alive; }
     void Entity::destroy() { alive = false; }
-    template<typename T, typename... TArgs>
+    /*template<typename T, typename... TArgs>
     T& Entity::addComponent(TArgs&&... mArgs)
     {
         assert(!hasComponent<T>());
@@ -42,9 +43,9 @@ namespace EntitySystem
         c->init();
 
         return *c;
-    }
+    }*/
 
-    template<typename T> T& Entity::getComponent() const
+    /*template<typename T> T& Entity::getComponent() const
     {
         assert(hasComponent<T>());
         auto ptr(componentArray[getComponentTypeID<T>()]);
@@ -54,7 +55,7 @@ namespace EntitySystem
     template<typename T> bool Entity::hasComponent() const
     {
         return componentBitset[getComponentTypeID<T>()];
-    }
+    }*/
 
     bool Entity::hasGroup(Group mGroup) const noexcept
     {

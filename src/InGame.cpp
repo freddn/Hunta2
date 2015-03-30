@@ -1,19 +1,30 @@
 #include "InGame.hpp"
+
 #include "EntitySystem.hpp"
 
 using namespace EntitySystem;
 
+InGame::InGame()
+{
+
+}
+
 InGame::~InGame()
 {
     stick_T.free();
-    player.free();
+
 }
 
 void InGame::init()
 {
+    auto& entity(manager.addEntity());
+    //auto& entity = manager.addEntity();
 
-    player.init();
-
+    player = entity.addComponent<Character>();
+    std::cout << "player loaded to entity";
+    entity.addGroup(game::PLAYER);
+    //auto& player(entity.getComponent<Character>());
+    //player.init();
     stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
 }
 
@@ -42,7 +53,8 @@ void InGame::draw()
                     game::getRect()->y-game::getOffset()->y,
                     (SDL_Rect*)NULL, (double)0.0,NULL,SDL_FLIP_NONE);
 
-    player.draw();
+    //player.draw();
+    manager.draw();
 
     /* Display inventory */
     if(game::inventoryIsDisplayed())
@@ -54,8 +66,14 @@ void InGame::draw()
 
 void InGame::update()
 {
-    key = SDL_GetKeyboardState(NULL);
-    player.moveChar(4,key);
+    //key = SDL_GetKeyboardState(NULL);
+    //player.moveChar(4,key);
+
+    manager.update();
+    manager.refresh();
+    auto& characters(manager.getEntitiesByGroup(game::PLAYER));
+    player = characters[0]->getComponent<Character>();
+
     if((player.getX() - (game::getWidth()/2)) > 0 &&
         (player.getX() + (game::getWidth()/2)) < game::getBackground()->w*2)
     {

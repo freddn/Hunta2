@@ -29,7 +29,12 @@ namespace game
 
     enum State {MAINMENU=0,INGAME=1,PAUSED=2,GAMEOVER=3, EDITOR=4};
     enum Selected {GRASS,GROUND,WATER};
-
+    enum EntityGroup : std::size_t
+    {
+        PLAYER,
+        ENEMY,
+        TREE
+    };
     SDL_Event *getEvent();
     SDL_Rect *getOffset();
     SDL_Rect *getRect();

@@ -3,14 +3,16 @@
 #include "Texture.hpp"
 #include "EntitySystem.hpp"
 
-class Character: public Texture, EntitySystem::Component
+using namespace EntitySystem;
+
+struct Character: public Texture, Component
 {
     public:
         Character();
-        void init();
-        void draw();
-        void update();
-        void moveChar(int vel, const Uint8 *key);
+        void init() override;
+        void draw() override;
+        void update() override;
+        void moveChar(const Uint8 *key);
 
         void setVelocity(int vel);
 
@@ -29,6 +31,7 @@ class Character: public Texture, EntitySystem::Component
         SOUTH = 3,
         WEST = 4
     };
+    int vel = 4;
     int coins;
     int xPos;
     int yPos;

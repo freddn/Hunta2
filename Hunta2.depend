@@ -179,11 +179,11 @@
 	<algorithm>
 	<bitset>
 
-1427569611 source:/home/fredrik/Documents/projects/Hunta2/src/Character.cpp
+1427753454 source:/home/fredrik/Documents/projects/Hunta2/src/Character.cpp
 	"Character.hpp"
 	"Game.hpp"
 
-1427567898 /home/fredrik/Documents/projects/Hunta2/src/Character.hpp
+1427730529 /home/fredrik/Documents/projects/Hunta2/src/Character.hpp
 	"Texture.hpp"
 	"EntitySystem.hpp"
 
@@ -205,7 +205,7 @@
 	<sstream>
 	"Texture.hpp"
 
-1425845116 /home/fredrik/Documents/projects/Hunta2/src/Game.hpp
+1427755550 /home/fredrik/Documents/projects/Hunta2/src/Game.hpp
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	<SDL2/SDL_ttf.h>
@@ -227,7 +227,8 @@
 1424184458 /home/fredrik/Documents/projects/Hunta2/src/Tile.hpp
 	"Texture.hpp"
 
-1427315091 /home/fredrik/Documents/projects/Hunta2/src/InGame.hpp
+1427755613 /home/fredrik/Documents/projects/Hunta2/src/InGame.hpp
+	<memory>
 	"Inventory.hpp"
 	"Screen.hpp"
 	"Game.hpp"
@@ -271,8 +272,9 @@
 1427311158 source:/home/fredrik/Documents/projects/Hunta2/src/Game.cpp
 	"Game.hpp"
 
-1427315107 source:/home/fredrik/Documents/projects/Hunta2/src/InGame.cpp
+1427756052 source:/home/fredrik/Documents/projects/Hunta2/src/InGame.cpp
 	"InGame.hpp"
+	"EntitySystem.hpp"
 
 1427566772 source:/home/fredrik/Documents/projects/Hunta2/src/Inventory.cpp
 	"Inventory.hpp"
@@ -287,7 +289,7 @@
 1424184394 source:/home/fredrik/Documents/projects/Hunta2/src/LTimer.cpp
 	"LTimer.hpp"
 
-1427137541 source:/home/fredrik/Documents/projects/Hunta2/src/LuaInterface.cpp
+1427753205 source:/home/fredrik/Documents/projects/Hunta2/src/LuaInterface.cpp
 	"LuaInterface.hpp"
 
 1424184398 source:/home/fredrik/Documents/projects/Hunta2/src/LuaState.cpp
@@ -299,7 +301,7 @@
 	"Game.hpp"
 	"EntitySystem.hpp"
 
-1427566249 /home/fredrik/Documents/projects/Hunta2/src/EntitySystem.hpp
+1427752599 /home/fredrik/Documents/projects/Hunta2/src/EntitySystem.hpp
 	<vector>
 	<memory>
 	<algorithm>
@@ -337,7 +339,7 @@
 1424184406 source:/home/fredrik/Documents/projects/Hunta2/src/Tile.cpp
 	"Tile.hpp"
 
-1427566418 source:/home/fredrik/Documents/projects/Hunta2/src/EntitySystem.cpp
+1427752601 source:/home/fredrik/Documents/projects/Hunta2/src/EntitySystem.cpp
 	"EntitySystem.hpp"
 
 1427567627 source:/home/fredrik/Documents/projects/Hunta2/src/Enemy.cpp

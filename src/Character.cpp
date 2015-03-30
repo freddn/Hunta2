@@ -1,4 +1,3 @@
-
 #include "Character.hpp"
 
 #include "Game.hpp"
@@ -20,6 +19,7 @@ void Character::init()
     setYPos(game::getHeight());
     setXRect(game::getWidth()/2);
     setYRect(game::getHeight()/2);
+    std::cerr << "player init()";
 }
 
 void Character::draw()
@@ -30,10 +30,11 @@ void Character::draw()
 
 void Character::update()
 {
-
+    const Uint8 *key = SDL_GetKeyboardState(NULL);
+    moveChar(key);
 }
 
-void Character::moveChar(int vel, const Uint8 *key)
+void Character::moveChar(const Uint8 *key)
 {
     if(key[SDL_SCANCODE_UP])
     {
@@ -96,10 +97,12 @@ bool Character::checkCollision(int DIR)
     bool isColliding = false;
 
 
-
-
-
     return isColliding;
+}
+
+void Character::setVelocity(int v)
+{
+    vel = v;
 }
 
 
