@@ -4,6 +4,7 @@
 #include <map>
 #include "Tile.hpp"
 
+/* TODO remove */
 class Renderer
 {
     public:

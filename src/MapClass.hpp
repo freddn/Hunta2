@@ -2,13 +2,15 @@
 #define MAPCLASS_H
 
 #include <map>
+
 #include "Tile.hpp"
 #include "LuaInterface.hpp"
 #include "LoadMapData.hpp"
 #include "MapCreator.hpp"
 
-
-
+/*
+ * Load a map, save a map, change a map.
+ */
 class MapClass
 {
     public:
@@ -17,20 +19,16 @@ class MapClass
         bool loadMap(const char* filename);
         void saveMap(std::map<int,Texture*> loadedMap,
                     const char*filename, int width, int height);
-
         void insertTile(Texture *texture);
-
         void setMap(std::map<int,Texture*> textureMap);
         std::map<int,Texture*> getMap();
-        Texture* tileAtIndex();
 
+        Texture* tileAtIndex();
         Texture *getGrassTile();
         Texture *getGroundTile();
         Texture *getWaterTile();
 
         void changeMap(const char *mapName);
-
-
         virtual ~MapClass();
     protected:
     private:
@@ -44,9 +42,4 @@ class MapClass
 };
 
 #endif // MAPCLASS_H
-
-
-
-
-
 

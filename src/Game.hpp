@@ -12,29 +12,36 @@
 #include <map>
 
 #include "LTimer.hpp"
-//#include "Character.hpp"
 #include "Tile.hpp"
-//#include "Item.hpp"
 #include "Editor.hpp"
 #include "InGame.hpp"
 #include "MapClass.hpp"
 
-//#include "Inventory.hpp"
-
+/*
+ * Game class. Contains game-loop. State of the game. Init of map/data.
+ * This class holds alot of important game related objects.
+ */
 namespace game
 {
+    /* Will init the needed states and then start the game-loop. */
     void start();
+    /* Initiates SDL, creates a window, buffer and so on. */
     bool init_game();
+    /* Quit SDL and deallocate stuff. */
     void close();
 
+    /* The different states of the game. */
     enum State {MAINMENU=0,INGAME=1,PAUSED=2,GAMEOVER=3, EDITOR=4};
+    /* Some tiles.(used in the editor) */
     enum Selected {GRASS,GROUND,WATER};
+    /* Different entity types. */
     enum EntityGroup : std::size_t
     {
         PLAYER,
         ENEMY,
         TREE
     };
+    /* Getters. */
     SDL_Event *getEvent();
     SDL_Rect *getOffset();
     SDL_Rect *getRect();
@@ -60,11 +67,12 @@ namespace game
     bool getHasChanged();
     float getAvgFPS();
     LTimer getTimer();
-    bool inventoryIsDisplayed();
 
+    bool inventoryIsDisplayed();
     void showInventory();
     void hideInventory();
 
+    /* Setters. */
     void setHasChanged(bool boolean);
     void setTexture_map(std::map<int,Texture*> temp_map);
     void setBuffer(SDL_Texture * temp);

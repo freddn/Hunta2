@@ -1,11 +1,13 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
 #include <iostream>
 
+/* Texture class. Can load an image, render the texture and get texture data.*/
 class Texture
 {
     public:
@@ -43,15 +45,15 @@ class Texture
         ~Texture();
     protected:
     private:
-    SDL_Texture *currentTexture = NULL;
-    SDL_Rect rect;
-    SDL_Rect tclip;
-    bool solid = false; // texture is solid?
-    std::string imageName = "image";
-    int xPos;
-    int yPos;
-    int tWidth; //texture width
-    int tHeight; //texture height
+        SDL_Texture *currentTexture = NULL;
+        SDL_Rect rect;
+        SDL_Rect tclip;
+        bool solid = false; // texture is solid?
+        std::string imageName = "image";
+        int xPos;
+        int yPos;
+        int tWidth; //texture width
+        int tHeight; //texture height
 };
 
 #endif // TEXTURE_H

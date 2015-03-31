@@ -2,12 +2,15 @@
 #define INGAME_H
 
 #include <memory>
+
 #include "Inventory.hpp"
 #include "Screen.hpp"
 #include "Game.hpp"
 #include "Item.hpp"
 #include "Character.hpp"
 
+/* This is the game-state of the game. Here we draw all game-related things
+ * on the screen and deal with all input and events related to the game itself. */
 struct InGame : public Screen
 {
     public:

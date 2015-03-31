@@ -3,15 +3,16 @@
 
 #include "Screen.hpp"
 
+/* This class represents the main menu. */
 struct MainMenu : public Screen
 {
     public:
         MainMenu();
-        void init() override;
-        void update() override;
-        void draw() override;
+        void init();
+        void update();
+        void draw();
 
-        ~MainMenu() override;
+        ~MainMenu();
     protected:
     private:
 };

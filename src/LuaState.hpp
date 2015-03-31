@@ -1,7 +1,7 @@
 #ifndef LUASTATE_H
 #define LUASTATE_H
 
-
+/* TODO remove. */
 class LuaState
 {
     public:

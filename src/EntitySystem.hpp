@@ -9,6 +9,15 @@
 #include <cassert>
 #include <type_traits>
 
+/*
+ * EntitySystem is a system where we have a managers that contains all the
+ * entities we have in the game. The entities is built of different components.
+ *
+ * We can have different managers for different areas.
+ * (Editor, InGame, different levels)
+ * An entity can be a character, an enemy, a house, an item and so on.
+ * The components can be a position class, physics class, texture and so on.
+ */
 namespace EntitySystem
 {
     struct Component;

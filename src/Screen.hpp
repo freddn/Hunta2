@@ -4,15 +4,15 @@
 #include <sstream>
 
 #include "Texture.hpp"
-//#include "Game.hpp"
-//#include "EntitySystem.hpp"
 
-struct Screen// : EntitySystem::Component
+/* Screen class. Can render items ontop of underlaying screens.
+ * */
+struct Screen
 {
     public:
-        virtual void init();// override;
-        virtual void update();// override;
-        virtual void draw();// override;
+        void init();// override;
+        void update();// override;
+        void draw();// override;
         void renderStart();
         void renderEnd();
         int getSelected();

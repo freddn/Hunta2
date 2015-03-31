@@ -71,6 +71,7 @@ void InGame::update()
 
     manager.update();
     manager.refresh();
+
     auto& characters(manager.getEntitiesByGroup(game::PLAYER));
     player = characters[0]->getComponent<Character>();
 

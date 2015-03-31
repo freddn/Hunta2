@@ -4,9 +4,9 @@
 #include "LuaInterface.hpp"
 
 
-/**
-    Import map-data. (lua/plaintext?)
-*/
+/*
+ * Import map-data.
+ */
 class LoadMapData
 {
     public:

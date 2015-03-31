@@ -3,8 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-
-
+/* A timer class. Can be used as stopwatch or clock.*/
 class LTimer
 {
     public:

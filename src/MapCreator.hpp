@@ -2,12 +2,13 @@
 #define MAPCREATOR_H
 
 #include <map>
+
 #include "Texture.hpp"
 #include "LuaInterface.hpp"
 
-/**
-    Generate map
-*/
+/*
+ * Will create a new map.
+ */
 class MapCreator
 {
     public:
@@ -24,9 +25,4 @@ class MapCreator
 };
 
 #endif // MAPCREATOR_H
-
-
-
-
-
 

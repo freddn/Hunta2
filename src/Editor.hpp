@@ -4,17 +4,18 @@
 #include "Screen.hpp"
 #include "Game.hpp"
 
-
-
-
+/* This class represents the map-editor.
+ * Currently we can only draw the background-tiles.
+ * TODO Put objects on the map. Trees/houses/enemys.
+ */
 struct Editor : public Screen
 {
     public:
         Editor();
-        void init() override{};
-        void update() override;// override;
-        void draw() override;// override; /* TODO put selected in Editor. */
-        ~Editor() override;
+        void init();
+        void update();
+        void draw();
+        ~Editor();
     protected:
     private:
     SDL_Rect rground;

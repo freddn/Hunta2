@@ -1,17 +1,14 @@
 #ifndef INVENTORY_H
 #define INVENTORY_H
 
-
-
-#include <SDL2/SDL.h>
-
 #include "Texture.hpp"
-
-
 #include "EntitySystem.hpp"
 
 using namespace EntitySystem;
 
+/*
+ * Inventory. Load items from file. Save items to file.
+ */
 struct Inventory : Component
 {
     public:
@@ -20,6 +17,7 @@ struct Inventory : Component
         void update();
         void draw();
         void loadInventory();
+        void saveInventory();
         ~Inventory();
     protected:
     private:

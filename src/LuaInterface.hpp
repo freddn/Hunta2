@@ -3,18 +3,13 @@
 
 #include <iostream>
 #include <map>
-#include "Texture.hpp"
 #include <string>
 
 #include "lua5.1/lua.hpp"
-/*
-extern "C"
-{
-#include "lua5.2/lua.h"
-#include "lua5.2/lualib.h"
-#include "lua5.2/lauxlib.h"
-}*/
 
+#include "Texture.hpp"
+
+/* struct with some map-data. */
 struct map_data
 {
     int width;
@@ -22,6 +17,7 @@ struct map_data
     std::map<int,Texture*> textures;
 };
 
+/* Functions used by lua and getters for data gathered with lua. */
 namespace lua_functions
 {
     int loadTile(lua_State *l_state);
@@ -34,6 +30,7 @@ namespace lua_functions
     int getWidth();
 }
 
+/* Functions that will execute lua-scripts. */
 class LuaInterface
 {
     public:
@@ -57,9 +54,4 @@ class LuaInterface
 };
 
 #endif // LUAINTERFACE_H
-
-
-
-
-
 
