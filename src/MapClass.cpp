@@ -31,6 +31,7 @@ MapClass::~MapClass()
 
 bool MapClass::loadMap(const char* filename)
 {
+    std::cerr << "MapClass::loadMap(), " << filename << std::endl;
     bool success = true;
     currentMap = mapLoader.getMap(filename);
     if(currentMap.empty())

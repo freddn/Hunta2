@@ -1,6 +1,6 @@
 #include "Tile.hpp"
 
-Tile::Tile() : Texture()
+Tile::Tile() //: Texture()
 {
 
 }

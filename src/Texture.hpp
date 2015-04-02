@@ -7,13 +7,23 @@
 #include <string>
 #include <iostream>
 
+#include "EntitySystem.hpp"
+#include "Position.hpp"
+
 /* Texture class. Can load an image, render the texture and get texture data.*/
-class Texture
+struct Texture : EntitySystem::Component
 {
     public:
         Texture();
+        Texture(std::string img);
+        Texture(std::string text,SDL_Color textcolor,TTF_Font* font);
+
+        void init(); // Component
+        void draw(); // Component
+        void update(); // Component
+
         bool loadFromFile(SDL_Renderer *renderer, std::string path);
-        bool loadFromText(SDL_Renderer *renderer, std::string text, SDL_Color textcolor,TTF_Font * font);
+        bool loadFromText(SDL_Renderer *renderer, std::string text, SDL_Color textcolor,TTF_Font *font);
         void free();
         // (
         void setColor(Uint8 red, Uint8 green, Uint8 blue);
@@ -45,11 +55,16 @@ class Texture
         ~Texture();
     protected:
     private:
+        Position *position{nullptr};
         SDL_Texture *currentTexture = NULL;
         SDL_Rect rect;
         SDL_Rect tclip;
+        SDL_Color textColor;
+        TTF_Font* textFont;
+        bool isText = false;
         bool solid = false; // texture is solid?
         std::string imageName = "image";
+        std::string textString;
         int xPos;
         int yPos;
         int tWidth; //texture width

@@ -1,9 +1,5 @@
 #include "InGame.hpp"
 
-#include "EntitySystem.hpp"
-
-using namespace EntitySystem;
-
 InGame::InGame()
 {
 
@@ -11,27 +7,25 @@ InGame::InGame()
 
 InGame::~InGame()
 {
-    stick_T.free();
+    //stick_T.free();
 
 }
 
 void InGame::init()
 {
-    auto& entity(manager.addEntity());
-    //auto& entity = manager.addEntity();
 
-    player = entity.addComponent<Character>();
-    std::cout << "player loaded to entity";
-    entity.addGroup(game::PLAYER);
-    //auto& player(entity.getComponent<Character>());
-    //player.init();
-    stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
+    creator.createPlayer(&inGameManager);
+    creator.createItem(&inGameManager,0,100,100,true);
+    creator.createItem(&inGameManager,0,150,150,true);
+
+    //stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
 }
 
 void InGame::draw()
 {
+    //std::cerr << "InGame::draw" << std::endl;
     Screen::renderStart();
-
+    //std::cerr << "InGame::draw" << std::endl;
     if(game::getHasChanged())
     {
         SDL_SetRenderTarget(game::getRenderer(),game::getBuffer());
@@ -48,13 +42,14 @@ void InGame::draw()
     SDL_RenderCopy(game::getRenderer(),game::getBuffer(),
                     game::getOffset(),game::getBackground());
 
-    stick_T.render(game::getRenderer(),
-                    game::getRect()->x-game::getOffset()->x,
-                    game::getRect()->y-game::getOffset()->y,
-                    (SDL_Rect*)NULL, (double)0.0,NULL,SDL_FLIP_NONE);
+    //stick_T.render(game::getRenderer(),
+    //                game::getRect()->x-game::getOffset()->x,
+    //                game::getRect()->y-game::getOffset()->y,
+     //               (SDL_Rect*)NULL, (double)0.0,NULL,SDL_FLIP_NONE);
 
     //player.draw();
-    manager.draw();
+    //std::cerr << "InGame::draw" << std::endl;
+    inGameManager.draw();
 
     /* Display inventory */
     if(game::inventoryIsDisplayed())
@@ -68,22 +63,28 @@ void InGame::update()
 {
     //key = SDL_GetKeyboardState(NULL);
     //player.moveChar(4,key);
-
-    manager.update();
-    manager.refresh();
-
-    auto& characters(manager.getEntitiesByGroup(game::PLAYER));
-    player = characters[0]->getComponent<Character>();
-
-    if((player.getX() - (game::getWidth()/2)) > 0 &&
-        (player.getX() + (game::getWidth()/2)) < game::getBackground()->w*2)
+    //std::cerr << "InGame::update" << std::endl;
+    inGameManager.refresh();
+    inGameManager.update();
+    //std::cout << "InGame::update" << std::endl;
+    auto& characters(inGameManager.getEntitiesByGroup(game::PLAYER));
+    //std::cout << "characters " << std::endl;
+    if(!characters.empty() && characters[0]->hasComponent<Position>())
     {
-        game::getOffset()->x = player.getX() - game::getWidth()/2;
-    }
-    if((player.getY() - (game::getHeight()/2)) > 0 &&
-        (player.getY() + (game::getHeight()/2)) < game::getBackground()->h*2)
-    {
-        game::getOffset()->y = player.getY() - game::getHeight()/2;
+
+        //std::cout << "position exist" << std::endl;
+        playerPos = characters[0]->getComponent<Position>();
+
+        if((playerPos.getX() - (game::getWidth()/2)) > 0 &&
+            (playerPos.getX() + (game::getWidth()/2)) < game::getBackground()->w*2)
+        {
+            game::getOffset()->x = playerPos.getX() - game::getWidth()/2;
+        }
+        if((playerPos.getY() - (game::getHeight()/2)) > 0 &&
+            (playerPos.getY() + (game::getHeight()/2)) < game::getBackground()->h*2)
+        {
+            game::getOffset()->y = playerPos.getY() - game::getHeight()/2;
+        }
     }
 
     /* Inventory input */

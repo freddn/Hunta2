@@ -40,15 +40,17 @@ namespace game
 
     void start()
     {
+        std::cerr << "game::start()" << std::endl;
         printf("%d\n",current_state);
         key = SDL_GetKeyboardState(NULL);
         textureMap.init(renderer);
-
+        std::cerr << "game::start()" << std::endl;
         if(!textureMap.loadMap("data/map2"))
         {
             std::cerr << "Map could not be loaded" << std::endl;
         }
         //std::map<int,Texture*> textures;
+        std::cerr << "game::start()" << std::endl;
         Screen screen;
         Editor editor;
         InGame in_game;

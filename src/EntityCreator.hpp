@@ -1,8 +1,12 @@
 #ifndef ENTITYCREATOR_H
 #define ENTITYCREATOR_H
 
+#include <vector>
+#include <memory>
+
 #include "EntitySystem.hpp"
 
+using namespace EntitySystem;
 /* In this class you can create entitys that will be added to the
  * given manager.
  */
@@ -11,11 +15,10 @@ class EntityCreator
     public:
         EntityCreator();
 
-        void createPlayer(EntitySystem::EntityManager manager,
-                            const char* name);
-        void createItem(EntitySystem::EntityManager,int itemNumber,
+        Entity& createPlayer(EntitySystem::EntityManager *mManager);
+        Entity& createItem(EntitySystem::EntityManager *mManager,int itemNumber,
                             int x,int y, bool onGround);
-        void createEnemy(EntitySystem::EntityManager,int enemyNumber,
+        Entity& createEnemy(EntitySystem::EntityManager *mManager,int enemyNumber,
                             int x,int y);
 
 

@@ -16,6 +16,9 @@
 #include "Editor.hpp"
 #include "InGame.hpp"
 #include "MapClass.hpp"
+#include "Character.hpp"
+#include "Item.hpp"
+#include "Enemy.hpp"
 
 /*
  * Game class. Contains game-loop. State of the game. Init of map/data.
@@ -38,6 +41,7 @@ namespace game
     enum EntityGroup : std::size_t
     {
         PLAYER,
+        ITEM,
         ENEMY,
         TREE
     };

@@ -12,7 +12,7 @@ namespace lua_functions
     int loadTile(lua_State *l_state)
     {
         int argc = lua_gettop(l_state);
-        //std::cout << "loading tile.. \n";
+        //std::cout << "loadTile(), loading tile.. \n";
         if(argc == 7)
         {
             Texture *temp;

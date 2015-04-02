@@ -43,9 +43,9 @@ void insertTile()
 
 std::map<int,Texture*> LoadMapData::getMap(const char* filename)
 {
-    std::cout << "getMap: "<<filename << std::endl;
+    std::cout << "getMap(): "<<filename << std::endl;
     l_interface.load_tiles(filename);
-
+    std::cerr << "LoadMapData::getMap(), " << filename << std::endl;
     return lua_functions::getCurrentMap();
 }
 

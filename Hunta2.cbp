@@ -49,8 +49,12 @@
 		<Unit filename="src/Editor.hpp" />
 		<Unit filename="src/Enemy.cpp" />
 		<Unit filename="src/Enemy.hpp" />
+		<Unit filename="src/EntityCreator.cpp" />
+		<Unit filename="src/EntityCreator.hpp" />
 		<Unit filename="src/EntitySystem.cpp" />
 		<Unit filename="src/EntitySystem.hpp" />
+		<Unit filename="src/GPhysics.cpp" />
+		<Unit filename="src/GPhysics.hpp" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Game.hpp" />
 		<Unit filename="src/InGame.cpp" />
@@ -73,6 +77,8 @@
 		<Unit filename="src/MapClass.hpp" />
 		<Unit filename="src/MapCreator.cpp" />
 		<Unit filename="src/MapCreator.hpp" />
+		<Unit filename="src/Position.cpp" />
+		<Unit filename="src/Position.hpp" />
 		<Unit filename="src/Renderer.cpp" />
 		<Unit filename="src/Renderer.hpp" />
 		<Unit filename="src/Screen.cpp" />

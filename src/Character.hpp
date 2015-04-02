@@ -12,7 +12,7 @@
 
 using namespace EntitySystem;
 
-struct Character: public Texture, Component
+struct Character: Component
 {
     public:
         Character();
@@ -36,6 +36,8 @@ struct Character: public Texture, Component
     private:
 
     /* The directions.  */
+    Texture *texture{nullptr};
+    Position *position{nullptr};
     enum
     {
         NORTH = 1,

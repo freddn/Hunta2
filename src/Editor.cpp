@@ -95,19 +95,23 @@ void Editor::update()
     key = SDL_GetKeyboardState(NULL);
     if(key[SDL_SCANCODE_UP])
     {
-        game::getOffset()->y = game::getOffset()->y - 4;
+        if(game::getOffset()->y > 0)
+            game::getOffset()->y = game::getOffset()->y - 4;
     }
     else if(key[SDL_SCANCODE_DOWN])
     {
-        game::getOffset()->y = game::getOffset()->y + 4;
+        if(game::getOffset()->y < game::getHeight())
+            game::getOffset()->y = game::getOffset()->y + 4;
     }
     else if(key[SDL_SCANCODE_LEFT])
     {
-        game::getOffset()->x = game::getOffset()->x - 4;
+        if(game::getOffset()->x > 0)
+            game::getOffset()->x = game::getOffset()->x - 4;
     }
     else if(key[SDL_SCANCODE_RIGHT])
     {
-        game::getOffset()->x = game::getOffset()->x + 4;
+        if(game::getOffset()->x < game::getWidth())
+            game::getOffset()->x = game::getOffset()->x + 4;
     }
     if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
     {

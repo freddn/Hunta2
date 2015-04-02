@@ -1,10 +1,11 @@
 #ifndef TILE_H
 #define TILE_H
 
+#include "EntitySystem.hpp"
 #include "Texture.hpp"
 
 /* Tile class. Images used in background environments. */
-class Tile: public Texture
+struct Tile : Texture
 {
     public:
         Tile();

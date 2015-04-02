@@ -1,7 +1,35 @@
 #include "Texture.hpp"
-
+#include "Game.hpp"
 Texture::Texture()
 {
+    currentTexture = NULL;
+    tWidth = 0;
+    tHeight = 0;
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 0;
+    rect.h = 0;
+}
+
+Texture::Texture(std::string img)
+{
+    isText = false;
+    imageName = img;
+    currentTexture = NULL;
+    tWidth = 0;
+    tHeight = 0;
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 0;
+    rect.h = 0;
+}
+
+Texture::Texture(std::string text,SDL_Color textcolor,TTF_Font* font)
+{
+    isText = true;
+    textFont = font;
+    textColor = textcolor;
+    textString = text;
     currentTexture = NULL;
     tWidth = 0;
     tHeight = 0;
@@ -16,6 +44,35 @@ Texture::~Texture()
     free();
 }
 
+void Texture::init()
+{
+    position = &entity->getComponent<Position>();
+    if(!isText)
+    {
+        loadFromFile(game::getRenderer(),imageName);
+        setXPos(game::getWidth());
+        setYPos(game::getHeight());
+        setXRect(game::getWidth()/2);
+        setYRect(game::getHeight()/2);
+    }
+    else
+    {
+        loadFromText(game::getRenderer(),textString,textColor,textFont);
+    }
+}
+
+void Texture::draw()
+{
+    render(game::getRenderer(),position->getX()-game::getOffset()->x,
+            position->getY()-game::getOffset()->y,(SDL_Rect*)NULL,
+            (double)0.0,NULL,SDL_FLIP_NONE);
+}
+
+void Texture::update()
+{
+
+}
+
 bool Texture::loadFromFile(SDL_Renderer *renderer, std::string path)
 {
     free();
@@ -23,7 +80,7 @@ bool Texture::loadFromFile(SDL_Renderer *renderer, std::string path)
     SDL_Surface *tempSurface = IMG_Load(imageName.c_str());
     if(tempSurface == NULL)
     {
-        std::cerr << "IMG_Load() failed" << std::endl;
+        std::cerr << "IMG_Load() failed. Image: "<< path << std::endl;
     }
     else
     {
@@ -146,6 +203,7 @@ int Texture::getX()
 void Texture::setXPos(int x)
 {
     xPos = x;
+    //position->setX(x);
     //rect.x = x;
 }
 

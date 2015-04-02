@@ -14,18 +14,20 @@ Character::~Character()
 
 void Character::init()
 {
-    loadFromFile(game::getRenderer(),"data/gubbe.png");
-    setXPos(game::getWidth());
-    setYPos(game::getHeight());
-    setXRect(game::getWidth()/2);
-    setYRect(game::getHeight()/2);
+    position = &entity->getComponent<Position>();
+    texture = &entity->getComponent<Texture>();
+    position->setX(game::getWidth());
+    position->setY(game::getHeight());
+    texture->setXRect(game::getWidth()-game::getOffset()->x);
+    texture->setYRect(game::getHeight()-game::getOffset()->y);
+    //game::getOffset().x
     std::cerr << "player init()";
 }
 
 void Character::draw()
 {
-    render(game::getRenderer(),(SDL_Rect*)NULL,
-                    (double)0.0,NULL,SDL_FLIP_NONE);
+    //render(game::getRenderer(),(SDL_Rect*)NULL,
+    //                (double)0.0,NULL,SDL_FLIP_NONE);
 }
 
 void Character::update()
@@ -38,55 +40,56 @@ void Character::moveChar(const Uint8 *key)
 {
     if(key[SDL_SCANCODE_UP])
     {
-        setClipX(32);
-        setClipY(0);
+        texture->setClipX(32);
+        texture->setClipY(0);
         if(!checkCollision(NORTH))
         {
-            setYPos(getY()-vel);
-            if(getY() < (game::getHeight()/2))
-                setYRect(getY()); // screenheight
-            if(getY() > (game::getHeight()*2-(game::getHeight()/2)))
-                setYRect(getY()-game::getHeight());
+            position->setY(position->getY()-vel);
+            //texture->setYPos(texture->getY()texture-vel);
+            if(position->getY() < (game::getHeight()/2))
+                texture->setYRect(position->getY()); // screenheight
+            if(position->getY() > (game::getHeight()*2-(game::getHeight()/2)))
+                texture->setYRect(position->getY()-game::getHeight());
         }
     }
     else if(key[SDL_SCANCODE_DOWN])
     {
-        setClipX(0);
-        setClipY(0);
+        texture->setClipX(0);
+        texture->setClipY(0);
         if(!checkCollision(SOUTH))
         {
-            setYPos(getY()+vel);
-            if(getY() > (game::getHeight()*2-(game::getHeight()/2))) // Mapheight - screenheight
-                setYRect(getY()-game::getHeight());
-            if(getY() < game::getHeight()/2)
-                setYRect(getY());
+            position->setY(position->getY()+vel);
+            if(position->getY() > (game::getHeight()*2-(game::getHeight()/2))) // Mapheight - screenheight
+                texture->setYRect(position->getY()-game::getHeight());
+            if(position->getY() < game::getHeight()/2)
+                texture->setYRect(position->getY());
         }
 
     }
     else if(key[SDL_SCANCODE_LEFT])
     {
-        setClipX(0);
-        setClipY(32);
+        texture->setClipX(0);
+        texture->setClipY(32);
         if(!checkCollision(WEST))
         {
-            setXPos(getX()-vel);
-            if(getX() < game::getWidth()/2)
-                setXRect(getX());
-            if(getX() > game::getWidth()*2-(game::getWidth()/2))
-                setXRect(getX() - game::getWidth());
+            position->setX(position->getX()-vel);
+            if(position->getX() < game::getWidth()/2)
+                texture->setXRect(position->getX());
+            if(position->getX() > game::getWidth()*2-(game::getWidth()/2))
+                texture->setXRect(position->getX() - game::getWidth());
         }
     }
     else if(key[SDL_SCANCODE_RIGHT])
     {
-        setClipX(32);
-        setClipY(32);
+        texture->setClipX(32);
+        texture->setClipY(32);
         if(!checkCollision(EAST))
         {
-            setXPos(getX()+vel);
-            if(getX() > game::getWidth()*2-(game::getWidth()/2)) // Mapheight - screenheight
-                setXRect(getX()-game::getWidth());
-            if(getX() < game::getWidth()/2)
-                setXRect(getX());
+            position->setX(position->getX()+vel);
+            if(position->getX() > game::getWidth()*2-(game::getWidth()/2)) // Mapheight - screenheight
+                texture->setXRect(position->getX()-game::getWidth());
+            if(position->getX() < game::getWidth()/2)
+                texture->setXRect(position->getX());
         }
     }
 }

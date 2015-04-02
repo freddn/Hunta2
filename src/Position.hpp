@@ -6,10 +6,11 @@
 /* This class is a component and will give entitys a position.
  * This position is used in collision-system, drawing and movement.
  */
-class Position : EntitySystem::Component
+struct Position : EntitySystem::Component
 {
     public:
         Position();
+        Position(int xPos,int yPos);
 
         void update();
 
@@ -17,7 +18,10 @@ class Position : EntitySystem::Component
         int getY();
         void setX(int posX);
         void setY(int posY);
-
+        /* TODO
+         * - Add SDL_Rect.
+         * - Setters and getters for the rect.
+         */
         virtual ~Position();
     protected:
     private:
