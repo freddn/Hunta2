@@ -11,8 +11,9 @@ Texture::Texture()
     rect.h = 0;
 }
 
-Texture::Texture(std::string img)
+Texture::Texture(std::string img,bool clip)
 {
+    isClipped = clip;
     isText = false;
     imageName = img;
     currentTexture = NULL;
@@ -46,14 +47,15 @@ Texture::~Texture()
 
 void Texture::init()
 {
+    std::cout << " - Texture::init() ..." << std::endl;
     position = &entity->getComponent<Position>();
     if(!isText)
     {
         loadFromFile(game::getRenderer(),imageName);
-        setXPos(game::getWidth());
-        setYPos(game::getHeight());
-        setXRect(game::getWidth()/2);
-        setYRect(game::getHeight()/2);
+        //setXPos(game::getWidth());
+        //setYPos(game::getHeight());
+        //setXRect(game::getWidth()/2);
+        //setYRect(game::getHeight()/2);
     }
     else
     {
@@ -63,14 +65,17 @@ void Texture::init()
 
 void Texture::draw()
 {
+
     render(game::getRenderer(),position->getX()-game::getOffset()->x,
-            position->getY()-game::getOffset()->y,(SDL_Rect*)NULL,
-            (double)0.0,NULL,SDL_FLIP_NONE);
+                position->getY()-game::getOffset()->y,(SDL_Rect*)NULL,
+                (double)0.0,NULL,SDL_FLIP_NONE);
+
+
 }
 
 void Texture::update()
 {
-
+    //std::cerr<< "Texture::update()"<<std::endl;
 }
 
 bool Texture::loadFromFile(SDL_Renderer *renderer, std::string path)
@@ -95,8 +100,16 @@ bool Texture::loadFromFile(SDL_Renderer *renderer, std::string path)
         {
             tWidth = tempSurface->w;
             tHeight = tempSurface->h;
-            rect.w = 32; // tWidth
-            rect.h = 32; // tWidth
+            if(isClipped)
+            {
+                rect.w = 32; // tWidth
+                rect.h = 32; // tWidth
+            }
+            else
+            {
+                rect.w = tWidth;
+                rect.h = tHeight;
+            }
             tclip.x = 0;
             tclip.y = 0;
             tclip.w = 32;
@@ -166,7 +179,7 @@ void Texture::render(SDL_Renderer * renderer, int x, int y,SDL_Rect* clip,double
         rect.w = clip->w;
         rect.h = clip->h;
     }
-    else if(&tclip != NULL)
+    else if(&tclip != NULL && isClipped)
     {
         clip = &tclip;
     }

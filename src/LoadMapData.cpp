@@ -26,6 +26,7 @@ LoadMapData::~LoadMapData()
 
 void LoadMapData::init()
 {
+    std::cout << " - LoadMapData::init() ..."<<std::endl;
     l_interface.initLua();
     l_interface.load_File("src/LoadMap.lua");
 }
@@ -43,9 +44,8 @@ void insertTile()
 
 std::map<int,Texture*> LoadMapData::getMap(const char* filename)
 {
-    std::cout << "getMap(): "<<filename << std::endl;
+    std::cout << " - LoadMapData::getMap() ..."<<std::endl;
     l_interface.load_tiles(filename);
-    std::cerr << "LoadMapData::getMap(), " << filename << std::endl;
     return lua_functions::getCurrentMap();
 }
 

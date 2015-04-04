@@ -4,7 +4,7 @@ Position::Position()
 {
     //ctor
 }
-Position::Position(int posX, int posY)
+Position::Position(float posX, float posY)
 {
     x = posX;
     y = posY;
@@ -17,22 +17,22 @@ Position::~Position()
 
 void Position::update()
 {
-
+    //std::cerr <<"Position::update()"<<std::endl;
 }
 
-int Position::getX()
+float Position::getX()
 {
     return x;
 }
-int Position::getY()
+float Position::getY()
 {
     return y;
 }
-void Position::setX(int posX)
+void Position::setX(float posX)
 {
     x = posX;
 }
-void Position::setY(int posY)
+void Position::setY(float posY)
 {
     y = posY;
 }

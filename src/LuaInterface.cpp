@@ -57,7 +57,6 @@ namespace lua_functions
     }
     int setDimensions(lua_State *l_state)
     {
-        std::cout << "loading tile.. \n";
         int argc = lua_gettop(l_state);
         if(argc == 2)
         {
@@ -106,7 +105,7 @@ LuaInterface::LuaInterface()
 
 void LuaInterface::initLua()
 {
-    std::cout << "initLua" << std::endl;
+    std::cout << " - LuaInterface::initLua() ..." << std::endl;
     l_state = luaL_newstate();
     luaL_openlibs(l_state);
     lua_register(l_state, "loadTile", lua_functions::loadTile);
@@ -117,7 +116,7 @@ void LuaInterface::report_errors(lua_State *l_state, int status)
 {
     if(status != 0)
     {
-        std::cerr << "-- " << lua_tostring(l_state,-1) << std::endl;
+        std::cerr << " - " << lua_tostring(l_state,-1) << std::endl;
         lua_pop(l_state,1);
     }
 }
@@ -129,10 +128,9 @@ lua_State *LuaInterface::getLua_State()
 
 bool LuaInterface::load_File(const char *file)
 {
+    std::cout << " - LuaInterface::load_File() ..."<<std::endl;
     bool success = true;
-    std::cout << "loadFile:" << file << std::endl;
     int s = luaL_loadfile(l_state,file);
-    std::cout << "loadedFile:" << file << ", " <<s<< std::endl;
     if(s == 0)
     {
         if((s = lua_pcall(l_state,0,LUA_MULTRET,0)) != 0)
@@ -184,6 +182,7 @@ void LuaInterface::clearMapFile(const char *filename)
 
 void LuaInterface::newMapFile(const char *filename,int width,int height)
 {
+    std::cout << " - LuaInterface::newMapFile() ..."<<std::endl;
     lua_pushstring(l_state,"NewMapFile");
     lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1 working
     //lua_getglobal(l_state,"_G"); // lua5.2 not working
@@ -215,7 +214,7 @@ bool LuaInterface::mapFileExist(const char *filename)
 void LuaInterface::load_tiles(const char *filename)
 {
 
-    std::cout << "loadTiles:" << filename << std::endl;
+    std::cout << " - LuaInterface::load_tiles() ..." << std::endl;
     lua_pushstring(l_state,"getTiles");
     lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1
     //lua_getglobal(l_state,"_G"); // lua5.2 not working

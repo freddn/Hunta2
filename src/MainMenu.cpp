@@ -6,7 +6,7 @@ MainMenu::~MainMenu()
 }
 void MainMenu::init()
 {
-
+    std::cout << " - MainMenu::init() ..."<<std::endl;
 }
 
 void MainMenu::draw()

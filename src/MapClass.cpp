@@ -9,6 +9,7 @@ MapClass::MapClass()
 
 void MapClass::init(SDL_Renderer *renderer)
 {
+    std::cout << " - MapClass::init() ..."<<std::endl;
     ground_T.loadFromFile(renderer,"data/ground.png");
     water_T.loadFromFile(renderer,"data/water.png");
     grass_T.loadFromFile(renderer,"data/grass.png");
@@ -31,7 +32,7 @@ MapClass::~MapClass()
 
 bool MapClass::loadMap(const char* filename)
 {
-    std::cerr << "MapClass::loadMap(), " << filename << std::endl;
+    std::cout << " - MapClass::loadMap() ... " << std::endl;
     bool success = true;
     currentMap = mapLoader.getMap(filename);
     if(currentMap.empty())
@@ -42,6 +43,7 @@ bool MapClass::loadMap(const char* filename)
 void MapClass::saveMap(std::map<int,Texture*> temp_map,
                         const char* filename, int width, int height)
 {
+    std::cout << " - MapClass::saveMap() ..."<<std::endl;
     mapCreator.newMap(temp_map,filename,width,height);
 }
 

@@ -21,7 +21,7 @@ namespace game
     int t_width = width/32;
     int height = 480;
     int t_height = height/32;
-    int maxFPS = 60;
+    int maxFPS = 45;
     bool hasChanged = true;
 
     int countedFrames = 0;
@@ -40,17 +40,16 @@ namespace game
 
     void start()
     {
-        std::cerr << "game::start()" << std::endl;
-        printf("%d\n",current_state);
+        std::cerr << " - game::start() ..." << std::endl;
         key = SDL_GetKeyboardState(NULL);
         textureMap.init(renderer);
-        std::cerr << "game::start()" << std::endl;
+        std::cout << " - game::start() --load map-- ..."<<std::endl;
         if(!textureMap.loadMap("data/map2"))
         {
             std::cerr << "Map could not be loaded" << std::endl;
         }
         //std::map<int,Texture*> textures;
-        std::cerr << "game::start()" << std::endl;
+        std::cout << " - game::start() --creating states-- ..."<<std::endl;
         Screen screen;
         Editor editor;
         InGame in_game;
@@ -60,6 +59,7 @@ namespace game
 
 
         fpsTimer.start();
+        std::cout << " - game::start() --main loop-- ..."<<std::endl;
         while(running)
         {
             /* Get current time */

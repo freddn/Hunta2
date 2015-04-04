@@ -16,9 +16,10 @@
 #include "Editor.hpp"
 #include "InGame.hpp"
 #include "MapClass.hpp"
-#include "Character.hpp"
-#include "Item.hpp"
-#include "Enemy.hpp"
+
+//#include "Character.hpp"
+//#include "Item.hpp"
+//#include "Enemy.hpp"
 
 /*
  * Game class. Contains game-loop. State of the game. Init of map/data.
@@ -37,13 +38,14 @@ namespace game
     enum State {MAINMENU=0,INGAME=1,PAUSED=2,GAMEOVER=3, EDITOR=4};
     /* Some tiles.(used in the editor) */
     enum Selected {GRASS,GROUND,WATER};
+    enum Direction {NORTH,SOUTH,EAST,WEST};
     /* Different entity types. */
     enum EntityGroup : std::size_t
     {
         PLAYER,
         ITEM,
         ENEMY,
-        TREE
+        ENVIRONMENT
     };
     /* Getters. */
     SDL_Event *getEvent();

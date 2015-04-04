@@ -10,14 +10,14 @@ struct Position : EntitySystem::Component
 {
     public:
         Position();
-        Position(int xPos,int yPos);
+        Position(float xPos,float yPos);
 
         void update();
 
-        int getX();
-        int getY();
-        void setX(int posX);
-        void setY(int posY);
+        float getX();
+        float getY();
+        void setX(float posX);
+        void setY(float posY);
         /* TODO
          * - Add SDL_Rect.
          * - Setters and getters for the rect.
@@ -25,8 +25,8 @@ struct Position : EntitySystem::Component
         virtual ~Position();
     protected:
     private:
-        int x;
-        int y;
+        float x{0};
+        float y{0};
 };
 
 #endif // POSITION_H

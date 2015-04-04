@@ -15,7 +15,7 @@ struct Texture : EntitySystem::Component
 {
     public:
         Texture();
-        Texture(std::string img);
+        Texture(std::string img,bool clip);
         Texture(std::string text,SDL_Color textcolor,TTF_Font* font);
 
         void init(); // Component
@@ -61,6 +61,7 @@ struct Texture : EntitySystem::Component
         SDL_Rect tclip;
         SDL_Color textColor;
         TTF_Font* textFont;
+        bool isClipped = false;
         bool isText = false;
         bool solid = false; // texture is solid?
         std::string imageName = "image";

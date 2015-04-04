@@ -13,10 +13,15 @@ InGame::~InGame()
 
 void InGame::init()
 {
-
+    std::cout << " - InGame::init() ..."<<std::endl;
     creator.createPlayer(&inGameManager);
     creator.createItem(&inGameManager,0,100,100,true);
     creator.createItem(&inGameManager,0,150,150,true);
+
+    creator.createEnvironment(&inGameManager,0,400,130);
+    creator.createEnvironment(&inGameManager,0,130,300);
+    creator.createEnvironment(&inGameManager,0,300,200);
+    creator.createEnvironment(&inGameManager,0,220,300);
 
     //stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
 }
@@ -65,7 +70,9 @@ void InGame::update()
     //player.moveChar(4,key);
     //std::cerr << "InGame::update" << std::endl;
     inGameManager.refresh();
+    //std::cerr << "manager.refresh()"<<std::endl;
     inGameManager.update();
+    //std::cerr << "manager.update()"<<std::endl;
     //std::cout << "InGame::update" << std::endl;
     auto& characters(inGameManager.getEntitiesByGroup(game::PLAYER));
     //std::cout << "characters " << std::endl;
@@ -92,5 +99,6 @@ void InGame::update()
     {
         //inv.update();
     }
+    //std::cerr << "InGame::update" << std::endl;
     Screen::update();
 }

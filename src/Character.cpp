@@ -14,14 +14,16 @@ Character::~Character()
 
 void Character::init()
 {
+    std::cout << " - Character::init() ..."<<std::endl;
     position = &entity->getComponent<Position>();
+    physics = &entity->getComponent<GPhysics>();
     texture = &entity->getComponent<Texture>();
     position->setX(game::getWidth());
     position->setY(game::getHeight());
     texture->setXRect(game::getWidth()-game::getOffset()->x);
     texture->setYRect(game::getHeight()-game::getOffset()->y);
     //game::getOffset().x
-    std::cerr << "player init()";
+
 }
 
 void Character::draw()
@@ -40,58 +42,66 @@ void Character::moveChar(const Uint8 *key)
 {
     if(key[SDL_SCANCODE_UP])
     {
+        physics->setDir(game::NORTH,true);
         texture->setClipX(32);
         texture->setClipY(0);
-        if(!checkCollision(NORTH))
-        {
-            position->setY(position->getY()-vel);
-            //texture->setYPos(texture->getY()texture-vel);
-            if(position->getY() < (game::getHeight()/2))
-                texture->setYRect(position->getY()); // screenheight
-            if(position->getY() > (game::getHeight()*2-(game::getHeight()/2)))
-                texture->setYRect(position->getY()-game::getHeight());
-        }
+            //position->setY(position->getY()-vel);
+        if(position->getY() < (game::getHeight()/2))
+            texture->setYRect(position->getY());
+        if(position->getY() > (game::getHeight()*2-(game::getHeight()/2)))
+            texture->setYRect(position->getY()-game::getHeight());
     }
-    else if(key[SDL_SCANCODE_DOWN])
+    else
     {
+        //std::cerr <<"Physics::setDir() before"<<std::endl;
+        physics->setDir(game::NORTH,false);
+        //std::cerr <<"Physics::setDir() after"<<std::endl;
+    }
+    if(key[SDL_SCANCODE_DOWN])
+    {
+        physics->setDir(game::SOUTH,true);
         texture->setClipX(0);
         texture->setClipY(0);
-        if(!checkCollision(SOUTH))
-        {
-            position->setY(position->getY()+vel);
-            if(position->getY() > (game::getHeight()*2-(game::getHeight()/2))) // Mapheight - screenheight
-                texture->setYRect(position->getY()-game::getHeight());
-            if(position->getY() < game::getHeight()/2)
-                texture->setYRect(position->getY());
-        }
+
+            //position->setY(position->getY()+vel);
+        if(position->getY() > (game::getHeight()*2-(game::getHeight()/2))) // Mapheight - screenheight
+            texture->setYRect(position->getY()-game::getHeight());
+        if(position->getY() < game::getHeight()/2)
+            texture->setYRect(position->getY());
+
 
     }
-    else if(key[SDL_SCANCODE_LEFT])
+    else
     {
+        physics->setDir(game::SOUTH,false);
+        //std::cerr <<"Physics::setDir()"<<std::endl;
+    }
+    if(key[SDL_SCANCODE_LEFT])
+    {
+        physics->setDir(game::WEST,true);
         texture->setClipX(0);
         texture->setClipY(32);
-        if(!checkCollision(WEST))
-        {
-            position->setX(position->getX()-vel);
-            if(position->getX() < game::getWidth()/2)
-                texture->setXRect(position->getX());
-            if(position->getX() > game::getWidth()*2-(game::getWidth()/2))
-                texture->setXRect(position->getX() - game::getWidth());
-        }
+            //position->setX(position->getX()-vel);
+        if(position->getX() < game::getWidth()/2)
+            texture->setXRect(position->getX());
+        if(position->getX() > game::getWidth()*2-(game::getWidth()/2))
+            texture->setXRect(position->getX() - game::getWidth());
     }
-    else if(key[SDL_SCANCODE_RIGHT])
+    else
+        physics->setDir(game::WEST,false);
+    if(key[SDL_SCANCODE_RIGHT])
     {
+        physics->setDir(game::EAST,true);
         texture->setClipX(32);
         texture->setClipY(32);
-        if(!checkCollision(EAST))
-        {
-            position->setX(position->getX()+vel);
-            if(position->getX() > game::getWidth()*2-(game::getWidth()/2)) // Mapheight - screenheight
-                texture->setXRect(position->getX()-game::getWidth());
-            if(position->getX() < game::getWidth()/2)
-                texture->setXRect(position->getX());
-        }
+            //position->setX(position->getX()+vel);
+        if(position->getX() > game::getWidth()*2-(game::getWidth()/2)) // Mapheight - screenheight
+            texture->setXRect(position->getX()-game::getWidth());
+        if(position->getX() < game::getWidth()/2)
+            texture->setXRect(position->getX());
     }
+    else
+        physics->setDir(game::EAST,false);
 }
 
 bool Character::checkCollision(int DIR)
@@ -102,10 +112,4 @@ bool Character::checkCollision(int DIR)
 
     return isColliding;
 }
-
-void Character::setVelocity(int v)
-{
-    vel = v;
-}
-
 

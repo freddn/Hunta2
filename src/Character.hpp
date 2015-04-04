@@ -8,6 +8,7 @@
  */
 
 #include "Texture.hpp"
+#include "GPhysics.hpp"
 #include "EntitySystem.hpp"
 
 using namespace EntitySystem;
@@ -25,8 +26,6 @@ struct Character: Component
         void update() override;
         /* Takes in a key and move the char accordingly. */
         void moveChar(const Uint8 *key);
-        /* Change the velocity of the player. */
-        void setVelocity(int vel);
         /* Check if player is colliding with something. */
         bool checkCollision(int DIR);
         /* Load saved data. */
@@ -36,16 +35,10 @@ struct Character: Component
     private:
 
     /* The directions.  */
+    GPhysics *physics{nullptr};
     Texture *texture{nullptr};
     Position *position{nullptr};
-    enum
-    {
-        NORTH = 1,
-        EAST = 2,
-        SOUTH = 3,
-        WEST = 4
-    };
-    int vel = 4; // Velocity of the player. Default: 4.
+
     int coins; // Money
     int xPos; // x-position of the player.
     int yPos; // y-position of the player.

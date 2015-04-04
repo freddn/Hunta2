@@ -20,7 +20,8 @@ class EntityCreator
                             int x,int y, bool onGround);
         Entity& createEnemy(EntitySystem::EntityManager *mManager,int enemyNumber,
                             int x,int y);
-
+        Entity& createEnvironment(EntitySystem::EntityManager *mManager,
+                                            int envNumber,int x,int y);
 
         virtual ~EntityCreator();
     protected:
