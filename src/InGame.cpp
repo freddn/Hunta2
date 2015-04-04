@@ -22,6 +22,10 @@ void InGame::init()
     creator.createEnvironment(&inGameManager,0,130,300);
     creator.createEnvironment(&inGameManager,0,300,200);
     creator.createEnvironment(&inGameManager,0,220,300);
+    creator.createEnvironment(&inGameManager,0,220,600);
+    creator.createEnvironment(&inGameManager,0,720,300);
+    creator.createEnvironment(&inGameManager,0,620,400);
+    creator.createEnvironment(&inGameManager,0,1100,1200);
 
     //stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
 }
