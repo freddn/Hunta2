@@ -5,8 +5,9 @@
 
 #include "Texture.hpp"
 
-/* Screen class. Can render items ontop of underlaying screens.
- * */
+/*
+ * Screen class. Can render items ontop of underlaying screens.
+ */
 struct Screen
 {
     public:

@@ -53,6 +53,8 @@
 		<Unit filename="src/EntityCreator.hpp" />
 		<Unit filename="src/EntitySystem.cpp" />
 		<Unit filename="src/EntitySystem.hpp" />
+		<Unit filename="src/Environment.cpp" />
+		<Unit filename="src/Environment.hpp" />
 		<Unit filename="src/GPhysics.cpp" />
 		<Unit filename="src/GPhysics.hpp" />
 		<Unit filename="src/Game.cpp" />

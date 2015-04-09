@@ -3,7 +3,8 @@
 
 #include "EntitySystem.hpp"
 
-/* This class is a component and will give entitys a position.
+/*
+ * This class is a component and will give entitys a position.
  * This position is used in collision-system, drawing and movement.
  */
 struct Position : EntitySystem::Component

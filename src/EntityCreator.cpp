@@ -24,9 +24,9 @@ Entity& EntityCreator::createPlayer(EntitySystem::EntityManager *mManager)
     //auto& entity = manager.addEntity();
 
     entity.addComponent<Position>();
+    entity.addComponent<Texture>("data/gubbe_box.png",true);
     entity.addComponent<GPhysics>();
-    entity.addComponent<Texture>("data/gubbe.png",true);
-    entity.addComponent<Character>();
+    entity.addComponent<Character>(mManager);
 
     //if(!entity.hasGroup(game::PLAYER))
     entity.addGroup(game::PLAYER);
@@ -72,8 +72,8 @@ Entity& EntityCreator::createEnvironment(EntitySystem::EntityManager *mManager,
     auto& environment(mManager->addEntity());
 
     environment.addComponent<Position>(x,y);
+    environment.addComponent<Texture>("data/tree_box.png",false);
     environment.addComponent<GPhysics>();
-    environment.addComponent<Texture>("data/tree.png",false);
     environment.addComponent<Environment>();
 
     environment.addGroup(game::ENVIRONMENT);

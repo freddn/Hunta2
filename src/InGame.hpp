@@ -14,8 +14,10 @@
 
 using namespace EntitySystem;
 
-/* This is the game-state of the game. Here we draw all game-related things
- * on the screen and deal with all input and events related to the game itself. */
+/*
+ * This is the game-state of the game. Here we draw all game-related things
+ * on the screen and deal with all input and events related to the game itself.
+ */
 struct InGame : public Screen
 {
     public:

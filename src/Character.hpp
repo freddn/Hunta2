@@ -1,22 +1,22 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-/*
- * Character class. Draw the player on the screen.
- * Character is a component. Need a position and physics
- * component aswell to function.
- */
-
 #include "Texture.hpp"
 #include "GPhysics.hpp"
 #include "EntitySystem.hpp"
 
 using namespace EntitySystem;
 
+/*
+ * Character class. Draw the player on the screen.
+ * Character is a component. Need a position and physics
+ * component aswell to function.
+ */
 struct Character: Component
 {
     public:
         Character();
+        Character(EntityManager *m);
         /* Load player. Loads a texture with the
          * character image and set position. */
         void init() override;
@@ -34,15 +34,16 @@ struct Character: Component
     protected:
     private:
 
-    /* The directions.  */
-    GPhysics *physics{nullptr};
-    Texture *texture{nullptr};
-    Position *position{nullptr};
+        GPhysics *physics{nullptr};
+        Texture *texture{nullptr};
+        Position *position{nullptr};
 
-    int coins; // Money
-    int xPos; // x-position of the player.
-    int yPos; // y-position of the player.
-    int sticks; // ??
+        EntityManager *manager{nullptr};
+
+        int coins; // Money
+        int xPos; // x-position of the player.
+        int yPos; // y-position of the player.
+        int sticks; // ??
 };
 
 #endif // RENDERER_H

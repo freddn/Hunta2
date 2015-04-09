@@ -7,7 +7,9 @@
 #include "EntitySystem.hpp"
 
 using namespace EntitySystem;
-/* In this class you can create entitys that will be added to the
+
+/*
+ * In this class you can create entitys that will be added to the
  * given manager.
  */
 class EntityCreator

@@ -7,6 +7,11 @@ Character::Character() //: Texture()
 
 }
 
+Character::Character(EntityManager *m)
+{
+    manager = m;
+}
+
 Character::~Character()
 {
 
@@ -16,8 +21,8 @@ void Character::init()
 {
     std::cout << " - Character::init() ..."<<std::endl;
     position = &entity->getComponent<Position>();
-    physics = &entity->getComponent<GPhysics>();
     texture = &entity->getComponent<Texture>();
+    physics = &entity->getComponent<GPhysics>();
     position->setX(game::getWidth());
     position->setY(game::getHeight());
     texture->setXRect(game::getWidth()-game::getOffset()->x);
@@ -36,6 +41,20 @@ void Character::update()
 {
     const Uint8 *key = SDL_GetKeyboardState(NULL);
     moveChar(key);
+    for(auto& e: manager->getEntitiesByGroup(game::ENVIRONMENT))
+    {
+        Position temp = e->getComponent<Position>();
+        int width = e->getComponent<Texture>().getWidth();
+        int height = e->getComponent<Texture>().getHeight();
+        if((position->getX()-10 < temp.getX()+width &&
+            position->getX()+42 > temp.getX()) &&
+            (position->getY()-10 < temp.getY()+height &&
+            position->getY()+42 > temp.getY()))
+        {
+            physics->isColliding(e);
+        }
+
+    }
 }
 
 void Character::moveChar(const Uint8 *key)

@@ -5,6 +5,7 @@
 #include "Position.hpp"
 #include "GPhysics.hpp"
 
+
 struct Environment : EntitySystem::Component
 {
     public:

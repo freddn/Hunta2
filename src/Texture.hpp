@@ -56,6 +56,7 @@ struct Texture : EntitySystem::Component
     protected:
     private:
         Position *position{nullptr};
+
         SDL_Texture *currentTexture = NULL;
         SDL_Rect rect;
         SDL_Rect tclip;
