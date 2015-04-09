@@ -35,18 +35,12 @@ namespace game
     void close();
 
     /* The different states of the game. */
-    enum State {MAINMENU=0,INGAME=1,PAUSED=2,GAMEOVER=3, EDITOR=4};
+    enum State {MAINMENU,INGAME,PAUSED,GAMEOVER, EDITOR};
     /* Some tiles.(used in the editor) */
     enum Selected {GRASS,GROUND,WATER};
     enum Direction {NORTH,SOUTH,EAST,WEST};
     /* Different entity types. */
-    enum EntityGroup : std::size_t
-    {
-        PLAYER,
-        ITEM,
-        ENEMY,
-        ENVIRONMENT
-    };
+    enum EntityGroup : std::size_t {PLAYER, ITEM, ENEMY, ENVIRONMENT};
     /* Getters. */
     SDL_Event *getEvent();
     SDL_Rect *getOffset();
