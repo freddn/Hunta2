@@ -118,60 +118,60 @@ namespace game
         rect.h = 32;
         rect.w = 32;
 
-        bool success = true;
-
         if(SDL_Init(SDL_INIT_VIDEO) < 0)
         {
             std::cerr << "Init video failed." << std::endl;
-            success = false;
+            return false;
         }
-        else
+
+        gWindow = SDL_CreateWindow("Hunta 2",SDL_WINDOWPOS_UNDEFINED,
+                                   SDL_WINDOWPOS_UNDEFINED,
+                                   width,height,SDL_WINDOW_SHOWN);
+
+        if(gWindow == NULL)
         {
-            gWindow = SDL_CreateWindow("Hunta 2",SDL_WINDOWPOS_UNDEFINED,
-                                        SDL_WINDOWPOS_UNDEFINED,
-                                            width,height,SDL_WINDOW_SHOWN);
-            if(gWindow == NULL)
-            {
-                std::cerr << "Window could not be created." << std::endl;
-                success = false;
-            }
-            else
-            {
-                renderer = SDL_CreateRenderer(gWindow,-1,SDL_RENDERER_ACCELERATED);
-                if(renderer == NULL)
-                {
-                    std::cerr << "renderer could not be created" << std::endl;
-                    success = false;;
-                }
-                else
-                {
-                    if(IMG_Init(IMG_INIT_PNG) < 0)
-                    {
-                        std::cerr << "IMG_Init() failed." << std::endl;
-                        success = false;
-                    }
-                    if(TTF_Init() != 0)
-                    {
-                        std::cerr << "TTF_Init() failed" << std::endl;
-                        success = false;
-                    }
-                    else
-                    {
-                        font = TTF_OpenFont("freefont/FreeSans.ttf",24);
-                        if(font == NULL)
-                        {
-                            std::cerr << "No font" << std::endl;
-                            success = false;
-                        }
-                    }
-                }
-            }
+            std::cerr << "Window could not be created." << std::endl;
+            return false;
+        }
+
+        renderer = SDL_CreateRenderer(gWindow,-1,SDL_RENDERER_ACCELERATED);
+
+        if(renderer == NULL)
+        {
+            std::cerr << "renderer could not be created" << std::endl;
+            return false;
+        }
+
+        if(IMG_Init(IMG_INIT_PNG) < 0)
+        {
+            std::cerr << "IMG_Init() failed." << std::endl;
+            return false;
+        }
+
+        if(TTF_Init() != 0)
+        {
+            std::cerr << "TTF_Init() failed" << std::endl;
+            return false;
+        }
+
+        font = TTF_OpenFont("freefont/FreeSans.ttf",24);
+        if(font == NULL)
+        {
+            std::cerr << "No font" << std::endl;
+            return false;
         }
 
         buffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
-                                    SDL_TEXTUREACCESS_TARGET, width*2, height*2);
+                                   SDL_TEXTUREACCESS_TARGET, width*2, height*2);
 
-        return success;
+        if(buffer == 0)
+        {
+            std::cerr << "Failed to create buffer" << std::endl;
+            return false;
+        }
+
+        /* Everything went better than expected. */
+        return true;
     }
 
     bool inventoryIsDisplayed()
