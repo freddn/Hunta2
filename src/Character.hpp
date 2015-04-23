@@ -40,10 +40,8 @@ struct Character: Component
 
         EntityManager *manager{nullptr};
 
-        int coins; // Money
         int xPos; // x-position of the player.
         int yPos; // y-position of the player.
-        int sticks; // ??
 };
 
 #endif // RENDERER_H

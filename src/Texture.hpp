@@ -14,26 +14,34 @@
 struct Texture : EntitySystem::Component
 {
     public:
+        /* Create a regular texture, size will be set as the size of the image. */
         Texture();
+
+        /* Create a texture and choose if it is clipped, currently only 32x32px. */
         Texture(std::string img,bool clip);
+
+        /* Create a text that can be drawn to the screen. */
         Texture(std::string text,SDL_Color textcolor,TTF_Font* font);
 
-        void init(); // Component
-        void draw(); // Component
-        void update(); // Component
+        void init();
+        void draw();
+        void update();
 
         bool loadFromFile(SDL_Renderer *renderer, std::string path);
-        bool loadFromText(SDL_Renderer *renderer, std::string text, SDL_Color textcolor,TTF_Font *font);
+        bool loadFromText(SDL_Renderer *renderer, std::string text,
+                            SDL_Color textcolor,TTF_Font *font);
         void free();
         // (
         void setColor(Uint8 red, Uint8 green, Uint8 blue);
         void setBlendMode(SDL_BlendMode blending);
         void setAlpha(Uint8 alpha);
         // )
-        void render(SDL_Renderer *renderer, int x, int y,SDL_Rect* clip = NULL,double angle = 0.0,
+        void render(SDL_Renderer *renderer, int x, int y,
+                        SDL_Rect* clip = NULL,double angle = 0.0,
                     SDL_Point* center = NULL,SDL_RendererFlip = SDL_FLIP_NONE);
-        void render(SDL_Renderer *renderer, SDL_Rect* clip = NULL,double angle = 0.0,
-                    SDL_Point* center = NULL,SDL_RendererFlip = SDL_FLIP_NONE);
+        void render(SDL_Renderer *renderer, SDL_Rect* clip = NULL,
+                        double angle = 0.0, SDL_Point* center = NULL,
+                        SDL_RendererFlip = SDL_FLIP_NONE);
         int getWidth();
         int getHeight();
         SDL_Rect getRect();
@@ -53,7 +61,7 @@ struct Texture : EntitySystem::Component
         Texture *clone() const { return new Texture(*this); }
 
         ~Texture();
-    protected:
+
     private:
         Position *position{nullptr};
 
@@ -65,7 +73,7 @@ struct Texture : EntitySystem::Component
         bool isClipped = false;
         bool isText = false;
         bool solid = false; // texture is solid?
-        std::string imageName = "image";
+        std::string imageName = "image_name";
         std::string textString;
         int xPos;
         int yPos;

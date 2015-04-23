@@ -179,16 +179,16 @@
 	<algorithm>
 	<bitset>
 
-1428232156 source:/home/fredrik/Documents/projects/Hunta2/src/Character.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/Character.cpp
 	"Character.hpp"
 	"Game.hpp"
 
-1428606903 /home/fredrik/Documents/projects/Hunta2/src/Character.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/Character.hpp
 	"Texture.hpp"
 	"GPhysics.hpp"
 	"EntitySystem.hpp"
 
-1428230477 /home/fredrik/Documents/projects/Hunta2/src/Texture.hpp
+1429811253 /home/fredrik/Documents/projects/Hunta2/src/Texture.hpp
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	<SDL2/SDL_ttf.h>
@@ -197,18 +197,18 @@
 	"EntitySystem.hpp"
 	"Position.hpp"
 
-1427878551 source:/home/fredrik/Documents/projects/Hunta2/src/Editor.cpp
+1429810435 source:/home/fredrik/Documents/projects/Hunta2/src/Editor.cpp
 	"Editor.hpp"
 
-1427823567 /home/fredrik/Documents/projects/Hunta2/src/Editor.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/Editor.hpp
 	"Screen.hpp"
 	"Game.hpp"
 
-1428607045 /home/fredrik/Documents/projects/Hunta2/src/Screen.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/Screen.hpp
 	<sstream>
 	"Texture.hpp"
 
-1428607364 /home/fredrik/Documents/projects/Hunta2/src/Game.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/Game.hpp
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	<SDL2/SDL_ttf.h>
@@ -224,14 +224,14 @@
 	"InGame.hpp"
 	"MapClass.hpp"
 
-1427822848 /home/fredrik/Documents/projects/Hunta2/src/LTimer.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/LTimer.hpp
 	<SDL2/SDL.h>
 
-1427982395 /home/fredrik/Documents/projects/Hunta2/src/Tile.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/Tile.hpp
 	"EntitySystem.hpp"
 	"Texture.hpp"
 
-1428607045 /home/fredrik/Documents/projects/Hunta2/src/InGame.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/InGame.hpp
 	<memory>
 	<vector>
 	"Inventory.hpp"
@@ -242,68 +242,68 @@
 	"EntitySystem.hpp"
 	"EntityCreator.hpp"
 
-1427982259 /home/fredrik/Documents/projects/Hunta2/src/Inventory.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/Inventory.hpp
 	"Texture.hpp"
 	"EntitySystem.hpp"
 
-1427979557 /home/fredrik/Documents/projects/Hunta2/src/Item.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/Item.hpp
 	"Texture.hpp"
 	"EntitySystem.hpp"
 
-1427823299 /home/fredrik/Documents/projects/Hunta2/src/MapClass.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/MapClass.hpp
 	<map>
 	"Tile.hpp"
 	"LuaInterface.hpp"
 	"LoadMapData.hpp"
 	"MapCreator.hpp"
 
-1427823071 /home/fredrik/Documents/projects/Hunta2/src/LuaInterface.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/LuaInterface.hpp
 	<iostream>
 	<map>
 	<string>
 	"lua5.1/lua.hpp"
 	"Texture.hpp"
 
-1427822753 /home/fredrik/Documents/projects/Hunta2/src/LoadMapData.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/LoadMapData.hpp
 	"LuaInterface.hpp"
 
-1427823329 /home/fredrik/Documents/projects/Hunta2/src/MapCreator.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/MapCreator.hpp
 	<map>
 	"Texture.hpp"
 	"LuaInterface.hpp"
 
-1428150255 source:/home/fredrik/Documents/projects/Hunta2/src/Game.cpp
+1429811824 source:/home/fredrik/Documents/projects/Hunta2/src/Game.cpp
 	"Game.hpp"
 
-1428155923 source:/home/fredrik/Documents/projects/Hunta2/src/InGame.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/InGame.cpp
 	"InGame.hpp"
 
-1427566772 source:/home/fredrik/Documents/projects/Hunta2/src/Inventory.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/Inventory.cpp
 	"Inventory.hpp"
 	"Game.hpp"
 
-1427977703 source:/home/fredrik/Documents/projects/Hunta2/src/Item.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/Item.cpp
 	"Item.hpp"
 
-1428148684 source:/home/fredrik/Documents/projects/Hunta2/src/LoadMapData.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/LoadMapData.cpp
 	"LoadMapData.hpp"
 
-1424184394 source:/home/fredrik/Documents/projects/Hunta2/src/LTimer.cpp
+1427211927 source:/home/fredrik/Documents/projects/Hunta2/src/LTimer.cpp
 	"LTimer.hpp"
 
-1428148883 source:/home/fredrik/Documents/projects/Hunta2/src/LuaInterface.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/LuaInterface.cpp
 	"LuaInterface.hpp"
 
-1424184398 source:/home/fredrik/Documents/projects/Hunta2/src/LuaState.cpp
+1427211927 source:/home/fredrik/Documents/projects/Hunta2/src/LuaState.cpp
 	"LuaState.hpp"
 
-1427823099 /home/fredrik/Documents/projects/Hunta2/src/LuaState.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/LuaState.hpp
 
-1426966618 source:/home/fredrik/Documents/projects/Hunta2/src/main.cpp
+1427211927 source:/home/fredrik/Documents/projects/Hunta2/src/main.cpp
 	"Game.hpp"
 	"EntitySystem.hpp"
 
-1428227770 /home/fredrik/Documents/projects/Hunta2/src/EntitySystem.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/EntitySystem.hpp
 	<vector>
 	<memory>
 	<algorithm>
@@ -312,47 +312,47 @@
 	<cassert>
 	<type_traits>
 
-1428148901 source:/home/fredrik/Documents/projects/Hunta2/src/MainMenu.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/MainMenu.cpp
 	"MainMenu.hpp"
 
-1427823597 /home/fredrik/Documents/projects/Hunta2/src/MainMenu.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/MainMenu.hpp
 	"Screen.hpp"
 
-1428148968 source:/home/fredrik/Documents/projects/Hunta2/src/MapClass.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/MapClass.cpp
 	"MapClass.hpp"
 
-1428149008 source:/home/fredrik/Documents/projects/Hunta2/src/MapCreator.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/MapCreator.cpp
 	"MapCreator.hpp"
 
-1424184402 source:/home/fredrik/Documents/projects/Hunta2/src/Renderer.cpp
+1427211927 source:/home/fredrik/Documents/projects/Hunta2/src/Renderer.cpp
 	"Renderer.hpp"
 
-1427823357 /home/fredrik/Documents/projects/Hunta2/src/Renderer.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/Renderer.hpp
 	<map>
 	"Tile.hpp"
 
-1427313256 source:/home/fredrik/Documents/projects/Hunta2/src/Screen.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/Screen.cpp
 	"Screen.hpp"
 	"Game.hpp"
 
-1428608439 source:/home/fredrik/Documents/projects/Hunta2/src/Texture.cpp
+1429811152 source:/home/fredrik/Documents/projects/Hunta2/src/Texture.cpp
 	"Texture.hpp"
 	"Game.hpp"
 
-1427982396 source:/home/fredrik/Documents/projects/Hunta2/src/Tile.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/Tile.cpp
 	"Tile.hpp"
 
-1427969845 source:/home/fredrik/Documents/projects/Hunta2/src/EntitySystem.cpp
+1429810496 source:/home/fredrik/Documents/projects/Hunta2/src/EntitySystem.cpp
 	"EntitySystem.hpp"
 
-1428148617 source:/home/fredrik/Documents/projects/Hunta2/src/Enemy.cpp
+1429709168 source:/home/fredrik/Documents/projects/Hunta2/src/Enemy.cpp
 	"Enemy.hpp"
 
-1427979557 /home/fredrik/Documents/projects/Hunta2/src/Enemy.hpp
+1429709168 /home/fredrik/Documents/projects/Hunta2/src/Enemy.hpp
 	"Texture.hpp"
 	"EntitySystem.hpp"
 
-1428605091 source:/home/fredrik/Documents/projects/Hunta2/src/EntityCreator.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/EntityCreator.cpp
 	"EntityCreator.hpp"
 	"Character.hpp"
 	"Enemy.hpp"
@@ -360,32 +360,32 @@
 	"Environment.hpp"
 	"Game.hpp"
 
-1428607045 /home/fredrik/Documents/projects/Hunta2/src/EntityCreator.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/EntityCreator.hpp
 	<vector>
 	<memory>
 	"EntitySystem.hpp"
 
-1428148248 source:/home/fredrik/Documents/projects/Hunta2/src/Position.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/Position.cpp
 	"Position.hpp"
 
-1428607045 /home/fredrik/Documents/projects/Hunta2/src/Position.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/Position.hpp
 	"EntitySystem.hpp"
 
-1428608792 source:/home/fredrik/Documents/projects/Hunta2/src/GPhysics.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/GPhysics.cpp
 	"GPhysics.hpp"
 	<cmath>
 	"Game.hpp"
 
-1428606888 /home/fredrik/Documents/projects/Hunta2/src/GPhysics.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/GPhysics.hpp
 	"EntitySystem.hpp"
 	"Position.hpp"
 	"Texture.hpp"
 
-1428153456 source:/home/fredrik/Documents/projects/Hunta2/src/Environment.cpp
+1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/Environment.cpp
 	"Environment.hpp"
 	<iostream>
 
-1428607045 /home/fredrik/Documents/projects/Hunta2/src/Environment.hpp
+1429708856 /home/fredrik/Documents/projects/Hunta2/src/Environment.hpp
 	"EntitySystem.hpp"
 	"Position.hpp"
 	"GPhysics.hpp"

@@ -17,6 +17,15 @@ struct Enemy : EntitySystem::Component
         virtual ~Enemy();
     protected:
     private:
+
+        GPhysics *physics{nullptr};
+        Texture *texture{nullptr};
+        Position *position{nullptr};
+
+        EntityManager *manager{nullptr};
+
+        int xPos; // x-position of the enemy.
+        int yPos; // y-position of the enemy.
 };
 
 #endif // ENEMY_H

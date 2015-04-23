@@ -4,58 +4,10 @@
 
 namespace EntitySystem
 {
-    /*namespace Internal
-    {
-        inline ComponentID getUniqueComponentID() noexcept
-        {
-            // Every call to this function returns an unique ID every time.
-            static ComponentID lastID{0u};
-            return lastID++;
-        }
-    }*/
-
-    /*template<typename T> inline ComponentID getComponentTypeID() noexcept
-    {
-        static_assert(std::is_base_of<Component,T>::value,
-                        "T must inherit from Component");
-        static ComponentID typeID{Internal::getUniqueComponentID()};
-        return typeID;
-    }*/
-
     void Entity::draw()    { for(auto& c : components) c->draw(); }
     void Entity::update()    { for(auto& c : components) c->update(); }
     bool Entity::isAlive() const { return alive; }
     void Entity::destroy() { alive = false; }
-    /*template<typename T, typename... TArgs>
-    T& Entity::addComponent(TArgs&&... mArgs)
-    {
-        assert(!hasComponent<T>());
-
-        T* c(new T(std::forward<TArgs>(mArgs)...));
-        c->entity = this;
-        std::unique_ptr<Component> uPtr{c};
-        components.emplace_back(std::move(uPtr));
-
-
-        componentArray[getComponentTypeID<T>()] = c;
-        componentBitset[getComponentTypeID<T>()] = true;
-
-        c->init();
-
-        return *c;
-    }*/
-
-    /*template<typename T> T& Entity::getComponent() const
-    {
-        assert(hasComponent<T>());
-        auto ptr(componentArray[getComponentTypeID<T>()]);
-        return *reinterpret_cast<T*>(ptr);
-    }
-
-    template<typename T> bool Entity::hasComponent() const
-    {
-        return componentBitset[getComponentTypeID<T>()];
-    }*/
 
     bool Entity::hasGroup(Group mGroup) const noexcept
     {
