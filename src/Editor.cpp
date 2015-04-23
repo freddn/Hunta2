@@ -125,30 +125,26 @@ void Editor::update()
             {
                 game::getTexture_map()->erase(index);
             }
-            if(getSelected() == game::GROUND)
+
+            Texture *temp;
+
+            switch(getSelected())
             {
-                /* place ground tile on map */
-                Texture *temp = game::getTextureMap()->getGroundTile()->clone();
-                temp->setXRect(tempX);
-                temp->setYRect(tempY);
-                game::getTexture_map()->insert(std::pair<int,Texture*>(index,temp));
-            }
-            else if(getSelected() == game::WATER)
-            {
-                /* place water on the map. */
-                Texture *temp = game::getTextureMap()->getWaterTile()->clone();
-                temp->setXRect(tempX);
-                temp->setYRect(tempY);
-                game::getTexture_map()->insert(std::pair<int,Texture*>(index,temp));
-            }
-            else
-            {
-                /* place grass on the map. */
-                Texture *temp = game::getTextureMap()->getGrassTile()->clone();
-                temp->setXRect(tempX);
-                temp->setYRect(tempY);
-                game::getTexture_map()->insert(std::pair<int,Texture*>(index,temp));
-            }
+            case game::GROUND:
+                temp = game::getTextureMap()->getGroundTile()->clone();
+                break;
+            case game::WATER:
+                temp = game::getTextureMap()->getGroundTile()->clone();
+                break;
+            case game::GRASS:
+                temp = game::getTextureMap()->getGroundTile()->clone();
+                break;
+            };
+
+            temp->setXRect(tempX);
+            temp->setYRect(tempY);
+            game::getTexture_map()->insert(std::pair<int,Texture*>(index,temp));
+
             game::setHasChanged(true);
         }
     }

@@ -1,12 +1,9 @@
 include config.mk
 
 SRC = src/Character.cpp \
-      src/Component.cpp \
       src/Editor.cpp \
-      src/Entity.cpp \
       src/Enemy.cpp \
       src/EntityCreator.cpp \
-      src/EntityManager.cpp \
       src/EntitySystem.cpp \
       src/Environment.cpp \
       src/Game.cpp \
