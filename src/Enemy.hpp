@@ -30,6 +30,7 @@ struct Enemy : Component
 
         int xPos; // x-position of the enemy.
         int yPos; // y-position of the enemy.
+        bool aggro;
 };
 
 #endif // ENEMY_H
