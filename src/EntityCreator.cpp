@@ -17,13 +17,14 @@ EntityCreator::~EntityCreator()
     //dtor
 }
 
-Entity& EntityCreator::createPlayer(EntitySystem::EntityManager *mManager)
+Entity& EntityCreator::createPlayer(EntitySystem::EntityManager *mManager,
+                                    int x,int y)
 {
     std::cout << " - EntityCreator::createPlayer() ..."<<std::endl;
     auto& entity(mManager->addEntity());
     //auto& entity = manager.addEntity();
 
-    entity.addComponent<Position>();
+    entity.addComponent<Position>(x,y);
     entity.addComponent<Texture>("data/gubbe_box.png",true);
     entity.addComponent<GPhysics>();
     entity.addComponent<Character>(mManager);
@@ -34,8 +35,8 @@ Entity& EntityCreator::createPlayer(EntitySystem::EntityManager *mManager)
     return entity;
 }
 
-Entity& EntityCreator::createItem(EntitySystem::EntityManager *mManager,int itemNumber,
-                                int x,int y, bool onGround)
+Entity& EntityCreator::createItem(EntitySystem::EntityManager *mManager,
+                                    int itemNumber,int x,int y, bool onGround)
 {
     auto& item(mManager->addEntity());
 
@@ -57,8 +58,8 @@ Entity& EntityCreator::createEnemy(EntitySystem::EntityManager *mManager,
 
     /* Get right item from a list/file. */
     enemy.addComponent<Position>(x,y);
-    enemy.addComponent<Texture>();
-    enemy.addComponent<Enemy>();
+    enemy.addComponent<Texture>("data/goblin.png",true);
+    enemy.addComponent<Enemy>(mManager);
     /* add position */
 
     //if(!enemy.hasGroup(game::ENEMY))

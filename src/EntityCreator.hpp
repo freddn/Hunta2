@@ -17,13 +17,14 @@ class EntityCreator
     public:
         EntityCreator();
 
-        Entity& createPlayer(EntitySystem::EntityManager *mManager);
+        Entity& createPlayer(EntitySystem::EntityManager *mManager,
+                                int x,int y);
         Entity& createItem(EntitySystem::EntityManager *mManager,int itemNumber,
-                            int x,int y, bool onGround);
+                                int x,int y, bool onGround);
         Entity& createEnemy(EntitySystem::EntityManager *mManager,int enemyNumber,
-                            int x,int y);
+                                int x,int y);
         Entity& createEnvironment(EntitySystem::EntityManager *mManager,
-                                            int envNumber,int x,int y);
+                                    int envNumber,int x,int y);
 
         virtual ~EntityCreator();
     protected:

@@ -179,11 +179,11 @@
 	<algorithm>
 	<bitset>
 
-1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/Character.cpp
+1429891373 source:/home/fredrik/Documents/projects/Hunta2/src/Character.cpp
 	"Character.hpp"
 	"Game.hpp"
 
-1429708856 /home/fredrik/Documents/projects/Hunta2/src/Character.hpp
+1429821992 /home/fredrik/Documents/projects/Hunta2/src/Character.hpp
 	"Texture.hpp"
 	"GPhysics.hpp"
 	"EntitySystem.hpp"
@@ -272,10 +272,10 @@
 	"Texture.hpp"
 	"LuaInterface.hpp"
 
-1429811824 source:/home/fredrik/Documents/projects/Hunta2/src/Game.cpp
+1429889778 source:/home/fredrik/Documents/projects/Hunta2/src/Game.cpp
 	"Game.hpp"
 
-1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/InGame.cpp
+1429891451 source:/home/fredrik/Documents/projects/Hunta2/src/InGame.cpp
 	"InGame.hpp"
 
 1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/Inventory.cpp
@@ -345,14 +345,17 @@
 1429810496 source:/home/fredrik/Documents/projects/Hunta2/src/EntitySystem.cpp
 	"EntitySystem.hpp"
 
-1429709168 source:/home/fredrik/Documents/projects/Hunta2/src/Enemy.cpp
+1429893007 source:/home/fredrik/Documents/projects/Hunta2/src/Enemy.cpp
 	"Enemy.hpp"
 
-1429709168 /home/fredrik/Documents/projects/Hunta2/src/Enemy.hpp
+1429892901 /home/fredrik/Documents/projects/Hunta2/src/Enemy.hpp
+	"Game.hpp"
 	"Texture.hpp"
+	"GPhysics.hpp"
+	"Position.hpp"
 	"EntitySystem.hpp"
 
-1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/EntityCreator.cpp
+1429892862 source:/home/fredrik/Documents/projects/Hunta2/src/EntityCreator.cpp
 	"EntityCreator.hpp"
 	"Character.hpp"
 	"Enemy.hpp"
@@ -360,7 +363,7 @@
 	"Environment.hpp"
 	"Game.hpp"
 
-1429708856 /home/fredrik/Documents/projects/Hunta2/src/EntityCreator.hpp
+1429890675 /home/fredrik/Documents/projects/Hunta2/src/EntityCreator.hpp
 	<vector>
 	<memory>
 	"EntitySystem.hpp"

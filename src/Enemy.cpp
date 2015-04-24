@@ -1,8 +1,9 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy()
+Enemy::Enemy(EntityManager *m)
 {
     //ctor
+    manager = m;
 }
 
 Enemy::~Enemy()
@@ -13,6 +14,9 @@ Enemy::~Enemy()
 void Enemy::init()
 {
     std::cout << " - Enemy::init() ..."<<std::endl;
+    position = &entity->getComponent<Position>();
+    texture = &entity->getComponent<Texture>();
+    //physics = &entity->getComponent<GPhysics>();
 }
 
 void Enemy::draw()
@@ -22,5 +26,17 @@ void Enemy::draw()
 
 void Enemy::update()
 {
+    Position playerPos;
+    auto& player(manager->getEntitiesByGroup(game::PLAYER));
+    playerPos = player[0]->getComponent<Position>();
+
+    /* Check if player is near */
+    if(playerPos.getX()+132 > position->getX() &&
+        playerPos.getX()-100 < position->getX() &&
+        playerPos.getY()+132 > position->getY() &&
+        playerPos.getY()-100 < position->getY())
+        std::cerr << "!aggro!";
 }
+
+
 

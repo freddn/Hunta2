@@ -23,8 +23,22 @@ void Character::init()
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
     physics = &entity->getComponent<GPhysics>();
-    position->setX(game::getWidth());
-    position->setY(game::getHeight());
+    //position->setX(game::getWidth());
+    //position->setY(game::getHeight());
+    if(position->getX()-(game::getWidth()/2) < 0)
+        game::getOffset()->x = 0;
+    else if(position->getX()+(game::getWidth()/2) > game::getWidth()*2)
+        game::getOffset()->x = game::getWidth();
+    else
+        game::getOffset()->x = position->getX() - (game::getWidth()/2);
+
+    if(position->getY()-(game::getHeight()/2) < 0)
+        game::getOffset()->y = 0;
+    else if(position->getY()+(game::getHeight()/2) > game::getHeight()*2)
+        game::getOffset()->y = game::getHeight();
+    else
+        game::getOffset()->y = position->getY() - (game::getHeight()/2);
+
     texture->setXRect(game::getWidth()-game::getOffset()->x);
     texture->setYRect(game::getHeight()-game::getOffset()->y);
     //game::getOffset().x

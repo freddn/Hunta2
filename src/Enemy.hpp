@@ -1,14 +1,18 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include "Game.hpp"
 #include "Texture.hpp"
+#include "GPhysics.hpp"
+#include "Position.hpp"
 #include "EntitySystem.hpp"
 
+using namespace EntitySystem;
 /* The enemy class. */
-struct Enemy : EntitySystem::Component
+struct Enemy : Component
 {
     public:
-        Enemy();
+        Enemy(EntityManager *m);
 
         void init();
         void draw();

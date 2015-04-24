@@ -14,7 +14,8 @@ InGame::~InGame()
 void InGame::init()
 {
     std::cout << " - InGame::init() ..."<<std::endl;
-    creator.createPlayer(&inGameManager);
+    //creator.createPlayer(&inGameManager,game::getWidth(),game::getHeight());
+    creator.createPlayer(&inGameManager,20,20);
     creator.createItem(&inGameManager,0,100,100,true);
     creator.createItem(&inGameManager,0,150,150,true);
 
@@ -27,6 +28,8 @@ void InGame::init()
     creator.createEnvironment(&inGameManager,0,620,400);
     creator.createEnvironment(&inGameManager,0,1100,1200);
 
+    creator.createEnemy(&inGameManager,0,300,300);
+    creator.createEnemy(&inGameManager,0,345,290);
     //stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
 }
 
