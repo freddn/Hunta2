@@ -17,6 +17,7 @@ void Enemy::init()
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
     //physics = &entity->getComponent<GPhysics>();
+    aggro = false;
 }
 
 void Enemy::draw()
@@ -35,7 +36,25 @@ void Enemy::update()
         playerPos.getX()-100 < position->getX() &&
         playerPos.getY()+132 > position->getY() &&
         playerPos.getY()-100 < position->getY())
-        std::cerr << "!aggro!";
+    {
+        if(aggro == false)
+        {
+            aggro = true;
+            /* FIXME: Replace the position with an ID. */
+            std::cerr << "!aggro from enemy at pos " << position->getX() <<
+                "," << position->getY() << std::endl;
+        }
+    }
+    else
+    {
+        if(aggro == true)
+        {
+            aggro = false;
+            /* FIXME: Replace the position with an ID. */
+            std::cerr << "!no aggro from enemy at pos " << position->getX() <<
+                "," << position->getY() << std::endl;
+        }
+    }
 }
 
 
