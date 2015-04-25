@@ -42,13 +42,13 @@ void Screen::update()
             if(key[SDL_SCANCODE_ESCAPE]) { game::setRunning(false); }
             else if(key[SDL_SCANCODE_S])
             {
-                if (game::getTimer().isStarted()) { game::getTimer().stop(); }
-                else { game::getTimer().start(); }
+                if (game::getTimer()->isStarted()) { game::getTimer()->stop(); }
+                else { game::getTimer()->start(); }
             }
             else if(key[SDL_SCANCODE_P])
             {
-                if(game::getTimer().isPaused()) { game::getTimer().unpause(); }
-                else { game::getTimer().pause(); }
+                if(game::getTimer()->isPaused()) { game::getTimer()->unpause(); }
+                else { game::getTimer()->pause(); }
             }
 
             else if(key[SDL_SCANCODE_2]) { game::setCurrent_state(game::MAINMENU); }
@@ -119,7 +119,7 @@ void Screen::renderEnd()
     fpsText.loadFromText(game::getRenderer(),tempText.str() ,game::getText_color(),game::getFont());
 
     tempText.str("");
-    tempText << "Time: " << (game::getTimer().getTicks() / 1000.f);
+    tempText << "Time: " << (game::getTimer()->getTicks() / 1000.f);
     timerText.loadFromText(game::getRenderer(),tempText.str() ,game::getText_color(),game::getFont());
 
     fpsText.render(game::getRenderer(),200,30,(SDL_Rect*)NULL,

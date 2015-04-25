@@ -371,9 +371,9 @@ namespace game
         return avgFPS;
     }
 
-    LTimer getTimer()
+    LTimer* getTimer()
     {
-        return timer;
+        return &timer;
     }
 
     void setRunning(bool boolean)

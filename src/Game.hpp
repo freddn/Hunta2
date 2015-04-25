@@ -85,7 +85,7 @@ namespace game
 
     bool getHasChanged();
     float getAvgFPS();
-    LTimer getTimer();
+    LTimer* getTimer();
 
     bool inventoryIsDisplayed();
     void showInventory();

@@ -43,7 +43,7 @@ Entity& EntityCreator::createPlayer(EntitySystem::EntityManager *mManager,
     //auto& entity = manager.addEntity();
 
     entity.addComponent<Position>(x,y);
-    entity.addComponent<Texture>("data/gubbe_box.png",true);
+    entity.addComponent<Texture>("data/gubbe_box1.png",true);
     entity.addComponent<GPhysics>();
     entity.addComponent<Character>(mManager);
 

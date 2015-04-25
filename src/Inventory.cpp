@@ -68,21 +68,21 @@ void Inventory::update()
 
 void Inventory::buildInventory()
 {
-    SDL_Rect temp;
-    temp.x = 0;
-    temp.y = 0;
-    temp.w = 32;
-    temp.h = 32;
+    SDL_Rect clip;
+    clip.x = 0;
+    clip.y = 0;
+    clip.w = 32;
+    clip.h = 32;
 
     SDL_SetRenderTarget(game::getRenderer(),inv_bg);
-    frame.render(game::getRenderer(),0,0,&temp,0,NULL,SDL_FLIP_NONE);
-    temp.x = 64;
-    frame.render(game::getRenderer(),inventoryRect.w-32,0,&temp,0,NULL,SDL_FLIP_NONE);
+    frame.render(game::getRenderer(),0,0,&clip,0,NULL,SDL_FLIP_NONE);
+    clip.x = 64;
+    frame.render(game::getRenderer(),inventoryRect.w-32,0,&clip,0,NULL,SDL_FLIP_NONE);
     for(int j = 1;j<((inventoryRect.w-32) / 32);j++)
     {
-        temp.x = 32;
-        temp.y = 0;
-        frame.render(game::getRenderer(),j*32,0,&temp,0,NULL,SDL_FLIP_NONE);
+        clip.x = 32;
+        clip.y = 0;
+        frame.render(game::getRenderer(),j*32,0,&clip,0,NULL,SDL_FLIP_NONE);
     }
     for(int i = 1;i<=(inventoryRect.h / 32);i++)
     {
@@ -90,51 +90,51 @@ void Inventory::buildInventory()
         {
             if(i == 1 && j == 0)
             {
-                temp.x = 0;
-                temp.y = 0;
+                clip.x = 0;
+                clip.y = 0;
             }
             else if(i == ((inventoryRect.h-32)/32) && j == 0)
             {
-                temp.x = 0;
-                temp.y = 32;
+                clip.x = 0;
+                clip.y = 32;
             }
             else if(i == 1 && j == ((inventoryRect.w-32)/32))
             {
-                temp.x = 64;
-                temp.y = 0;
+                clip.x = 64;
+                clip.y = 0;
             }
             else if(i == ((inventoryRect.h-32)/32) &&
                     j == ((inventoryRect.w-32)/32))
             {
-                temp.x = 64;
-                temp.y = 32;
+                clip.x = 64;
+                clip.y = 32;
             }
             else if(i == 1)
             {
-                temp.x = 32;
-                temp.y = 0;
+                clip.x = 32;
+                clip.y = 0;
             }
             else if(i == ((inventoryRect.h-32)/32))
             {
-                temp.x = 32;
-                temp.y = 32;
+                clip.x = 32;
+                clip.y = 32;
             }
             else if(j == 0)
             {
-                temp.x = 0;
-                temp.y = 10;
+                clip.x = 0;
+                clip.y = 10;
             }
             else if(j == ((inventoryRect.w-32)/32))
             {
-                temp.x = 64;
-                temp.y = 10;
+                clip.x = 64;
+                clip.y = 10;
             }
             else
             {
-                temp.x = 32;
-                temp.y = 10;
+                clip.x = 32;
+                clip.y = 10;
             }
-            frame.render(game::getRenderer(),j*32,i*32,&temp,0,NULL,SDL_FLIP_NONE);
+            frame.render(game::getRenderer(),j*32,i*32,&clip,0,NULL,SDL_FLIP_NONE);
         }
     }
 
