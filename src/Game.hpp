@@ -16,6 +16,7 @@
 #include "Editor.hpp"
 #include "InGame.hpp"
 #include "MapClass.hpp"
+#include "MainMenu.hpp"
 
 //#include "Character.hpp"
 //#include "Item.hpp"

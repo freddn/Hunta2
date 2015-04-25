@@ -33,7 +33,7 @@ void Screen::update()
                 else { game::getTimer().pause(); }
             }
 
-            else if(key[SDL_SCANCODE_0]) { game::setCurrent_state(game::MAINMENU); }
+            else if(key[SDL_SCANCODE_2]) { game::setCurrent_state(game::MAINMENU); }
             else if(key[SDL_SCANCODE_1])
             {
                 if(game::getCurrent_state() == game::EDITOR)
@@ -51,8 +51,8 @@ void Screen::update()
                 // LOAD MAP
 
             }
-            else if(key[SDL_SCANCODE_2]) { game::setCurrent_state(game::PAUSED); }
-            else if(key[SDL_SCANCODE_3]) { game::setCurrent_state(game::GAMEOVER); }
+            else if(key[SDL_SCANCODE_3]) { game::setCurrent_state(game::PAUSED); }
+            else if(key[SDL_SCANCODE_0]) { game::setCurrent_state(game::GAMEOVER); }
             else if(key[SDL_SCANCODE_4])
             {
                 game::setCurrent_state(game::EDITOR);

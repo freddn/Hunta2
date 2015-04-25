@@ -14,8 +14,8 @@ InGame::~InGame()
 void InGame::init()
 {
     std::cout << " - InGame::init() ..."<<std::endl;
-    //creator.createPlayer(&inGameManager,game::getWidth(),game::getHeight());
-    creator.createPlayer(&inGameManager,20,20);
+    creator.createPlayer(&inGameManager,game::getWidth(),game::getHeight());
+    //creator.createPlayer(&inGameManager,20,20);
     creator.createItem(&inGameManager,0,100,100,true);
     creator.createItem(&inGameManager,0,150,150,true);
 
@@ -35,9 +35,9 @@ void InGame::init()
 
 void InGame::draw()
 {
-    //std::cerr << "InGame::draw" << std::endl;
     Screen::renderStart();
-    //std::cerr << "InGame::draw" << std::endl;
+
+    /* Update background tiles. */
     if(game::getHasChanged())
     {
         SDL_SetRenderTarget(game::getRenderer(),game::getBuffer());
@@ -51,16 +51,11 @@ void InGame::draw()
         SDL_SetRenderTarget(game::getRenderer(),NULL);
         game::setHasChanged(false);
     }
+    /* Draw background tiles. */
     SDL_RenderCopy(game::getRenderer(),game::getBuffer(),
                     game::getOffset(),game::getBackground());
 
-    //stick_T.render(game::getRenderer(),
-    //                game::getRect()->x-game::getOffset()->x,
-    //                game::getRect()->y-game::getOffset()->y,
-     //               (SDL_Rect*)NULL, (double)0.0,NULL,SDL_FLIP_NONE);
-
-    //player.draw();
-    //std::cerr << "InGame::draw" << std::endl;
+    /* Draw all entities. */
     inGameManager.draw();
 
     /* Display inventory */
@@ -73,14 +68,9 @@ void InGame::draw()
 
 void InGame::update()
 {
-    //key = SDL_GetKeyboardState(NULL);
-    //player.moveChar(4,key);
-    //std::cerr << "InGame::update" << std::endl;
-    inGameManager.refresh();
-    //std::cerr << "manager.refresh()"<<std::endl;
+    inGameManager.refresh(); /* Delete removed entities. */
     inGameManager.update();
-    //std::cerr << "manager.update()"<<std::endl;
-    //std::cout << "InGame::update" << std::endl;
+
     auto& characters(inGameManager.getEntitiesByGroup(game::PLAYER));
     //std::cout << "characters " << std::endl;
     if(!characters.empty() && characters[0]->hasComponent<Position>())
@@ -106,6 +96,5 @@ void InGame::update()
     {
         //inv.update();
     }
-    //std::cerr << "InGame::update" << std::endl;
     Screen::update();
 }

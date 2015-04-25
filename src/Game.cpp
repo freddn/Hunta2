@@ -53,6 +53,8 @@ namespace game
         Screen screen;
         Editor editor;
         InGame in_game;
+        MainMenu mMenu;
+        mMenu.init();
         in_game.init();
         texture_map = textureMap.getMap();
 
@@ -64,13 +66,13 @@ namespace game
         {
             /* Get current time */
             currentTick = (int)SDL_GetTicks();
-            /* Get input from keyboard */
 
             switch(current_state)
             {
             case(MAINMENU):
                 /* Show the main menu */
-                screen.update();
+                mMenu.update();
+                mMenu.draw();
                 break;
             case(INGAME):
                 in_game.update();

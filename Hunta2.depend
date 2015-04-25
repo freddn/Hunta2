@@ -183,7 +183,7 @@
 	"Character.hpp"
 	"Game.hpp"
 
-1429821992 /home/fredrik/Documents/projects/Hunta2/src/Character.hpp
+1429953387 /home/fredrik/Documents/projects/Hunta2/src/Character.hpp
 	"Texture.hpp"
 	"GPhysics.hpp"
 	"EntitySystem.hpp"
@@ -208,7 +208,7 @@
 	<sstream>
 	"Texture.hpp"
 
-1429708856 /home/fredrik/Documents/projects/Hunta2/src/Game.hpp
+1429953743 /home/fredrik/Documents/projects/Hunta2/src/Game.hpp
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	<SDL2/SDL_ttf.h>
@@ -223,6 +223,7 @@
 	"Editor.hpp"
 	"InGame.hpp"
 	"MapClass.hpp"
+	"MainMenu.hpp"
 
 1429708856 /home/fredrik/Documents/projects/Hunta2/src/LTimer.hpp
 	<SDL2/SDL.h>
@@ -272,10 +273,10 @@
 	"Texture.hpp"
 	"LuaInterface.hpp"
 
-1429889778 source:/home/fredrik/Documents/projects/Hunta2/src/Game.cpp
+1429954343 source:/home/fredrik/Documents/projects/Hunta2/src/Game.cpp
 	"Game.hpp"
 
-1429891451 source:/home/fredrik/Documents/projects/Hunta2/src/InGame.cpp
+1429952612 source:/home/fredrik/Documents/projects/Hunta2/src/InGame.cpp
 	"InGame.hpp"
 
 1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/Inventory.cpp
@@ -312,10 +313,11 @@
 	<cassert>
 	<type_traits>
 
-1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/MainMenu.cpp
+1429955556 source:/home/fredrik/Documents/projects/Hunta2/src/MainMenu.cpp
 	"MainMenu.hpp"
+	"Game.hpp"
 
-1429708856 /home/fredrik/Documents/projects/Hunta2/src/MainMenu.hpp
+1429955554 /home/fredrik/Documents/projects/Hunta2/src/MainMenu.hpp
 	"Screen.hpp"
 
 1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/MapClass.cpp
@@ -331,7 +333,7 @@
 	<map>
 	"Tile.hpp"
 
-1429708856 source:/home/fredrik/Documents/projects/Hunta2/src/Screen.cpp
+1429954527 source:/home/fredrik/Documents/projects/Hunta2/src/Screen.cpp
 	"Screen.hpp"
 	"Game.hpp"
 
@@ -345,7 +347,7 @@
 1429810496 source:/home/fredrik/Documents/projects/Hunta2/src/EntitySystem.cpp
 	"EntitySystem.hpp"
 
-1429950613 source:/home/fredrik/Documents/projects/Hunta2/src/Enemy.cpp
+1429952227 source:/home/fredrik/Documents/projects/Hunta2/src/Enemy.cpp
 	"Enemy.hpp"
 
 1429950104 /home/fredrik/Documents/projects/Hunta2/src/Enemy.hpp

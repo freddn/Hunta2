@@ -8,13 +8,16 @@ struct MainMenu : public Screen
 {
     public:
         MainMenu();
+
         void init();
         void update();
         void draw();
 
         ~MainMenu();
-    protected:
     private:
+        Texture frame;
+        SDL_Texture *startGame;
+        SDL_Rect button;
 };
 
 #endif // MAINMENU_H

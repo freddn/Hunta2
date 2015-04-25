@@ -62,20 +62,20 @@ void Enemy::update()
 
     if(aggro) /* Follow player */
     {
-        if(position->getX() < playerPos.getX())
+        if(position->getX()+32 < playerPos.getX())
         {
             position->setX(position->getX() + 1);
         }
-        else if(position->getX() > playerPos.getX())
+        else if(position->getX()-32 > playerPos.getX())
         {
             position->setX(position->getX() - 1);
         }
 
-        if(position->getY() < playerPos.getY())
+        if(position->getY()+32 < playerPos.getY())
         {
             position->setY(position->getY() + 1);
         }
-        else if(position->getY() > playerPos.getY())
+        else if(position->getY()-32 > playerPos.getY())
         {
             position->setY(position->getY() - 1);
         }
