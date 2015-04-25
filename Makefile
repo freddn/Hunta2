@@ -1,4 +1,11 @@
-include config.mk
+INCS = `freetype-config --cflags` -I/usr/include/lua5.1 -I/usr/include/GL
+LIBS = `freetype-config --libs` -llua5.1 -lGL -lGLU \
+       -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+
+CFLAGS += -g -Wall -O0 -std=c++11 ${INCS} ${CPPFLAGS}
+LDFLAGS += -g ${LIBS}
+
+CC = g++
 
 SRC = src/Character.cpp \
       src/Editor.cpp \
@@ -35,14 +42,9 @@ options:
 	@echo "LDFLAGS  = ${LDFLAGS}"
 	@echo "CC       = ${CC}"
 
-config.h:
-	cp config.def.h config.h
-
 .cpp.o:
 	@echo CC $<
 	@${CC} -c ${CFLAGS} $< -o $@
-
-${OBJ}: config.mk
 
 hunta2: ${OBJ}
 	@echo runnin CC -o $@
@@ -51,5 +53,6 @@ hunta2: ${OBJ}
 clean:
 	@echo cleaning
 	@rm -f hunta2
+	@rm src/*.o
 
 .PHONY: all hunta2 options clean

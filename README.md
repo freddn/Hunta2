@@ -12,4 +12,4 @@ Game in very early stages. SDL/C++/(Lua)
  - SDL 2.0 (libsdl2-2.0-0 libsdl2-dev libsdl2-image-2.0-0 libsdl2-image-dev libsdl-ttf2.0-0 libsdl-ttf2.0-dev ..)
 
 ## How to build
-Either use the Code::Blocks project file or edit the config.mk and run `make'.
+Either use the Code::Blocks project file or run `make'.
