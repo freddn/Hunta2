@@ -134,10 +134,10 @@ void Editor::update()
                 temp = game::getTextureMap()->getGroundTile()->clone();
                 break;
             case game::WATER:
-                temp = game::getTextureMap()->getGroundTile()->clone();
+                temp = game::getTextureMap()->getWaterTile()->clone();
                 break;
             case game::GRASS:
-                temp = game::getTextureMap()->getGroundTile()->clone();
+                temp = game::getTextureMap()->getGrassTile()->clone();
                 break;
             };
 
