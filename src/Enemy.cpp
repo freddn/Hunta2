@@ -16,6 +16,10 @@ void Enemy::init()
     std::cout << " - Enemy::init() ..."<<std::endl;
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
+
+    xSpawnPos = position->getX();
+    ySpawnPos = position->getY();
+
     //physics = &entity->getComponent<GPhysics>();
     aggro = false;
 }
@@ -55,6 +59,40 @@ void Enemy::update()
                 "," << position->getY() << std::endl;
         }
     }
+
+    if(aggro) /* Follow player */
+    {
+        if(position->getX() < playerPos.getX())
+        {
+            position->setX(position->getX() + 1);
+        }
+        else if(position->getX() > playerPos.getX())
+        {
+            position->setX(position->getX() - 1);
+        }
+
+        if(position->getY() < playerPos.getY())
+        {
+            position->setY(position->getY() + 1);
+        }
+        else if(position->getY() > playerPos.getY())
+        {
+            position->setY(position->getY() - 1);
+        }
+    }
+    else /* Return home */
+    {
+        if(position->getX() < xSpawnPos)
+            position->setX(position->getX() + 1);
+        else if(position->getX() > xSpawnPos)
+            position->setX(position->getX() - 1);
+        if(position->getY() < ySpawnPos)
+            position->setY(position->getY() + 1);
+        else if(position->getY() > ySpawnPos)
+            position->setY(position->getY() - 1);
+
+    }
+
 }
 
 
