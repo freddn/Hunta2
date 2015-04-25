@@ -2,8 +2,10 @@
 Game in very early stages. SDL/C++/(Lua)
 
 ## Keys
- - Leveleditor, press 4
- - Back to game/save, press 1
+ - Main Menu, 2
+ - Leveleditor, 4
+ - Back to game/save, 1
+ - Inventory, i
 
 ## Using
  - Lua 5.1 (liblua5.1-0 liblua5.1-dev)
