@@ -94,15 +94,18 @@ void Screen::update()
         }
         else if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN)
         {
-            if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))
+            if(game::getCurrent_state() == game::EDITOR)
             {
-                std::cerr << selected;
-                if(selected == game::GROUND)
-                    selected = game::WATER;
-                else if(selected == game::WATER)
-                    selected = game::GRASS;
-                else// if(selected == game::GRASS)
-                    selected = game::GROUND;
+                if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))
+                {
+                    std::cerr << selected;
+                    if(selected == game::GROUND)
+                        selected = game::WATER;
+                    else if(selected == game::WATER)
+                        selected = game::GRASS;
+                    else// if(selected == game::GRASS)
+                        selected = game::GROUND;
+                }
             }
         }
     }

@@ -33,10 +33,13 @@ void MainMenu::init()
     std::cout << " - MainMenu::init() ..."<<std::endl;
     frame.loadFromFile(game::getRenderer(),"data/frame.png");
 
-    button.x = 50;
-    button.y = 50;
-    button.w = 32*8;
-    button.h = 32*2;
+    button = {50,50,32*8,32*2};
+
+    newGame =  {32*6, 100,button.w,button.h};
+    loadGame = {32*6, 180,button.w,button.h};
+    settings = {32*6, 260,button.w,button.h};
+    quitGame = {32*6, 340,button.w,button.h};
+
     startGame = SDL_CreateTexture(game::getRenderer(), SDL_PIXELFORMAT_RGBA8888,
                                SDL_TEXTUREACCESS_TARGET, button.w, button.h);
 
@@ -55,17 +58,34 @@ void MainMenu::draw()
 {
     Screen::renderStart();
     /* Render the menu */
-    button.y = 100;
-    button.x = 32*6;
+    //button.y = 100;
+    //button.x = 32*6;
     //startGame.render(game::getRenderer(),0,0,NULL,SDL_FLIP_NONE,NULL,SDL_FLIP_NONE);
-    SDL_RenderCopy(game::getRenderer(),startGame,NULL,&button);
 
-    button.y += 80;
-    SDL_RenderCopy(game::getRenderer(),startGame,NULL,&button);
-    button.y += 80;
-    SDL_RenderCopy(game::getRenderer(),startGame,NULL,&button);
-    button.y += 80;
-    SDL_RenderCopy(game::getRenderer(),startGame,NULL,&button);
+
+    SDL_RenderCopy(game::getRenderer(),startGame,NULL,&newGame);
+    text.loadFromText(game::getRenderer(),"New Game" ,
+                        game::getText_color(),game::getFont());
+    text.render(game::getRenderer(),newGame.x+20,newGame.y+18,(SDL_Rect*)NULL,
+                (double)0.0,NULL,SDL_FLIP_NONE);
+   // button.y += 80;
+    SDL_RenderCopy(game::getRenderer(),startGame,NULL,&loadGame);
+    text.loadFromText(game::getRenderer(),"Load Game" ,
+                        game::getText_color(),game::getFont());
+    text.render(game::getRenderer(),loadGame.x+20,loadGame.y+18,(SDL_Rect*)NULL,
+                (double)0.0,NULL,SDL_FLIP_NONE);
+    //button.y += 80;
+    SDL_RenderCopy(game::getRenderer(),startGame,NULL,&settings);
+    text.loadFromText(game::getRenderer(),"Settings" ,
+                        game::getText_color(),game::getFont());
+    text.render(game::getRenderer(),settings.x+20,settings.y+18,(SDL_Rect*)NULL,
+                (double)0.0,NULL,SDL_FLIP_NONE);
+   // button.y += 80;
+    SDL_RenderCopy(game::getRenderer(),startGame,NULL,&quitGame);
+    text.loadFromText(game::getRenderer(),"Quit game" ,
+                        game::getText_color(),game::getFont());
+    text.render(game::getRenderer(),quitGame.x+20,quitGame.y+18,(SDL_Rect*)NULL,
+                (double)0.0,NULL,SDL_FLIP_NONE);
 
 
 
@@ -75,10 +95,44 @@ void MainMenu::draw()
 
 void MainMenu::update()
 {
+    if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN)
+    {
 
+        if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
+        {
+            if(mouseOverRect(newGame))
+            {
+                game::setCurrent_state(game::INGAME);
+                std::cerr << "new game\n";
+            }
+            else if(mouseOverRect(loadGame))
+            {
+                game::setCurrent_state(game::INGAME);
+                std::cerr << "load game\n";
+            }
+            else if(mouseOverRect(settings))
+            {
+                std::cerr << "settings\n";
+            }
+            else if(mouseOverRect(quitGame))
+            {
+                std::cerr << "quit game\n";
+            }
+        }
+    }
 
 
     Screen::update();
+}
+
+bool MainMenu::mouseOverRect(SDL_Rect r)
+{
+    if(game::getMouseX() < r.x+r.w && game::getMouseX() > r.x &&
+        game::getMouseY() < r.y+r.h && game::getMouseY() > r.y)
+    {
+       return true;
+    }
+    return false;
 }
 
 void MainMenu::buildButton()

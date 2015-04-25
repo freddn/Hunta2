@@ -31,12 +31,19 @@ struct MainMenu : public Screen
         void update();
         void draw();
         void buildButton();
-
+        bool mouseOverRect(SDL_Rect r);
         ~MainMenu();
     private:
         Texture frame;
+        Texture text;
         SDL_Texture *startGame;
+        std::stringstream tempText;
         SDL_Rect button;
+        SDL_Rect newGame;
+        SDL_Rect loadGame;
+        SDL_Rect settings;
+        SDL_Rect quitGame;
+
 };
 
 #endif // MAINMENU_H
