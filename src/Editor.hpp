@@ -34,16 +34,16 @@ struct Editor : public Screen
         void update();
         void draw();
         ~Editor();
-    protected:
     private:
-    SDL_Rect rground;
-    SDL_Rect rwater;
-    SDL_Rect rgrass;
-    SDL_Rect sel;
-    const Uint8 *key = NULL;
-    //int selected;
-    SDL_Surface *r_select;
-    SDL_Texture *rect_select;
+        SDL_Rect rground;
+        SDL_Rect rwater;
+        SDL_Rect rgrass;
+        SDL_Rect sel;
+        const Uint8 *key = NULL;
+        bool selBool = false;
+        int selected = 0;
+        SDL_Surface *r_select;
+        SDL_Texture *rect_select;
 };
 
 #endif // EDITOR_H

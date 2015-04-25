@@ -36,13 +36,12 @@ struct Screen
         void renderEnd();
         int getSelected();
         virtual ~Screen();// override;
-    protected:
     private:
         const Uint8 *key = NULL;
         std::stringstream tempText;
         int x = 0;
         int y = 0;
-        int selected = 0;
+        //int selected = 0;
         Texture timerText;
         Texture fpsText;
 };

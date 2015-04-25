@@ -32,6 +32,7 @@ InGame::~InGame()
 void InGame::init()
 {
     std::cout << " - InGame::init() ..."<<std::endl;
+    inv.init();
     creator.createPlayer(&inGameManager,game::getWidth(),game::getHeight());
     //creator.createPlayer(&inGameManager,20,20);
     creator.createItem(&inGameManager,0,100,100,true);
@@ -77,9 +78,9 @@ void InGame::draw()
     inGameManager.draw();
 
     /* Display inventory */
-    if(game::inventoryIsDisplayed())
+    if(showInventory)
     {
-        //inv.draw();
+        inv.draw();
     }
     Screen::renderEnd();
 }
@@ -109,10 +110,31 @@ void InGame::update()
         }
     }
 
-    /* Inventory input */
-    if(game::inventoryIsDisplayed())
+    key = SDL_GetKeyboardState(NULL);
+    if(key[SDL_SCANCODE_I])
     {
-        //inv.update();
+        if(!showInventory && buf == 10)
+        {
+            buf = 0;
+            showInventory = true;
+        }
+        else if(showInventory && buf == 10)
+        {
+            buf = 0;
+           showInventory = false;
+        }
+        else
+        {
+            buf++;
+        }
+    }
+    else
+        buf = 10;
+
+    /* Inventory input */
+    if(showInventory)
+    {
+        inv.update();
     }
     Screen::update();
 }

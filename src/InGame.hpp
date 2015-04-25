@@ -48,8 +48,9 @@ struct InGame : public Screen
     protected:
     private:
         bool showInventory = false;
-        //Inventory inv;
 
+        Inventory inv{445,150};
+        int buf = 0;
         //EntitySystem::EntityManager* inGameManager;
         EntityCreator creator;
         EntitySystem::EntityManager inGameManager;

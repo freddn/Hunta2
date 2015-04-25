@@ -23,8 +23,10 @@
 
 using namespace EntitySystem;
 
-Inventory::Inventory(int x, int y) : sizeX(x), sizeY(y)
+Inventory::Inventory(int x, int y)
 {
+    inventoryRect.x = x;
+    inventoryRect.y = y;
 
 }
 
@@ -37,26 +39,15 @@ Inventory::~Inventory()
 void Inventory::init()
 {
     frame.loadFromFile(game::getRenderer(),"data/frame.png");
+    inventoryRect.w = sizeX*32;
+    inventoryRect.h = sizeY*32;
     inv_bg = SDL_CreateTexture(game::getRenderer(), SDL_PIXELFORMAT_RGBA8888,
                                     SDL_TEXTUREACCESS_TARGET, sizeX*32, sizeY*32);
-    SDL_SetRenderTarget(game::getRenderer(),inv_bg);
-
-    //SDL_Rect clipRect = {0,0,32,32};
-    //SDL_Rect destRect = {0,0,32,32};
-
-    for(int y = 0;y<sizeY;y++)
+    if(inv_bg == 0)
     {
-        for(int x = 0;x<sizeX;x++)
-        {
-            if(x == 0)
-            {
-                //SDL_RenderCopy(game::getRenderer(),frame,NULL,NULL);
-                //frame.render(game::getRenderer(),NULL,0,NULL,SDL_FLIP_NONE);
-            }
-        }
+        std::cerr << "Failed to create inventory" << std::endl;
     }
-
-    SDL_SetRenderTarget(game::getRenderer(),NULL);
+    buildInventory();
 }
 
 void Inventory::loadInventory()
@@ -66,7 +57,8 @@ void Inventory::loadInventory()
 
 void Inventory::draw()
 {
-    frame.render(game::getRenderer(),(SDL_Rect*)NULL,0,NULL,SDL_FLIP_NONE);
+    //frame.render(game::getRenderer(),(SDL_Rect*)NULL,0,NULL,SDL_FLIP_NONE);
+    SDL_RenderCopy(game::getRenderer(),inv_bg,NULL,&inventoryRect);
 }
 
 void Inventory::update()
@@ -74,6 +66,83 @@ void Inventory::update()
     //check if item is dropped or if new items arrive
 }
 
+void Inventory::buildInventory()
+{
+    SDL_Rect temp;
+    temp.x = 0;
+    temp.y = 0;
+    temp.w = 32;
+    temp.h = 32;
 
+    SDL_SetRenderTarget(game::getRenderer(),inv_bg);
+    frame.render(game::getRenderer(),0,0,&temp,0,NULL,SDL_FLIP_NONE);
+    temp.x = 64;
+    frame.render(game::getRenderer(),inventoryRect.w-32,0,&temp,0,NULL,SDL_FLIP_NONE);
+    for(int j = 1;j<((inventoryRect.w-32) / 32);j++)
+    {
+        temp.x = 32;
+        temp.y = 0;
+        frame.render(game::getRenderer(),j*32,0,&temp,0,NULL,SDL_FLIP_NONE);
+    }
+    for(int i = 1;i<=(inventoryRect.h / 32);i++)
+    {
+        for(int j = 0;j<=((inventoryRect.w-32) / 32);j++)
+        {
+            if(i == 1 && j == 0)
+            {
+                temp.x = 0;
+                temp.y = 0;
+            }
+            else if(i == ((inventoryRect.h-32)/32) && j == 0)
+            {
+                temp.x = 0;
+                temp.y = 32;
+            }
+            else if(i == 1 && j == ((inventoryRect.w-32)/32))
+            {
+                temp.x = 64;
+                temp.y = 0;
+            }
+            else if(i == ((inventoryRect.h-32)/32) &&
+                    j == ((inventoryRect.w-32)/32))
+            {
+                temp.x = 64;
+                temp.y = 32;
+            }
+            else if(i == 1)
+            {
+                temp.x = 32;
+                temp.y = 0;
+            }
+            else if(i == ((inventoryRect.h-32)/32))
+            {
+                temp.x = 32;
+                temp.y = 32;
+            }
+            else if(j == 0)
+            {
+                temp.x = 0;
+                temp.y = 10;
+            }
+            else if(j == ((inventoryRect.w-32)/32))
+            {
+                temp.x = 64;
+                temp.y = 10;
+            }
+            else
+            {
+                temp.x = 32;
+                temp.y = 10;
+            }
+            frame.render(game::getRenderer(),j*32,i*32,&temp,0,NULL,SDL_FLIP_NONE);
+        }
+    }
+
+    text.loadFromText(game::getRenderer(),"Inventory" ,
+                        game::getText_color(),game::getFont());
+    text.render(game::getRenderer(),10,4,(SDL_Rect*)NULL,
+                (double)0.0,NULL,SDL_FLIP_NONE);
+    SDL_SetRenderTarget(game::getRenderer(),NULL);
+}
 
 

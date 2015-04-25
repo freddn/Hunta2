@@ -48,56 +48,43 @@ void MainMenu::init()
         std::cerr << "Failed to create Start Game button" << std::endl;
     }
 
-
     buildButton();
-
-
 }
 
 void MainMenu::draw()
 {
     Screen::renderStart();
+
     /* Render the menu */
-    //button.y = 100;
-    //button.x = 32*6;
-    //startGame.render(game::getRenderer(),0,0,NULL,SDL_FLIP_NONE,NULL,SDL_FLIP_NONE);
-
-
     SDL_RenderCopy(game::getRenderer(),startGame,NULL,&newGame);
     text.loadFromText(game::getRenderer(),"New Game" ,
                         game::getText_color(),game::getFont());
     text.render(game::getRenderer(),newGame.x+20,newGame.y+18,(SDL_Rect*)NULL,
                 (double)0.0,NULL,SDL_FLIP_NONE);
-   // button.y += 80;
     SDL_RenderCopy(game::getRenderer(),startGame,NULL,&loadGame);
     text.loadFromText(game::getRenderer(),"Load Game" ,
                         game::getText_color(),game::getFont());
     text.render(game::getRenderer(),loadGame.x+20,loadGame.y+18,(SDL_Rect*)NULL,
                 (double)0.0,NULL,SDL_FLIP_NONE);
-    //button.y += 80;
     SDL_RenderCopy(game::getRenderer(),startGame,NULL,&settings);
     text.loadFromText(game::getRenderer(),"Settings" ,
                         game::getText_color(),game::getFont());
     text.render(game::getRenderer(),settings.x+20,settings.y+18,(SDL_Rect*)NULL,
                 (double)0.0,NULL,SDL_FLIP_NONE);
-   // button.y += 80;
     SDL_RenderCopy(game::getRenderer(),startGame,NULL,&quitGame);
     text.loadFromText(game::getRenderer(),"Quit game" ,
                         game::getText_color(),game::getFont());
     text.render(game::getRenderer(),quitGame.x+20,quitGame.y+18,(SDL_Rect*)NULL,
                 (double)0.0,NULL,SDL_FLIP_NONE);
 
-
-
     Screen::renderEnd();
-
 }
 
 void MainMenu::update()
 {
+    /* Check if button is pressed. */
     if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN)
     {
-
         if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
         {
             if(mouseOverRect(newGame))
@@ -121,7 +108,6 @@ void MainMenu::update()
         }
     }
 
-
     Screen::update();
 }
 
@@ -144,7 +130,7 @@ void MainMenu::buildButton()
     temp.h = 32;
 
     SDL_SetRenderTarget(game::getRenderer(),startGame);
-    //frame.render(game::getRenderer(),x,y,&temp,0,NULL,SDL_FLIP_NONE);
+
     for(int i = 0;i<=(button.h / 32);i++)
     {
         for(int j = 0;j<=(button.w / 32);j++)
@@ -153,7 +139,6 @@ void MainMenu::buildButton()
             {
                 temp.x = 0;
                 temp.y = 0;
-
             }
             else if(i == ((button.h-32)/32) && j == 0)
             {

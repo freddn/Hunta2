@@ -36,13 +36,15 @@ struct Inventory : Component
         void draw();
         void loadInventory();
         void saveInventory();
+        void buildInventory();
         ~Inventory();
-    protected:
     private:
         SDL_Texture *inv_bg;
         Texture frame;
+        Texture text;
         int sizeX = 6;
-        int sizeY = 6;
+        int sizeY = 9;
+        SDL_Rect inventoryRect;
 };
 
 #endif // INVENTORY_H

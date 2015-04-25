@@ -64,7 +64,7 @@ void Editor::draw()
     game::setRectX(game::getMouseX()-(game::getMouseX()%32)); // ?
     game::getRect()->y = game::getMouseY()-(game::getMouseY()%32); // ?
 
-    switch(getSelected())
+    switch(selected)
     {
     case(game::GRASS):
         sel.x = rgrass.x -2;
@@ -146,7 +146,7 @@ void Editor::update()
 
             Texture *temp;
 
-            switch(getSelected())
+            switch(selected)
             {
             case game::GROUND:
                 temp = game::getTextureMap()->getGroundTile()->clone();
@@ -166,6 +166,29 @@ void Editor::update()
             game::setHasChanged(true);
         }
     }
+    else if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN)
+    {
+
+        if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))
+        {
+            //std::cerr << selected;
+            if(!selBool)
+            {
+                selBool = true;
+                if(selected == game::GROUND)
+                    selected = game::WATER;
+                else if(selected == game::WATER)
+                    selected = game::GRASS;
+                else// if(selected == game::GRASS)
+                    selected = game::GROUND;
+            }
+        }
+    }
+    else
+    {
+        selBool = false;
+    }
+
 
     Screen::update();
 }
