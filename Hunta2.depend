@@ -357,7 +357,7 @@
 	"Position.hpp"
 	"EntitySystem.hpp"
 
-1429960820 source:/home/fredrik/Documents/projects/Hunta2/src/EntityCreator.cpp
+1429986147 source:/home/fredrik/Documents/projects/Hunta2/src/EntityCreator.cpp
 	"EntityCreator.hpp"
 	"Character.hpp"
 	"Enemy.hpp"
