@@ -1,4 +1,4 @@
-/* Copyright (C) 2015  Fredik Mörtberg <fredrikmo@hotmail.com>
+/* Copyright (C) 2015  Fredrik Mörtberg <fredrikmo@hotmail.com>
  *
  * This file is a part of the Hunta2 project.
  *
@@ -141,7 +141,6 @@ void MainMenu::buildButton()
                 temp.x = 32;
                 temp.y = 10;
             }
-            std::cerr << j << " " << i << std::endl;
             frame.render(game::getRenderer(),j*32,i*32,&temp,0,NULL,SDL_FLIP_NONE);
         }
     }

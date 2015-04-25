@@ -1,4 +1,4 @@
-/* Copyright (C) 2015  Fredik Mörtberg <fredrikmo@hotmail.com>
+/* Copyright (C) 2015  Fredrik Mörtberg <fredrikmo@hotmail.com>
  *
  * This file is a part of the Hunta2 project.
  *
