@@ -202,7 +202,7 @@ void Texture::render(SDL_Renderer * renderer, int x, int y,SDL_Rect* clip,double
         rect.w = clip->w;
         rect.h = clip->h;
     }
-    else if(&tclip != NULL && isClipped)
+    else if(tclip.w != 0 && tclip.h != 0 && isClipped)
     {
         clip = &tclip;
     }
