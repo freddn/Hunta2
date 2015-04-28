@@ -142,6 +142,7 @@ void LuaInterface::initLua()
     lua_register(l_state, "loadTile", lua_functions::loadTile);
     lua_register(l_state, "setDimensions", lua_functions::setDimensions);
     lua_register(l_state, "loadItem", lua_functions::loadItem);
+
 }
 
 void LuaInterface::report_errors(lua_State *l_state, int status)
@@ -158,11 +159,11 @@ lua_State *LuaInterface::getLua_State()
     return l_state;
 }
 
-bool LuaInterface::load_File(const char *file)
+bool LuaInterface::load_File(const char *filename)
 {
     std::cout << " - LuaInterface::load_File() ..."<<std::endl;
     bool success = true;
-    int s = luaL_loadfile(l_state,file);
+    int s = luaL_loadfile(l_state,filename);
     if(s == 0)
     {
         if((s = lua_pcall(l_state,0,LUA_MULTRET,0)) != 0)
@@ -180,7 +181,7 @@ bool LuaInterface::load_File(const char *file)
     return success;
 }
 
-void LuaInterface::appendTile(const char* map_name, int index, int x,
+void LuaInterface::appendTile(const char* filename, int index, int x,
                             int y, int z, const char* image, int solid)
 {
     lua_pushstring(l_state,"AppendTile");
@@ -188,7 +189,7 @@ void LuaInterface::appendTile(const char* map_name, int index, int x,
     lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1
     //lua_getglobal(l_state,"_G"); // lua5.2 not working
     //lua_pushglobaltable(l_state); // lua5.2 not working
-    lua_pushstring(l_state,map_name);
+    lua_pushstring(l_state,filename);
     lua_pushnumber(l_state, index);
     lua_pushnumber(l_state, x);
     lua_pushnumber(l_state, y);
@@ -241,6 +242,50 @@ bool LuaInterface::mapFileExist(const char *filename)
         exists = true;
     }
     return exists;
+}
+
+
+void LuaInterface::addItem(const char *filename,int id,
+                            int amount, int x, int y)
+{
+    lua_pushstring(l_state,"AddItem");
+    lua_gettable(l_state,LUA_GLOBALSINDEX);
+    lua_pushstring(l_state,filename);
+    lua_pushnumber(l_state, id);
+    lua_pushnumber(l_state, amount);
+    lua_pushnumber(l_state, x);
+    lua_pushnumber(l_state, y);
+    int p = lua_pcall(l_state,5,0,0);
+    report_errors(l_state,p);
+}
+void LuaInterface::deleteItem(const char *filename,int id,
+                                int amount, int x, int y)
+{
+    lua_pushstring(l_state,"DeleteItem");
+    lua_gettable(l_state,LUA_GLOBALSINDEX);
+    lua_pushstring(l_state,filename);
+    lua_pushnumber(l_state, id);
+    lua_pushnumber(l_state, amount);
+    lua_pushnumber(l_state, x);
+    lua_pushnumber(l_state, y);
+    int p = lua_pcall(l_state,5,0,0);
+    report_errors(l_state,p);
+}
+void LuaInterface::clearInventory(const char *filename)
+{
+    lua_pushstring(l_state,"ClearInventory");
+    lua_gettable(l_state,LUA_GLOBALSINDEX);
+    lua_pushstring(l_state,filename);
+    int p = lua_pcall(l_state,1,0,0);
+    report_errors(l_state,p);
+}
+void LuaInterface::newInventory(const char *filename)
+{
+    lua_pushstring(l_state,"NewInventory");
+    lua_gettable(l_state,LUA_GLOBALSINDEX);
+    lua_pushstring(l_state,filename);
+    int p = lua_pcall(l_state,1,0,0);
+    report_errors(l_state,p);
 }
 
 void LuaInterface::load_tiles(const char *filename)

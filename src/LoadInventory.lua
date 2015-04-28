@@ -33,6 +33,6 @@ function loadInventory(filename)
 		end
 		i = i + 1
 	end
-	io.close(map)
+	io.close(inv)
 end
 

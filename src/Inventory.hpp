@@ -36,6 +36,10 @@ struct Inventory : Component
         void update();
         void draw();
         void loadInventory();
+
+        void addItem(int id,int amount,int x, int y);
+        void deleteItem(int id,int amount,int x, int y);
+
         void saveInventory();
         void buildInventory();
         ~Inventory();

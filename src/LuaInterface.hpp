@@ -59,11 +59,17 @@ class LuaInterface
         void initLua();
         void report_errors(lua_State *l_State, int status);
         lua_State *getLua_State();
-        bool load_File(const char *file);
-        void appendTile(const char *map_name, int index, int x, int y, int z, const char* image, int solid);
+        bool load_File(const char *filename);
+        void appendTile(const char *filename, int index, int x, int y,
+                            int z, const char* image, int solid);
         void clearMapFile(const char *filename);
         void newMapFile(const char *filename,int width,int height);
         bool mapFileExist(const char *filename);
+
+        void addItem(const char *filename,int id, int amount, int x, int y);
+        void deleteItem(const char *filename,int id, int amount, int x, int y);
+        void clearInventory(const char *filename);
+        void newInventory(const char *filename);
 
         void load_tiles(const char *filename);
         void loadInventory(const char *filename);

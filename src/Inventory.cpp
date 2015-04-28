@@ -49,12 +49,30 @@ void Inventory::init()
     }
     buildInventory();
     l_interface.initLua();
-    l_interface.load_File("src/LoadInventory.lua");
+    if(!l_interface.load_File("src/LoadInventory.lua"))
+    {
+        std::cerr << "Failed to Load LoadInventory.lua" << std::endl;
+    }
+    if(!l_interface.load_File("src/InventoryFunctions.lua"))
+    {
+        std::cerr << "Failed to Load InventoryFunctions.lua" << std::endl;
+    }
 }
 
 void Inventory::loadInventory()
 {
     l_interface.loadInventory("data/inventory1");
+    l_interface.addItem("data/inventory1",12,4,4,6);
+}
+
+void Inventory::addItem(int id,int amount,int x, int y)
+{
+    l_interface.addItem("data/inventory1",id,amount,x,y);
+}
+
+void Inventory::deleteItem(int id,int amount,int x,int y)
+{
+    l_interface.deleteItem("data/inventory1",id,amount,x,y);
 }
 
 void Inventory::draw()

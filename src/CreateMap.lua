@@ -1,7 +1,7 @@
 
 function AppendTile(filename, index,x,y,z,img,solid)
 	file = io.open(filename,"a")
-	if file != nil then
+	if file ~= nil then
 		io.output(file)
 		io.write("index ",index," x ",x," y ",y," z ",z," img ",img," solid ",solid,"\n" )
 		io.close(file)
@@ -19,7 +19,7 @@ end
 
 function NewMapFile(filename, width, height)
 	file = io.open(filename, "w")
-	if file != nil then
+	if file ~= nil then
 		io.output(file)
 		io.write("width ",width," height ", height," name ",filename,"\n")
 		io.close(file)

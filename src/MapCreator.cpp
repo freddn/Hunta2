@@ -36,7 +36,7 @@ void MapCreator::init()
 }
 
 void MapCreator::newMap(std::map<int,Texture*> currentMap,
-            const char*filename, int width, int height)
+            const char *filename, int width, int height)
 {
     std::cout << " - MapCreator::newMap() ..."<<std::endl;
     l_interface.newMapFile(filename,width,height);
