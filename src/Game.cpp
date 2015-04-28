@@ -51,8 +51,6 @@ namespace game
     int selected;
     const Uint8 *key;
 
-    bool displayInventory = false;
-
     SDL_Color text_color = {255,255,255};
     bool running = true;
 
@@ -192,22 +190,6 @@ namespace game
 
         /* Everything went better than expected. */
         return true;
-    }
-
-    bool inventoryIsDisplayed()
-    {
-        return displayInventory;
-    }
-
-    void showInventory()
-    {
-        displayInventory = true;
-        hasChanged = true;
-    }
-    void hideInventory()
-    {
-        displayInventory = false;
-        hasChanged = true;
     }
 
     void close()

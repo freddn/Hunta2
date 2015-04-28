@@ -23,7 +23,7 @@
 #include <map>
 #include <string>
 
-#include "lua5.1/lua.hpp"
+#include "lua.hpp"
 
 #include "Texture.hpp"
 
@@ -40,6 +40,8 @@ namespace lua_functions
 {
     int loadTile(lua_State *l_state);
     int setDimensions(lua_State *l_state);
+    int loadItem(lua_State *l_state);
+
     std::map<int,Texture*> getCurrentMap();
     void setWater(Texture *water);
     void setGround(Texture *ground);
@@ -64,6 +66,7 @@ class LuaInterface
         bool mapFileExist(const char *filename);
 
         void load_tiles(const char *filename);
+        void loadInventory(const char *filename);
         std::map<int,Texture> getMap();
         virtual ~LuaInterface();
     private:

@@ -117,6 +117,7 @@ void InGame::update()
         {
             buf = 0;
             showInventory = true;
+            inv.loadInventory();
         }
         else if(showInventory && buf == 10)
         {

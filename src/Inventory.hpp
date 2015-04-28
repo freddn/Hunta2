@@ -21,6 +21,7 @@
 
 #include "Texture.hpp"
 #include "EntitySystem.hpp"
+#include "LuaInterface.hpp"
 
 using namespace EntitySystem;
 
@@ -39,6 +40,7 @@ struct Inventory : Component
         void buildInventory();
         ~Inventory();
     private:
+        LuaInterface l_interface;
         SDL_Texture *inv_bg;
         Texture frame;
         Texture text;

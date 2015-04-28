@@ -87,10 +87,6 @@ namespace game
     float getAvgFPS();
     LTimer* getTimer();
 
-    bool inventoryIsDisplayed();
-    void showInventory();
-    void hideInventory();
-
     /* Setters. */
     void setHasChanged(bool boolean);
     void setTexture_map(std::map<int,Texture*> temp_map);

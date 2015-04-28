@@ -77,13 +77,6 @@ void Screen::update()
                 // LOAD MAP.
                 // SAVE MAP.
             }
-            else if(key[SDL_SCANCODE_I] && game::getCurrent_state() == game::INGAME)
-            {
-                if(!game::inventoryIsDisplayed())
-                    game::showInventory();
-                else
-                    game::hideInventory();
-            }
 
         }
         else if(game::getEvent()->type == SDL_MOUSEMOTION)

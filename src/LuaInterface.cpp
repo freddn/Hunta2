@@ -84,6 +84,19 @@ namespace lua_functions
         return 1;
     }
 
+    int loadItem(lua_State *l_state)
+    {
+        int argc = lua_gettop(l_state);
+        if(argc == 5)
+        {
+            std::cout << " - ItemID: "<<lua_tonumber(l_state,2)<<
+                        " Count: "<<lua_tonumber(l_state,3)<<
+                        " x: " <<lua_tonumber(l_state,4) <<
+                        " y: " <<lua_tonumber(l_state,5)<<std::endl;
+        }
+        return 1;
+    }
+
     std::map<int,Texture*> getCurrentMap()
     {
         return current_map_data.textures;
@@ -128,6 +141,7 @@ void LuaInterface::initLua()
     luaL_openlibs(l_state);
     lua_register(l_state, "loadTile", lua_functions::loadTile);
     lua_register(l_state, "setDimensions", lua_functions::setDimensions);
+    lua_register(l_state, "loadItem", lua_functions::loadItem);
 }
 
 void LuaInterface::report_errors(lua_State *l_state, int status)
@@ -238,6 +252,15 @@ void LuaInterface::load_tiles(const char *filename)
     //lua_getglobal(l_state,"_G"); // lua5.2 not working
     //lua_rawgeti(l_state, LUA_REGISTRYINDEX, LUA_RIDX_GLOBALS); // lua5.2 not working
     //lua_pushglobaltable(l_state);  // lua5.2 not working
+    lua_pushstring(l_state,filename);
+    int p = lua_pcall(l_state,1,0,0);
+    report_errors(l_state,p);
+}
+
+void LuaInterface::loadInventory(const char *filename)
+{
+    lua_pushstring(l_state,"loadInventory");
+    lua_gettable(l_state,LUA_GLOBALSINDEX);
     lua_pushstring(l_state,filename);
     int p = lua_pcall(l_state,1,0,0);
     report_errors(l_state,p);

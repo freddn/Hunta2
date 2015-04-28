@@ -48,11 +48,13 @@ void Inventory::init()
         std::cerr << "Failed to create inventory" << std::endl;
     }
     buildInventory();
+    l_interface.initLua();
+    l_interface.load_File("src/LoadInventory.lua");
 }
 
 void Inventory::loadInventory()
 {
-
+    l_interface.loadInventory("data/inventory1");
 }
 
 void Inventory::draw()
