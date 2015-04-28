@@ -62,7 +62,7 @@ void Inventory::init()
 void Inventory::loadInventory()
 {
     l_interface.loadInventory("data/inventory1");
-    l_interface.addItem("data/inventory1",12,4,4,6);
+    //l_interface.addItem("data/inventory1",12,4,4,6);
 }
 
 void Inventory::addItem(int id,int amount,int x, int y)
