@@ -1,0 +1,7 @@
+id name equip use stack image description value atk def hp heal 
+1 stick 0 0 20 data/stick.png "A stick" 4 0 0 0 0
+2 potion 0 1 20 data/stick.png "Gives hp" 10 0 0 0 20
+3 sword 0 0 20 data/stick.png "A weak sword" 20 5 0 0 0
+4 hat 0 0 20 data/stick.png "A leather hat" 10 0 2 0 0
+5 pants 0 0 20 data/stick.png "Lether pants" 4 0 4 0 0
+6 apple 0 1 20 data/stick.png "Looking fresh" 6 0 0 0 10
