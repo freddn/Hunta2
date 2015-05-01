@@ -47,7 +47,7 @@ void InGame::init()
     creator.createEnvironment(&inGameManager,0,620,400);
     creator.createEnvironment(&inGameManager,0,1100,1200);
 
-    creator.createEnemy(&inGameManager,0,300,300);
+    creator.createEnemy(&inGameManager,1,300,300);
     creator.createEnemy(&inGameManager,0,345,290);
     //stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
 }

@@ -37,8 +37,27 @@ Texture::Texture(std::string img,bool clip)
     isText = false;
     imageName = img;
     currentTexture = NULL;
+    tclip.w = 32;
+    tclip.h = 32;
     tWidth = 0;
     tHeight = 0;
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 0;
+    rect.h = 0;
+}
+
+Texture::Texture(std::string img,bool clip, int w,int h)
+{
+    isClipped = clip;
+
+    isText = false;
+    imageName = img;
+    currentTexture = NULL;
+    tWidth = 0;
+    tHeight = 0;
+    tclip.w = w;
+    tclip.h = h;
     rect.x = 0;
     rect.y = 0;
     rect.w = 0;
@@ -125,8 +144,8 @@ bool Texture::loadFromFile(SDL_Renderer *renderer, std::string path)
             tHeight = tempSurface->h;
             if(isClipped)
             {
-                rect.w = 32; // tWidth
-                rect.h = 32; // tWidth
+                rect.w = tclip.w; // tWidth
+                rect.h = tclip.h; // tWidth
             }
             else
             {
@@ -135,8 +154,7 @@ bool Texture::loadFromFile(SDL_Renderer *renderer, std::string path)
             }
             tclip.x = 0;
             tclip.y = 0;
-            tclip.w = 32;
-            tclip.h = 32;
+
         }
         SDL_FreeSurface(tempSurface);
     }
@@ -287,6 +305,14 @@ void Texture::setClipY(int y)
     tclip.y = y;
 }
 
+void Texture::setClipW(int w)
+{
+    tclip.w = w;
+}
 
+void Texture::setClipH(int h)
+{
+    tclip.h = h;
+}
 
 

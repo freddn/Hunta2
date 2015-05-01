@@ -37,6 +37,7 @@ struct Texture : EntitySystem::Component
 
         /* Create a texture and choose if it is clipped, currently only 32x32px. */
         Texture(std::string img,bool clip);
+        Texture(std::string img,bool clip,int w,int h);
 
         /* Create a text that can be drawn to the screen. */
         Texture(std::string text,SDL_Color textcolor,TTF_Font* font);
@@ -72,6 +73,8 @@ struct Texture : EntitySystem::Component
 
         void setClipX(int x);
         void setClipY(int y);
+        void setClipW(int w);
+        void setClipH(int h);
 
         std::string getImgPath();
         bool isSolid();

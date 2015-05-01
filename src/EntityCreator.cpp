@@ -76,7 +76,10 @@ Entity& EntityCreator::createEnemy(EntitySystem::EntityManager *mManager,
 
     /* Get right item from a list/file. */
     enemy.addComponent<Position>(x,y);
-    enemy.addComponent<Texture>("data/goblin.png",true);
+    if(enemyNumber == 1)
+        enemy.addComponent<Texture>("data/goblin.png",true);
+    else
+        enemy.addComponent<Texture>("data/wolf.png",true,48,48);
     enemy.addComponent<Enemy>(mManager);
     /* add position */
 
@@ -91,7 +94,7 @@ Entity& EntityCreator::createEnvironment(EntitySystem::EntityManager *mManager,
     auto& environment(mManager->addEntity());
 
     environment.addComponent<Position>(x,y);
-    environment.addComponent<Texture>("data/tree_box.png",false);
+    environment.addComponent<Texture>("data/tree2.png",false);
     environment.addComponent<GPhysics>();
     environment.addComponent<Environment>();
 
