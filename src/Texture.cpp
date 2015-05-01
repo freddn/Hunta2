@@ -297,12 +297,13 @@ std::string Texture::getImgPath()
 
 void Texture::setClipX(int x)
 {
-    tclip.x = x;
+
+    tclip.x = tclip.w*x;
 }
 
 void Texture::setClipY(int y)
 {
-    tclip.y = y;
+    tclip.y = tclip.h*y;
 }
 
 void Texture::setClipW(int w)

@@ -83,10 +83,12 @@ void Enemy::update()
         if(position->getX()+32 < playerPos.getX())
         {
             position->setX(position->getX() + 1);
+            texture->setClipX(1);
         }
         else if(position->getX()-32 > playerPos.getX())
         {
             position->setX(position->getX() - 1);
+            texture->setClipX(0);
         }
 
         if(position->getY()+32 < playerPos.getY())
@@ -101,14 +103,23 @@ void Enemy::update()
     else /* Return home */
     {
         if(position->getX() < xSpawnPos)
+        {
             position->setX(position->getX() + 1);
+            texture->setClipX(1);
+        }
         else if(position->getX() > xSpawnPos)
+        {
             position->setX(position->getX() - 1);
+            texture->setClipX(0);
+        }
         if(position->getY() < ySpawnPos)
+        {
             position->setY(position->getY() + 1);
+        }
         else if(position->getY() > ySpawnPos)
+        {
             position->setY(position->getY() - 1);
-
+        }
     }
 
 }

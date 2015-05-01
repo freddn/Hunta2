@@ -94,7 +94,7 @@ void Character::moveChar(const Uint8 *key)
     if(key[SDL_SCANCODE_UP])
     {
         physics->setDir(game::NORTH,true);
-        texture->setClipX(32);
+        texture->setClipX(1);
         texture->setClipY(0);
             //position->setY(position->getY()-vel);
         if(position->getY() < (game::getHeight()/2))
@@ -131,7 +131,7 @@ void Character::moveChar(const Uint8 *key)
     {
         physics->setDir(game::WEST,true);
         texture->setClipX(0);
-        texture->setClipY(32);
+        texture->setClipY(1);
             //position->setX(position->getX()-vel);
         if(position->getX() < game::getWidth()/2)
             texture->setXRect(position->getX());
@@ -143,8 +143,8 @@ void Character::moveChar(const Uint8 *key)
     if(key[SDL_SCANCODE_RIGHT])
     {
         physics->setDir(game::EAST,true);
-        texture->setClipX(32);
-        texture->setClipY(32);
+        texture->setClipX(1);
+        texture->setClipY(1);
             //position->setX(position->getX()+vel);
         if(position->getX() > game::getWidth()*2-(game::getWidth()/2)) // Mapheight - screenheight
             texture->setXRect(position->getX()-game::getWidth());
