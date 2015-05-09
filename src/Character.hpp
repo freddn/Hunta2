@@ -1,4 +1,5 @@
 /* Copyright (C) 2015  Fredrik Mörtberg <fredrikmo@hotmail.com>
+ * Copyright (C) 2015  Lucas Sköldqvist <frusen@gungre.ch>
  *
  * This file is a part of the Hunta2 project.
  *
@@ -16,8 +17,8 @@
  * along with Hunta2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#ifndef CHARACTER_HPP
+#define CHARACTER_HPP
 
 #include "Texture.hpp"
 #include "GPhysics.hpp"
@@ -32,39 +33,38 @@ using namespace EntitySystem;
  */
 struct Character: Component
 {
-    public:
-        Character();
-        Character(EntityManager *m);
-        /* Load player. Loads a texture with the
-         * character image and set position. */
-        void init() override;
-        /* Draw the player.*/
-        void draw() override;
+public:
+    Character();
+    Character(EntityManager *m);
 
-        void update() override;
-        /* Takes in a key and move the char accordingly. */
-        void moveChar(const Uint8 *key);
-        /* Check if player is colliding with something. */
-        bool checkCollision(int DIR);
-        /* Load saved data. */
-        void loadSaveFile(std::string char_name);
-        virtual ~Character();
-    protected:
-    private:
+    /* Load player. Loads a texture with the
+     * character image and set position. */
+    void init() override;
 
-        GPhysics *physics{nullptr};
-        Texture *texture{nullptr};
-        Position *position{nullptr};
+    /* Draw the player. */
+    void draw() override;
 
-        EntityManager *manager{nullptr};
+    void update() override;
 
-        int xPos; // x-position of the player.
-        int yPos; // y-position of the player.
+    /* Takes in a key and move the char accordingly. */
+    void moveChar(const Uint8 *key);
+
+    /* Check if player is colliding with something. */
+    bool checkCollision(int DIR);
+
+    /* Load saved data. */
+    void loadSaveFile(std::string char_name);
+
+    virtual ~Character();
+
+private:
+    GPhysics *physics{nullptr};
+    Texture *texture{nullptr};
+    Position *position{nullptr};
+    EntityManager *manager{nullptr};
+
+    int xPos; /* x-position of the player. */
+    int yPos; /* y-position of the player. */
 };
 
-#endif // RENDERER_H
-
-
-
-
-
+#endif /* CHARACTER_HPP */

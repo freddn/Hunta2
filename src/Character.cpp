@@ -1,4 +1,5 @@
 /* Copyright (C) 2015  Fredrik Mörtberg <fredrikmo@hotmail.com>
+ * Copyright (C) 2015  Lucas Sköldqvist <frusen@gungre.ch>
  *
  * This file is a part of the Hunta2 project.
  *
@@ -17,12 +18,10 @@
  */
 
 #include "Character.hpp"
-
 #include "Game.hpp"
 
 Character::Character() //: Texture()
 {
-
 }
 
 Character::Character(EntityManager *m)
@@ -32,7 +31,6 @@ Character::Character(EntityManager *m)
 
 Character::~Character()
 {
-
 }
 
 void Character::init()
@@ -43,16 +41,16 @@ void Character::init()
     physics = &entity->getComponent<GPhysics>();
     //position->setX(game::getWidth());
     //position->setY(game::getHeight());
-    if(position->getX()-(game::getWidth()/2) < 0)
+    if (position->getX()-(game::getWidth()/2) < 0)
         game::getOffset()->x = 0;
-    else if(position->getX()+(game::getWidth()/2) > game::getWidth()*2)
+    else if (position->getX()+(game::getWidth()/2) > game::getWidth()*2)
         game::getOffset()->x = game::getWidth();
     else
         game::getOffset()->x = position->getX() - (game::getWidth()/2);
 
-    if(position->getY()-(game::getHeight()/2) < 0)
+    if (position->getY()-(game::getHeight()/2) < 0)
         game::getOffset()->y = 0;
-    else if(position->getY()+(game::getHeight()/2) > game::getHeight()*2)
+    else if (position->getY()+(game::getHeight()/2) > game::getHeight()*2)
         game::getOffset()->y = game::getHeight();
     else
         game::getOffset()->y = position->getY() - (game::getHeight()/2);
@@ -60,7 +58,6 @@ void Character::init()
     texture->setXRect(game::getWidth()-game::getOffset()->x);
     texture->setYRect(game::getHeight()-game::getOffset()->y);
     //game::getOffset().x
-
 }
 
 void Character::draw()
@@ -91,76 +88,69 @@ void Character::update()
 
 void Character::moveChar(const Uint8 *key)
 {
-    if(key[SDL_SCANCODE_UP])
-    {
-        physics->setDir(game::NORTH,true);
+    if (key[SDL_SCANCODE_UP]) {
+        physics->setDir(game::NORTH, true);
         texture->setClipX(1);
         texture->setClipY(0);
             //position->setY(position->getY()-vel);
-        if(position->getY() < (game::getHeight()/2))
+        if (position->getY() < (game::getHeight()/2))
             texture->setYRect(position->getY());
-        if(position->getY() > (game::getHeight()*2-(game::getHeight()/2)))
+        if (position->getY() > (game::getHeight()*2-(game::getHeight()/2)))
             texture->setYRect(position->getY()-game::getHeight());
-    }
-    else
-    {
+    } else {
         //std::cerr <<"Physics::setDir() before"<<std::endl;
-        physics->setDir(game::NORTH,false);
+        physics->setDir(game::NORTH, false);
         //std::cerr <<"Physics::setDir() after"<<std::endl;
     }
-    if(key[SDL_SCANCODE_DOWN])
-    {
-        physics->setDir(game::SOUTH,true);
+
+    if (key[SDL_SCANCODE_DOWN]) {
+        physics->setDir(game::SOUTH, true);
         texture->setClipX(0);
         texture->setClipY(0);
 
             //position->setY(position->getY()+vel);
-        if(position->getY() > (game::getHeight()*2-(game::getHeight()/2))) // Mapheight - screenheight
+        if (position->getY() > (game::getHeight()*2-(game::getHeight()/2))) // Mapheight - screenheight
             texture->setYRect(position->getY()-game::getHeight());
-        if(position->getY() < game::getHeight()/2)
+        if (position->getY() < game::getHeight()/2)
             texture->setYRect(position->getY());
 
 
-    }
-    else
-    {
-        physics->setDir(game::SOUTH,false);
+    } else {
+        physics->setDir(game::SOUTH, false);
         //std::cerr <<"Physics::setDir()"<<std::endl;
     }
-    if(key[SDL_SCANCODE_LEFT])
-    {
-        physics->setDir(game::WEST,true);
+
+    if (key[SDL_SCANCODE_LEFT]) {
+        physics->setDir(game::WEST, true);
         texture->setClipX(0);
         texture->setClipY(1);
             //position->setX(position->getX()-vel);
-        if(position->getX() < game::getWidth()/2)
+        if (position->getX() < game::getWidth()/2)
             texture->setXRect(position->getX());
-        if(position->getX() > game::getWidth()*2-(game::getWidth()/2))
+        if (position->getX() > game::getWidth()*2-(game::getWidth()/2))
             texture->setXRect(position->getX() - game::getWidth());
+    } else {
+        physics->setDir(game::WEST, false);
     }
-    else
-        physics->setDir(game::WEST,false);
-    if(key[SDL_SCANCODE_RIGHT])
-    {
-        physics->setDir(game::EAST,true);
+
+    if (key[SDL_SCANCODE_RIGHT]) {
+        physics->setDir(game::EAST, true);
         texture->setClipX(1);
         texture->setClipY(1);
             //position->setX(position->getX()+vel);
-        if(position->getX() > game::getWidth()*2-(game::getWidth()/2)) // Mapheight - screenheight
+        if (position->getX() > game::getWidth()*2-(game::getWidth()/2)) // Mapheight - screenheight
             texture->setXRect(position->getX()-game::getWidth());
-        if(position->getX() < game::getWidth()/2)
+        if (position->getX() < game::getWidth()/2)
             texture->setXRect(position->getX());
+    } else {
+        physics->setDir(game::EAST, false);
     }
-    else
-        physics->setDir(game::EAST,false);
 }
 
 bool Character::checkCollision(int DIR)
 {
-    /* need to get the surrounding tiles somehow */
+    /* Need to get the surrounding tiles somehow. */
     bool isColliding = false;
-
 
     return isColliding;
 }
-
