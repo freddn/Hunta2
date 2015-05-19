@@ -80,24 +80,31 @@ void Enemy::update()
 
     if(aggro) /* Follow player */
     {
+
+
+        if(position->getY()+32 < playerPos.getY())
+        {
+            position->setY(position->getY() + 1);
+            texture->setClipX(0);
+            texture->setClipY(0);
+        }
+        else if(position->getY()-32 > playerPos.getY())
+        {
+            position->setY(position->getY() - 1);
+            texture->setClipX(1);
+            texture->setClipY(0);
+        }
         if(position->getX()+32 < playerPos.getX())
         {
             position->setX(position->getX() + 1);
             texture->setClipX(1);
+            texture->setClipY(1);
         }
         else if(position->getX()-32 > playerPos.getX())
         {
             position->setX(position->getX() - 1);
             texture->setClipX(0);
-        }
-
-        if(position->getY()+32 < playerPos.getY())
-        {
-            position->setY(position->getY() + 1);
-        }
-        else if(position->getY()-32 > playerPos.getY())
-        {
-            position->setY(position->getY() - 1);
+            texture->setClipY(1);
         }
     }
     else /* Return home */

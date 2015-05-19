@@ -74,7 +74,7 @@ Entity& EntityCreator::createEnemy(EntitySystem::EntityManager *mManager,
 {
     auto& enemy(mManager->addEntity());
 
-    /* Get right item from a list/file. */
+    /* Get right enemy from a list/file. */
     enemy.addComponent<Position>(x,y);
     if(enemyNumber == 1)
         enemy.addComponent<Texture>("data/goblin.png",true);

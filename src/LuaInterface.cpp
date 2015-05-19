@@ -22,7 +22,8 @@
 namespace lua_functions
 {
     map_data current_map_data;
-
+    inventoryItem* items; /* */
+    int itemNo = 0;
     Texture *grass_T;
     Texture *water_T;
     Texture *ground_T;
@@ -89,10 +90,18 @@ namespace lua_functions
         int argc = lua_gettop(l_state);
         if(argc == 5)
         {
-            std::cout << " - ItemID: "<<lua_tonumber(l_state,2)<<
+            inventoryItem temp;
+            temp.id =  lua_tonumber(l_state,2);
+            temp.amount = lua_tonumber(l_state,3);
+            temp.x = lua_tonumber(l_state,4);
+            temp.y = lua_tonumber(l_state,5);
+            items[itemNo] = temp;
+            itemNo++;
+            /*std::cout << " - ItemID: "<<lua_tonumber(l_state,2)<<
                         " Count: "<<lua_tonumber(l_state,3)<<
                         " x: " <<lua_tonumber(l_state,4) <<
-                        " y: " <<lua_tonumber(l_state,5)<<std::endl;
+                        " y: " <<lua_tonumber(l_state,5)<<std::endl;*/
+
         }
         return 1;
     }
@@ -100,6 +109,11 @@ namespace lua_functions
     std::map<int,Texture*> getCurrentMap()
     {
         return current_map_data.textures;
+    }
+
+    inventoryItem* getItems()
+    {
+        return items;
     }
 
     int getWidth()
@@ -304,6 +318,8 @@ void LuaInterface::load_tiles(const char *filename)
 
 void LuaInterface::loadInventory(const char *filename)
 {
+    lua_functions::itemNo = 0;
+    lua_functions::items = NULL;
     lua_pushstring(l_state,"loadInventory");
     lua_gettable(l_state,LUA_GLOBALSINDEX);
     lua_pushstring(l_state,filename);

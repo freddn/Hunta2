@@ -91,23 +91,7 @@ void Character::update()
 
 void Character::moveChar(const Uint8 *key)
 {
-    if(key[SDL_SCANCODE_UP])
-    {
-        physics->setDir(game::NORTH,true);
-        texture->setClipX(1);
-        texture->setClipY(0);
-            //position->setY(position->getY()-vel);
-        if(position->getY() < (game::getHeight()/2))
-            texture->setYRect(position->getY());
-        if(position->getY() > (game::getHeight()*2-(game::getHeight()/2)))
-            texture->setYRect(position->getY()-game::getHeight());
-    }
-    else
-    {
-        //std::cerr <<"Physics::setDir() before"<<std::endl;
-        physics->setDir(game::NORTH,false);
-        //std::cerr <<"Physics::setDir() after"<<std::endl;
-    }
+
     if(key[SDL_SCANCODE_DOWN])
     {
         physics->setDir(game::SOUTH,true);
@@ -127,19 +111,24 @@ void Character::moveChar(const Uint8 *key)
         physics->setDir(game::SOUTH,false);
         //std::cerr <<"Physics::setDir()"<<std::endl;
     }
-    if(key[SDL_SCANCODE_LEFT])
+    if(key[SDL_SCANCODE_UP])
     {
-        physics->setDir(game::WEST,true);
-        texture->setClipX(0);
-        texture->setClipY(1);
-            //position->setX(position->getX()-vel);
-        if(position->getX() < game::getWidth()/2)
-            texture->setXRect(position->getX());
-        if(position->getX() > game::getWidth()*2-(game::getWidth()/2))
-            texture->setXRect(position->getX() - game::getWidth());
+        physics->setDir(game::NORTH,true);
+        texture->setClipX(1);
+        texture->setClipY(0);
+            //position->setY(position->getY()-vel);
+        if(position->getY() < (game::getHeight()/2))
+            texture->setYRect(position->getY());
+        if(position->getY() > (game::getHeight()*2-(game::getHeight()/2)))
+            texture->setYRect(position->getY()-game::getHeight());
     }
     else
-        physics->setDir(game::WEST,false);
+    {
+        //std::cerr <<"Physics::setDir() before"<<std::endl;
+        physics->setDir(game::NORTH,false);
+        //std::cerr <<"Physics::setDir() after"<<std::endl;
+    }
+
     if(key[SDL_SCANCODE_RIGHT])
     {
         physics->setDir(game::EAST,true);
@@ -153,6 +142,19 @@ void Character::moveChar(const Uint8 *key)
     }
     else
         physics->setDir(game::EAST,false);
+    if(key[SDL_SCANCODE_LEFT])
+    {
+        physics->setDir(game::WEST,true);
+        texture->setClipX(0);
+        texture->setClipY(1);
+            //position->setX(position->getX()-vel);
+        if(position->getX() < game::getWidth()/2)
+            texture->setXRect(position->getX());
+        if(position->getX() > game::getWidth()*2-(game::getWidth()/2))
+            texture->setXRect(position->getX() - game::getWidth());
+    }
+    else
+        physics->setDir(game::WEST,false);
 }
 
 bool Character::checkCollision(int DIR)

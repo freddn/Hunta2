@@ -62,6 +62,7 @@ void Inventory::init()
 void Inventory::loadInventory()
 {
     l_interface.loadInventory("data/inventory1");
+    inventoryItem *items = lua_functions::getItems();
     //l_interface.addItem("data/inventory1",12,4,4,6);
 }
 

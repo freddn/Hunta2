@@ -34,6 +34,14 @@ struct map_data
     int height;
     std::map<int,Texture*> textures;
 };
+struct inventoryItem
+{
+    int id;
+    int amount;
+    int x;
+    int y;
+};
+
 
 /* Functions used by lua and getters for data gathered with lua. */
 namespace lua_functions
@@ -43,6 +51,7 @@ namespace lua_functions
     int loadItem(lua_State *l_state);
 
     std::map<int,Texture*> getCurrentMap();
+    inventoryItem* getItems();
     void setWater(Texture *water);
     void setGround(Texture *ground);
     void setGrass(Texture *grass);
