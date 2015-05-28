@@ -28,29 +28,28 @@ using namespace EntitySystem;
 /*
  * Inventory. Load items from file. Save items to file.
  */
-struct Inventory : Component
-{
-    public:
-        Inventory(int x, int y);
-        void init();
-        void update();
-        void draw();
-        void loadInventory();
+struct Inventory : Component {
+public:
+    Inventory(int x, int y);
+    void init();
+    void update();
+    void draw();
+    void loadInventory();
 
-        void addItem(int id,int amount,int x, int y);
-        void deleteItem(int id,int amount,int x, int y);
+    int addItem(int id,int amount,int x, int y);
+    void deleteItem(int id,int amount,int x, int y);
 
-        void saveInventory();
-        void buildInventory();
-        ~Inventory();
-    private:
-        LuaInterface l_interface;
-        SDL_Texture *inv_bg;
-        Texture frame;
-        Texture text;
-        int sizeX = 6;
-        int sizeY = 9;
-        SDL_Rect inventoryRect;
+    void saveInventory();
+    void buildInventory();
+    ~Inventory();
+private:
+    LuaInterface l_interface;
+    SDL_Texture *inv_bg;
+    Texture frame;
+    Texture text;
+    int sizeX = 6;
+    int sizeY = 9;
+    SDL_Rect inventoryRect;
 };
 
 #endif // INVENTORY_H

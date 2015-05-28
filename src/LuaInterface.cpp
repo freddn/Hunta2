@@ -19,21 +19,19 @@
 #include "LuaInterface.hpp"
 
 
-namespace lua_functions
-{
+namespace lua_functions {
+
     map_data current_map_data;
-    inventoryItem* items; /* */
+    inventoryItem items[20]; /* */
     int itemNo = 0;
     Texture *grass_T;
     Texture *water_T;
     Texture *ground_T;
 
-    int loadTile(lua_State *l_state)
-    {
+    int loadTile(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         //std::cout << "loadTile(), loading tile.. \n";
-        if(argc == 7)
-        {
+        if(argc == 7) {
             Texture *temp;
             //const char* name = lua_tostring(l_state,1); // filename
             int index = lua_tonumber(l_state,2); // index
@@ -43,23 +41,15 @@ namespace lua_functions
             std::string img = lua_tostring(l_state,6); // image
             bool solid = lua_tonumber(l_state,7); // solid
 
-
             if(img.compare(grass_T->getImgPath()) == 0)
-            {
                 temp = grass_T->clone();
-            }
             else if(img.compare(ground_T->getImgPath()) == 0)
-            {
                 temp = ground_T->clone();
-            }
             else if(img.compare(water_T->getImgPath()) == 0)
-            {
                 temp = water_T->clone();
-            }
             else
-            {
                 temp = grass_T->clone();
-            }
+
             temp->setXPos(x*temp->getWidth());
             temp->setYPos(y*temp->getHeight());
             temp->setXRect(x*temp->getWidth());
@@ -74,29 +64,32 @@ namespace lua_functions
         //std::cout << std::endl;
         return 1;
     }
-    int setDimensions(lua_State *l_state)
-    {
+    int setDimensions(lua_State *l_state) {
         int argc = lua_gettop(l_state);
-        if(argc == 2)
-        {
+        if(argc == 2) {
             current_map_data.width = lua_tonumber(l_state,1);
             current_map_data.height = lua_tonumber(l_state,2);
         }
         return 1;
     }
 
-    int loadItem(lua_State *l_state)
-    {
+    int loadItem(lua_State *l_state) {
         int argc = lua_gettop(l_state);
-        if(argc == 5)
-        {
+        if(argc == 5) {
             inventoryItem temp;
             temp.id =  lua_tonumber(l_state,2);
             temp.amount = lua_tonumber(l_state,3);
             temp.x = lua_tonumber(l_state,4);
             temp.y = lua_tonumber(l_state,5);
+
+            if(itemNo > 19) {
+                std::cerr << "Too many items in inventory" << std::endl;
+                return 1;
+            }
+
             items[itemNo] = temp;
             itemNo++;
+
             /*std::cout << " - ItemID: "<<lua_tonumber(l_state,2)<<
                         " Count: "<<lua_tonumber(l_state,3)<<
                         " x: " <<lua_tonumber(l_state,4) <<
@@ -106,88 +99,71 @@ namespace lua_functions
         return 1;
     }
 
-    std::map<int,Texture*> getCurrentMap()
-    {
+    std::map<int,Texture*> getCurrentMap() {
         return current_map_data.textures;
     }
 
-    inventoryItem* getItems()
-    {
+    int getItemCount() {
+        return itemNo;
+    }
+
+    inventoryItem* getItems() {
         return items;
     }
 
-    int getWidth()
-    {
+    int getWidth() {
         return current_map_data.width;
     }
 
-    int getHeight()
-    {
+    int getHeight() {
         return current_map_data.height;
     }
-    void setGrass(Texture *grass)
-    {
+
+    void setGrass(Texture *grass) {
         grass_T = grass;
     }
 
-    void setGround(Texture *ground)
-    {
+    void setGround(Texture *ground) {
         ground_T = ground;
     }
 
-    void setWater(Texture *water)
-    {
+    void setWater(Texture *water) {
         water_T = water;
     }
-
 }
 
+LuaInterface::LuaInterface() { }
 
-LuaInterface::LuaInterface()
-{
-
-}
-
-void LuaInterface::initLua()
-{
+void LuaInterface::initLua() {
     std::cout << " - LuaInterface::initLua() ..." << std::endl;
     l_state = luaL_newstate();
     luaL_openlibs(l_state);
     lua_register(l_state, "loadTile", lua_functions::loadTile);
     lua_register(l_state, "setDimensions", lua_functions::setDimensions);
     lua_register(l_state, "loadItem", lua_functions::loadItem);
-
 }
 
-void LuaInterface::report_errors(lua_State *l_state, int status)
-{
-    if(status != 0)
-    {
+void LuaInterface::report_errors(lua_State *l_state, int status) {
+    if(status != 0) {
         std::cerr << " - " << lua_tostring(l_state,-1) << std::endl;
         lua_pop(l_state,1);
     }
 }
 
-lua_State *LuaInterface::getLua_State()
-{
+lua_State *LuaInterface::getLua_State() {
     return l_state;
 }
 
-bool LuaInterface::load_File(const char *filename)
-{
+bool LuaInterface::load_File(const char *filename) {
     std::cout << " - LuaInterface::load_File() ..."<<std::endl;
     bool success = true;
     int s = luaL_loadfile(l_state,filename);
-    if(s == 0)
-    {
-        if((s = lua_pcall(l_state,0,LUA_MULTRET,0)) != 0)
-        {
+    if(s == 0) {
+        if((s = lua_pcall(l_state,0,LUA_MULTRET,0)) != 0) {
             success = false;
             std::cout << "Could not execute lua-program.";
         }
-    }
-    else
-    {
+    } else {
         success = false;
     }
     report_errors(l_state,s);
@@ -196,8 +172,7 @@ bool LuaInterface::load_File(const char *filename)
 }
 
 void LuaInterface::appendTile(const char* filename, int index, int x,
-                            int y, int z, const char* image, int solid)
-{
+                            int y, int z, const char* image, int solid) {
     lua_pushstring(l_state,"AppendTile");
 
     lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1
@@ -215,8 +190,7 @@ void LuaInterface::appendTile(const char* filename, int index, int x,
     //std::cout << std::endl;
 }
 
-void LuaInterface::clearMapFile(const char *filename)
-{
+void LuaInterface::clearMapFile(const char *filename) {
     lua_pushstring(l_state,"ClearMapFile");
     lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1
     //lua_getglobal(l_state,"_G"); // lua5.2 not working
@@ -227,8 +201,7 @@ void LuaInterface::clearMapFile(const char *filename)
     //std::cout << std::endl;
 }
 
-void LuaInterface::newMapFile(const char *filename,int width,int height)
-{
+void LuaInterface::newMapFile(const char *filename,int width,int height) {
     std::cout << " - LuaInterface::newMapFile() ..."<<std::endl;
     lua_pushstring(l_state,"NewMapFile");
     lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1 working
@@ -241,8 +214,7 @@ void LuaInterface::newMapFile(const char *filename,int width,int height)
     report_errors(l_state,p);
 }
 
-bool LuaInterface::mapFileExist(const char *filename)
-{
+bool LuaInterface::mapFileExist(const char *filename) {
     bool exists = false;
     lua_pushstring(l_state,"MapFileExist");
     lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1
@@ -251,8 +223,7 @@ bool LuaInterface::mapFileExist(const char *filename)
     lua_pushstring(l_state,filename);
     int p = lua_pcall(l_state,1,0,0);
     report_errors(l_state,p);
-    if(lua_tonumber(l_state,-1) == 1)
-    {
+    if(lua_tonumber(l_state,-1) == 1) {
         exists = true;
     }
     return exists;
@@ -260,8 +231,7 @@ bool LuaInterface::mapFileExist(const char *filename)
 
 
 void LuaInterface::addItem(const char *filename,int id,
-                            int amount, int x, int y)
-{
+                            int amount, int x, int y) {
     lua_pushstring(l_state,"AddItem");
     lua_gettable(l_state,LUA_GLOBALSINDEX);
     lua_pushstring(l_state,filename);
@@ -272,9 +242,9 @@ void LuaInterface::addItem(const char *filename,int id,
     int p = lua_pcall(l_state,5,0,0);
     report_errors(l_state,p);
 }
+
 void LuaInterface::deleteItem(const char *filename,int id,
-                                int amount, int x, int y)
-{
+                                int amount, int x, int y) {
     lua_pushstring(l_state,"DeleteItem");
     lua_gettable(l_state,LUA_GLOBALSINDEX);
     lua_pushstring(l_state,filename);
@@ -285,16 +255,16 @@ void LuaInterface::deleteItem(const char *filename,int id,
     int p = lua_pcall(l_state,5,0,0);
     report_errors(l_state,p);
 }
-void LuaInterface::clearInventory(const char *filename)
-{
+
+void LuaInterface::clearInventory(const char *filename) {
     lua_pushstring(l_state,"ClearInventory");
     lua_gettable(l_state,LUA_GLOBALSINDEX);
     lua_pushstring(l_state,filename);
     int p = lua_pcall(l_state,1,0,0);
     report_errors(l_state,p);
 }
-void LuaInterface::newInventory(const char *filename)
-{
+
+void LuaInterface::newInventory(const char *filename) {
     lua_pushstring(l_state,"NewInventory");
     lua_gettable(l_state,LUA_GLOBALSINDEX);
     lua_pushstring(l_state,filename);
@@ -302,8 +272,7 @@ void LuaInterface::newInventory(const char *filename)
     report_errors(l_state,p);
 }
 
-void LuaInterface::load_tiles(const char *filename)
-{
+void LuaInterface::load_tiles(const char *filename) {
 
     std::cout << " - LuaInterface::load_tiles() ..." << std::endl;
     lua_pushstring(l_state,"getTiles");
@@ -316,10 +285,16 @@ void LuaInterface::load_tiles(const char *filename)
     report_errors(l_state,p);
 }
 
-void LuaInterface::loadInventory(const char *filename)
-{
+void LuaInterface::loadInventory(const char *filename) {
+    for(int i = 0;i<20;i++) {
+        lua_functions::items[i].id = -1;
+        lua_functions::items[i].amount = -1;
+        lua_functions::items[i].x = -1;
+        lua_functions::items[i].y = -1;
+    }
+
     lua_functions::itemNo = 0;
-    lua_functions::items = NULL;
+
     lua_pushstring(l_state,"loadInventory");
     lua_gettable(l_state,LUA_GLOBALSINDEX);
     lua_pushstring(l_state,filename);
@@ -327,7 +302,6 @@ void LuaInterface::loadInventory(const char *filename)
     report_errors(l_state,p);
 }
 
-LuaInterface::~LuaInterface()
-{
+LuaInterface::~LuaInterface() {
     lua_close(l_state);
 }
