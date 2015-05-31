@@ -19,13 +19,15 @@
 #include "Character.hpp"
 #include "Game.hpp"
 
+
 Character::Character() //: Texture()
 {
 }
 
-Character::Character(EntityManager *m)
+Character::Character(EntityManager *m, EntityCreator *c)
 {
     manager = m;
+    creator = c;
 }
 
 Character::~Character()
@@ -38,6 +40,7 @@ void Character::init()
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
     physics = &entity->getComponent<GPhysics>();
+    physics->setKeyControlled(true);
     //position->setX(game::getWidth());
     //position->setY(game::getHeight());
     if(position->getX()-(game::getWidth()/2) < 0)
@@ -80,6 +83,21 @@ void Character::update()
             physics->isColliding(e);
         }
     }
+    if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
+        if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+            //std::cerr << selected;
+            if(!attacking) {
+                attacking = true;
+                /* Fire a projectile.. */
+                std::cerr << "create a projectile." << std::endl;
+                creator->createProjectile(manager,position->getX(),position->getY(),
+                            game::getMouseX()+game::getOffset()->x,game::getMouseY()+game::getOffset()->y);
+                std::cerr << "created a projectile." << std::endl;
+            }
+        }
+    }
+    else
+        attacking = false;
 }
 void Character::moveChar(const Uint8 *key)
 {

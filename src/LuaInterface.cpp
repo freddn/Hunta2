@@ -99,8 +99,8 @@ namespace lua_functions {
         return 1;
     }
 
-    std::map<int,Texture*> getCurrentMap() {
-        return current_map_data.textures;
+    std::map<int,Texture*> *getCurrentMap() {
+        return &current_map_data.textures;
     }
 
     int getItemCount() {

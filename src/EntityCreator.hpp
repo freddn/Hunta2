@@ -36,14 +36,15 @@ class EntityCreator
         EntityCreator();
 
         Entity& createPlayer(EntitySystem::EntityManager *mManager,
-                                int x,int y);
+                                EntityCreator *creator,int x,int y);
         Entity& createItem(EntitySystem::EntityManager *mManager,int itemNumber,
                                 int x,int y, bool onGround);
         Entity& createEnemy(EntitySystem::EntityManager *mManager,int enemyNumber,
                                 int x,int y);
         Entity& createEnvironment(EntitySystem::EntityManager *mManager,
                                     int envNumber,int x,int y);
-
+        Entity& createProjectile(EntitySystem::EntityManager *mManager,
+                                        int x,int y,int destX,int destY);
         virtual ~EntityCreator();
     protected:
     private:

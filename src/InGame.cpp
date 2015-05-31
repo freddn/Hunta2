@@ -33,7 +33,7 @@ void InGame::init()
 {
     std::cout << " - InGame::init() ..."<<std::endl;
     inv.init();
-    creator.createPlayer(&inGameManager,game::getWidth(),game::getHeight());
+    creator.createPlayer(&inGameManager,&creator,game::getWidth(),game::getHeight());
     //creator.createPlayer(&inGameManager,20,20);
     creator.createItem(&inGameManager,0,100,100,true);
     creator.createItem(&inGameManager,0,150,150,true);
@@ -52,6 +52,8 @@ void InGame::init()
     creator.createEnemy(&inGameManager,1,530,300);
     creator.createEnemy(&inGameManager,0,790,570);
     creator.createEnemy(&inGameManager,0,345,390);
+    creator.createProjectile(&inGameManager,300,300,600,600);
+    //creator.createProjectile(manager,position->getX(),position->getY(),game::getMouseX(),game::getMouseY());
     //stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
 }
 
@@ -63,7 +65,7 @@ void InGame::draw()
     if(game::getHasChanged())
     {
         SDL_SetRenderTarget(game::getRenderer(),game::getBuffer());
-        for(auto iter = game::getTexture_map()->begin(); iter != game::getTexture_map()->end();iter++)
+        for(auto iter = game::getTextureMap()->begin(); iter != game::getTextureMap()->end();iter++)
         {
             //std::cout << "render texure" << std::endl;
             ((Texture*)iter->second)->render(game::getRenderer(),

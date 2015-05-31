@@ -33,10 +33,10 @@ Position::~Position()
     //dtor
 }
 
-void Position::update()
+/*void Position::update()
 {
     //std::cerr <<"Position::update()"<<std::endl;
-}
+}*/
 
 float Position::getX()
 {

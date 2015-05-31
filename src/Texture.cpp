@@ -104,6 +104,7 @@ void Texture::init()
 
 void Texture::draw()
 {
+    //std::cerr << "-- Texture::draw"<<std::endl;
     if(position->getX()+tWidth > game::getOffset()->x &&
         position->getX() < game::getOffset()->x + game::getWidth() &&
         position->getY()+tHeight > game::getOffset()->y &&
@@ -114,11 +115,12 @@ void Texture::draw()
 
 
 }
-
+/*
 void Texture::update()
 {
     //std::cerr<< "Texture::update()"<<std::endl;
 }
+*/
 
 bool Texture::loadFromFile(SDL_Renderer *renderer, std::string path)
 {

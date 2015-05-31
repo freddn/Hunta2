@@ -20,13 +20,11 @@
 
 
 
-MapClass::MapClass()
-{
+MapClass::MapClass() {
 
 }
 
-void MapClass::init(SDL_Renderer *renderer)
-{
+void MapClass::init(SDL_Renderer *renderer) {
     std::cout << " - MapClass::init() ..."<<std::endl;
     ground_T.loadFromFile(renderer,"data/ground.png");
     water_T.loadFromFile(renderer,"data/water.png");
@@ -40,63 +38,53 @@ void MapClass::init(SDL_Renderer *renderer)
     mapCreator.init();
 }
 
-MapClass::~MapClass()
-{
+MapClass::~MapClass() {
     currentMap.erase(currentMap.begin(),currentMap.end());
     grass_T.free();
     ground_T.free();
     water_T.free();
 }
 
-bool MapClass::loadMap(const char* filename)
-{
+bool MapClass::loadMap(const char* filename) {
     std::cout << " - MapClass::loadMap() ... " << std::endl;
     bool success = true;
-    currentMap = mapLoader.getMap(filename);
+    currentMap = *mapLoader.getMap(filename);
     if(currentMap.empty())
         success = false;
     return success;
 }
 
-void MapClass::saveMap(std::map<int,Texture*> temp_map,
-                        const char* filename, int width, int height)
-{
+void MapClass::saveMap(std::map<int,Texture*> &temp_map,
+                        const char* filename, int width, int height) {
     std::cout << " - MapClass::saveMap() ..."<<std::endl;
     mapCreator.newMap(temp_map,filename,width,height);
 }
 
-void insertTile(Texture *texture)
-{
+void insertTile(Texture *texture) {
 
 }
 
-void MapClass::setMap(std::map<int,Texture*> tempMap)
-{
+void MapClass::setMap(std::map<int,Texture*> &tempMap) {
     currentMap = tempMap;
 }
 
-std::map<int,Texture*> MapClass::getMap()
-{
-    return currentMap;
+std::map<int,Texture*> *MapClass::getMap() {
+    return &currentMap;
 }
 
-Texture* MapClass::tileAtIndex()
-{
+Texture* MapClass::tileAtIndex() {
     return NULL;
 }
 
-Texture* MapClass::getGrassTile()
-{
+Texture* MapClass::getGrassTile() {
     return grass_T.clone();
 }
 
-Texture* MapClass::getGroundTile()
-{
+Texture* MapClass::getGroundTile() {
     return ground_T.clone();
 }
 
-Texture* MapClass::getWaterTile()
-{
+Texture* MapClass::getWaterTile() {
     return water_T.clone();
 }
 

@@ -44,8 +44,7 @@
  * Game class. Contains game-loop. State of the game. Init of map/data.
  * This class holds alot of important game related objects.
  */
-namespace game
-{
+namespace game {
     /* Will init the needed states and then start the game-loop. */
     void start();
     /* Initiates SDL, creates a window, buffer and so on. */
@@ -59,7 +58,7 @@ namespace game
     enum Selected {GRASS,GROUND,WATER};
     enum Direction {NORTH,SOUTH,EAST,WEST};
     /* Different entity types. */
-    enum EntityGroup : std::size_t {PLAYER, ITEM, ENEMY, ENVIRONMENT};
+    enum EntityGroup : std::size_t {PLAYER, ITEM, ENEMY, ENVIRONMENT,PROJECTILE};
     /* Getters. */
     SDL_Event *getEvent();
     SDL_Rect *getOffset();
@@ -73,12 +72,12 @@ namespace game
     TTF_Font * getFont();
 
     int getCurrent_state();
-    MapClass *getTextureMap();
-    std::map<int,Texture*> *getTexture_map();
+    MapClass *getTextureMapObject();
+    std::map<int,Texture*> *getTextureMap();
     int getWidth();
-    int getT_width();
+    int getTWidth();
     int getHeight();
-    int getT_height();
+    int getTHeight();
     int getMouseX();
     int getMouseY();
     int getMaxFPS();
@@ -89,7 +88,7 @@ namespace game
 
     /* Setters. */
     void setHasChanged(bool boolean);
-    void setTexture_map(std::map<int,Texture*> temp_map);
+    void setTextureMap(std::map<int,Texture*> &temp_map);
     void setBuffer(SDL_Texture * temp);
     void setCurrent_state(int temp);
     void setRectX(int x);

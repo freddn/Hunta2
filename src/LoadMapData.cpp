@@ -60,7 +60,7 @@ void insertTile()
 
 }
 
-std::map<int,Texture*> LoadMapData::getMap(const char* filename)
+std::map<int,Texture*> * LoadMapData::getMap(const char* filename)
 {
     std::cout << " - LoadMapData::getMap() ..."<<std::endl;
     l_interface.load_tiles(filename);

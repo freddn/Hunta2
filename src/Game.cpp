@@ -19,8 +19,7 @@
 #include "Game.hpp"
 
 
-namespace game
-{
+namespace game {
     SDL_Event event;
     SDL_Rect offset;
     SDL_Rect rect;
@@ -54,37 +53,31 @@ namespace game
     SDL_Color text_color = {255,255,255};
     bool running = true;
 
-    void start()
-    {
+    void start() {
         std::cerr << " - game::start() ..." << std::endl;
         key = SDL_GetKeyboardState(NULL);
         textureMap.init(renderer);
-        std::cout << " - game::start() --load map-- ..."<<std::endl;
-        if(!textureMap.loadMap("data/map2"))
-        {
+        std::cerr << " - game::start() (load map) ..."<<std::endl;
+        if(!textureMap.loadMap("data/map2")) {
             std::cerr << "Map could not be loaded" << std::endl;
         }
         //std::map<int,Texture*> textures;
-        std::cout << " - game::start() --creating states-- ..."<<std::endl;
+        std::cerr << " - game::start() (creating states) ..."<<std::endl;
         Screen screen;
         Editor editor;
         InGame in_game;
         MainMenu mMenu;
         mMenu.init();
         in_game.init();
-        texture_map = textureMap.getMap();
-
-
+        texture_map = *textureMap.getMap();
 
         fpsTimer.start();
-        std::cout << " - game::start() --main loop-- ..."<<std::endl;
-        while(running)
-        {
+        std::cerr << " - game::start() (main loop) ..."<<std::endl;
+        while(running) {
             /* Get current time */
             currentTick = (int)SDL_GetTicks();
 
-            switch(current_state)
-            {
+            switch(current_state) {
             case(MAINMENU):
                 /* Show the main menu */
                 mMenu.update();
@@ -110,8 +103,7 @@ namespace game
             }
 
             avgFPS = countedFrames / (fpsTimer.getTicks() / 1000.f);
-            if(avgFPS > 2000000)
-            {
+            if(avgFPS > 2000000) {
                 avgFPS = 0;
             }
             if(((int)SDL_GetTicks() - currentTick) < 1000/game::getMaxFPS()) {
@@ -121,8 +113,7 @@ namespace game
         }
     }
 
-    bool init_game()
-    {
+    bool init_game() {
         offset.x = width/2;
         offset.y = height/2;
         offset.w = width;
@@ -136,45 +127,40 @@ namespace game
         rect.h = 32;
         rect.w = 32;
 
-        if(SDL_Init(SDL_INIT_VIDEO) < 0)
-        {
+        if(SDL_Init(SDL_INIT_VIDEO) < 0) {
             std::cerr << "Init video failed." << std::endl;
             return false;
         }
 
         gWindow = SDL_CreateWindow("Hunta 2",SDL_WINDOWPOS_UNDEFINED,
                                    SDL_WINDOWPOS_UNDEFINED,
-                                   width,height,SDL_WINDOW_SHOWN);
+                                   width,height,SDL_WINDOW_OPENGL |
+                                   SDL_WINDOW_RESIZABLE); //SDL_WINDOW_SHOWN);
 
-        if(gWindow == NULL)
-        {
+        if(gWindow == NULL) {
             std::cerr << "Window could not be created." << std::endl;
             return false;
         }
 
         renderer = SDL_CreateRenderer(gWindow,-1,SDL_RENDERER_ACCELERATED);
 
-        if(renderer == NULL)
-        {
-            std::cerr << "renderer could not be created" << std::endl;
+        if(renderer == NULL) {
+            std::cerr << "Renderer could not be created" << std::endl;
             return false;
         }
 
-        if(IMG_Init(IMG_INIT_PNG) < 0)
-        {
+        if(IMG_Init(IMG_INIT_PNG) < 0) {
             std::cerr << "IMG_Init() failed." << std::endl;
             return false;
         }
 
-        if(TTF_Init() != 0)
-        {
+        if(TTF_Init() != 0) {
             std::cerr << "TTF_Init() failed" << std::endl;
             return false;
         }
 
         font = TTF_OpenFont("freefont/FreeSans.ttf",24);
-        if(font == NULL)
-        {
+        if(font == NULL) {
             std::cerr << "No font" << std::endl;
             return false;
         }
@@ -182,8 +168,7 @@ namespace game
         buffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
                                    SDL_TEXTUREACCESS_TARGET, width*2, height*2);
 
-        if(buffer == 0)
-        {
+        if(buffer == 0) {
             std::cerr << "Failed to create buffer" << std::endl;
             return false;
         }
@@ -192,10 +177,8 @@ namespace game
         return true;
     }
 
-    void close()
-    {
-        for(auto iter = game::getTexture_map()->begin(); iter != game::getTexture_map()->end();iter++)
-        {
+    void close() {
+        for(auto iter = game::getTextureMap()->begin(); iter != game::getTextureMap()->end();iter++){
             ((Texture*)iter->second)->free();
         }
 
@@ -213,155 +196,124 @@ namespace game
         SDL_Quit();
     }
 
-
-
-    SDL_Event *getEvent()
-    {
+    SDL_Event *getEvent() {
         return &event;
     }
 
-    SDL_Rect *getOffset()
-    {
+    SDL_Rect *getOffset() {
         return &offset;
     }
 
-    SDL_Rect *getRect()
-    {
+    SDL_Rect *getRect() {
         return &rect;
     }
 
-    void setRectX(int x)
-    {
+    void setRectX(int x) {
         rect.x = x;
     }
 
-    SDL_Rect *getBackground()
-    {
+    SDL_Rect *getBackground() {
         return &background;
     }
 
-    SDL_Color getText_color()
-    {
+    SDL_Color getText_color() {
         return text_color;
     }
 
-    int getMouseX()
-    {
+    int getMouseX() {
         return mouseX;
     }
 
-    void setMouseX(int x)
-    {
+    void setMouseX(int x) {
         mouseX = x;
     }
 
-    int getMouseY()
-    {
+    int getMouseY() {
         return mouseY;
     }
 
-    void setMouseY(int y)
-    {
+    void setMouseY(int y) {
         mouseY = y;
     }
 
-    SDL_Window *getGWindow()
-    {
+    SDL_Window *getGWindow() {
         return gWindow;
     }
 
-    SDL_Renderer *getRenderer()
-    {
+    SDL_Renderer *getRenderer() {
         return renderer;
     }
 
-    SDL_Texture *getBuffer()
-    {
+    SDL_Texture *getBuffer() {
         return buffer;
     }
 
-    void setBuffer(SDL_Texture * temp)
-    {
+    void setBuffer(SDL_Texture * temp) {
         buffer = temp;
     }
 
-    TTF_Font * getFont()
-    {
+    TTF_Font * getFont() {
         return font;
     }
 
-    int getCurrent_state()
-    {
+    int getCurrent_state() {
         return current_state;
     }
 
-    void setCurrent_state(int temp)
-    {
+    void setCurrent_state(int temp) {
         current_state = temp;
     }
 
-    MapClass *getTextureMap()
-    {
+    MapClass *getTextureMapObject()  {
         return &textureMap;
     }
 
-    std::map<int,Texture*> *getTexture_map()
-    {
+    std::map<int,Texture*> *getTextureMap() {
         return &texture_map;
     }
 
-    void setTexture_map(std::map<int,Texture*> temp_map)
-    {
+    void setTextureMap(std::map<int,Texture*> &temp_map) {
         texture_map = temp_map;
     }
 
-    int getWidth()
-    {
+    int getWidth() {
         return width;
     }
 
-    int getT_width()
-    {
+    int getTWidth() {
         return t_width;
     }
-    int getHeight()
-    {
+
+    int getHeight() {
         return height;
     }
-    int getT_height()
-    {
+
+    int getTHeight() {
         return t_height;
     }
 
-    int getMaxFPS()
-    {
+    int getMaxFPS() {
         return maxFPS;
     }
 
-    bool getHasChanged()
-    {
+    bool getHasChanged() {
         return hasChanged;
     }
 
-    void setHasChanged(bool boolean)
-    {
+    void setHasChanged(bool boolean) {
         hasChanged = boolean;
     }
 
-    float getAvgFPS()
-    {
+    float getAvgFPS() {
         return avgFPS;
     }
 
-    LTimer* getTimer()
-    {
+    LTimer* getTimer() {
         return &timer;
     }
 
-    void setRunning(bool boolean)
-    {
+    void setRunning(bool boolean) {
         running = boolean;
     }
-
 }
 

@@ -25,16 +25,14 @@
 /*
  * Import map-data.
  */
-class LoadMapData
-{
-    public:
-        LoadMapData();
-        void init();
-        void insertTiles();
-        std::map<int,Texture*> getMap(const char* filename);
-        virtual ~LoadMapData();
-    protected:
-    private:
+class LoadMapData {
+public:
+    LoadMapData();
+    void init();
+    void insertTiles();
+    std::map<int,Texture*> *getMap(const char* filename);
+    virtual ~LoadMapData();
+private:
     LuaInterface l_interface;
 };
 

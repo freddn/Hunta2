@@ -48,7 +48,7 @@ namespace lua_functions {
     int setDimensions(lua_State *l_state);
     int loadItem(lua_State *l_state);
 
-    std::map<int,Texture*> getCurrentMap();
+    std::map<int,Texture*> *getCurrentMap();
     int getItemCount();
     inventoryItem* getItems();
     void setWater(Texture *water);
@@ -80,10 +80,10 @@ public:
 
     void load_tiles(const char *filename);
     void loadInventory(const char *filename);
-    std::map<int,Texture> getMap();
+    std::vector<std::pair<int,Texture*>> *getMap();
     virtual ~LuaInterface();
 private:
-    std::map<int,Texture> texture_map;
+    std::vector<std::pair<int,Texture*>> texture_map;
     lua_State *l_state;
 };
 

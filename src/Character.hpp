@@ -23,6 +23,7 @@
 #include "Texture.hpp"
 #include "GPhysics.hpp"
 #include "EntitySystem.hpp"
+#include "EntityCreator.hpp"
 
 using namespace EntitySystem;
 
@@ -35,7 +36,7 @@ struct Character: Component
 {
 public:
     Character();
-    Character(EntityManager *m);
+    Character(EntityManager *m, EntityCreator *c);
 
     /* Load player. Loads a texture with the
      * character image and set position. */
@@ -62,7 +63,8 @@ private:
     Texture *texture{nullptr};
     Position *position{nullptr};
     EntityManager *manager{nullptr};
-
+    EntityCreator *creator;
+    bool attacking = false;
     int xPos; /* x-position of the player. */
     int yPos; /* y-position of the player. */
 };

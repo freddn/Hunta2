@@ -27,17 +27,15 @@
 /*
  * Will create a new map.
  */
-class MapCreator
-{
-    public:
-        MapCreator();
-        void init();
-        void newMap(std::map<int,Texture*> currentMap,
-                    const char*filename, int width, int height);
+class MapCreator {
+public:
+    MapCreator();
+    void init();
+    void newMap(std::map<int,Texture*> &currentMap,
+                const char*filename, int width, int height);
 
-        virtual ~MapCreator();
-    protected:
-    private:
+    virtual ~MapCreator();
+private:
     LuaInterface l_interface;
 
 };

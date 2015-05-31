@@ -31,75 +31,75 @@
 /* Texture class. Can load an image, render the texture and get texture data.*/
 struct Texture : EntitySystem::Component
 {
-    public:
-        /* Create a regular texture, size will be set as the size of the image. */
-        Texture();
+public:
+    /* Create a regular texture, size will be set as the size of the image. */
+    Texture();
 
-        /* Create a texture and choose if it is clipped, currently only 32x32px. */
-        Texture(std::string img,bool clip);
-        Texture(std::string img,bool clip,int w,int h);
+    /* Create a texture and choose if it is clipped, currently only 32x32px. */
+    Texture(std::string img,bool clip);
+    Texture(std::string img,bool clip,int w,int h);
 
-        /* Create a text that can be drawn to the screen. */
-        Texture(std::string text,SDL_Color textcolor,TTF_Font* font);
+    /* Create a text that can be drawn to the screen. */
+    Texture(std::string text,SDL_Color textcolor,TTF_Font* font);
 
-        void init();
-        void draw();
-        void update();
+    void init();
+    void draw();
+    //void update();
 
-        bool loadFromFile(SDL_Renderer *renderer, std::string path);
-        bool loadFromText(SDL_Renderer *renderer, std::string text,
-                            SDL_Color textcolor,TTF_Font *font);
-        void free();
-        // (
-        void setColor(Uint8 red, Uint8 green, Uint8 blue);
-        void setBlendMode(SDL_BlendMode blending);
-        void setAlpha(Uint8 alpha);
-        // )
-        void render(SDL_Renderer *renderer, int x, int y,
-                        SDL_Rect* clip = NULL,double angle = 0.0,
-                    SDL_Point* center = NULL,SDL_RendererFlip = SDL_FLIP_NONE);
-        void render(SDL_Renderer *renderer, SDL_Rect* clip = NULL,
-                        double angle = 0.0, SDL_Point* center = NULL,
-                        SDL_RendererFlip = SDL_FLIP_NONE);
-        int getWidth();
-        int getHeight();
-        SDL_Rect getRect();
-        void setXPos(int x);
-        void setYPos(int y);
-        void setXRect(int x);
-        void setYRect(int y);
-        int getX();
-        int getY();
+    bool loadFromFile(SDL_Renderer *renderer, std::string path);
+    bool loadFromText(SDL_Renderer *renderer, std::string text,
+                        SDL_Color textcolor,TTF_Font *font);
+    void free();
+    // (
+    void setColor(Uint8 red, Uint8 green, Uint8 blue);
+    void setBlendMode(SDL_BlendMode blending);
+    void setAlpha(Uint8 alpha);
+    // )
+    void render(SDL_Renderer *renderer, int x, int y,
+                    SDL_Rect* clip = NULL,double angle = 0.0,
+                SDL_Point* center = NULL,SDL_RendererFlip = SDL_FLIP_NONE);
+    void render(SDL_Renderer *renderer, SDL_Rect* clip = NULL,
+                    double angle = 0.0, SDL_Point* center = NULL,
+                    SDL_RendererFlip = SDL_FLIP_NONE);
+    int getWidth();
+    int getHeight();
+    SDL_Rect getRect();
+    void setXPos(int x);
+    void setYPos(int y);
+    void setXRect(int x);
+    void setYRect(int y);
+    int getX();
+    int getY();
 
-        void setClipX(int x);
-        void setClipY(int y);
-        void setClipW(int w);
-        void setClipH(int h);
+    void setClipX(int x);
+    void setClipY(int y);
+    void setClipW(int w);
+    void setClipH(int h);
 
-        std::string getImgPath();
-        bool isSolid();
-        void setSolid(bool solidBool);
-        Texture *clone() const { return new Texture(*this); }
+    std::string getImgPath();
+    bool isSolid();
+    void setSolid(bool solidBool);
+    Texture *clone() const { return new Texture(*this); }
 
-        ~Texture();
+    ~Texture();
 
-    private:
-        Position *position{nullptr};
+private:
+    Position *position{nullptr};
 
-        SDL_Texture *currentTexture = NULL;
-        SDL_Rect rect;
-        SDL_Rect tclip;
-        SDL_Color textColor;
-        TTF_Font* textFont;
-        bool isClipped = false;
-        bool isText = false;
-        bool solid = false; // texture is solid?
-        std::string imageName = "image_name";
-        std::string textString;
-        int xPos;
-        int yPos;
-        int tWidth; //texture width
-        int tHeight; //texture height
+    SDL_Texture *currentTexture = NULL;
+    SDL_Rect rect;
+    SDL_Rect tclip;
+    SDL_Color textColor;
+    TTF_Font* textFont;
+    bool isClipped = false;
+    bool isText = false;
+    bool solid = false; // texture is solid?
+    std::string imageName = "image_name";
+    std::string textString;
+    int xPos;
+    int yPos;
+    int tWidth; //texture width
+    int tHeight; //texture height
 };
 
 #endif // TEXTURE_H

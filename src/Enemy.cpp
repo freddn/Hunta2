@@ -18,19 +18,16 @@
 
  #include "Enemy.hpp"
 
-Enemy::Enemy(EntityManager *m)
-{
+Enemy::Enemy(EntityManager *m) {
     //ctor
     manager = m;
 }
 
-Enemy::~Enemy()
-{
+Enemy::~Enemy() {
     //dtor
 }
 
-void Enemy::init()
-{
+void Enemy::init() {
     std::cout << " - Enemy::init() ..."<<std::endl;
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
@@ -38,17 +35,16 @@ void Enemy::init()
     xSpawnPos = position->getX();
     ySpawnPos = position->getY();
 
-    //physics = &entity->getComponent<GPhysics>();
+    physics = &entity->getComponent<GPhysics>();
+    physics->setVelocity(2);
+
     aggro = false;
 }
 
-void Enemy::draw()
-{
-
+void Enemy::draw() {
 }
 
-void Enemy::update()
-{
+void Enemy::update() {
     Position playerPos;
     auto& player(manager->getEntitiesByGroup(game::PLAYER));
     playerPos = player[0]->getComponent<Position>();
@@ -57,20 +53,16 @@ void Enemy::update()
     if(playerPos.getX()+132 > position->getX() &&
         playerPos.getX()-100 < position->getX() &&
         playerPos.getY()+132 > position->getY() &&
-        playerPos.getY()-100 < position->getY())
-    {
-        if(aggro == false)
-        {
+        playerPos.getY()-100 < position->getY()) {
+        if(aggro == false) {
             aggro = true;
             /* FIXME: Replace the position with an ID. */
             std::cerr << "!aggro from enemy at pos " << position->getX() <<
                 "," << position->getY() << std::endl;
         }
     }
-    else
-    {
-        if(aggro == true)
-        {
+    else {
+        if(aggro == true) {
             aggro = false;
             /* FIXME: Replace the position with an ID. */
             std::cerr << "!no aggro from enemy at pos " << position->getX() <<
@@ -78,57 +70,47 @@ void Enemy::update()
         }
     }
 
-    if(aggro) /* Follow player */
-    {
+    if(aggro) {     /* Follow player */
+        //std::cerr << "x: "<< playerPos.getX() - position->getX() << std::endl;
+        //std::cerr << "y: "<< playerPos.getY() - position->getY() << std::endl;
+        physics->setDestX(playerPos.getX() - position->getX());
+        physics->setDestY(playerPos.getY() - position->getY());
 
-
-        if(position->getY()+32 < playerPos.getY())
-        {
-            position->setY(position->getY() + 1);
+        if(position->getY()+32 < playerPos.getY()) {
+            //position->setY(position->getY() + 1);
             texture->setClipX(0);
             texture->setClipY(0);
-        }
-        else if(position->getY()-32 > playerPos.getY())
-        {
-            position->setY(position->getY() - 1);
+        } else if(position->getY()-32 > playerPos.getY()) {
+            //position->setY(position->getY() - 1);
             texture->setClipX(1);
             texture->setClipY(0);
         }
-        if(position->getX()+32 < playerPos.getX())
-        {
-            position->setX(position->getX() + 1);
+        if(position->getX()+32 < playerPos.getX()) {
+            //position->setX(position->getX() + 1);
             texture->setClipX(1);
             texture->setClipY(1);
-        }
-        else if(position->getX()-32 > playerPos.getX())
-        {
-            position->setX(position->getX() - 1);
+        } else if(position->getX()-32 > playerPos.getX()) {
+            //position->setX(position->getX() - 1);
             texture->setClipX(0);
             texture->setClipY(1);
         }
-    }
-    else /* Return home */
-    {
-        if(position->getX() < xSpawnPos)
-        {
+    } else {        /* Return home */
+        physics->setDestX(0.f);
+        physics->setDestY(0.f);
+
+        if(position->getX() < xSpawnPos-1) {
             position->setX(position->getX() + 1);
             texture->setClipX(1);
-        }
-        else if(position->getX() > xSpawnPos)
-        {
+        } else if(position->getX() > xSpawnPos+1) {
             position->setX(position->getX() - 1);
             texture->setClipX(0);
         }
-        if(position->getY() < ySpawnPos)
-        {
+        if(position->getY() < ySpawnPos-1) {
             position->setY(position->getY() + 1);
-        }
-        else if(position->getY() > ySpawnPos)
-        {
+        } else if(position->getY() > ySpawnPos+1) {
             position->setY(position->getY() - 1);
         }
     }
-
 }
 
 

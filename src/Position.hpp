@@ -31,7 +31,7 @@ struct Position : EntitySystem::Component
         Position();
         Position(float xPos,float yPos);
 
-        void update();
+        //void update();
 
         float getX();
         float getY();
