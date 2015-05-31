@@ -30,7 +30,8 @@ SRC = src/Character.cpp \
       src/Renderer.cpp \
       src/Screen.cpp \
       src/Texture.cpp \
-      src/Tile.cpp
+      src/Tile.cpp \
+	  src/Projectile.cpp
 
 OBJ = ${SRC:.cpp=.o}
 
