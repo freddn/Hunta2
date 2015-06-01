@@ -48,7 +48,7 @@ void GPhysics::update() {
 }
 
 void GPhysics::init() {
-    std::cout << " - GPhysics::init() ..."<<std::endl;
+    //std::cout << " - GPhysics::init() ..."<<std::endl;
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
 }

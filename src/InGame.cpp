@@ -33,26 +33,30 @@ void InGame::init()
 {
     std::cout << " - InGame::init() ..."<<std::endl;
     inv.init();
-    creator.createPlayer(&inGameManager,&creator,game::getWidth(),game::getHeight());
+    creator.createPlayer(inGameManager,creator,game::getWidth(),game::getHeight());
     //creator.createPlayer(&inGameManager,20,20);
-    creator.createItem(&inGameManager,0,100,100,true);
-    creator.createItem(&inGameManager,0,150,150,true);
+    creator.createItem(inGameManager,0,100,100,true);
+    creator.createItem(inGameManager,0,150,150,true);
 
-    creator.createEnvironment(&inGameManager,0,400,130);
-    creator.createEnvironment(&inGameManager,0,130,300);
-    creator.createEnvironment(&inGameManager,0,300,200);
-    creator.createEnvironment(&inGameManager,0,220,300);
-    creator.createEnvironment(&inGameManager,0,220,600);
-    creator.createEnvironment(&inGameManager,0,720,300);
-    creator.createEnvironment(&inGameManager,0,620,400);
-    creator.createEnvironment(&inGameManager,0,1100,1200);
+    creator.createEnvironment(inGameManager,0,400,130);
+    creator.createEnvironment(inGameManager,0,130,300);
+    creator.createEnvironment(inGameManager,0,300,200);
+    creator.createEnvironment(inGameManager,0,220,300);
+    creator.createEnvironment(inGameManager,0,220,600);
+    creator.createEnvironment(inGameManager,0,720,300);
+    creator.createEnvironment(inGameManager,0,4,400);
+    creator.createEnvironment(inGameManager,0,1,300);
+    creator.createEnvironment(inGameManager,0,220,600);
+    creator.createEnvironment(inGameManager,0,7,300);
+    creator.createEnvironment(inGameManager,0,9,400);
+    creator.createEnvironment(inGameManager,0,1100,1200);
 
-    creator.createEnemy(&inGameManager,1,300,300);
-    creator.createEnemy(&inGameManager,0,345,290);
-    creator.createEnemy(&inGameManager,1,530,300);
-    creator.createEnemy(&inGameManager,0,790,570);
-    creator.createEnemy(&inGameManager,0,345,390);
-    creator.createProjectile(&inGameManager,300,300,600,600);
+    creator.createEnemy(inGameManager,1,300,300);
+    creator.createEnemy(inGameManager,0,345,290);
+    creator.createEnemy(inGameManager,1,530,300);
+    creator.createEnemy(inGameManager,0,790,570);
+    creator.createEnemy(inGameManager,0,345,390);
+    //creator.createProjectile(inGameManager,300,300,600,600);
     //creator.createProjectile(manager,position->getX(),position->getY(),game::getMouseX(),game::getMouseY());
     //stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
 }

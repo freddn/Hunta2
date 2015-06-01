@@ -31,7 +31,7 @@ Environment::~Environment()
 
 void Environment::init()
 {
-    std::cout << " - Environment::init() ..."<<std::endl;
+    //std::cout << " - Environment::init() ..."<<std::endl;
     position = &entity->getComponent<Position>();
     physics = &entity->getComponent<GPhysics>();
 }

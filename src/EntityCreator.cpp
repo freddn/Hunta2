@@ -33,63 +33,61 @@ EntityCreator::~EntityCreator() {
     //dtor
 }
 
-Entity& EntityCreator::createPlayer(EntitySystem::EntityManager *mManager,
-                                    EntityCreator *creator,int x,int y) {
+Entity& EntityCreator::createPlayer(EntitySystem::EntityManager &mManager,
+                                    EntityCreator &creator,int x,int y) {
     std::cout << " - EntityCreator::createPlayer() ..."<<std::endl;
-    auto& entity(mManager->addEntity());
+    auto& entity(mManager.addEntity());
     //auto& entity = manager.addEntity();
 
     entity.addComponent<Position>(x,y);
-    entity.addComponent<Texture>("data/gubbe_box1.png",true);
+    entity.addComponent<Texture>("data/gubbe_box1.png",true); // 32x32 clip
     entity.addComponent<GPhysics>();
     entity.addComponent<Character>(mManager,creator);
 
     //if(!entity.hasGroup(game::PLAYER))
     entity.addGroup(game::PLAYER);
-
     return entity;
 }
 
-Entity& EntityCreator::createItem(EntitySystem::EntityManager *mManager,
+Entity& EntityCreator::createItem(EntitySystem::EntityManager &mManager,
                                     int itemNumber,int x,int y, bool onGround) {
-    auto& item(mManager->addEntity());
+    auto& item(mManager.addEntity());
 
     /* Get right item from a list/file. */
     item.addComponent<Position>(x,y);
-    item.addComponent<Texture>("data/stick.png",false);
+    item.addComponent<Texture>("data/stick.png",false); // no clip
     item.addComponent<Item>();
     /* add position */
 
-    //if(!item.hasGroup(game::ITEM))
+
     item.addGroup(game::ITEM);
     return item;
 }
 
-Entity& EntityCreator::createEnemy(EntitySystem::EntityManager *mManager,
+Entity& EntityCreator::createEnemy(EntitySystem::EntityManager &mManager,
                                 int enemyNumber,int x,int y) {
-    auto& enemy(mManager->addEntity());
+    auto& enemy(mManager.addEntity());
 
     /* Get right enemy from a list/file. */
     enemy.addComponent<Position>(x,y);
     if(enemyNumber == 1)
-        enemy.addComponent<Texture>("data/goblin.png",true);
+        enemy.addComponent<Texture>("data/goblin.png",true); // 32x32 clip
     else
-        enemy.addComponent<Texture>("data/wolf.png",true,48,48);
+        enemy.addComponent<Texture>("data/wolf.png",true,48,48); // 48x48 clip
     enemy.addComponent<GPhysics>();
     enemy.addComponent<Enemy>(mManager);
     /* add position */
 
-    //if(!enemy.hasGroup(game::ENEMY))
-        enemy.addGroup(game::ENEMY);
+    enemy.addGroup(game::ENEMY);
     return enemy;
 }
 
-Entity& EntityCreator::createEnvironment(EntitySystem::EntityManager *mManager,
+Entity& EntityCreator::createEnvironment(EntitySystem::EntityManager &mManager,
                                             int envNumber,int x,int y) {
-    auto& environment(mManager->addEntity());
+    auto& environment(mManager.addEntity());
 
     environment.addComponent<Position>(x,y);
-    environment.addComponent<Texture>("data/tree2.png",false);
+    environment.addComponent<Texture>("data/tree2.png",false); // no clip
     environment.addComponent<GPhysics>();
     environment.addComponent<Environment>();
 
@@ -97,12 +95,12 @@ Entity& EntityCreator::createEnvironment(EntitySystem::EntityManager *mManager,
     return environment;
 }
 
-Entity& EntityCreator::createProjectile(EntitySystem::EntityManager *mManager,
+Entity& EntityCreator::createProjectile(EntitySystem::EntityManager &mManager,
                                         int x,int y,int destX,int destY) {
-    auto& projectile(mManager->addEntity());
+    auto& projectile(mManager.addEntity());
 
     projectile.addComponent<Position>(x,y);
-    projectile.addComponent<Texture>("data/fireball.png",false);
+    projectile.addComponent<Texture>("data/fireball.png",false); // no clip
     projectile.addComponent<GPhysics>();
     projectile.addComponent<Projectile>(destX,destY,destX-x,destY-y);
 

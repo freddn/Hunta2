@@ -18,9 +18,9 @@
 
  #include "Enemy.hpp"
 
-Enemy::Enemy(EntityManager *m) {
+Enemy::Enemy(EntityManager &m) {
     //ctor
-    manager = m;
+    manager = &m;
 }
 
 Enemy::~Enemy() {
@@ -28,7 +28,7 @@ Enemy::~Enemy() {
 }
 
 void Enemy::init() {
-    std::cout << " - Enemy::init() ..."<<std::endl;
+    //std::cout << " - Enemy::init() ..."<<std::endl;
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
 

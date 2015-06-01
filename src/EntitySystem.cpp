@@ -21,10 +21,21 @@
 
 namespace EntitySystem
 {
-    void Entity::draw()    { for(auto& c : components) c->draw(); }
-    void Entity::update()    { for(auto& c : components) c->update(); }
-    bool Entity::isAlive() const { return alive; }
-    void Entity::destroy() { alive = false; }
+    void Entity::draw() {
+        for(auto& c : components) c->draw();
+    }
+
+    void Entity::update() {
+        for(auto& c : components) c->update();
+    }
+
+    bool Entity::isAlive() const {
+        return alive;
+    }
+
+    void Entity::destroy() {
+        alive = false;
+    }
 
     bool Entity::hasGroup(Group mGroup) const noexcept {
         return groupBitset[mGroup];

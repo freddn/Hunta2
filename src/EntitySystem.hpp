@@ -67,7 +67,7 @@ namespace EntitySystem
     using ComponentBitset = std::bitset<maxComponents>;
     using ComponentArray = std::array<Component*,maxComponents>;
 
-    constexpr std::size_t maxGroups{32};
+    constexpr std::size_t maxGroups{300};
     using GroupBitset = std::bitset<maxGroups>;
 
     struct Component

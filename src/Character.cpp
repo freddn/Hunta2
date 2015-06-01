@@ -20,22 +20,18 @@
 #include "Game.hpp"
 
 
-Character::Character() //: Texture()
-{
+Character::Character() {
 }
 
-Character::Character(EntityManager *m, EntityCreator *c)
-{
-    manager = m;
-    creator = c;
+Character::Character(EntityManager &m, EntityCreator &c) {
+    manager = &m;
+    creator = &c;
 }
 
-Character::~Character()
-{
+Character::~Character() {
 }
 
-void Character::init()
-{
+void Character::init() {
     std::cout << " - Character::init() ..."<<std::endl;
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
@@ -43,12 +39,14 @@ void Character::init()
     physics->setKeyControlled(true);
     //position->setX(game::getWidth());
     //position->setY(game::getHeight());
+
     if(position->getX()-(game::getWidth()/2) < 0)
         game::getOffset()->x = 0;
     else if(position->getX()+(game::getWidth()/2) > game::getWidth()*2)
         game::getOffset()->x = game::getWidth();
     else
         game::getOffset()->x = position->getX() - (game::getWidth()/2);
+
     if(position->getY()-(game::getHeight()/2) < 0)
         game::getOffset()->y = 0;
     else if(position->getY()+(game::getHeight()/2) > game::getHeight()*2)
@@ -60,49 +58,46 @@ void Character::init()
     //game::getOffset().x
 }
 
-void Character::draw()
-{
+void Character::draw() {
     //render(game::getRenderer(),(SDL_Rect*)NULL,
     // (double)0.0,NULL,SDL_FLIP_NONE);
 }
 
-void Character::update()
-{
+void Character::update() {
     const Uint8 *key = SDL_GetKeyboardState(NULL);
     moveChar(key);
-    for(auto& e: manager->getEntitiesByGroup(game::ENVIRONMENT))
-    {
+
+    for(auto& e: manager->getEntitiesByGroup(game::ENVIRONMENT)) {
         Position temp = e->getComponent<Position>();
         int width = e->getComponent<Texture>().getWidth();
         int height = e->getComponent<Texture>().getHeight();
         if((position->getX()-10 < temp.getX()+width &&
             position->getX()+42 > temp.getX()) &&
             (position->getY()-10 < temp.getY()+height &&
-            position->getY()+42 > temp.getY()))
-        {
+            position->getY()+42 > temp.getY())) {
             physics->isColliding(e);
         }
     }
+
     if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
         if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
             //std::cerr << selected;
             if(!attacking) {
                 attacking = true;
                 /* Fire a projectile.. */
-                std::cerr << "create a projectile." << std::endl;
-                creator->createProjectile(manager,position->getX(),position->getY(),
+                //std::cerr << "create a projectile." << std::endl;
+                creator->createProjectile(*manager,position->getX(),position->getY(),
                             game::getMouseX()+game::getOffset()->x,game::getMouseY()+game::getOffset()->y);
-                std::cerr << "created a projectile." << std::endl;
+                //std::cerr << "created a projectile." << std::endl;
             }
         }
     }
     else
         attacking = false;
 }
-void Character::moveChar(const Uint8 *key)
-{
-    if(key[SDL_SCANCODE_DOWN])
-    {
+
+void Character::moveChar(const Uint8 *key) {
+    if(key[SDL_SCANCODE_DOWN]) {
         physics->setDir(game::SOUTH,true);
         texture->setClipX(0);
         texture->setClipY(0);
@@ -111,14 +106,10 @@ void Character::moveChar(const Uint8 *key)
             texture->setYRect(position->getY()-game::getHeight());
         if(position->getY() < game::getHeight()/2)
             texture->setYRect(position->getY());
-    }
-    else
-    {
+    } else
         physics->setDir(game::SOUTH,false);
-        //std::cerr <<"Physics::setDir()"<<std::endl;
-    }
-    if(key[SDL_SCANCODE_UP])
-    {
+
+    if(key[SDL_SCANCODE_UP]) {
         physics->setDir(game::NORTH,true);
         texture->setClipX(1);
         texture->setClipY(0);
@@ -127,15 +118,10 @@ void Character::moveChar(const Uint8 *key)
             texture->setYRect(position->getY());
         if(position->getY() > (game::getHeight()*2-(game::getHeight()/2)))
             texture->setYRect(position->getY()-game::getHeight());
-    }
-    else
-    {
-        //std::cerr <<"Physics::setDir() before"<<std::endl;
+    } else
         physics->setDir(game::NORTH,false);
-        //std::cerr <<"Physics::setDir() after"<<std::endl;
-    }
-    if(key[SDL_SCANCODE_RIGHT])
-    {
+
+    if(key[SDL_SCANCODE_RIGHT]) {
         physics->setDir(game::EAST,true);
         texture->setClipX(1);
         texture->setClipY(1);
@@ -144,11 +130,10 @@ void Character::moveChar(const Uint8 *key)
             texture->setXRect(position->getX()-game::getWidth());
         if(position->getX() < game::getWidth()/2)
             texture->setXRect(position->getX());
-    }
-    else
+    } else
         physics->setDir(game::EAST,false);
-    if(key[SDL_SCANCODE_LEFT])
-    {
+
+    if(key[SDL_SCANCODE_LEFT]) {
         physics->setDir(game::WEST,true);
         texture->setClipX(0);
         texture->setClipY(1);
@@ -157,13 +142,11 @@ void Character::moveChar(const Uint8 *key)
             texture->setXRect(position->getX());
         if(position->getX() > game::getWidth()*2-(game::getWidth()/2))
             texture->setXRect(position->getX() - game::getWidth());
-    }
-    else
+    } else
         physics->setDir(game::WEST,false);
 }
 
-bool Character::checkCollision(int DIR)
-{
+bool Character::checkCollision(int DIR) {
     /* need to get the surrounding tiles somehow */
     bool isColliding = false;
     return isColliding;

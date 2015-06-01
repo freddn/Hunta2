@@ -30,7 +30,7 @@ using namespace EntitySystem;
 struct Enemy : Component
 {
     public:
-        Enemy(EntityManager *m);
+        Enemy(EntityManager &m);
 
         void init();
         void draw();

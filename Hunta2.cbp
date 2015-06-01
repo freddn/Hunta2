@@ -37,6 +37,7 @@
 		<Linker>
 			<Add option="-lSDL2 -lSDL2_image -lSDL2_ttf -llua5.1 -ldl" />
 		</Linker>
+		<Unit filename="data/fireball.png" />
 		<Unit filename="data/frame.png" />
 		<Unit filename="data/grass.png" />
 		<Unit filename="data/ground.png" />
@@ -81,6 +82,8 @@
 		<Unit filename="src/MapCreator.hpp" />
 		<Unit filename="src/Position.cpp" />
 		<Unit filename="src/Position.hpp" />
+		<Unit filename="src/Projectile.cpp" />
+		<Unit filename="src/Projectile.hpp" />
 		<Unit filename="src/Renderer.cpp" />
 		<Unit filename="src/Renderer.hpp" />
 		<Unit filename="src/Screen.cpp" />

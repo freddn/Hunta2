@@ -13,12 +13,16 @@ public:
     Projectile(int x, int y,int relX,int relY);
     void update();
     void init();
+    void setRange(int r);
     ~Projectile();
 private:
     int destX;
     int destY;
     int posY;
     int posX;
+    int startX;
+    int startY;
+    int range = 200;
     GPhysics *physics{nullptr};
     //Texture *texture{nullptr};
     Position *position{nullptr};

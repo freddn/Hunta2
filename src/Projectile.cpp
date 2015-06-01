@@ -1,5 +1,6 @@
 #include "Projectile.hpp"
 #include "Game.hpp"
+#include <cmath>
 
 Projectile::Projectile(int x,int y,int relX,int relY) {
     destX = relX;
@@ -12,33 +13,43 @@ Projectile::Projectile(int x,int y,int relX,int relY) {
 Projectile::~Projectile()
 {
     //dtor
-    std::cerr << "projectile dead" << std::endl;
+    //std::cerr << "projectile dead" << std::endl;
 }
 
 
 
 void Projectile::update() {
     //std::cerr << " - Projectile::update() ..."<<std::endl;
-    int x = (int)(position->getX());
-    int y = (int)(position->getY());
-    if(x == posX || x > game::getWidth()*2 || x < 0) {
+    int x = std::abs( startX - (int)(position->getX()) );
+    int y = std::abs( startY - (int)(position->getY()) );
+    int d = std::sqrt(std::pow(x,2) + std::pow(y,2));
+
+    /* Range of projectiles. */
+    if(d > range)
+        entity->destroy();
+
+    /*if(x > startX + 100 || x > game::getWidth()*2 || x < 0) {
         entity->destroy();
     }
     if(y == posY || y > game::getHeight()*2 || y < 0) {
         entity->destroy();
-    }
+    }*/
     //std::cerr << " - Projectile::update() ..."<<std::endl;
 }
 
 void Projectile::init() {
-    std::cerr << " - Projectile::init() ...";
+    //std::cerr << " - Projectile::init() ...";
     position = &entity->getComponent<Position>();
     //texture = &entity->getComponent<Texture>();
     physics = &entity->getComponent<GPhysics>();
-
+    startX = position->getX();
+    startY = position->getY();
     physics->setDestX(destX);
     physics->setDestY(destY);
 
-    std::cerr << " DONE"<<std::endl;
+    //std::cerr << " DONE"<<std::endl;
 }
 
+void Projectile::setRange(int r) {
+    range = r;
+}

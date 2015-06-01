@@ -36,7 +36,7 @@ struct Character: Component
 {
 public:
     Character();
-    Character(EntityManager *m, EntityCreator *c);
+    Character(EntityManager &m, EntityCreator &c);
 
     /* Load player. Loads a texture with the
      * character image and set position. */
