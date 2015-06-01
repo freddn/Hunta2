@@ -95,16 +95,18 @@ Entity& EntityCreator::createEnvironment(EntitySystem::EntityManager &mManager,
     return environment;
 }
 
-Entity& EntityCreator::createProjectile(EntitySystem::EntityManager &mManager,
+void EntityCreator::createProjectile(EntitySystem::EntityManager &mManager,
                                         int x,int y,int destX,int destY) {
-    auto& projectile(mManager.addEntity());
 
-    projectile.addComponent<Position>(x,y);
-    projectile.addComponent<Texture>("data/fireball.png",false); // no clip
-    projectile.addComponent<GPhysics>();
-    projectile.addComponent<Projectile>(destX,destY,destX-x,destY-y);
+    if(mManager.canAdd()) {
+        auto& projectile(mManager.addEntity());
 
-    projectile.addGroup(game::PROJECTILE);
-    return projectile;
+        projectile.addComponent<Position>(x,y);
+        projectile.addComponent<Texture>("data/fireball.png",false); // no clip
+        projectile.addComponent<GPhysics>();
+        projectile.addComponent<Projectile>(destX,destY,destX-x,destY-y);
+
+        projectile.addGroup(game::PROJECTILE);
+    }
 }
 

@@ -43,7 +43,7 @@ class EntityCreator
                                 int x,int y);
         Entity& createEnvironment(EntitySystem::EntityManager &mManager,
                                     int envNumber,int x,int y);
-        Entity& createProjectile(EntitySystem::EntityManager &mManager,
+        void createProjectile(EntitySystem::EntityManager &mManager,
                                         int x,int y,int destX,int destY);
         virtual ~EntityCreator();
     protected:

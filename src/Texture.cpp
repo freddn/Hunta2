@@ -21,28 +21,17 @@
 
 
 Texture::Texture() {
-    currentTexture = NULL;
-    tWidth = 0;
-    tHeight = 0;
-    rect.x = 0;
-    rect.y = 0;
-    rect.w = 0;
-    rect.h = 0;
+    tclip.w = 0;
+    tclip.h = 0;
 }
 
 Texture::Texture(std::string img,bool clip) {
     isClipped = clip;
     isText = false;
     imageName = img;
-    currentTexture = NULL;
+    //currentTexture = nullptr;
     tclip.w = 32;
     tclip.h = 32;
-    tWidth = 0;
-    tHeight = 0;
-    rect.x = 0;
-    rect.y = 0;
-    rect.w = 0;
-    rect.h = 0;
 }
 
 Texture::Texture(std::string img,bool clip, int w,int h) {
@@ -50,15 +39,12 @@ Texture::Texture(std::string img,bool clip, int w,int h) {
 
     isText = false;
     imageName = img;
-    currentTexture = NULL;
-    tWidth = 0;
-    tHeight = 0;
+    //currentTexture = nullptr;
+
     tclip.w = w;
     tclip.h = h;
-    rect.x = 0;
-    rect.y = 0;
-    rect.w = 0;
-    rect.h = 0;
+
+
 }
 
 Texture::Texture(std::string text,SDL_Color textcolor,TTF_Font* font) {
@@ -66,21 +52,22 @@ Texture::Texture(std::string text,SDL_Color textcolor,TTF_Font* font) {
     textFont = font;
     textColor = textcolor;
     textString = text;
-    currentTexture = NULL;
+    //currentTexture = nullptr;
+}
+
+Texture::~Texture() {
+    //free();
+}
+
+void Texture::init() {
+    //std::cout << " - Texture::init() ..." << std::endl;
     tWidth = 0;
     tHeight = 0;
     rect.x = 0;
     rect.y = 0;
     rect.w = 0;
     rect.h = 0;
-}
 
-Texture::~Texture() {
-    free();
-}
-
-void Texture::init() {
-    //std::cout << " - Texture::init() ..." << std::endl;
     position = &entity->getComponent<Position>();
 
     if(!isText)
@@ -96,8 +83,7 @@ void Texture::draw() {
         position->getY()+tHeight > game::getOffset()->y &&
         position->getY() < game::getOffset()->y + game::getHeight())
     render(game::getRenderer(),position->getX()-game::getOffset()->x,
-                position->getY()-game::getOffset()->y,(SDL_Rect*)NULL,
-                (double)0.0,NULL,SDL_FLIP_NONE);
+                position->getY()-game::getOffset()->y,(SDL_Rect*)nullptr);
 }
 /*
 void Texture::update()
@@ -111,14 +97,14 @@ bool Texture::loadFromFile(SDL_Renderer *renderer, std::string path) {
     imageName = path;
     SDL_Surface *tempSurface = IMG_Load(imageName.c_str());
 
-    if(tempSurface == NULL)
+    if(tempSurface == nullptr)
         std::cerr << "IMG_Load() failed. Image: "<< path << std::endl;
     else {
         SDL_SetColorKey(tempSurface,SDL_TRUE,
             SDL_MapRGB(tempSurface->format,0xFF,0,0xFF));
         currentTexture = SDL_CreateTextureFromSurface(renderer,tempSurface);
 
-        if(currentTexture == NULL) {
+        if(currentTexture == nullptr) {
             std::cerr << "SDL_CreateTextureFromSurface() failed" << std::endl;
         } else {
             tWidth = tempSurface->w;
@@ -136,7 +122,7 @@ bool Texture::loadFromFile(SDL_Renderer *renderer, std::string path) {
         }
         SDL_FreeSurface(tempSurface);
     }
-    return currentTexture != NULL;
+    return currentTexture != nullptr;
 }
 
 bool Texture::loadFromText( SDL_Renderer *renderer, std::string textureText,
@@ -144,12 +130,12 @@ bool Texture::loadFromText( SDL_Renderer *renderer, std::string textureText,
     free();
     SDL_Surface *tempSurface = TTF_RenderText_Solid(font,textureText.c_str(), textcolor);
 
-    if(tempSurface == NULL)
+    if(tempSurface == nullptr)
         std::cerr << "TTF_RenderText_Solid() failed" << std::endl;
     else {
         currentTexture = SDL_CreateTextureFromSurface(renderer,tempSurface);
 
-        if(currentTexture == NULL)
+        if(currentTexture == nullptr)
             std::cerr << "SDL_CreateTextureFromSurface() failed" << std::endl;
         else {
             tWidth = tempSurface->w;
@@ -159,39 +145,39 @@ bool Texture::loadFromText( SDL_Renderer *renderer, std::string textureText,
         }
         SDL_FreeSurface(tempSurface);
     }
-    return currentTexture != NULL;
+    return currentTexture != nullptr;
 }
 
 void Texture::free() {
-    if(currentTexture != NULL) {
+
+    //if(currentTexture != nullptr) {
         SDL_DestroyTexture(currentTexture);
 
-        currentTexture = NULL;
-        tWidth = 0;
-        tHeight = 0;
+        currentTexture = nullptr;
+    //}
+
+}
+
+void Texture::render(SDL_Renderer *renderer,SDL_Rect *clip) {
+    render(renderer,rect.x, rect.y,clip);
+}
+
+
+void Texture::render(SDL_Renderer *renderer, int x, int y,SDL_Rect *clip) {
+    if(renderer != nullptr) {
+        rect.x = x;
+        rect.y = y;
+
+        if(clip != nullptr) {
+            rect.w = clip->w;
+            rect.h = clip->h;
+        } else if(tclip.w != 0 && tclip.h != 0 && isClipped)
+            clip = &tclip;
+        else
+            clip = NULL;
+        SDL_RenderCopy(renderer,currentTexture, clip,&rect);
+        //SDL_RenderCopyEx(renderer,currentTexture, clip,&rect,0.0,nullptr,SDL_FLIP_NONE);
     }
-
-}
-
-void Texture::render(SDL_Renderer * renderer,SDL_Rect* clip,double angle,
-                    SDL_Point* center,SDL_RendererFlip flip) {
-    render(renderer,rect.x , rect.y,clip,angle,
-                    center,flip);
-}
-
-
-void Texture::render(   SDL_Renderer * renderer, int x, int y,SDL_Rect* clip,
-                        double angle, SDL_Point* center,SDL_RendererFlip flip) {
-    rect.x = x;
-    rect.y = y;
-
-    if(clip != NULL) {
-        rect.w = clip->w;
-        rect.h = clip->h;
-    } else if(tclip.w != 0 && tclip.h != 0 && isClipped)
-        clip = &tclip;
-
-    SDL_RenderCopyEx(renderer,currentTexture, clip,&rect,angle,center,flip);
 }
 
 void Texture::setSolid(bool s) {

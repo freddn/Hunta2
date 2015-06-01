@@ -26,9 +26,9 @@ namespace game {
     SDL_Rect background;
     int mouseX;
     int mouseY;
-    SDL_Window *gWindow = NULL;
-    SDL_Renderer *renderer = NULL;
-    SDL_Texture *buffer = NULL;
+    SDL_Window *gWindow = nullptr;
+    SDL_Renderer *renderer = nullptr;
+    SDL_Texture *buffer = nullptr;
     TTF_Font * font;
 
     int current_state = INGAME;
@@ -50,15 +50,17 @@ namespace game {
     int selected;
     const Uint8 *key;
 
-    SDL_Color text_color = {255,255,255};
+    SDL_Color text_color = {255,255,255,0};
+
     bool running = true;
 
     void start() {
         std::cerr << " - game::start() ..." << std::endl;
-        key = SDL_GetKeyboardState(NULL);
-        textureMap.init(renderer);
+        key = SDL_GetKeyboardState(nullptr);
+        textureMap.init();
         std::cerr << " - game::start() (load map) ..."<<std::endl;
-        if(!textureMap.loadMap("data/map2")) {
+        std::string map2 = "data/map2";
+        if(!textureMap.loadMap(map2)) {
             std::cerr << "Map could not be loaded" << std::endl;
         }
         //std::map<int,Texture*> textures;
@@ -137,14 +139,14 @@ namespace game {
                                    width,height,SDL_WINDOW_OPENGL |
                                    SDL_WINDOW_RESIZABLE); //SDL_WINDOW_SHOWN);
 
-        if(gWindow == NULL) {
+        if(gWindow == nullptr) {
             std::cerr << "Window could not be created." << std::endl;
             return false;
         }
 
         renderer = SDL_CreateRenderer(gWindow,-1,SDL_RENDERER_ACCELERATED);
 
-        if(renderer == NULL) {
+        if(renderer == nullptr) {
             std::cerr << "Renderer could not be created" << std::endl;
             return false;
         }
@@ -160,7 +162,7 @@ namespace game {
         }
 
         font = TTF_OpenFont("freefont/FreeSans.ttf",24);
-        if(font == NULL) {
+        if(font == nullptr) {
             std::cerr << "No font" << std::endl;
             return false;
         }
@@ -179,17 +181,21 @@ namespace game {
 
     void close() {
         for(auto iter = game::getTextureMap()->begin(); iter != game::getTextureMap()->end();iter++){
-            ((Texture*)iter->second)->free();
+            //((Texture*)iter->second)->free();
+            //free((Texture*)iter->second);
+            delete (Texture*)iter->second;
         }
 
         SDL_DestroyTexture(buffer);
+        buffer = nullptr;
 
+        SDL_RenderClear(renderer);
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(gWindow);
-        renderer = NULL;
-        gWindow = NULL;
+        renderer = nullptr;
+        gWindow = nullptr;
         TTF_CloseFont(font);
-        font = NULL;
+        font = nullptr;
 
         TTF_Quit();
         IMG_Quit();
@@ -216,8 +222,8 @@ namespace game {
         return &background;
     }
 
-    SDL_Color getText_color() {
-        return text_color;
+    SDL_Color *getText_color() {
+        return &text_color;
     }
 
     int getMouseX() {

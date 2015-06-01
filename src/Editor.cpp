@@ -82,8 +82,7 @@ void Editor::draw() {
                 ((Texture*)iter->second)->getY() > -32 &&
                 ((Texture*)iter->second)->getY() < game::getBackground()->h) {
 
-                ((Texture*)iter->second)->render(game::getRenderer(),(SDL_Rect*)NULL,
-                                                    (double)0.0,NULL,SDL_FLIP_NONE);
+                ((Texture*)iter->second)->render(game::getRenderer(),(SDL_Rect*)NULL);
             }
         }
         SDL_SetRenderTarget(game::getRenderer(),NULL);
@@ -94,14 +93,11 @@ void Editor::draw() {
     SDL_RenderCopy(game::getRenderer(),rect_select,NULL,&sel);
 
     game::getTextureMapObject()->getGroundTile()->render( game::getRenderer(),rground.x,
-                                                    rground.y,(SDL_Rect*)NULL,
-                    (double)0.0,NULL,SDL_FLIP_NONE);
+                                                    rground.y,(SDL_Rect*)NULL);
     game::getTextureMapObject()->getWaterTile()->render(game::getRenderer(),rwater.x,
-                                                    rwater.y,(SDL_Rect*)NULL,
-                    (double)0.0,NULL,SDL_FLIP_NONE);
+                                                    rwater.y,(SDL_Rect*)NULL);
     game::getTextureMapObject()->getGrassTile()->render(  game::getRenderer(),rgrass.x,
-                                                    rgrass.y,(SDL_Rect*)NULL,
-                    (double)0.0,NULL,SDL_FLIP_NONE);
+                                                    rgrass.y,(SDL_Rect*)NULL);
 
     //CLICK EVENT..
     Screen::renderEnd();

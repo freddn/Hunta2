@@ -17,16 +17,24 @@
  */
 
 #include "EntitySystem.hpp"
-
+#include <iostream>
 
 namespace EntitySystem
 {
     void Entity::draw() {
-        for(auto& c : components) c->draw();
+        for(auto& c : components) {
+            c->draw();
+        }
     }
 
     void Entity::update() {
-        for(auto& c : components) c->update();
+        //std::cerr << components.size() << std::endl;
+
+        for(auto& c : components) {
+            //if(c != nullptr && c->entity->isAlive())
+            c->update();
+        }
+
     }
 
     bool Entity::isAlive() const {
@@ -52,11 +60,17 @@ namespace EntitySystem
                 return !mEntity->isAlive();
             }),
             std::end(entities));
-
-        for(auto& e : entities) e->update();
+        //std::cerr << entities.size()<< std::endl;
+        for(auto& e : entities) {
+            //if(e->isAlive())
+            e->update();
+        }
     }
 
-    void EntityManager::draw()    { for(auto& e : entities) e->draw(); }
+    void EntityManager::draw() {
+        for(auto& e : entities)
+            e->draw();
+    }
 
     void EntityManager::addToGroup(Entity *mEntity,Group mGroup) {
         groupedEntities[mGroup].emplace_back(mEntity);
@@ -88,10 +102,22 @@ namespace EntitySystem
             std::end(entities));
     }
 
+    bool EntityManager::canAdd() {
+        return (entities.size() < entitiesReserved);
+    }
+
+    void EntityManager::reserveEntities(int amount) {
+        entities.reserve(amount);
+        entitiesReserved = amount;
+    }
+
     Entity& EntityManager::addEntity() {
         Entity* e(new Entity(*this));
+        //std::cerr << entities.size() << std::endl;
+
         std::unique_ptr<Entity> uPtr{e};
         entities.emplace_back(std::move(uPtr));
+
         return *e;
     }
 

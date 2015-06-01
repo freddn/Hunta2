@@ -29,8 +29,7 @@
 #include "Position.hpp"
 
 /* Texture class. Can load an image, render the texture and get texture data.*/
-struct Texture : EntitySystem::Component
-{
+struct Texture : EntitySystem::Component {
 public:
     /* Create a regular texture, size will be set as the size of the image. */
     Texture();
@@ -56,11 +55,11 @@ public:
     void setAlpha(Uint8 alpha);
     // )
     void render(SDL_Renderer *renderer, int x, int y,
-                    SDL_Rect* clip = NULL,double angle = 0.0,
-                SDL_Point* center = NULL,SDL_RendererFlip = SDL_FLIP_NONE);
-    void render(SDL_Renderer *renderer, SDL_Rect* clip = NULL,
-                    double angle = 0.0, SDL_Point* center = NULL,
-                    SDL_RendererFlip = SDL_FLIP_NONE);
+                    SDL_Rect* clip = NULL);/*,double angle = 0.0,
+                SDL_Point* center = NULL,SDL_RendererFlip = SDL_FLIP_NONE);*/
+    void render(SDL_Renderer *renderer, SDL_Rect* clip = NULL);
+                    /*double angle = 0.0, SDL_Point* center = NULL,
+                    SDL_RendererFlip = SDL_FLIP_NONE);*/
     int getWidth();
     int getHeight();
     SDL_Rect getRect();
@@ -80,17 +79,15 @@ public:
     bool isSolid();
     void setSolid(bool solidBool);
     Texture *clone() const { return new Texture(*this); }
-
     ~Texture();
-
 private:
     Position *position{nullptr};
 
-    SDL_Texture *currentTexture = NULL;
+    SDL_Texture *currentTexture{nullptr};
     SDL_Rect rect;
     SDL_Rect tclip;
     SDL_Color textColor;
-    TTF_Font* textFont;
+    TTF_Font* textFont{nullptr};
     bool isClipped = false;
     bool isText = false;
     bool solid = false; // texture is solid?

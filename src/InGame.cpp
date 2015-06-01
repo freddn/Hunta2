@@ -33,6 +33,7 @@ void InGame::init()
 {
     std::cout << " - InGame::init() ..."<<std::endl;
     inv.init();
+    inGameManager.reserveEntities(300);
     creator.createPlayer(inGameManager,creator,game::getWidth(),game::getHeight());
     //creator.createPlayer(&inGameManager,20,20);
     creator.createItem(inGameManager,0,100,100,true);
@@ -72,9 +73,7 @@ void InGame::draw()
         for(auto iter = game::getTextureMap()->begin(); iter != game::getTextureMap()->end();iter++)
         {
             //std::cout << "render texure" << std::endl;
-            ((Texture*)iter->second)->render(game::getRenderer(),
-                                    (SDL_Rect*)NULL,
-                                    (double)0.0,NULL,SDL_FLIP_NONE);
+            ((Texture*)iter->second)->render(game::getRenderer(),(SDL_Rect*)NULL);
         }
         SDL_SetRenderTarget(game::getRenderer(),NULL);
         game::setHasChanged(false);

@@ -74,8 +74,8 @@ void Inventory::deleteItem(int id,int amount,int x,int y) {
 }
 
 void Inventory::draw() {
-    //frame.render(game::getRenderer(),(SDL_Rect*)NULL,0,NULL,SDL_FLIP_NONE);
-    SDL_RenderCopy(game::getRenderer(),inv_bg,NULL,&inventoryRect);
+    //frame.render(game::getRenderer(),(SDL_Rect*)NULL);
+    SDL_RenderCopy(game::getRenderer(),inv_bg,nullptr,&inventoryRect);
 }
 
 void Inventory::update() {
@@ -90,13 +90,13 @@ void Inventory::buildInventory() {
     clip.h = 32;
 
     SDL_SetRenderTarget(game::getRenderer(),inv_bg);
-    frame.render(game::getRenderer(),0,0,&clip,0,NULL,SDL_FLIP_NONE);
+    frame.render(game::getRenderer(),0,0,&clip);
     clip.x = 64;
-    frame.render(game::getRenderer(),inventoryRect.w-32,0,&clip,0,NULL,SDL_FLIP_NONE);
+    frame.render(game::getRenderer(),inventoryRect.w-32,0,&clip);
     for(int j = 1;j<((inventoryRect.w-32) / 32);j++) {
         clip.x = 32;
         clip.y = 0;
-        frame.render(game::getRenderer(),j*32,0,&clip,0,NULL,SDL_FLIP_NONE);
+        frame.render(game::getRenderer(),j*32,0,&clip);
     }
 
     for(int i = 1;i<=(inventoryRect.h / 32);i++) {
@@ -130,15 +130,14 @@ void Inventory::buildInventory() {
                 clip.x = 32;
                 clip.y = 10;
             }
-            frame.render(game::getRenderer(),j*32,i*32,&clip,0,NULL,SDL_FLIP_NONE);
+            frame.render(game::getRenderer(),j*32,i*32,&clip);
         }
     }
 
     text.loadFromText(game::getRenderer(),"Inventory" ,
-                        game::getText_color(),game::getFont());
-    text.render(game::getRenderer(),10,4,(SDL_Rect*)NULL,
-                (double)0.0,NULL,SDL_FLIP_NONE);
-    SDL_SetRenderTarget(game::getRenderer(),NULL);
+                        *game::getText_color(),game::getFont());
+    text.render(game::getRenderer(),10,4,nullptr);
+    SDL_SetRenderTarget(game::getRenderer(),nullptr);
 }
 
 

@@ -79,21 +79,22 @@ void Character::update() {
         }
     }
 
-    if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
+    //if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
         if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
             //std::cerr << selected;
+            creator->createProjectile(*manager,position->getX(),position->getY(),
+                            game::getMouseX()+game::getOffset()->x,game::getMouseY()+game::getOffset()->y);
             if(!attacking) {
                 attacking = true;
                 /* Fire a projectile.. */
                 //std::cerr << "create a projectile." << std::endl;
-                creator->createProjectile(*manager,position->getX(),position->getY(),
-                            game::getMouseX()+game::getOffset()->x,game::getMouseY()+game::getOffset()->y);
+
                 //std::cerr << "created a projectile." << std::endl;
             }
         }
-    }
-    else
-        attacking = false;
+    //}
+   // else
+       // attacking = false;
 }
 
 void Character::moveChar(const Uint8 *key) {
@@ -146,8 +147,4 @@ void Character::moveChar(const Uint8 *key) {
         physics->setDir(game::WEST,false);
 }
 
-bool Character::checkCollision(int DIR) {
-    /* need to get the surrounding tiles somehow */
-    bool isColliding = false;
-    return isColliding;
-}
+

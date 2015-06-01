@@ -22,6 +22,10 @@
 
 int main(int argc, char *argv[])
 {
+    if(argc > 1) {
+        std::cerr << "Wrong amount of arguments, run: " << argv[0] << std::endl;
+        return 0;
+    }
     if(!game::init_game())
     {
         std::cerr << "Init failed." << std::endl;

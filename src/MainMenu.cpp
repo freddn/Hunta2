@@ -56,26 +56,22 @@ void MainMenu::draw()
     Screen::renderStart();
 
     /* Render the menu */
-    SDL_RenderCopy(game::getRenderer(),startGame,NULL,&newGame);
+    SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&newGame);
     text.loadFromText(game::getRenderer(),"New Game" ,
-                        game::getText_color(),game::getFont());
-    text.render(game::getRenderer(),newGame.x+20,newGame.y+18,(SDL_Rect*)NULL,
-                (double)0.0,NULL,SDL_FLIP_NONE);
-    SDL_RenderCopy(game::getRenderer(),startGame,NULL,&loadGame);
+                        *game::getText_color(),game::getFont());
+    text.render(game::getRenderer(),newGame.x+20,newGame.y+18,(SDL_Rect*)nullptr);
+    SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&loadGame);
     text.loadFromText(game::getRenderer(),"Load Game" ,
-                        game::getText_color(),game::getFont());
-    text.render(game::getRenderer(),loadGame.x+20,loadGame.y+18,(SDL_Rect*)NULL,
-                (double)0.0,NULL,SDL_FLIP_NONE);
-    SDL_RenderCopy(game::getRenderer(),startGame,NULL,&settings);
+                        *game::getText_color(),game::getFont());
+    text.render(game::getRenderer(),loadGame.x+20,loadGame.y+18,(SDL_Rect*)nullptr);
+    SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&settings);
     text.loadFromText(game::getRenderer(),"Settings" ,
-                        game::getText_color(),game::getFont());
-    text.render(game::getRenderer(),settings.x+20,settings.y+18,(SDL_Rect*)NULL,
-                (double)0.0,NULL,SDL_FLIP_NONE);
-    SDL_RenderCopy(game::getRenderer(),startGame,NULL,&quitGame);
+                        *game::getText_color(),game::getFont());
+    text.render(game::getRenderer(),settings.x+20,settings.y+18,(SDL_Rect*)nullptr);
+    SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&quitGame);
     text.loadFromText(game::getRenderer(),"Quit game" ,
-                        game::getText_color(),game::getFont());
-    text.render(game::getRenderer(),quitGame.x+20,quitGame.y+18,(SDL_Rect*)NULL,
-                (double)0.0,NULL,SDL_FLIP_NONE);
+                        *game::getText_color(),game::getFont());
+    text.render(game::getRenderer(),quitGame.x+20,quitGame.y+18,(SDL_Rect*)nullptr);
 
     Screen::renderEnd();
 }
@@ -180,7 +176,7 @@ void MainMenu::buildButton()
                 temp.x = 32;
                 temp.y = 10;
             }
-            frame.render(game::getRenderer(),j*32,i*32,&temp,0,NULL,SDL_FLIP_NONE);
+            frame.render(game::getRenderer(),j*32,i*32,&temp);
         }
     }
     SDL_SetRenderTarget(game::getRenderer(),NULL);

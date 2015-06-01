@@ -1,5 +1,6 @@
 #include "Projectile.hpp"
 #include "Game.hpp"
+
 #include <cmath>
 
 Projectile::Projectile(int x,int y,int relX,int relY) {
@@ -7,6 +8,7 @@ Projectile::Projectile(int x,int y,int relX,int relY) {
     destY = relY;
     posX = x;
     posY = y;
+    timer.start();
     //ctor
 }
 
@@ -27,7 +29,8 @@ void Projectile::update() {
     /* Range of projectiles. */
     if(d > range)
         entity->destroy();
-
+    if(timer.getTicks() > 50 && d < 5)
+        entity->destroy();
     /*if(x > startX + 100 || x > game::getWidth()*2 || x < 0) {
         entity->destroy();
     }

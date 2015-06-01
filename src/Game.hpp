@@ -67,7 +67,7 @@ namespace game {
     SDL_Window *getGWindow();
     SDL_Renderer *getRenderer();
     SDL_Texture *getBuffer();
-    SDL_Color getText_color();
+    SDL_Color *getText_color();
 
     TTF_Font * getFont();
 

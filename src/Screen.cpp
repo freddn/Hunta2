@@ -22,8 +22,8 @@
 
 Screen::~Screen() {
     //dtor
-    fpsText.free();
-    timerText.free();
+    //fpsText.free();
+    //timerText.free();
 }
 
 void Screen::init() {}
@@ -90,16 +90,14 @@ void Screen::renderEnd() {
     SDL_Renderer *renderer = game::getRenderer();
     tempText.str("");
     tempText << "FPS: " << game::getAvgFPS();
-    fpsText.loadFromText(renderer,tempText.str() ,game::getText_color(),game::getFont());
+    fpsText.loadFromText(renderer,tempText.str(), *game::getText_color(),game::getFont());
 
     tempText.str("");
     tempText << "Time: " << (game::getTimer()->getTicks() / 1000.f);
-    timerText.loadFromText(renderer,tempText.str() ,game::getText_color(),game::getFont());
+    timerText.loadFromText(renderer,tempText.str(), *game::getText_color(),game::getFont());
 
-    fpsText.render(renderer,200,30,(SDL_Rect*)NULL,
-                (double)0.0,NULL,SDL_FLIP_NONE);
-    timerText.render(renderer,350,30,(SDL_Rect*)NULL,
-                (double)0.0,NULL,SDL_FLIP_NONE);
+    fpsText.render(game::getRenderer(),200,30,nullptr);
+    timerText.render(renderer,350,30,nullptr);
 
 
     SDL_RenderPresent(renderer);

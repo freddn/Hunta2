@@ -53,10 +53,10 @@ void GPhysics::init() {
     texture = &entity->getComponent<Texture>();
 }
 
-bool GPhysics::isColliding(int x, int y) {
+/*bool GPhysics::isColliding(int x, int y) {
 
     return false;
-}
+}*/
 
 bool GPhysics::isColliding(EntitySystem::Entity *e) {
     Position *tempPos = &e->getComponent<Position>();
