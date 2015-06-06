@@ -55,9 +55,9 @@ void Screen::update() {
                     //std::cout << "save map size: " << textures.size() << std::endl;
                     game::getOffset()->x = game::getWidth();
                     game::getOffset()->y = game::getHeight();
-                    game::getTextureMapObject()->saveMap(*game::getTextureMap(),"data/map2",40,30);
+                    game::getTextureMapObject()->saveMap(game::getTextureMap(),"data/map2",40,30);
                     game::getTextureMapObject()->loadMap("data/map2");
-                    game::setTextureMap(*game::getTextureMapObject()->getMap());
+                    game::setTextureMap(game::getTextureMapObject()->getMap());
                     //std::cout << "loaded map size: " << textures.size() << std::endl;
                 }
                 game::setCurrent_state(game::INGAME);

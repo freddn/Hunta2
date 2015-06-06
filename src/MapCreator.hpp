@@ -31,7 +31,7 @@ class MapCreator {
 public:
     MapCreator();
     void init();
-    void newMap(std::map<int,Texture*> &currentMap,
+    void newMap(std::map<int,Texture*> *currentMap,
                 const char*filename, int width, int height);
 
     virtual ~MapCreator();

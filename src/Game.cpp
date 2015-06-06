@@ -33,12 +33,12 @@ namespace game {
 
     int current_state = INGAME;
     MapClass textureMap;
-    std::map<int,Texture*> texture_map;
+    std::map<int,Texture*> *texture_map;
     int width = 640;
     int t_width = width/32;
     int height = 480;
     int t_height = height/32;
-    int maxFPS = 5000;
+    int maxFPS = 45;
     bool hasChanged = true;
 
     int countedFrames = 0;
@@ -71,7 +71,7 @@ namespace game {
         MainMenu mMenu;
         mMenu.init();
         in_game.init();
-        texture_map = *textureMap.getMap();
+        texture_map = textureMap.getMap();
 
         fpsTimer.start();
         std::cerr << " - game::start() (main loop) ..."<<std::endl;
@@ -282,10 +282,10 @@ namespace game {
     }
 
     std::map<int,Texture*> *getTextureMap() {
-        return &texture_map;
+        return texture_map;
     }
 
-    void setTextureMap(std::map<int,Texture*> &temp_map) {
+    void setTextureMap(std::map<int,Texture*> *temp_map) {
         texture_map = temp_map;
     }
 

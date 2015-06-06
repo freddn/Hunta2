@@ -88,8 +88,8 @@ namespace game {
 
     /* Setters. */
     void setHasChanged(bool boolean);
-    void setTextureMap(std::map<int,Texture*> &temp_map);
-    void setBuffer(SDL_Texture * temp);
+    void setTextureMap(std::map<int,Texture*> *temp_map);
+    void setBuffer(SDL_Texture *temp);
     void setCurrent_state(int temp);
     void setRectX(int x);
     void setMouseX(int x);

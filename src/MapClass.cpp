@@ -49,25 +49,25 @@ bool MapClass::loadMap(std::string filename) {
     std::cout << " - MapClass::loadMap() ... " << std::endl;
     bool success = true;
     //clearCurrentMap();
-    currentMap = *mapLoader.getMap(filename.c_str());
-    if(currentMap.empty())
+    currentMap = mapLoader.getMap(filename.c_str());
+    if(currentMap->empty())
         success = false;
     return success;
 }
 
 void MapClass::clearCurrentMap() {
-    for(auto iter = currentMap.begin(); iter != currentMap.end();iter++) {
+    for(auto iter = currentMap->begin(); iter != currentMap->end();iter++) {
 
         if(iter->second != nullptr) {
             delete (Texture*)iter->second;
 
         }
-        currentMap.erase(iter->first);
+        currentMap->erase(iter->first);
 
     }
 }
 
-void MapClass::saveMap(std::map<int,Texture*> &temp_map,
+void MapClass::saveMap(std::map<int,Texture*> *temp_map,
                         const char* filename, int width, int height) {
     std::cout << " - MapClass::saveMap() ..."<<std::endl;
     mapCreator.newMap(temp_map,filename,width,height);
@@ -77,12 +77,13 @@ void MapClass::saveMap(std::map<int,Texture*> &temp_map,
 
 }*/
 
-void MapClass::setMap(std::map<int,Texture*> &tempMap) {
+void MapClass::setMap(std::map<int,Texture*> *tempMap) {
     currentMap = tempMap;
+
 }
 
 std::map<int,Texture*> *MapClass::getMap() {
-    return &currentMap;
+    return currentMap;
 }
 
 Texture* MapClass::tileAtIndex() {

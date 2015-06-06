@@ -32,11 +32,11 @@ void MapCreator::init() {
     l_interface.load_File("src/CreateMap.lua");
 }
 
-void MapCreator::newMap(std::map<int,Texture*> &currentMap,
+void MapCreator::newMap(std::map<int,Texture*> *currentMap,
             const char *filename, int width, int height) {
     std::cout << " - MapCreator::newMap() ..."<<std::endl;
     l_interface.newMapFile(filename,width,height);
-    for(auto iter = currentMap.begin(); iter != currentMap.end();iter++) {
+    for(auto iter = currentMap->begin(); iter != currentMap->end();iter++) {
         l_interface.appendTile(
                     filename,
                     ((int)iter->first),

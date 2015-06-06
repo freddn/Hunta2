@@ -34,10 +34,10 @@ public:
     MapClass();
     void init();
     bool loadMap(std::string filename);
-    void saveMap(std::map<int,Texture*> &loadedMap,
+    void saveMap(std::map<int,Texture*> *loadedMap,
                 const char*filename, int width, int height);
     void insertTile(Texture &texture);
-    void setMap(std::map<int,Texture*> &textureMap);
+    void setMap(std::map<int,Texture*> *textureMap);
     std::map<int,Texture*> *getMap();
     void clearCurrentMap();
     Texture *tileAtIndex();
@@ -49,7 +49,7 @@ public:
     ~MapClass();
 private:
     //std::map<const char*,std::map<int,Texture*>> maps;
-    std::map<int,Texture*> currentMap;
+    std::map<int,Texture*> *currentMap;
     LoadMapData mapLoader;
     MapCreator mapCreator;
     Texture grass_T;
