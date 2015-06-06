@@ -1,5 +1,5 @@
 # Hunta2
-Game in very early stages. SDL/C++/(Lua)
+Game in very early stages. SDL2/C++/Lua
 
 ## Keys
  - Main Menu, 2
@@ -9,11 +9,11 @@ Game in very early stages. SDL/C++/(Lua)
  - Shoot, left mouse button
 
 ## Using
- - Lua 5.1 (liblua5.1-0 liblua5.1-dev)
- - SDL 2.0 (libsdl2-dev libsdl2-image-dev libsdl-ttf2.0-dev)
+ - Lua 5.1 (liblua5.1-dev)
+ - SDL2 (libsdl2-dev libsdl2-image-dev libsdl-ttf2.0-dev)
 
-## How to build
-Either use the Code::Blocks project file or run `make'.
+## How to build on freebsd/linux
+Either use the Code::Blocks project file or run `make linux' or 'make freebsd'. 
 
-## Running under Windows
+## How to build on Windows
 Use the Code::Blocks project file. In Code::Blocks, change the build target to "Debug Windows" when compiling.
