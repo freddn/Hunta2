@@ -15,13 +15,5 @@ Game in very early stages. SDL/C++/(Lua)
 ## How to build
 Either use the Code::Blocks project file or run `make'.
 
-## Settings for windows in Code::Blocks
-Project->Build Options->Linker Settings->Other linker options:</br>
--lSDL2main -lSDL2 -lSDL2\_image -lSDL2_ttf -llua51</br>
-
-Project->Build Options->Search directories->Compiler:</br>
-include</br>
-
-Project->Build Options->Search directories->Linker:</br>
-lib\x86 or lib\x64 (x64 not tested)</br>
-lib\lua</br>
+## Running under Windows
+Use the Code::Blocks project file. In Code::Blocks, change the build target to "Debug Windows" when compiling.
