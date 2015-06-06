@@ -124,11 +124,15 @@ void Editor::update() {
         int tempX = (game::getMouseX()+game::getOffset()->x)-((game::getMouseX()+game::getOffset()->x)%32);
         int tempY = (game::getMouseY()+game::getOffset()->y)-((game::getMouseY()+game::getOffset()->y)%32);
         int index = (tempX/32)+((tempY/32)*40);
-
+        //std::cerr << "before:" <<game::getTextureMap()->count(index);
         if(game::getTextureMap()->count(index) < 2)
         {
-            if(game::getTextureMap()->count(index) != 0)
+            if(game::getTextureMap()->count(index) > 0) {
+                if(game::getTextureMap()->at(index) != nullptr)
+                    delete game::getTextureMap()->at(index);
+                //delete (Texture*)iter->second;
                 game::getTextureMap()->erase(index);
+            }
 
             Texture *temp;
 
@@ -150,6 +154,7 @@ void Editor::update() {
 
             game::setHasChanged(true);
         }
+        //std::cerr << "after:" <<game::getTextureMap()->count(index) << std::endl;
     }
     else if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
         if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {

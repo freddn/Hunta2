@@ -31,7 +31,9 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-pedantic" />
 			<Add option="-std=c++11" />
+			<Add option="-Wextra" />
 			<Add option="-Wall" />
 		</Compiler>
 		<Linker>

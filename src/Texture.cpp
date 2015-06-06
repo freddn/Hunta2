@@ -57,6 +57,7 @@ Texture::Texture(std::string text,SDL_Color textcolor,TTF_Font* font) {
 
 Texture::~Texture() {
     //free();
+    //SDL_DestroyTexture(currentTexture);
 }
 
 void Texture::init() {

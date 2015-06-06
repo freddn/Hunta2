@@ -24,15 +24,15 @@ namespace lua_functions {
     map_data current_map_data;
     inventoryItem items[20]; /* */
     int itemNo = 0;
-    Texture *grass_T;
-    Texture *water_T;
-    Texture *ground_T;
+    Texture grass_T;
+    Texture water_T;
+    Texture ground_T;
 
     int loadTile(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         //std::cout << "loadTile(), loading tile.. \n";
         if(argc == 7) {
-            Texture *temp;
+
             //const char* name = lua_tostring(l_state,1); // filename
             int index = lua_tonumber(l_state,2); // index
             int x = lua_tonumber(l_state,3); // x
@@ -41,14 +41,23 @@ namespace lua_functions {
             std::string img = lua_tostring(l_state,6); // image
             bool solid = lua_tonumber(l_state,7); // solid
 
-            if(img.compare(grass_T->getImgPath()) == 0)
-                temp = grass_T->clone();
-            else if(img.compare(ground_T->getImgPath()) == 0)
-                temp = ground_T->clone();
-            else if(img.compare(water_T->getImgPath()) == 0)
-                temp = water_T->clone();
+            /* Segmentation fault !!!!!!!!!!!!!!!!!!!!!!!!!*/
+            if(current_map_data.textures.count(index) > 0) {
+                if(current_map_data.textures.at(index) != nullptr)
+                    delete current_map_data.textures[index];
+                current_map_data.textures.erase(index);
+            }
+
+
+            Texture *temp;
+            if(img.compare(grass_T.getImgPath()) == 0)
+                temp = grass_T.clone();
+            else if(img.compare(ground_T.getImgPath()) == 0)
+                temp = ground_T.clone();
+            else if(img.compare(water_T.getImgPath()) == 0)
+                temp = water_T.clone();
             else
-                temp = grass_T->clone();
+                temp = grass_T.clone();
 
             temp->setXPos(x*temp->getWidth());
             temp->setYPos(y*temp->getHeight());
@@ -57,8 +66,8 @@ namespace lua_functions {
             if(solid == 1)
                 temp->setSolid(true);
 
-            //std::cout << temp->getImgPath() << std::endl;
-            current_map_data.textures.insert(std::pair<int,Texture*>(index,temp));
+            if(temp != nullptr)
+                current_map_data.textures.insert(std::pair<int,Texture*>(index,temp));
             //std::cout << "Loading tile: ";
         }
         //std::cout << std::endl;
@@ -119,15 +128,15 @@ namespace lua_functions {
         return current_map_data.height;
     }
 
-    void setGrass(Texture *grass) {
+    void setGrass(Texture grass) {
         grass_T = grass;
     }
 
-    void setGround(Texture *ground) {
+    void setGround(Texture ground) {
         ground_T = ground;
     }
 
-    void setWater(Texture *water) {
+    void setWater(Texture water) {
         water_T = water;
     }
 }

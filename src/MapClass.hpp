@@ -39,7 +39,7 @@ public:
     void insertTile(Texture &texture);
     void setMap(std::map<int,Texture*> &textureMap);
     std::map<int,Texture*> *getMap();
-
+    void clearCurrentMap();
     Texture *tileAtIndex();
     Texture *getGrassTile();
     Texture *getGroundTile();

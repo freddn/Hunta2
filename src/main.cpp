@@ -20,16 +20,16 @@
 #include "EntitySystem.hpp"
 
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     if(argc > 1) {
         std::cerr << "Wrong amount of arguments, run: " << argv[0] << std::endl;
         return 0;
     }
-    if(!game::init_game())
-    {
+
+    if(!game::init_game()) {
         std::cerr << "Init failed." << std::endl;
         game::close();
+        return 0;
     }
 
     game::start();

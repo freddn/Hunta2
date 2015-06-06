@@ -29,7 +29,7 @@ namespace game {
     SDL_Window *gWindow = nullptr;
     SDL_Renderer *renderer = nullptr;
     SDL_Texture *buffer = nullptr;
-    TTF_Font * font;
+    TTF_Font * font = nullptr;
 
     int current_state = INGAME;
     MapClass textureMap;
@@ -38,7 +38,7 @@ namespace game {
     int t_width = width/32;
     int height = 480;
     int t_height = height/32;
-    int maxFPS = 45;
+    int maxFPS = 5000;
     bool hasChanged = true;
 
     int countedFrames = 0;
@@ -48,7 +48,7 @@ namespace game {
     LTimer fpsTimer;
     int currentTick;
     int selected;
-    const Uint8 *key;
+    const Uint8 *key = nullptr;
 
     SDL_Color text_color = {255,255,255,0};
 
@@ -147,8 +147,15 @@ namespace game {
         renderer = SDL_CreateRenderer(gWindow,-1,SDL_RENDERER_ACCELERATED);
 
         if(renderer == nullptr) {
-            std::cerr << "Renderer could not be created" << std::endl;
-            return false;
+            std::cerr << "Renderer could not be created "
+                        <<"(SDL_RENDERER_ACCELERATED)" << std::endl;
+            /* Testing software rendering instead.. */
+            renderer = SDL_CreateRenderer(gWindow,-1,SDL_RENDERER_SOFTWARE);
+            if(renderer == nullptr) {
+                std::cerr << "Renderer could not be created "
+                        <<"(SDL_RENDERER_SOFTWARE)" << std::endl;
+                return false;
+            }
         }
 
         if(IMG_Init(IMG_INIT_PNG) < 0) {

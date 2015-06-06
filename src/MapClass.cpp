@@ -30,9 +30,9 @@ void MapClass::init() {
     water_T.loadFromFile(game::getRenderer(),"data/water.png");
     grass_T.loadFromFile(game::getRenderer(),"data/grass.png");
 
-    lua_functions::setGrass(&grass_T);
-    lua_functions::setGround(&ground_T);
-    lua_functions::setWater(&water_T);
+    lua_functions::setGrass(grass_T);
+    lua_functions::setGround(ground_T);
+    lua_functions::setWater(water_T);
 
     mapLoader.init();
     mapCreator.init();
@@ -48,10 +48,23 @@ MapClass::~MapClass() {
 bool MapClass::loadMap(std::string filename) {
     std::cout << " - MapClass::loadMap() ... " << std::endl;
     bool success = true;
+    //clearCurrentMap();
     currentMap = *mapLoader.getMap(filename.c_str());
     if(currentMap.empty())
         success = false;
     return success;
+}
+
+void MapClass::clearCurrentMap() {
+    for(auto iter = currentMap.begin(); iter != currentMap.end();iter++) {
+
+        if(iter->second != nullptr) {
+            delete (Texture*)iter->second;
+
+        }
+        currentMap.erase(iter->first);
+
+    }
 }
 
 void MapClass::saveMap(std::map<int,Texture*> &temp_map,

@@ -21,8 +21,7 @@
 
 using namespace lua_functions;
 
-LoadMapData::LoadMapData()
-{
+LoadMapData::LoadMapData() {
     //std::map<int,Texture*> mamppp = lua_functions::getCurrentMap();
 
     //l_interface.newMapFile("data/map233",width/32,height/32);
@@ -37,38 +36,32 @@ LoadMapData::LoadMapData()
 
 }
 
-LoadMapData::~LoadMapData()
-{
+LoadMapData::~LoadMapData() {
     //dtor
 }
 
-void LoadMapData::init()
-{
+void LoadMapData::init() {
     std::cout << " - LoadMapData::init() ..."<<std::endl;
     l_interface.initLua();
     l_interface.load_File("src/LoadMap.lua");
 }
 
-void LoadMapData::insertTiles()
-{
+void LoadMapData::insertTiles() {
 
 }
 
-void insertTile()
-{
+void insertTile() {
 
 
 }
 
-std::map<int,Texture*> * LoadMapData::getMap(const char* filename)
-{
+std::map<int,Texture*> * LoadMapData::getMap(const char* filename) {
     std::cout << " - LoadMapData::getMap() ..."<<std::endl;
     l_interface.load_tiles(filename);
     return lua_functions::getCurrentMap();
 }
 
-void setMap()
-{
+void setMap() {
 
 }
 
