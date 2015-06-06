@@ -15,17 +15,20 @@
  * You should have received a copy of the GNU General Public License
  * along with Hunta2.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <string>
 
 #include "Game.hpp"
-
+#include "Editor.hpp"
+#include "InGame.hpp"
+#include "MainMenu.hpp"
 
 namespace game {
     SDL_Event event;
     SDL_Rect offset;
     SDL_Rect rect;
     SDL_Rect background;
-    int mouseX;
-    int mouseY;
+    int mouseX = 0;
+    int mouseY = 0;
     SDL_Window *gWindow = nullptr;
     SDL_Renderer *renderer = nullptr;
     SDL_Texture *buffer = nullptr;
@@ -69,8 +72,9 @@ namespace game {
         Editor editor;
         InGame in_game;
         MainMenu mMenu;
-        mMenu.init();
+        editor.init();
         in_game.init();
+        mMenu.init();
         texture_map = textureMap.getMap();
 
         fpsTimer.start();
@@ -217,19 +221,11 @@ namespace game {
         return &offset;
     }
 
-    SDL_Rect *getRect() {
-        return &rect;
-    }
-
-    void setRectX(int x) {
-        rect.x = x;
-    }
-
     SDL_Rect *getBackground() {
         return &background;
     }
 
-    SDL_Color *getText_color() {
+    SDL_Color *getTextColor() {
         return &text_color;
     }
 
@@ -269,7 +265,7 @@ namespace game {
         return font;
     }
 
-    int getCurrent_state() {
+    int getCurrentState() {
         return current_state;
     }
 

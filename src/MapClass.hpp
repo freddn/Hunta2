@@ -49,9 +49,8 @@ public:
     ~MapClass();
 private:
     //std::map<const char*,std::map<int,Texture*>> maps;
+    LuaInterface l_interface;
     std::map<int,Texture*> *currentMap;
-    LoadMapData mapLoader;
-    MapCreator mapCreator;
     Texture grass_T;
     Texture ground_T;
     Texture water_T;

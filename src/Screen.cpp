@@ -50,7 +50,7 @@ void Screen::update() {
             } else if(key[SDL_SCANCODE_2])
                 game::setCurrent_state(game::MAINMENU);
             else if(key[SDL_SCANCODE_1]) {
-                if(game::getCurrent_state() == game::EDITOR) {
+                if(game::getCurrentState() == game::EDITOR) {
                     /* Save as .. */
                     //std::cout << "save map size: " << textures.size() << std::endl;
                     game::getOffset()->x = game::getWidth();
@@ -90,11 +90,11 @@ void Screen::renderEnd() {
     SDL_Renderer *renderer = game::getRenderer();
     tempText.str("");
     tempText << "FPS: " << game::getAvgFPS();
-    fpsText.loadFromText(renderer,tempText.str(), *game::getText_color(),game::getFont());
+    fpsText.loadFromText(renderer,tempText.str(), *game::getTextColor(),game::getFont());
 
     tempText.str("");
     tempText << "Time: " << (game::getTimer()->getTicks() / 1000.f);
-    timerText.loadFromText(renderer,tempText.str(), *game::getText_color(),game::getFont());
+    timerText.loadFromText(renderer,tempText.str(), *game::getTextColor(),game::getFont());
 
     fpsText.render(game::getRenderer(),200,30,nullptr);
     timerText.render(renderer,350,30,nullptr);

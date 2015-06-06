@@ -27,43 +27,39 @@
 
 using namespace EntitySystem;
 
-/*
+/**
  * Character class. Draw the player on the screen.
  * Character is a component. Need a position and physics
  * component aswell to function.
  */
-struct Character: Component
-{
+struct Character: Component {
 public:
     Character();
     Character(EntityManager &m, EntityCreator &c);
 
-    /* Load player. Loads a texture with the
-     * character image and set position. */
-    void init() override;
+    /** Init the player component. Gets the entity's other components. */
+    void init();
 
-    /* Draw the player. */
-    void draw() override;
+    /** Updates everything that has to do with the character. */
+    void update();
 
-    void update() override;
-
-    /* Takes in a key and move the char accordingly. */
+    /** Takes in a key and move the char accordingly. */
     void moveChar(const Uint8 *key);
 
-    /* Check if player is colliding with something. */
+    /** Check if player is colliding with something. */
     bool checkCollision(int DIR);
 
-    /* Load saved data. */
+    /** Load saved data. */
     void loadSaveFile(std::string char_name);
 
-    virtual ~Character();
+    ~Character();
 
 private:
     GPhysics *physics{nullptr};
     Texture *texture{nullptr};
     Position *position{nullptr};
     EntityManager *manager{nullptr};
-    EntityCreator *creator;
+    EntityCreator *creator{nullptr};
     bool attacking = false;
     int xPos; /* x-position of the player. */
     int yPos; /* y-position of the player. */

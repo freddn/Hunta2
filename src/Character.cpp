@@ -58,11 +58,6 @@ void Character::init() {
     //game::getOffset().x
 }
 
-void Character::draw() {
-    //render(game::getRenderer(),(SDL_Rect*)NULL,
-    // (double)0.0,NULL,SDL_FLIP_NONE);
-}
-
 void Character::update() {
     const Uint8 *key = SDL_GetKeyboardState(NULL);
     moveChar(key);
@@ -82,19 +77,17 @@ void Character::update() {
     //if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
         if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
             //std::cerr << selected;
-            creator->createProjectile(*manager,position->getX(),position->getY(),
-                            game::getMouseX()+game::getOffset()->x,game::getMouseY()+game::getOffset()->y);
+
             if(!attacking) {
                 attacking = true;
                 /* Fire a projectile.. */
                 //std::cerr << "create a projectile." << std::endl;
-
+                creator->createProjectile(*manager,position->getX(),position->getY(),
+                                            game::getMouseX()+game::getOffset()->x,game::getMouseY()+game::getOffset()->y);
                 //std::cerr << "created a projectile." << std::endl;
             }
-        }
-    //}
-   // else
-       // attacking = false;
+        } else
+            attacking = false;
 }
 
 void Character::moveChar(const Uint8 *key) {

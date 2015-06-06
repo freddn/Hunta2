@@ -20,8 +20,15 @@
 
 
 Editor::Editor() {
-    //ctor
+}
 
+Editor::~Editor() {
+    //dtor
+    SDL_FreeSurface(r_select);
+    SDL_DestroyTexture(rect_select);
+}
+
+void Editor::init() {
     r_select = SDL_CreateRGBSurface(0,36,36,32,0,0,0,0);
     SDL_FillRect(r_select,NULL,SDL_MapRGB(r_select->format,255,0,0));
     rect_select = SDL_CreateTextureFromSurface(game::getRenderer(),r_select);
@@ -47,19 +54,11 @@ Editor::Editor() {
     sel.h = 36;
 }
 
-Editor::~Editor() {
-    //dtor
-    SDL_FreeSurface(r_select);
-    SDL_DestroyTexture(rect_select);
-}
-
-
-
 void Editor::draw() {
     Screen::renderStart();
 
-    game::setRectX(game::getMouseX()-(game::getMouseX()%32)); // which is faster/better
-    game::getRect()->y = game::getMouseY()-(game::getMouseY()%32); // ??
+    //game::setRectX(game::getMouseX()-(game::getMouseX()%32)); // which is faster/better
+    //game::getRect()->y = game::getMouseY()-(game::getMouseY()%32); // ??
 
     switch(selected) {
     case(game::GRASS):
@@ -119,14 +118,12 @@ void Editor::update() {
             game::getOffset()->x = game::getOffset()->x + 4;
     }
 
-    if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
-    {
+    if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
         int tempX = (game::getMouseX()+game::getOffset()->x)-((game::getMouseX()+game::getOffset()->x)%32);
         int tempY = (game::getMouseY()+game::getOffset()->y)-((game::getMouseY()+game::getOffset()->y)%32);
         int index = (tempX/32)+((tempY/32)*40);
         //std::cerr << "before:" <<game::getTextureMap()->count(index);
-        if(game::getTextureMap()->count(index) < 2)
-        {
+        if(game::getTextureMap()->count(index) < 2) {
             if(game::getTextureMap()->count(index) > 0) {
                 if(game::getTextureMap()->at(index) != nullptr)
                     delete game::getTextureMap()->at(index);
@@ -146,7 +143,7 @@ void Editor::update() {
             case game::GRASS:
                 temp = game::getTextureMapObject()->getGrassTile()->clone();
                 break;
-            };
+            }
 
             temp->setXRect(tempX);
             temp->setYRect(tempY);

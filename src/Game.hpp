@@ -23,55 +23,48 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
-#include <string>
-#include <cstdio>
-#include <stdlib.h>
-#include <vector>
 #include <map>
 
 #include "LTimer.hpp"
-#include "Tile.hpp"
-#include "Editor.hpp"
-#include "InGame.hpp"
 #include "MapClass.hpp"
-#include "MainMenu.hpp"
 
-//#include "Character.hpp"
-//#include "Item.hpp"
-//#include "Enemy.hpp"
 
-/*
+/**
  * Game class. Contains game-loop. State of the game. Init of map/data.
  * This class holds alot of important game related objects.
  */
 namespace game {
-    /* Will init the needed states and then start the game-loop. */
+    /** Will init the needed states and then start the game-loop. */
     void start();
-    /* Initiates SDL, creates a window, buffer and so on. */
+
+    /** Initiates SDL, creates a window, buffer and so on. */
     bool init_game();
-    /* Quit SDL and deallocate stuff. */
+
+    /** Quit SDL and deallocate stuff. */
     void close();
 
-    /* The different states of the game. */
+    /** The different states of the game. */
     enum State {MAINMENU,INGAME,PAUSED,GAMEOVER, EDITOR};
-    /* Some tiles.(used in the editor) */
+
+    /** Some directions the character can have. */
+    enum Direction {NORTH,SOUTH,WEST,EAST};
+
+    /** Different tiles used by the Editor. */
     enum Selected {GRASS,GROUND,WATER};
-    enum Direction {NORTH,SOUTH,EAST,WEST};
-    /* Different entity types. */
+
+    /** Different entity types. */
     enum EntityGroup : std::size_t {PLAYER, ITEM, ENEMY, ENVIRONMENT,PROJECTILE};
-    /* Getters. */
+
+    /** Getters for important game variables/objects. */
     SDL_Event *getEvent();
     SDL_Rect *getOffset();
-    SDL_Rect *getRect();
     SDL_Rect *getBackground();
     SDL_Window *getGWindow();
     SDL_Renderer *getRenderer();
     SDL_Texture *getBuffer();
-    SDL_Color *getText_color();
-
-    TTF_Font * getFont();
-
-    int getCurrent_state();
+    SDL_Color *getTextColor();
+    TTF_Font *getFont();
+    int getCurrentState();
     MapClass *getTextureMapObject();
     std::map<int,Texture*> *getTextureMap();
     int getWidth();
@@ -81,17 +74,15 @@ namespace game {
     int getMouseX();
     int getMouseY();
     int getMaxFPS();
-
     bool getHasChanged();
     float getAvgFPS();
     LTimer* getTimer();
 
-    /* Setters. */
+    /** Setters. */
     void setHasChanged(bool boolean);
     void setTextureMap(std::map<int,Texture*> *temp_map);
     void setBuffer(SDL_Texture *temp);
     void setCurrent_state(int temp);
-    void setRectX(int x);
     void setMouseX(int x);
     void setMouseY(int y);
     void setRunning(bool boolean);

@@ -22,28 +22,28 @@
 #include "Screen.hpp"
 #include "Game.hpp"
 
-/* This class represents the map-editor.
+/**
+ * This class represents the map-editor.
  * Currently we can only draw the background-tiles.
- * TODO Put objects on the map. Trees/houses/enemys.
+ * (TODO) Put objects on the map. Trees/houses/enemys.
  */
-struct Editor : public Screen
-{
-    public:
-        Editor();
-        void init();
-        void update();
-        void draw();
-        ~Editor();
-    private:
-        SDL_Rect rground;
-        SDL_Rect rwater;
-        SDL_Rect rgrass;
-        SDL_Rect sel;
-        const Uint8 *key = NULL;
-        bool selBool = false;
-        int selected = 0;
-        SDL_Surface *r_select;
-        SDL_Texture *rect_select;
+struct Editor : public Screen {
+public:
+    Editor();
+    void init();
+    void update();
+    void draw();
+    ~Editor();
+private:
+    SDL_Rect rground;
+    SDL_Rect rwater;
+    SDL_Rect rgrass;
+    SDL_Rect sel;
+    const Uint8 *key = NULL;
+    bool selBool = false;
+    int selected = 0;
+    SDL_Surface *r_select;
+    SDL_Texture *rect_select;
 };
 
 #endif // EDITOR_H

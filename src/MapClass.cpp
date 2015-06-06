@@ -19,6 +19,7 @@
 #include "MapClass.hpp"
 #include "Game.hpp"
 
+using namespace lua_functions;
 
 MapClass::MapClass() {
 
@@ -30,12 +31,13 @@ void MapClass::init() {
     water_T.loadFromFile(game::getRenderer(),"data/water.png");
     grass_T.loadFromFile(game::getRenderer(),"data/grass.png");
 
-    lua_functions::setGrass(grass_T);
-    lua_functions::setGround(ground_T);
-    lua_functions::setWater(water_T);
+    setGrass(grass_T);
+    setGround(ground_T);
+    setWater(water_T);
 
-    mapLoader.init();
-    mapCreator.init();
+    l_interface.initLua();
+    l_interface.load_File("src/LoadMap.lua");
+    l_interface.load_File("src/CreateMap.lua");
 }
 
 MapClass::~MapClass() {
@@ -48,8 +50,8 @@ MapClass::~MapClass() {
 bool MapClass::loadMap(std::string filename) {
     std::cout << " - MapClass::loadMap() ... " << std::endl;
     bool success = true;
-    //clearCurrentMap();
-    currentMap = mapLoader.getMap(filename.c_str());
+    l_interface.load_tiles(filename.c_str());
+    currentMap = getCurrentMap();
     if(currentMap->empty())
         success = false;
     return success;
@@ -57,29 +59,33 @@ bool MapClass::loadMap(std::string filename) {
 
 void MapClass::clearCurrentMap() {
     for(auto iter = currentMap->begin(); iter != currentMap->end();iter++) {
-
         if(iter->second != nullptr) {
             delete (Texture*)iter->second;
-
         }
         currentMap->erase(iter->first);
-
     }
 }
 
 void MapClass::saveMap(std::map<int,Texture*> *temp_map,
                         const char* filename, int width, int height) {
     std::cout << " - MapClass::saveMap() ..."<<std::endl;
-    mapCreator.newMap(temp_map,filename,width,height);
+    l_interface.newMapFile(filename,width,height);
+    for(auto iter = temp_map->begin(); iter != temp_map->end();iter++) {
+        l_interface.appendTile(
+                    filename,
+                    ((int)iter->first),
+                    (int)((int)(((Texture*)iter->second)->getRect().x) /
+                    (int)(((Texture*)iter->second)->getWidth())),
+                    (int)((int)(((Texture*)iter->second)->getRect().y) /
+                    (int)(((Texture*)iter->second)->getHeight())),
+                    0,
+                    ((Texture*)iter->second)->getImgPath().c_str(),
+                    ((Texture*)iter->second)->isSolid());
+    }
 }
-
-/*void insertTile(Texture &texture) {
-
-}*/
 
 void MapClass::setMap(std::map<int,Texture*> *tempMap) {
     currentMap = tempMap;
-
 }
 
 std::map<int,Texture*> *MapClass::getMap() {
@@ -101,13 +107,4 @@ Texture* MapClass::getGroundTile() {
 Texture* MapClass::getWaterTile() {
     return &water_T;
 }
-
-
-
-
-
-
-
-
-
 

@@ -19,17 +19,15 @@
 #include "MainMenu.hpp"
 #include "Game.hpp"
 
-MainMenu::MainMenu()
-{
+MainMenu::MainMenu() {
 
 }
 
-MainMenu::~MainMenu()
-{
+MainMenu::~MainMenu() {
 
 }
-void MainMenu::init()
-{
+
+void MainMenu::init() {
     std::cout << " - MainMenu::init() ..."<<std::endl;
     frame.loadFromFile(game::getRenderer(),"data/frame.png");
 
@@ -43,62 +41,50 @@ void MainMenu::init()
     startGame = SDL_CreateTexture(game::getRenderer(), SDL_PIXELFORMAT_RGBA8888,
                                SDL_TEXTUREACCESS_TARGET, button.w, button.h);
 
-    if(startGame == 0)
-    {
+    if(startGame == 0) {
         std::cerr << "Failed to create Start Game button" << std::endl;
     }
 
     buildButton();
 }
 
-void MainMenu::draw()
-{
+void MainMenu::draw() {
     Screen::renderStart();
 
     /* Render the menu */
     SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&newGame);
     text.loadFromText(game::getRenderer(),"New Game" ,
-                        *game::getText_color(),game::getFont());
+                        *game::getTextColor(),game::getFont());
     text.render(game::getRenderer(),newGame.x+20,newGame.y+18,(SDL_Rect*)nullptr);
     SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&loadGame);
     text.loadFromText(game::getRenderer(),"Load Game" ,
-                        *game::getText_color(),game::getFont());
+                        *game::getTextColor(),game::getFont());
     text.render(game::getRenderer(),loadGame.x+20,loadGame.y+18,(SDL_Rect*)nullptr);
     SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&settings);
     text.loadFromText(game::getRenderer(),"Settings" ,
-                        *game::getText_color(),game::getFont());
+                        *game::getTextColor(),game::getFont());
     text.render(game::getRenderer(),settings.x+20,settings.y+18,(SDL_Rect*)nullptr);
     SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&quitGame);
     text.loadFromText(game::getRenderer(),"Quit game" ,
-                        *game::getText_color(),game::getFont());
+                        *game::getTextColor(),game::getFont());
     text.render(game::getRenderer(),quitGame.x+20,quitGame.y+18,(SDL_Rect*)nullptr);
 
     Screen::renderEnd();
 }
 
-void MainMenu::update()
-{
+void MainMenu::update() {
     /* Check if button is pressed. */
-    if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN)
-    {
-        if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
-        {
-            if(mouseOverRect(newGame))
-            {
+    if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
+        if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+            if(mouseOverRect(newGame)) {
                 game::setCurrent_state(game::INGAME);
                 std::cerr << "new game\n";
-            }
-            else if(mouseOverRect(loadGame))
-            {
+            } else if(mouseOverRect(loadGame)) {
                 game::setCurrent_state(game::INGAME);
                 std::cerr << "load game\n";
-            }
-            else if(mouseOverRect(settings))
-            {
+            } else if(mouseOverRect(settings)) {
                 std::cerr << "settings\n";
-            }
-            else if(mouseOverRect(quitGame))
-            {
+            } else if(mouseOverRect(quitGame)) {
                 std::cerr << "quit game\n";
             }
         }
@@ -107,18 +93,15 @@ void MainMenu::update()
     Screen::update();
 }
 
-bool MainMenu::mouseOverRect(SDL_Rect r)
-{
+bool MainMenu::mouseOverRect(SDL_Rect r) {
     if(game::getMouseX() < r.x+r.w && game::getMouseX() > r.x &&
-        game::getMouseY() < r.y+r.h && game::getMouseY() > r.y)
-    {
+        game::getMouseY() < r.y+r.h && game::getMouseY() > r.y) {
        return true;
     }
     return false;
 }
 
-void MainMenu::buildButton()
-{
+void MainMenu::buildButton() {
     SDL_Rect temp;
     temp.x = 0;
     temp.y = 0;
@@ -127,52 +110,33 @@ void MainMenu::buildButton()
 
     SDL_SetRenderTarget(game::getRenderer(),startGame);
 
-    for(int i = 0;i<=(button.h / 32);i++)
-    {
-        for(int j = 0;j<=(button.w / 32);j++)
-        {
-            if(i == 0 && j == 0)
-            {
+    for(int i = 0;i<=(button.h / 32);i++) {
+        for(int j = 0;j<=(button.w / 32);j++) {
+            if(i == 0 && j == 0) {
                 temp.x = 0;
                 temp.y = 0;
-            }
-            else if(i == ((button.h-32)/32) && j == 0)
-            {
+            } else if(i == ((button.h-32)/32) && j == 0) {
                 temp.x = 0;
                 temp.y = 32;
-            }
-            else if(i == 0 && j == ((button.w-32)/32))
-            {
+            } else if(i == 0 && j == ((button.w-32)/32)) {
                 temp.x = 64;
                 temp.y = 0;
-            }
-            else if(i == ((button.h-32)/32) && j == ((button.w-32)/32))
-            {
+            } else if(i == ((button.h-32)/32) && j == ((button.w-32)/32)) {
                 temp.x = 64;
                 temp.y = 32;
-            }
-            else if(i == 0)
-            {
+            } else if(i == 0) {
                 temp.x = 32;
                 temp.y = 0;
-            }
-            else if(i == ((button.h-32)/32))
-            {
+            } else if(i == ((button.h-32)/32)) {
                 temp.x = 32;
                 temp.y = 32;
-            }
-            else if(j == 0)
-            {
+            } else if(j == 0) {
                 temp.x = 0;
                 temp.y = 10;
-            }
-            else if(j == ((button.w-32)/32))
-            {
+            } else if(j == ((button.w-32)/32)) {
                 temp.x = 64;
                 temp.y = 10;
-            }
-            else
-            {
+            } else {
                 temp.x = 32;
                 temp.y = 10;
             }

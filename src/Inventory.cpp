@@ -135,7 +135,7 @@ void Inventory::buildInventory() {
     }
 
     text.loadFromText(game::getRenderer(),"Inventory" ,
-                        *game::getText_color(),game::getFont());
+                        *game::getTextColor(),game::getFont());
     text.render(game::getRenderer(),10,4,nullptr);
     SDL_SetRenderTarget(game::getRenderer(),nullptr);
 }
