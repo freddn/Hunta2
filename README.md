@@ -17,11 +17,11 @@ Either use the Code::Blocks project file or run `make'.
 
 ## Settings for windows in Code::Blocks
 Project->Build Options->Linker Settings->Other linker options:</br>
--lSDL2main -lSDL2 -lSDL2\_image -lSDL2_ttf -llua51
+-lSDL2main -lSDL2 -lSDL2\_image -lSDL2_ttf -llua51</br>
 
 Project->Build Options->Search directories->Compiler:</br>
-include
+include</br>
 
 Project->Build Options->Search directories->Linker:</br>
-lib\x86 or lib\x64 (x64 not tested)
-lib\lua
+lib\x86 or lib\x64 (x64 not tested)</br>
+lib\lua</br>
