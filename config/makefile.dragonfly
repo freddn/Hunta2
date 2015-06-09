@@ -1,8 +1,8 @@
 include sources
 
-INCS = `freetype-config --cflags` -I/usr/include/lua5.1 -I/usr/include/GL
-LIBS = `freetype-config --libs` -llua5.1 -lGL -lGLU \
-       -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+INCS = `freetype-config --cflags; sdl2-config --cflags` -I/usr/local/include/lua51
+LIBS = `freetype-config --libs; sdl2-config --libs` -llua-5.1 -lGL -lGLU -lSDL2_ttf \
+    -lSDL2_image -lSDL2_mixer
 
 CFLAGS += -g -Wall -O0 -std=c++11 ${INCS} ${CPPFLAGS}
 LDFLAGS += -g ${LIBS}
