@@ -71,7 +71,7 @@ namespace lua_functions {
             //std::cout << "Loading tile: ";
         }
         //std::cout << std::endl;
-        return 1;
+        return 0;
     }
     int setDimensions(lua_State *l_state) {
         int argc = lua_gettop(l_state);
@@ -79,7 +79,7 @@ namespace lua_functions {
             current_map_data.width = lua_tonumber(l_state,1);
             current_map_data.height = lua_tonumber(l_state,2);
         }
-        return 1;
+        return 0;
     }
 
     int loadItem(lua_State *l_state) {
@@ -105,7 +105,7 @@ namespace lua_functions {
                         " y: " <<lua_tonumber(l_state,5)<<std::endl;*/
 
         }
-        return 1;
+        return 0;
     }
 
     std::map<int,Texture*> *getCurrentMap() {

@@ -39,7 +39,6 @@ private:
     SDL_Rect rwater;
     SDL_Rect rgrass;
     SDL_Rect sel;
-    const Uint8 *key = NULL;
     bool selBool = false;
     int selected = 0;
     SDL_Surface *r_select;

@@ -23,8 +23,6 @@
 
 #include "Tile.hpp"
 #include "LuaInterface.hpp"
-#include "LoadMapData.hpp"
-#include "MapCreator.hpp"
 
 /*
  * Load a map, save a map, change a map.

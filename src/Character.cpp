@@ -53,6 +53,7 @@ void Character::init() {
         game::getOffset()->y = game::getHeight();
     else
         game::getOffset()->y = position->getY() - (game::getHeight()/2);
+
     texture->setXRect(game::getWidth()-game::getOffset()->x);
     texture->setYRect(game::getHeight()-game::getOffset()->y);
     //game::getOffset().x
@@ -66,28 +67,29 @@ void Character::update() {
         Position temp = e->getComponent<Position>();
         int width = e->getComponent<Texture>().getWidth();
         int height = e->getComponent<Texture>().getHeight();
+
         if((position->getX()-10 < temp.getX()+width &&
-            position->getX()+42 > temp.getX()) &&
-            (position->getY()-10 < temp.getY()+height &&
-            position->getY()+42 > temp.getY())) {
+                position->getX()+42 > temp.getX()) &&
+                (position->getY()-10 < temp.getY()+height &&
+                 position->getY()+42 > temp.getY())) {
             physics->isColliding(e);
         }
     }
 
     //if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
-        if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-            //std::cerr << selected;
+    if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+        //std::cerr << selected;
 
-            if(!attacking) {
-                attacking = true;
-                /* Fire a projectile.. */
-                //std::cerr << "create a projectile." << std::endl;
-                creator->createProjectile(*manager,position->getX(),position->getY(),
-                                            game::getMouseX()+game::getOffset()->x,game::getMouseY()+game::getOffset()->y);
-                //std::cerr << "created a projectile." << std::endl;
-            }
-        } else
-            attacking = false;
+        if(!attacking) {
+            attacking = true;
+            /* Fire a projectile.. */
+            //std::cerr << "create a projectile." << std::endl;
+            creator->createProjectile(*manager,position->getX(),position->getY(),
+                                      game::getMouseX()+game::getOffset()->x,game::getMouseY()+game::getOffset()->y);
+            //std::cerr << "created a projectile." << std::endl;
+        }
+    } else
+        attacking = false;
 }
 
 void Character::moveChar(const Uint8 *key) {
@@ -95,9 +97,11 @@ void Character::moveChar(const Uint8 *key) {
         physics->setDir(game::SOUTH,true);
         texture->setClipX(0);
         texture->setClipY(0);
+
         //position->setY(position->getY()+vel);
         if(position->getY() > (game::getHeight()*2-(game::getHeight()/2))) // Mapheight - screenheight
             texture->setYRect(position->getY()-game::getHeight());
+
         if(position->getY() < game::getHeight()/2)
             texture->setYRect(position->getY());
     } else
@@ -107,9 +111,11 @@ void Character::moveChar(const Uint8 *key) {
         physics->setDir(game::NORTH,true);
         texture->setClipX(1);
         texture->setClipY(0);
+
         //position->setY(position->getY()-vel);
         if(position->getY() < (game::getHeight()/2))
             texture->setYRect(position->getY());
+
         if(position->getY() > (game::getHeight()*2-(game::getHeight()/2)))
             texture->setYRect(position->getY()-game::getHeight());
     } else
@@ -119,9 +125,11 @@ void Character::moveChar(const Uint8 *key) {
         physics->setDir(game::EAST,true);
         texture->setClipX(1);
         texture->setClipY(1);
+
         //position->setX(position->getX()+vel);
         if(position->getX() > game::getWidth()*2-(game::getWidth()/2)) // Mapheight - screenheight
             texture->setXRect(position->getX()-game::getWidth());
+
         if(position->getX() < game::getWidth()/2)
             texture->setXRect(position->getX());
     } else
@@ -131,9 +139,11 @@ void Character::moveChar(const Uint8 *key) {
         physics->setDir(game::WEST,true);
         texture->setClipX(0);
         texture->setClipY(1);
+
         //position->setX(position->getX()-vel);
         if(position->getX() < game::getWidth()/2)
             texture->setXRect(position->getX());
+
         if(position->getX() > game::getWidth()*2-(game::getWidth()/2))
             texture->setXRect(position->getX() - game::getWidth());
     } else

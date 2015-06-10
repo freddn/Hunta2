@@ -365,7 +365,7 @@ index 362 x 2 y 9 z 0 img data/grass.png solid 0
 index 363 x 3 y 9 z 0 img data/grass.png solid 0
 index 364 x 4 y 9 z 0 img data/grass.png solid 0
 index 365 x 5 y 9 z 0 img data/grass.png solid 0
-index 366 x 32 y 28 z 0 img data/grass.png solid 0
+index 366 x 6 y 9 z 0 img data/grass.png solid 0
 index 367 x 7 y 9 z 0 img data/grass.png solid 0
 index 368 x 8 y 9 z 0 img data/grass.png solid 0
 index 369 x 9 y 9 z 0 img data/grass.png solid 0
@@ -730,12 +730,12 @@ index 727 x 7 y 18 z 0 img data/grass.png solid 0
 index 728 x 8 y 18 z 0 img data/grass.png solid 0
 index 729 x 9 y 18 z 0 img data/grass.png solid 0
 index 730 x 10 y 18 z 0 img data/grass.png solid 0
-index 731 x 11 y 18 z 0 img data/water.png solid 0
-index 732 x 12 y 18 z 0 img data/water.png solid 0
+index 731 x 11 y 18 z 0 img data/grass.png solid 0
+index 732 x 12 y 18 z 0 img data/grass.png solid 0
 index 733 x 13 y 18 z 0 img data/water.png solid 0
 index 734 x 14 y 18 z 0 img data/water.png solid 0
 index 735 x 15 y 18 z 0 img data/water.png solid 0
-index 736 x 16 y 18 z 0 img data/grass.png solid 0
+index 736 x 16 y 18 z 0 img data/water.png solid 0
 index 737 x 17 y 18 z 0 img data/grass.png solid 0
 index 738 x 18 y 18 z 0 img data/grass.png solid 0
 index 739 x 19 y 18 z 0 img data/grass.png solid 0
@@ -772,9 +772,9 @@ index 769 x 9 y 19 z 0 img data/grass.png solid 0
 index 770 x 10 y 19 z 0 img data/grass.png solid 0
 index 771 x 11 y 19 z 0 img data/grass.png solid 0
 index 772 x 12 y 19 z 0 img data/grass.png solid 0
-index 773 x 13 y 19 z 0 img data/grass.png solid 0
-index 774 x 14 y 19 z 0 img data/grass.png solid 0
-index 775 x 15 y 19 z 0 img data/grass.png solid 0
+index 773 x 13 y 19 z 0 img data/water.png solid 0
+index 774 x 14 y 19 z 0 img data/water.png solid 0
+index 775 x 15 y 19 z 0 img data/water.png solid 0
 index 776 x 16 y 19 z 0 img data/grass.png solid 0
 index 777 x 17 y 19 z 0 img data/grass.png solid 0
 index 778 x 18 y 19 z 0 img data/grass.png solid 0

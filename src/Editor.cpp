@@ -57,16 +57,15 @@ void Editor::init() {
 void Editor::draw() {
     Screen::renderStart();
 
-    //game::setRectX(game::getMouseX()-(game::getMouseX()%32)); // which is faster/better
-    //game::getRect()->y = game::getMouseY()-(game::getMouseY()%32); // ??
-
     switch(selected) {
     case(game::GRASS):
         sel.x = rgrass.x -2;
         break;
+
     case(game::GROUND):
         sel.x = rground.x -2;
         break;
+
     case(game::WATER):
         sel.x = rwater.x -2;
         break;
@@ -74,59 +73,68 @@ void Editor::draw() {
 
     if(game::getHasChanged()) {
         SDL_SetRenderTarget(game::getRenderer(),game::getBuffer());
-        for(auto iter = game::getTextureMap()->begin();
-            iter != game::getTextureMap()->end();iter++) {
-            if(((Texture*)iter->second)->getX() > -32 &&
-                ((Texture*)iter->second)->getX() < game::getBackground()->w &&
-                ((Texture*)iter->second)->getY() > -32 &&
-                ((Texture*)iter->second)->getY() < game::getBackground()->h) {
 
-                ((Texture*)iter->second)->render(game::getRenderer(),(SDL_Rect*)NULL);
+        for(auto iter = game::getTextureMap()->begin();
+                iter != game::getTextureMap()->end(); iter++) {
+            if(((Texture *)iter->second)->getX() > -32 &&
+                    ((Texture *)iter->second)->getX() < game::getBackground()->w &&
+                    ((Texture *)iter->second)->getY() > -32 &&
+                    ((Texture *)iter->second)->getY() < game::getBackground()->h) {
+
+                ((Texture *)iter->second)->render(game::getRenderer(),(SDL_Rect *)NULL);
             }
         }
+
         SDL_SetRenderTarget(game::getRenderer(),NULL);
         game::setHasChanged(false);
     }
+
     SDL_RenderCopy( game::getRenderer(),game::getBuffer(),
                     game::getOffset(),game::getBackground());
     SDL_RenderCopy(game::getRenderer(),rect_select,NULL,&sel);
 
     game::getTextureMapObject()->getGroundTile()->render( game::getRenderer(),rground.x,
-                                                    rground.y,(SDL_Rect*)NULL);
+            rground.y,(SDL_Rect *)NULL);
     game::getTextureMapObject()->getWaterTile()->render(game::getRenderer(),rwater.x,
-                                                    rwater.y,(SDL_Rect*)NULL);
+            rwater.y,(SDL_Rect *)NULL);
     game::getTextureMapObject()->getGrassTile()->render(  game::getRenderer(),rgrass.x,
-                                                    rgrass.y,(SDL_Rect*)NULL);
+            rgrass.y,(SDL_Rect *)NULL);
 
     //CLICK EVENT..
     Screen::renderEnd();
 }
 
 void Editor::update() {
-    key = SDL_GetKeyboardState(NULL);
+    int mouseX;
+    int mouseY;
+    SDL_Rect* offset = game::getOffset();
+    const Uint8 *key = SDL_GetKeyboardState(NULL);
+
     if(key[SDL_SCANCODE_UP]) {
-        if(game::getOffset()->y > 0)
-            game::getOffset()->y = game::getOffset()->y - 4;
+        if(offset->y > 0)
+            offset->y = offset->y - 4;
     } else if(key[SDL_SCANCODE_DOWN]) {
-        if(game::getOffset()->y < game::getHeight())
-            game::getOffset()->y = game::getOffset()->y + 4;
+        if(offset->y < game::getHeight())
+            offset->y = offset->y + 4;
     } else if(key[SDL_SCANCODE_LEFT]) {
-        if(game::getOffset()->x > 0)
-            game::getOffset()->x = game::getOffset()->x - 4;
+        if(offset->x > 0)
+            offset->x = offset->x - 4;
     } else if(key[SDL_SCANCODE_RIGHT]) {
-        if(game::getOffset()->x < game::getWidth())
-            game::getOffset()->x = game::getOffset()->x + 4;
+        if(offset->x < game::getWidth())
+            offset->x = offset->x + 4;
     }
 
-    if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-        int tempX = (game::getMouseX()+game::getOffset()->x)-((game::getMouseX()+game::getOffset()->x)%32);
-        int tempY = (game::getMouseY()+game::getOffset()->y)-((game::getMouseY()+game::getOffset()->y)%32);
+    if(SDL_GetMouseState(&mouseX, &mouseY) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+        int tempX = (mouseX+offset->x)-((mouseX+offset->x)%32);
+        int tempY = (mouseY+offset->y)-((mouseY+offset->y)%32);
         int index = (tempX/32)+((tempY/32)*40);
+
         //std::cerr << "before:" <<game::getTextureMap()->count(index);
         if(game::getTextureMap()->count(index) < 2) {
             if(game::getTextureMap()->count(index) > 0) {
                 if(game::getTextureMap()->at(index) != nullptr)
                     delete game::getTextureMap()->at(index);
+
                 //delete (Texture*)iter->second;
                 game::getTextureMap()->erase(index);
             }
@@ -137,9 +145,11 @@ void Editor::update() {
             case game::GROUND:
                 temp = game::getTextureMapObject()->getGroundTile()->clone();
                 break;
+
             case game::WATER:
                 temp = game::getTextureMapObject()->getWaterTile()->clone();
                 break;
+
             case game::GRASS:
                 temp = game::getTextureMapObject()->getGrassTile()->clone();
                 break;
@@ -147,17 +157,18 @@ void Editor::update() {
 
             temp->setXRect(tempX);
             temp->setYRect(tempY);
-            game::getTextureMap()->insert(std::pair<int,Texture*>(index,temp));
+            game::getTextureMap()->insert(std::pair<int,Texture *>(index,temp));
 
             game::setHasChanged(true);
         }
+
         //std::cerr << "after:" <<game::getTextureMap()->count(index) << std::endl;
-    }
-    else if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
+    } else if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
         if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
             //std::cerr << selected;
             if(!selBool) {
                 selBool = true;
+
                 if(selected == game::GROUND)
                     selected = game::WATER;
                 else if(selected == game::WATER)
@@ -166,8 +177,7 @@ void Editor::update() {
                     selected = game::GROUND;
             }
         }
-    }
-    else
+    } else
         selBool = false;
 
     Screen::update();
