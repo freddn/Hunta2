@@ -1,4 +1,4 @@
-include sources
+include config/sources
 
 INCS = `freetype-config --cflags` -I/usr/include/lua5.1 -I/usr/include/GL
 LIBS = `freetype-config --libs` -llua5.1 -lGL -lGLU \
