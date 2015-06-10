@@ -1,3 +1,5 @@
+include sources
+
 INCS = `freetype-config --cflags; sdl2-config --cflags` -I/usr/local/include/lua51
 LIBS = `freetype-config --libs; sdl2-config --libs` -llua-5.1 -lGL -lGLU -lSDL2_ttf \
     -lSDL2_image -lSDL2_mixer
@@ -6,32 +8,6 @@ CFLAGS += -g -Wall -O0 -std=c++11 ${INCS} ${CPPFLAGS}
 LDFLAGS += -g ${LIBS}
 
 CC = clang++
-
-SRC = src/Character.cpp \
-      src/Editor.cpp \
-      src/Enemy.cpp \
-      src/EntityCreator.cpp \
-      src/EntitySystem.cpp \
-      src/Environment.cpp \
-      src/Game.cpp \
-      src/GPhysics.cpp \
-      src/InGame.cpp \
-      src/Inventory.cpp \
-      src/Item.cpp \
-      src/LoadMapData.cpp \
-      src/LTimer.cpp \
-      src/LuaInterface.cpp \
-      src/LuaState.cpp \
-      src/main.cpp \
-      src/MainMenu.cpp \
-      src/MapClass.cpp \
-      src/MapCreator.cpp \
-      src/Position.cpp \
-      src/Renderer.cpp \
-      src/Screen.cpp \
-      src/Texture.cpp \
-      src/Tile.cpp \
-	  src/Projectile.cpp
 
 OBJ = ${SRC:.cpp=.o}
 

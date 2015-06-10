@@ -1,0 +1,21 @@
+SRC = src/Character.cpp \
+      src/Editor.cpp \
+      src/Enemy.cpp \
+      src/EntityCreator.cpp \
+      src/EntitySystem.cpp \
+      src/Environment.cpp \
+      src/Game.cpp \
+      src/GPhysics.cpp \
+      src/InGame.cpp \
+      src/Inventory.cpp \
+      src/Item.cpp \
+      src/LTimer.cpp \
+      src/LuaInterface.cpp \
+      src/main.cpp \
+      src/MainMenu.cpp \
+      src/MapClass.cpp \
+      src/Position.cpp \
+      src/Screen.cpp \
+      src/Texture.cpp \
+      src/Tile.cpp \
+      src/Projectile.cpp
