@@ -23,6 +23,7 @@
 #include "Item.hpp"
 #include "Environment.hpp"
 #include "Projectile.hpp"
+#include "Weapon.hpp"
 #include "Game.hpp"
 
 EntityCreator::EntityCreator() {
@@ -36,17 +37,18 @@ EntityCreator::~EntityCreator() {
 Entity& EntityCreator::createPlayer(EntitySystem::EntityManager &mManager,
                                     EntityCreator &creator,int x,int y) {
     std::cout << " - EntityCreator::createPlayer() ..."<<std::endl;
-    auto& entity(mManager.addEntity());
+    auto& player(mManager.addEntity());
     //auto& entity = manager.addEntity();
 
-    entity.addComponent<Position>(x,y);
-    entity.addComponent<Texture>("data/gubbe_box1.png",true); // 32x32 clip
-    entity.addComponent<GPhysics>();
-    entity.addComponent<Character>(mManager,creator);
+    player.addComponent<Position>(x,y);
+    player.addComponent<Texture>("data/gubbe_box1.png",true); // 32x32 clip
+    player.addComponent<GPhysics>();
+    player.addComponent<Weapon>("data/sword.png");
+    player.addComponent<Character>(mManager,creator);
 
     //if(!entity.hasGroup(game::PLAYER))
-    entity.addGroup(game::PLAYER);
-    return entity;
+    player.addGroup(game::PLAYER);
+    return player;
 }
 
 Entity& EntityCreator::createItem(EntitySystem::EntityManager &mManager,
@@ -83,7 +85,7 @@ Entity& EntityCreator::createEnemy(EntitySystem::EntityManager &mManager,
 }
 
 Entity& EntityCreator::createEnvironment(EntitySystem::EntityManager &mManager,
-                                            int envNumber,int x,int y) {
+                                            int envId,int x,int y) {
     auto& environment(mManager.addEntity());
 
     environment.addComponent<Position>(x,y);

@@ -28,24 +28,28 @@
 #include "EntitySystem.hpp"
 #include "Position.hpp"
 
-/* Texture class. Can load an image, render the texture and get texture data.*/
+/** Texture class. Can load an image, render the texture and get texture data.*/
 struct Texture : EntitySystem::Component {
 public:
-    /* Create a regular texture, size will be set as the size of the image. */
+    /** Create a regular texture, size will be set as the size of the image. */
     Texture();
 
-    /* Create a texture and choose if it is clipped, currently only 32x32px. */
+    /** Create a texture and choose if it is clipped, clip = 32 x 32 px. */
     Texture(std::string img,bool clip);
-    Texture(std::string img,bool clip,int w,int h);
 
-    /* Create a text that can be drawn to the screen. */
-    Texture(std::string text,SDL_Color textcolor,TTF_Font* font);
+    /** Create a texture and choose if it is clipped, clip = w x h px. */
+    Texture(std::string img, bool clip, int w, int h);
+
+    /** Create a text that can be drawn to the screen. */
+    Texture(std::string text, SDL_Color textcolor, TTF_Font* font);
 
     void init();
     void draw();
-    //void update();
 
+    /** Loads an image to the texture. */
     bool loadFromFile(SDL_Renderer *renderer, std::string path);
+
+    /** Loads a text string to the texture. */
     bool loadFromText(SDL_Renderer *renderer, std::string text,
                         SDL_Color textcolor,TTF_Font *font);
     void free();
@@ -54,12 +58,18 @@ public:
     void setBlendMode(SDL_BlendMode blending);
     void setAlpha(Uint8 alpha);
     // )
+    /** Renders the texture on the screen at x-position = x and y-position = y. */
     void render(SDL_Renderer *renderer, int x, int y,
                     SDL_Rect* clip = NULL);/*,double angle = 0.0,
                 SDL_Point* center = NULL,SDL_RendererFlip = SDL_FLIP_NONE);*/
+
+    /** Renders the image on the screen at x-position = rect.x and
+     * y-position = rect.y. */
     void render(SDL_Renderer *renderer, SDL_Rect* clip = NULL);
                     /*double angle = 0.0, SDL_Point* center = NULL,
                     SDL_RendererFlip = SDL_FLIP_NONE);*/
+
+    /** Getters and setters. */
     int getWidth();
     int getHeight();
     SDL_Rect getRect();
@@ -70,15 +80,21 @@ public:
     int getX();
     int getY();
 
+    void setClipped(bool clipped);
     void setClipX(int x);
     void setClipY(int y);
     void setClipW(int w);
     void setClipH(int h);
+    void setClip(SDL_Rect *clip);
 
     std::string getImgPath();
     bool isSolid();
     void setSolid(bool solidBool);
+
+    /** Gets a new instance of current texture. Shared SDL_Texture so
+     * need to keep the original SDL_Texture unfree'd. */
     Texture *clone() const { return new Texture(*this); }
+
     ~Texture();
 private:
     Position *position{nullptr};

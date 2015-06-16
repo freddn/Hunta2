@@ -226,6 +226,17 @@ void Texture::setYRect(int y) {
     rect.y = y;
 }
 
+void Texture::setClipped(bool clipped) {
+    isClipped = clipped;
+}
+
+void Texture::setClip(SDL_Rect *clip) {
+    rect.h = clip->h;
+    rect.w = clip->w;
+    rect.x = clip->x;
+    rect.y = clip->y;
+}
+
 SDL_Rect Texture::getRect() {
     return rect;
 }
