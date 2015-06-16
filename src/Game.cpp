@@ -41,7 +41,7 @@ namespace game {
     int t_width = width/32;
     int height = 480;
     int t_height = height/32;
-    int maxFPS = 9999;
+    int maxFPS = 45;
     bool hasChanged = true;
 
     int countedFrames = 0;

@@ -70,6 +70,7 @@ void Weapon::update() {
             if(!attackTimer.isStarted())
                 attackTimer.start();
             if(attackTimer.getTicks() > INTERVALL) {
+                std::cout << "Attack!" << std::endl;
                 attackState++;
                 attackTimer.stop();
             }
