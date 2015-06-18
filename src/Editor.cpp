@@ -24,7 +24,7 @@ Editor::Editor() {
 
 Editor::~Editor() {
     //dtor
-    SDL_FreeSurface(r_select);
+
     SDL_DestroyTexture(rect_select);
 }
 
@@ -33,7 +33,7 @@ void Editor::init() {
     SDL_FillRect(r_select,NULL,SDL_MapRGB(r_select->format,255,0,0));
     rect_select = SDL_CreateTextureFromSurface(game::getRenderer(),r_select);
     //
-
+    SDL_FreeSurface(r_select);
     rground.x = 0;
     rground.y = 2;
     rground.w = 32;

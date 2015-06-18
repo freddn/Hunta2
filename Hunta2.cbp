@@ -114,16 +114,22 @@
 		<Unit filename="src/MainMenu.hpp" />
 		<Unit filename="src/MapClass.cpp" />
 		<Unit filename="src/MapClass.hpp" />
+		<Unit filename="src/Melee.cpp" />
+		<Unit filename="src/Melee.hpp" />
 		<Unit filename="src/Position.cpp" />
 		<Unit filename="src/Position.hpp" />
 		<Unit filename="src/Projectile.cpp" />
 		<Unit filename="src/Projectile.hpp" />
+		<Unit filename="src/Ranged.cpp" />
+		<Unit filename="src/Ranged.hpp" />
 		<Unit filename="src/Screen.cpp" />
 		<Unit filename="src/Screen.hpp" />
 		<Unit filename="src/Texture.cpp" />
 		<Unit filename="src/Texture.hpp" />
 		<Unit filename="src/Tile.cpp" />
 		<Unit filename="src/Tile.hpp" />
+		<Unit filename="src/Weapon.cpp" />
+		<Unit filename="src/Weapon.hpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />

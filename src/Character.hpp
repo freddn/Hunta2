@@ -22,6 +22,7 @@
 
 #include "Texture.hpp"
 #include "GPhysics.hpp"
+#include "HealthBar.hpp"
 #include "EntitySystem.hpp"
 #include "EntityCreator.hpp"
 
@@ -58,8 +59,12 @@ private:
     GPhysics *physics{nullptr};
     Texture *texture{nullptr};
     Position *position{nullptr};
+    HealthBar *hpBar{nullptr};
+
+
     EntityManager *manager{nullptr};
     EntityCreator *creator{nullptr};
+
     bool attacking = false;
     int xPos; /* x-position of the player. */
     int yPos; /* y-position of the player. */

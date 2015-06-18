@@ -24,6 +24,7 @@
 #include "Environment.hpp"
 #include "Projectile.hpp"
 #include "Weapon.hpp"
+#include "HealthBar.hpp"
 #include "Game.hpp"
 
 EntityCreator::EntityCreator() {
@@ -43,6 +44,7 @@ Entity& EntityCreator::createPlayer(EntitySystem::EntityManager &mManager,
     player.addComponent<Position>(x,y);
     player.addComponent<Texture>("data/gubbe_box1.png",true); // 32x32 clip
     player.addComponent<GPhysics>();
+    player.addComponent<HealthBar>(100);
     player.addComponent<Weapon>("data/sword.png");
     player.addComponent<Character>(mManager,creator);
 
@@ -77,6 +79,7 @@ Entity& EntityCreator::createEnemy(EntitySystem::EntityManager &mManager,
     else
         enemy.addComponent<Texture>("data/wolf.png",true,48,48); // 48x48 clip
     enemy.addComponent<GPhysics>();
+    enemy.addComponent<HealthBar>(100);
     enemy.addComponent<Enemy>(mManager);
     /* add position */
 

@@ -7,7 +7,7 @@ Weapon::Weapon() {
     //ctor
 }
 
-Weapon::Weapon(std::string img) {
+Weapon::Weapon(std::string img,EntityManager *mgr) {
     imgPath = img;
     //ctor
 }
@@ -70,7 +70,8 @@ void Weapon::update() {
             if(!attackTimer.isStarted())
                 attackTimer.start();
             if(attackTimer.getTicks() > INTERVALL) {
-                std::cout << "Attack!" << std::endl;
+                //std::cout << "Attack!" << std::endl;
+                attack();
                 attackState++;
                 attackTimer.stop();
             }
@@ -92,6 +93,21 @@ void Weapon::update() {
             weaponImage.setClipX(attackState);
             isAttacking = false;
             break;
+        }
+    }
+}
+
+bool Weapon::attack() {
+    for(auto& e: manager->getEntitiesByGroup(game::ENEMY)) {
+        Position temp = e->getComponent<Position>();
+        int width = e->getComponent<Texture>().getWidth();
+        int height = e->getComponent<Texture>().getHeight();
+
+        if((position->getX()-10 < temp.getX()+width &&
+                position->getX()+42 > temp.getX()) &&
+                (position->getY()-10 < temp.getY()+height &&
+                 position->getY()+42 > temp.getY())) {
+            e->getComponent<HealthBar>().setHp(e->getComponent<HealthBar>().getHp()-4);
         }
     }
 }

@@ -27,7 +27,7 @@
 #include <cassert>
 #include <type_traits>
 
-/*
+/**
  * EntitySystem is a system where we have a managers that contains all the
  * entities we have in the game. The entities is built of different components.
  *
@@ -98,14 +98,17 @@ namespace EntitySystem {
 
             return *c;
         }
+
         template<typename T> bool hasComponent() const {
             return componentBitset[getComponentTypeID<T>()];
         }
+
         template<typename T> T& getComponent() const {
             assert(hasComponent<T>());
             auto ptr(componentArray[getComponentTypeID<T>()]);
             return *reinterpret_cast<T*>(ptr);
         }
+
         bool hasGroup(Group mGroup) const noexcept;
         void addGroup(Group mGroup) noexcept;
         void delGroup(Group mGroup) noexcept;
@@ -119,6 +122,7 @@ namespace EntitySystem {
 
         GroupBitset groupBitset;
     };
+
     struct EntityManager {
     public:
         void update();

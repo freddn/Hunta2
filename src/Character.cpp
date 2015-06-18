@@ -36,6 +36,7 @@ void Character::init() {
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
     physics = &entity->getComponent<GPhysics>();
+    hpBar = &entity->getComponent<HealthBar>();
     physics->setKeyControlled(true);
     //position->setX(game::getWidth());
     //position->setY(game::getHeight());
@@ -83,6 +84,7 @@ void Character::update() {
         if(!attacking) {
             attacking = true;
             /* Fire a projectile.. */
+
             //std::cerr << "create a projectile." << std::endl;
             creator->createProjectile(*manager,position->getX(),position->getY(),
                                       game::getMouseX()+game::getOffset()->x,game::getMouseY()+game::getOffset()->y);

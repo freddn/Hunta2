@@ -11,14 +11,14 @@ using namespace EntitySystem;
 
 
 /**
- * This class is a Parent weapon class.
+ * This class represents a weapon that enemys and players will have.
  */
 struct Weapon : Component {
 public:
     Weapon();
     Weapon(std::string img);
 
-    /** Will draw the weapon. */
+    /** Will draw the weapon texture. */
     void draw();
 
     /** Update the weapon and check if attacking. */
