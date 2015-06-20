@@ -18,4 +18,6 @@ SRC = src/Character.cpp \
       src/Screen.cpp \
       src/Texture.cpp \
       src/Tile.cpp \
-      src/Projectile.cpp
+      src/Projectile.cpp \
+	  src/HealthBar.cpp \
+	  src/Weapon.cpp

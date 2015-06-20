@@ -82,6 +82,10 @@ namespace EntitySystem {
         void update();
         bool isAlive() const;
         void destroy();
+        void setY(int y);
+        int getY() const;
+        bool operator < (const Entity &ent) const {
+            return yPos < ent.getY(); };
         template<typename T, typename... TArgs> T& addComponent(TArgs&&... mArgs) {
             assert(!hasComponent<T>());
 
@@ -89,7 +93,6 @@ namespace EntitySystem {
             c->entity = this;
             std::unique_ptr<Component> uPtr{c};
             components.emplace_back(std::move(uPtr));
-
 
             componentArray[getComponentTypeID<T>()] = c;
             componentBitset[getComponentTypeID<T>()] = true;
@@ -114,8 +117,8 @@ namespace EntitySystem {
         void delGroup(Group mGroup) noexcept;
     private:
         EntityManager &manager;
-
-        bool alive{true};
+        int yPos = 0;
+        bool alive = true;
         std::vector<std::unique_ptr<Component>> components;
         ComponentArray componentArray;
         ComponentBitset componentBitset;

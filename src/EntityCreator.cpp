@@ -45,9 +45,9 @@ Entity& EntityCreator::createPlayer(EntitySystem::EntityManager &mManager,
     player.addComponent<Texture>("data/gubbe_box1.png",true); // 32x32 clip
     player.addComponent<GPhysics>();
     player.addComponent<HealthBar>(100);
-    player.addComponent<Weapon>("data/sword.png");
+    player.addComponent<Weapon>("data/sword.png", mManager);
     player.addComponent<Character>(mManager,creator);
-
+    player.setY(y);
     //if(!entity.hasGroup(game::PLAYER))
     player.addGroup(game::PLAYER);
     return player;
@@ -61,6 +61,7 @@ Entity& EntityCreator::createItem(EntitySystem::EntityManager &mManager,
     item.addComponent<Position>(x,y);
     item.addComponent<Texture>("data/stick.png",false); // no clip
     item.addComponent<Item>();
+    item.setY(y);
     /* add position */
 
 
@@ -81,6 +82,7 @@ Entity& EntityCreator::createEnemy(EntitySystem::EntityManager &mManager,
     enemy.addComponent<GPhysics>();
     enemy.addComponent<HealthBar>(100);
     enemy.addComponent<Enemy>(mManager);
+    enemy.setY(y);
     /* add position */
 
     enemy.addGroup(game::ENEMY);
@@ -95,7 +97,7 @@ Entity& EntityCreator::createEnvironment(EntitySystem::EntityManager &mManager,
     environment.addComponent<Texture>("data/tree2.png",false); // no clip
     environment.addComponent<GPhysics>();
     environment.addComponent<Environment>();
-
+    environment.setY(y);
     environment.addGroup(game::ENVIRONMENT);
     return environment;
 }
@@ -110,7 +112,7 @@ void EntityCreator::createProjectile(EntitySystem::EntityManager &mManager,
         projectile.addComponent<Texture>("data/fireball.png",false); // no clip
         projectile.addComponent<GPhysics>();
         projectile.addComponent<Projectile>(destX,destY,destX-x,destY-y);
-
+        projectile.setY(y);
         projectile.addGroup(game::PROJECTILE);
     }
 }

@@ -52,6 +52,14 @@ namespace EntitySystem
         groupBitset[mGroup] = false;
     }
 
+    void Entity::setY(int y) {
+        yPos = y;
+    }
+
+    int Entity::getY() const {
+        return yPos;
+    }
+
     void EntityManager::update() {
         entities.erase(
             std::remove_if(std::begin(entities), std::end(entities),
@@ -68,6 +76,10 @@ namespace EntitySystem
     }
 
     void EntityManager::draw() {
+        /* Sort after y position. */
+
+        std::sort(entities.begin(),entities.end());
+
         for(auto& e : entities)
             e->draw();
     }
@@ -125,5 +137,7 @@ namespace EntitySystem
         groupBitset[mGroup] = true;
         manager.addToGroup(this,mGroup);
     }
-
 }
+
+
+

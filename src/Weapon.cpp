@@ -1,14 +1,15 @@
 #include "Weapon.hpp"
 
 #include "Game.hpp"
-
+#include "HealthBar.hpp"
 
 Weapon::Weapon() {
     //ctor
 }
 
-Weapon::Weapon(std::string img,EntityManager *mgr) {
+Weapon::Weapon(std::string img,EntityManager &mgr) {
     imgPath = img;
+    manager = &mgr;
     //ctor
 }
 
@@ -98,18 +99,21 @@ void Weapon::update() {
 }
 
 bool Weapon::attack() {
+    bool hit = false;
     for(auto& e: manager->getEntitiesByGroup(game::ENEMY)) {
         Position temp = e->getComponent<Position>();
         int width = e->getComponent<Texture>().getWidth();
         int height = e->getComponent<Texture>().getHeight();
-
-        if((position->getX()-10 < temp.getX()+width &&
-                position->getX()+42 > temp.getX()) &&
-                (position->getY()-10 < temp.getY()+height &&
-                 position->getY()+42 > temp.getY())) {
+        /* Right attack */
+        if((temp.getX() < playerPosition->getX()+32+16  &&
+            temp.getX()+width > playerPosition->getX()+32) &&
+           (temp.getY() < playerPosition->getY()+32 &&
+            temp.getY()+height > playerPosition->getY())) {
             e->getComponent<HealthBar>().setHp(e->getComponent<HealthBar>().getHp()-4);
+            hit = true;
         }
     }
+    return hit;
 }
 
 void Weapon::draw() {

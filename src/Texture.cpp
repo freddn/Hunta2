@@ -190,11 +190,17 @@ bool Texture::isSolid() {
 }
 
 int Texture::getWidth() {
-    return tWidth;
+    if(!isClipped)
+        return tWidth;
+    else
+        return tclip.w;
 }
 
 int Texture::getHeight() {
-    return tHeight;
+    if(!isClipped)
+        return tHeight;
+    else
+        return tclip.h;
 }
 
 int Texture::getX() {

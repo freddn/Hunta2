@@ -16,7 +16,7 @@ using namespace EntitySystem;
 struct Weapon : Component {
 public:
     Weapon();
-    Weapon(std::string img);
+    Weapon(std::string img, EntityManager &mgr);
 
     /** Will draw the weapon texture. */
     void draw();
@@ -35,6 +35,9 @@ public:
     virtual ~Weapon();
 private:
     Position *playerPosition{nullptr};
+
+    EntityManager *manager{nullptr};
+
     LTimer attackTimer;
     Texture weaponImage;
     std::string imgPath = "";
