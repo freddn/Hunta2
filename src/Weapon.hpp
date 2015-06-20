@@ -5,6 +5,7 @@
 
 #include "EntitySystem.hpp"
 #include "Texture.hpp"
+#include "GPhysics.hpp"
 #include "LTimer.hpp"
 
 using namespace EntitySystem;
@@ -35,8 +36,12 @@ public:
     virtual ~Weapon();
 private:
     Position *playerPosition{nullptr};
+    GPhysics *physics{nullptr};
 
     EntityManager *manager{nullptr};
+
+    int weaponX = 0;
+    int weaponY = 0;
 
     LTimer attackTimer;
     Texture weaponImage;

@@ -38,7 +38,7 @@ namespace game {
     void start();
 
     /** Initiates SDL, creates a window, buffer and so on. */
-    bool init_game();
+    bool init_game(bool fullscreen);
 
     /** Quit SDL and deallocate stuff. */
     void close();

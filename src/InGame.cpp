@@ -66,7 +66,7 @@ void InGame::draw()
 {
     Screen::renderStart();
 
-    /* Update background tiles. */
+    // Update background tiles.
     if(game::getHasChanged())
     {
         SDL_SetRenderTarget(game::getRenderer(),game::getBuffer());
@@ -78,14 +78,14 @@ void InGame::draw()
         SDL_SetRenderTarget(game::getRenderer(),NULL);
         game::setHasChanged(false);
     }
-    /* Draw background tiles. */
+    // Draw background tiles.
     SDL_RenderCopy(game::getRenderer(),game::getBuffer(),
                     game::getOffset(),game::getBackground());
 
-    /* Draw all entities. */
+    // Draw all entities.
     inGameManager.draw();
 
-    /* Display inventory */
+    // Display inventory
     if(showInventory)
     {
         inv.draw();

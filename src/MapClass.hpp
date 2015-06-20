@@ -46,7 +46,7 @@ public:
     void changeMap(const char *mapName);
     ~MapClass();
 private:
-    //std::map<const char*,std::map<int,Texture*>> maps;
+    std::map<std::string,std::map<int,Texture*>> maps;
     LuaInterface l_interface;
     std::map<int,Texture*> *currentMap;
     Texture grass_T;

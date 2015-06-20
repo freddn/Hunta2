@@ -23,31 +23,42 @@
 #include "Position.hpp"
 #include "Texture.hpp"
 
-/*
- * The physics of an object. This class is a component and will
+/**
+ * The physics of an entity. This class is a component and will
  * give an entity collision detection, velocity and movement.
  */
 struct GPhysics : EntitySystem::Component {
 public:
     GPhysics();
+
+    /** Sets the velocity of the player and change the position accordingly. */
     void update();
+
+    /** Gets the needed components. */
     void init();
+
+    /** Clears all collision booleans. */
     void clearCol();
     bool isColliding(int x, int y);
     bool isColliding(EntitySystem::Entity *e);
+
+    /** Getters. */
+    int getDir();
+    float getXVel();
+    float getYVel();
+    int getDestX();
+    int getDestY();
+
+    /** Setters. */
     void setDir(int dir, bool isMoving);
     void setVelocity(float v);
     void setXVelocity();
     void setYVelocity();
-    float getXVel();
-    float getYVel();
     void setKeyControlled(bool keyControlled);
     void setDestX(int x);
     void setDestY(int y);
-    int getDestX();
-    int getDestY();
-    virtual ~GPhysics();
 
+    virtual ~GPhysics();
 private:
     bool dirUp = false;
     bool dirDown = false;
@@ -58,6 +69,7 @@ private:
     bool colLeft = false;
     bool colRight = false;
     bool movedByKey = false;
+    int currentDir = 0;
     float destX = 0;
     float destY = 0;
     Position *position{nullptr};

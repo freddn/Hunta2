@@ -21,12 +21,18 @@
 
 
 int main(int argc, char *argv[]) {
-    if(argc > 1) {
+    bool fullscreen = false;
+    if(argc > 2) {
         std::cerr << "Wrong amount of arguments, run: " << argv[0] << std::endl;
         return 0;
+    } else if(argc == 2) {
+        if(*argv[1] == 'f')
+            fullscreen = true;
+
     }
 
-    if(!game::init_game()) {
+
+    if(!game::init_game(fullscreen)) {
         std::cerr << "Init failed." << std::endl;
         game::close();
         return 0;

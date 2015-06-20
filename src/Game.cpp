@@ -41,7 +41,7 @@ namespace game {
     int t_width = width/32;
     int height = 480;
     int t_height = height/32;
-    int maxFPS = 45;
+    int maxFPS = 60;
     bool hasChanged = true;
 
     int countedFrames = 0;
@@ -119,7 +119,7 @@ namespace game {
         }
     }
 
-    bool init_game() {
+    bool init_game(bool fullscreen) {
         offset.x = width/2;
         offset.y = height/2;
         offset.w = width;
@@ -137,8 +137,13 @@ namespace game {
             std::cerr << "Init video failed." << std::endl;
             return false;
         }
-
-        gWindow = SDL_CreateWindow("Hunta 2",SDL_WINDOWPOS_UNDEFINED,
+        if(fullscreen) {
+            gWindow = SDL_CreateWindow("Hunta",SDL_WINDOWPOS_UNDEFINED,
+                                   SDL_WINDOWPOS_UNDEFINED,
+                                   width,height,SDL_WINDOW_OPENGL |
+                                   SDL_WINDOW_FULLSCREEN);
+        } else
+            gWindow = SDL_CreateWindow("Hunta",SDL_WINDOWPOS_UNDEFINED,
                                    SDL_WINDOWPOS_UNDEFINED,
                                    width,height,SDL_WINDOW_OPENGL |
                                    SDL_WINDOW_RESIZABLE); //SDL_WINDOW_SHOWN);

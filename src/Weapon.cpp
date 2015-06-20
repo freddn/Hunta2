@@ -3,6 +3,7 @@
 #include "Game.hpp"
 #include "HealthBar.hpp"
 
+
 Weapon::Weapon() {
     //ctor
 }
@@ -19,11 +20,12 @@ Weapon::~Weapon() {
 
 void Weapon::init() {
     playerPosition = &entity->getComponent<Position>();
+    physics = &entity->getComponent<GPhysics>();
     weaponImage.setClipped(true);
     weaponImage.setClipH(32);
     weaponImage.setClipW(32);
     weaponImage.setClipX(0);
-    weaponImage.setClipY(0);
+    weaponImage.setClipY(physics->getDir());
     weaponImage.loadFromFile(game::getRenderer(),imgPath);
 }
 
@@ -31,6 +33,9 @@ void Weapon::update() {
     //SDL_Event *event = game::getEvent();
 
     const Uint8 *key = SDL_GetKeyboardState(NULL);
+
+    weaponImage.setClipY(physics->getDir());
+
 
     if(key[SDL_SCANCODE_SPACE]) {
         if(!isAttacking)
@@ -100,15 +105,18 @@ void Weapon::update() {
 
 bool Weapon::attack() {
     bool hit = false;
+    // If this is a player:
     for(auto& e: manager->getEntitiesByGroup(game::ENEMY)) {
-        Position temp = e->getComponent<Position>();
+        Position enemyPos = e->getComponent<Position>();
         int width = e->getComponent<Texture>().getWidth();
         int height = e->getComponent<Texture>().getHeight();
         /* Right attack */
-        if((temp.getX() < playerPosition->getX()+32+16  &&
-            temp.getX()+width > playerPosition->getX()+32) &&
-           (temp.getY() < playerPosition->getY()+32 &&
-            temp.getY()+height > playerPosition->getY())) {
+
+
+        if((enemyPos.getX() < weaponImage.getX()+weaponImage.getWidth()+game::getOffset()->x &&
+            enemyPos.getX()+width > weaponImage.getX()+game::getOffset()->x) &&
+           (enemyPos.getY() < weaponImage.getY()+weaponImage.getHeight()+game::getOffset()->y &&
+            enemyPos.getY()+height > weaponImage.getY()+game::getOffset()->y)) {
             e->getComponent<HealthBar>().setHp(e->getComponent<HealthBar>().getHp()-4);
             hit = true;
         }
@@ -117,7 +125,34 @@ bool Weapon::attack() {
 }
 
 void Weapon::draw() {
-    int posX = playerPosition->getX() + 16 - game::getOffset()->x;
-    weaponImage.render(game::getRenderer(), posX,
+    int posX = 0;
+    int posY = 0;
+    switch(physics->getDir()) {
+    case game::NORTH:
+        posY = playerPosition->getY() - 24 - game::getOffset()->y;
+        weaponImage.render(game::getRenderer(),
+                            playerPosition->getX() - game::getOffset()->x,
+                            posY, nullptr);
+        break;
+    case game::SOUTH:
+        posY = playerPosition->getY() + 24 - game::getOffset()->y;
+        weaponImage.render(game::getRenderer(),
+                            playerPosition->getX() - game::getOffset()->x,
+                            posY, nullptr);
+        break;
+    case game::WEST:
+
+        posX = playerPosition->getX() - 24 - game::getOffset()->x;
+        weaponImage.render(game::getRenderer(), posX,
                        playerPosition->getY() - game::getOffset()->y, nullptr);
+        break;
+    case game::EAST:
+        posX = playerPosition->getX() + 24 - game::getOffset()->x;
+        weaponImage.render(game::getRenderer(), posX,
+                       playerPosition->getY() - game::getOffset()->y, nullptr);
+        break;
+
+    }
+
+
 }

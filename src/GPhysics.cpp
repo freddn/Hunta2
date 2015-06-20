@@ -51,6 +51,7 @@ void GPhysics::init() {
     //std::cout << " - GPhysics::init() ..."<<std::endl;
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
+    currentDir = game::SOUTH;
 }
 
 /*bool GPhysics::isColliding(int x, int y) {
@@ -138,19 +139,26 @@ void GPhysics::setDir(int dir, bool isMoving) {
     case (game::NORTH):
         //std::cerr << "position: "<<&position<<std::endl;
         //std::cerr << "north"<<" up: "<<this->dirUp<<" = "<< isMoving<<std::endl;
-
+        if(isMoving)
+            currentDir = dir;
         dirUp = isMoving;
         //std::cerr << "north set"<<std::endl;
         break;
     case (game::SOUTH):
+        if(isMoving)
+            currentDir = dir;
         //std::cerr << "south"<<std::endl;
         dirDown = isMoving;
         break;
     case (game::EAST):
+        if(isMoving)
+            currentDir = dir;
         //std::cerr << "east"<<std::endl;
         dirRight = isMoving;
         break;
     case (game::WEST):
+        if(isMoving)
+            currentDir = dir;
         //std::cerr << "west"<<std::endl;
         dirLeft = isMoving;
         break;
@@ -247,4 +255,8 @@ int GPhysics::getDestY() {
 
 void GPhysics::setKeyControlled(bool keyControlled) {
     movedByKey = keyControlled;
+}
+
+int GPhysics::getDir() {
+    return currentDir;
 }

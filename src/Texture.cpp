@@ -204,8 +204,8 @@ int Texture::getHeight() {
 }
 
 int Texture::getX() {
-    return xPos;
-    //return rect.x;
+    //return xPos;
+    return rect.x;
 }
 
 void Texture::setXPos(int x) {
@@ -219,8 +219,8 @@ void Texture::setXRect(int x) {
 }
 
 int Texture::getY() {
-    return yPos;
-    //return rect.y;
+    //return yPos;
+    return rect.y;
 }
 
 void Texture::setYPos(int y) {
