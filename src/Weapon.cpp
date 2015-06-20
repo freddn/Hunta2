@@ -129,25 +129,25 @@ void Weapon::draw() {
     int posY = 0;
     switch(physics->getDir()) {
     case game::NORTH:
-        posY = playerPosition->getY() - 24 - game::getOffset()->y;
+        posY = playerPosition->getY() - 16 - game::getOffset()->y;
         weaponImage.render(game::getRenderer(),
                             playerPosition->getX() - game::getOffset()->x,
                             posY, nullptr);
         break;
     case game::SOUTH:
-        posY = playerPosition->getY() + 24 - game::getOffset()->y;
+        posY = playerPosition->getY() + 16 - game::getOffset()->y;
         weaponImage.render(game::getRenderer(),
                             playerPosition->getX() - game::getOffset()->x,
                             posY, nullptr);
         break;
     case game::WEST:
 
-        posX = playerPosition->getX() - 24 - game::getOffset()->x;
+        posX = playerPosition->getX() - 16 - game::getOffset()->x;
         weaponImage.render(game::getRenderer(), posX,
                        playerPosition->getY() - game::getOffset()->y, nullptr);
         break;
     case game::EAST:
-        posX = playerPosition->getX() + 24 - game::getOffset()->x;
+        posX = playerPosition->getX() + 16 - game::getOffset()->x;
         weaponImage.render(game::getRenderer(), posX,
                        playerPosition->getY() - game::getOffset()->y, nullptr);
         break;

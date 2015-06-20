@@ -45,7 +45,7 @@ Entity& EntityCreator::createPlayer(EntitySystem::EntityManager &mManager,
     player.addComponent<Texture>("data/gubbe_box1.png",true); // 32x32 clip
     player.addComponent<GPhysics>();
     player.addComponent<HealthBar>(100);
-    player.addComponent<Weapon>("data/sword.png", mManager);
+    player.addComponent<Weapon>("data/sword_red.png", mManager);
     player.addComponent<Character>(mManager,creator);
     player.setY(y);
     //if(!entity.hasGroup(game::PLAYER))

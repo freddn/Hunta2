@@ -41,13 +41,11 @@ namespace lua_functions {
             std::string img = lua_tostring(l_state,6); // image
             bool solid = lua_tonumber(l_state,7); // solid
 
-            /* Segmentation fault !!!!!!!!!!!!!!!!!!!!!!!!!*/
             if(current_map_data.textures.count(index) > 0) {
                 if(current_map_data.textures.at(index) != nullptr)
                     delete current_map_data.textures[index];
                 current_map_data.textures.erase(index);
             }
-
 
             Texture *temp;
             if(img.compare(grass_T.getImgPath()) == 0)

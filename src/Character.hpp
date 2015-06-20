@@ -38,32 +38,43 @@ public:
     Character();
     Character(EntityManager &m, EntityCreator &c);
 
-    /** Init the player component. Gets the entity's other components. */
+    /**
+     * Init the player component. Gets the entity's other components.
+     */
     void init();
 
-    /** Updates everything that has to do with the character. */
+    /**
+     * Updates everything that has to do with the character.
+     */
     void update();
 
-    /** Takes in a key and move the char accordingly. */
+    /**
+     * Takes in a key and move the char accordingly.
+     */
     void moveChar(const Uint8 *key);
 
-    /** Check if player is colliding with something. */
+    /**
+     * Check if player is colliding with something.
+     */
     bool checkCollision(int DIR);
 
-    /** Load saved data. */
+    /**
+     * Load saved data.
+     */
     void loadSaveFile(std::string char_name);
 
     ~Character();
 
 private:
+    // Needed components.
     GPhysics *physics{nullptr};
     Texture *texture{nullptr};
     Position *position{nullptr};
     HealthBar *hpBar{nullptr};
 
 
-    EntityManager *manager{nullptr};
-    EntityCreator *creator{nullptr};
+    EntityManager *manager{nullptr}; // For (creating and) finding entitys.
+    EntityCreator *creator{nullptr}; // Creating entitys.
 
     bool attacking = false;
     int xPos; /* x-position of the player. */

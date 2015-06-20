@@ -19,8 +19,6 @@
 #include "MapClass.hpp"
 #include "Game.hpp"
 
-using namespace lua_functions;
-
 MapClass::MapClass() {
 
 }
@@ -31,9 +29,9 @@ void MapClass::init() {
     water_T.loadFromFile(game::getRenderer(),"data/water.png");
     grass_T.loadFromFile(game::getRenderer(),"data/grass.png");
 
-    setGrass(grass_T);
-    setGround(ground_T);
-    setWater(water_T);
+    lua_functions::setGrass(grass_T);
+    lua_functions::setGround(ground_T);
+    lua_functions::setWater(water_T);
 
     l_interface.initLua();
     l_interface.load_File("src/LoadMap.lua");
@@ -50,8 +48,18 @@ MapClass::~MapClass() {
 bool MapClass::loadMap(std::string filename) {
     std::cout << " - MapClass::loadMap() ... " << std::endl;
     bool success = true;
+    if(mapContainer.find(filename) == mapContainer.end()) {
+        std::cout << "New map was added." << std::endl;
+    } else
+        mapContainer.erase(filename);
+
+
+
     l_interface.load_tiles(filename.c_str());
-    currentMap = getCurrentMap();
+    currentMap = lua_functions::getCurrentMap();
+
+    mapContainer.insert(std::pair<std::string,std::map<int,Texture*>*>(filename,currentMap));
+
     if(currentMap->empty())
         success = false;
     return success;

@@ -18,19 +18,16 @@
 
 #include "InGame.hpp"
 
-InGame::InGame()
-{
+InGame::InGame() {
 
 }
 
-InGame::~InGame()
-{
+InGame::~InGame() {
     //stick_T.free();
 
 }
 
-void InGame::init()
-{
+void InGame::init() {
     std::cout << " - InGame::init() ..."<<std::endl;
     inv.init();
     inGameManager.reserveEntities(300);
@@ -62,16 +59,13 @@ void InGame::init()
     //stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
 }
 
-void InGame::draw()
-{
+void InGame::draw() {
     Screen::renderStart();
 
     // Update background tiles.
-    if(game::getHasChanged())
-    {
+    if(game::getHasChanged()) {
         SDL_SetRenderTarget(game::getRenderer(),game::getBuffer());
-        for(auto iter = game::getTextureMap()->begin(); iter != game::getTextureMap()->end();iter++)
-        {
+        for(auto iter = game::getTextureMap()->begin(); iter != game::getTextureMap()->end();iter++) {
             //std::cout << "render texure" << std::endl;
             ((Texture*)iter->second)->render(game::getRenderer(),(SDL_Rect*)NULL);
         }
@@ -87,63 +81,54 @@ void InGame::draw()
 
     // Display inventory
     if(showInventory)
-    {
         inv.draw();
-    }
+
     Screen::renderEnd();
 }
 
-void InGame::update()
-{
+void InGame::update() {
     inGameManager.refresh(); /* Delete removed entities. */
     inGameManager.update();
 
     auto& characters(inGameManager.getEntitiesByGroup(game::PLAYER));
     //std::cout << "characters " << std::endl;
-    if(!characters.empty() && characters[0]->hasComponent<Position>())
-    {
+    if(!characters.empty() && characters[0]->hasComponent<Position>()) {
 
         //std::cout << "position exist" << std::endl;
         playerPos = characters[0]->getComponent<Position>();
 
         if((playerPos.getX() - (game::getWidth()/2)) > 0 &&
-            (playerPos.getX() + (game::getWidth()/2)) < game::getBackground()->w*2)
-        {
+            (playerPos.getX() + (game::getWidth()/2)) < game::getBackground()->w*2) {
             game::getOffset()->x = playerPos.getX() - game::getWidth()/2;
         }
         if((playerPos.getY() - (game::getHeight()/2)) > 0 &&
-            (playerPos.getY() + (game::getHeight()/2)) < game::getBackground()->h*2)
-        {
+            (playerPos.getY() + (game::getHeight()/2)) < game::getBackground()->h*2) {
             game::getOffset()->y = playerPos.getY() - game::getHeight()/2;
         }
     }
 
     key = SDL_GetKeyboardState(NULL);
-    if(key[SDL_SCANCODE_I])
-    {
-        if(!showInventory && buf == 10)
-        {
+    if(key[SDL_SCANCODE_I]) {
+        if(!showInventory && buf == 10) {
             buf = 0;
             showInventory = true;
             inv.loadInventory();
-        }
-        else if(showInventory && buf == 10)
-        {
+        } else if(showInventory && buf == 10) {
             buf = 0;
            showInventory = false;
-        }
-        else
-        {
+        } else
             buf++;
-        }
     }
     else
         buf = 10;
 
     /* Inventory input */
     if(showInventory)
-    {
         inv.update();
-    }
+
     Screen::update();
 }
+
+
+
+

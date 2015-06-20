@@ -24,20 +24,43 @@
 #include "Tile.hpp"
 #include "LuaInterface.hpp"
 
-/*
+/**
  * Load a map, save a map, change a map.
  */
 class MapClass {
 public:
     MapClass();
+
+    /**
+     * Loads tiles and set up lua-scripts.
+     */
     void init();
+
+    /**
+     * Make a call to the script that loads the tiles. Then we get the map from
+     * the lua namespace.
+     */
     bool loadMap(std::string filename);
+
+    /**
+     * Will erase and delete all tiles of the map.
+     */
+    void clearCurrentMap();
+
+    /**
+     * Will create a new map and replace existing ones with same name.
+     */
     void saveMap(std::map<int,Texture*> *loadedMap,
                 const char*filename, int width, int height);
-    void insertTile(Texture &texture);
+
+    void insertTile(Texture &texture); // maby remove
+
+    /**
+     * Sets the current map.
+     */
     void setMap(std::map<int,Texture*> *textureMap);
     std::map<int,Texture*> *getMap();
-    void clearCurrentMap();
+
     Texture *tileAtIndex();
     Texture *getGrassTile();
     Texture *getGroundTile();
@@ -46,7 +69,7 @@ public:
     void changeMap(const char *mapName);
     ~MapClass();
 private:
-    std::map<std::string,std::map<int,Texture*>> maps;
+    std::map<std::string,std::map<int,Texture*>*> mapContainer;
     LuaInterface l_interface;
     std::map<int,Texture*> *currentMap;
     Texture grass_T;
