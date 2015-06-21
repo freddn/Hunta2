@@ -57,16 +57,16 @@ void Enemy::update() {
         if(aggro == false) {
             aggro = true;
             /* FIXME: Replace the position with an ID. */
-            std::cerr << "!aggro from enemy at pos " << position->getX() <<
-                "," << position->getY() << std::endl;
+            //std::cerr << "!aggro from enemy at pos " << position->getX() <<
+            //    "," << position->getY() << std::endl;
         }
     }
     else {
         if(aggro == true) {
             aggro = false;
             /* FIXME: Replace the position with an ID. */
-            std::cerr << "!no aggro from enemy at pos " << position->getX() <<
-                "," << position->getY() << std::endl;
+            //std::cerr << "!no aggro from enemy at pos " << position->getX() <<
+            //    "," << position->getY() << std::endl;
         }
     }
 
@@ -76,20 +76,20 @@ void Enemy::update() {
         physics->setDestX(playerPos.getX() - position->getX());
         physics->setDestY(playerPos.getY() - position->getY());
 
-        if(position->getY()+32 < playerPos.getY()) {
+        if(position->getY()+5 < playerPos.getY()) {
             //position->setY(position->getY() + 1);
             texture->setClipX(0);
             texture->setClipY(0);
-        } else if(position->getY()-32 > playerPos.getY()) {
+        } else if(position->getY()-5 > playerPos.getY()) {
             //position->setY(position->getY() - 1);
             texture->setClipX(1);
             texture->setClipY(0);
         }
-        if(position->getX()+32 < playerPos.getX()) {
+        if(position->getX()+5 < playerPos.getX()) {
             //position->setX(position->getX() + 1);
             texture->setClipX(1);
             texture->setClipY(1);
-        } else if(position->getX()-32 > playerPos.getX()) {
+        } else if(position->getX()-5 > playerPos.getX()) {
             //position->setX(position->getX() - 1);
             texture->setClipX(0);
             texture->setClipY(1);

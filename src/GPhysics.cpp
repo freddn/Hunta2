@@ -81,8 +81,8 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
         if(posX+33 > entPosX &&
             posX+16 < entPosX &&
             (posY+24+(vel) > entPosY ||
-            posY+32-24-(vel) < entPosY+entH) &&
-            !(posY+32-24-(vel) < entPosY ||
+            posY+12-(vel) < entPosY+entH) &&
+            !(posY+12-(vel) < entPosY ||
             posY+24+(vel) > entPosY+entH)) {
             colRight = true;
             //std::cerr << "--collision-right--"<<std::endl;
@@ -96,8 +96,8 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
         if(posX-1 < entPosX+entW &&
             posX+16 > entPosX &&
             (posY+24+(vel) > entPosY ||
-            posY-24+32-(vel) < entPosY+entH) &&
-            !(posY-24+32-(vel) < entPosY ||
+            posY+12-(vel) < entPosY+entH) &&
+            !(posY+12-(vel) < entPosY ||
             posY+24+(vel) > entPosY+entH)) {
 
             colLeft = true;
@@ -110,7 +110,7 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
 
     if(dirDown) {
         //if(posY+33 > entPosY &&
-        if(posY+12 > entPosY &&
+        if(posY+13 > entPosY &&
             (posY < entPosY) &&
             (posX+(vel) > entPosX ||
             posX+32-(vel) < entPosX+entW) &&
@@ -126,7 +126,7 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
 
     if(dirUp) {
         //if(posY-1 < entPosY+entH &&
-        if(posY+24 < entPosY+entH &&
+        if(posY+23 < entPosY+entH &&
             (posY-16 > entPosY) &&
             (posX+(vel) > entPosX ||
             posX+32-(vel) < entPosX+entW) &&
@@ -189,10 +189,13 @@ void GPhysics::setVelocity(float v) {
 
 void GPhysics::setXVelocity() {
     if(!movedByKey) {
-        if(destX != 0 && destY != 0) {
-            float dY = std::abs(destY);
-            float dX = std::abs(destX);
-            xVel = ((dX/dY) / (dY/dX + dX/dY)) * vel;
+        if(destX != 0) {
+            if(destY != 0) {
+                float dY = std::abs(destY);
+                float dX = std::abs(destX);
+                xVel = dX / (dY + dX) * vel;
+            } else
+                xVel = vel;
             if(destX<0)
                 xVel*=-1;
         } else
@@ -218,10 +221,14 @@ void GPhysics::setXVelocity() {
 
 void GPhysics::setYVelocity() {
     if(!movedByKey) {
-        if(destX != 0 && destY != 0) {
-            float dY = std::abs(destY);
-            float dX = std::abs(destX);
-            yVel =  ((dY/dX) / ((dY/dX) + dX/dY)) * vel;
+        if(destY != 0) {
+            if(destX != 0) {
+                float dY = std::abs(destY);
+                float dX = std::abs(destX);
+                yVel = dY / (dY + dX) * vel;
+               // yVel = sqrt(yVel);
+            } else
+                yVel = vel;
             if(destY<0)
                 yVel*=-1;
         } else
