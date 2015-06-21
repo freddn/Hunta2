@@ -15,9 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with Hunta2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <string>
 
 #include "Game.hpp"
+
+#include <string>
+
 #include "Editor.hpp"
 #include "InGame.hpp"
 #include "MainMenu.hpp"
@@ -32,7 +34,7 @@ namespace game {
     SDL_Window *gWindow = nullptr;
     SDL_Renderer *renderer = nullptr;
     SDL_Texture *buffer = nullptr;
-    TTF_Font * font = nullptr;
+    TTF_Font *font = nullptr;
 
     int current_state = INGAME;
     MapClass textureMap;
@@ -41,7 +43,7 @@ namespace game {
     int t_width = width/32;
     int height = 480;
     int t_height = height/32;
-    int maxFPS = 60;
+    int maxFPS = 45;
     bool hasChanged = true;
 
     int countedFrames = 0;

@@ -19,6 +19,7 @@
 #ifndef ENTITYSYSTEM_H
 #define ENTITYSYSTEM_H
 
+#include <map>
 #include <vector>
 #include <memory>
 #include <algorithm>
@@ -26,6 +27,7 @@
 #include <array>
 #include <cassert>
 #include <type_traits>
+
 
 /**
  * EntitySystem is a system where we have a managers that contains all the
@@ -44,6 +46,9 @@ namespace EntitySystem {
     using ComponentID = std::size_t;
     using Group = std::size_t;
 
+    /**
+     *
+     */
     namespace Internal {
         inline ComponentID getUniqueComponentID() noexcept {
             // Every call to this function returns an unique ID every time.
@@ -52,6 +57,9 @@ namespace EntitySystem {
         }
     }
 
+    /**
+     *
+     */
     template<typename T> inline ComponentID getComponentTypeID() noexcept {
         static_assert(std::is_base_of<Component,T>::value,
                         "T must inherit from Component");
@@ -59,6 +67,9 @@ namespace EntitySystem {
         return typeID;
     }
 
+    /**
+     *
+     */
     constexpr std::size_t maxComponents{32};
     using ComponentBitset = std::bitset<maxComponents>;
     using ComponentArray = std::array<Component*,maxComponents>;
@@ -66,6 +77,9 @@ namespace EntitySystem {
     constexpr std::size_t maxGroups{32};
     using GroupBitset = std::bitset<maxGroups>;
 
+    /**
+     *
+     */
     struct Component {
         Entity* entity;
         virtual void init() {};
@@ -75,6 +89,9 @@ namespace EntitySystem {
         virtual ~Component() {};
     };
 
+    /**
+     *
+     */
     class Entity {
     public:
         Entity(EntityManager &mManager) : manager(mManager){};
@@ -83,9 +100,10 @@ namespace EntitySystem {
         bool isAlive() const;
         void destroy();
         void setY(int y);
-        int getY() const;
-        bool operator < (const Entity &ent) const {
-            return yPos < ent.getY(); };
+        void setEntityId(int id);
+        int getY();
+        int getEntityId();
+
         template<typename T, typename... TArgs> T& addComponent(TArgs&&... mArgs) {
             assert(!hasComponent<T>());
 
@@ -118,6 +136,7 @@ namespace EntitySystem {
     private:
         EntityManager &manager;
         int yPos = 0;
+        int entityId = -1;
         bool alive = true;
         std::vector<std::unique_ptr<Component>> components;
         ComponentArray componentArray;
@@ -131,14 +150,17 @@ namespace EntitySystem {
         void update();
         void draw();
         void reserveEntities(int amount);
+        void moveEntity(int entityId, int srcPos, int destPos);
         bool canAdd();
         void addToGroup(Entity *mEntity,Group mGroup);
         std::vector<Entity*>& getEntitiesByGroup(Group mGroup);
+        std::map<int, std::vector<std::unique_ptr<Entity>>>* getEntities();
         void refresh();
-        Entity& addEntity();
+        Entity& addEntity(int yPos);
     private:
+        int id = 0;
         unsigned int entitiesReserved = 32;
-        std::vector<std::unique_ptr<Entity>> entities;
+        std::map<int, std::vector<std::unique_ptr<Entity>>> entities;
         std::array<std::vector<Entity*>, maxGroups> groupedEntities;
     };
 }

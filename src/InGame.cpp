@@ -31,6 +31,9 @@ void InGame::init() {
     std::cout << " - InGame::init() ..."<<std::endl;
     inv.init();
     inGameManager.reserveEntities(300);
+
+    // CALL A LUA SCRIPT THAT LOADS ALL ENTITYS!!
+
     creator.createPlayer(inGameManager,creator,game::getWidth(),game::getHeight());
     //creator.createPlayer(&inGameManager,20,20);
     creator.createItem(inGameManager,0,100,100,true);

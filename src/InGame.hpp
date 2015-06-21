@@ -32,32 +32,45 @@
 
 using namespace EntitySystem;
 
-/*
+/**
  * This is the game-state of the game. Here we draw all game-related things
  * on the screen and deal with all input and events related to the game itself.
  */
-struct InGame : public Screen
-{
-    public:
-        InGame();
-        void init();
-        void update();
-        void draw();
-        void displayInventory(bool);
-        ~InGame();
-    protected:
-    private:
-        bool showInventory = false;
+struct InGame : public Screen {
+public:
+    InGame();
 
-        Inventory inv{445,150};
-        int buf = 0;
-        //EntitySystem::EntityManager* inGameManager;
-        EntityCreator creator;
-        EntitySystem::EntityManager inGameManager;
-        Item stick_T;
-        Position playerPos;
+    /**
+     *
+     */
+    void init();
 
-        const Uint8 *key;
+    /**
+     *
+     */
+    void update();
+
+    /**
+     *
+     */
+    void draw();
+
+    /**
+     *
+     */
+    void displayInventory(bool);
+    ~InGame();
+private:
+    bool showInventory = false;
+
+    Inventory inv{445,150};
+    int buf = 0;
+    EntityCreator creator;
+    EntityManager inGameManager;
+    Item stick_T;
+    Position playerPos;
+
+    const Uint8 *key;
 };
 
 #endif // INGAME_H

@@ -38,20 +38,22 @@ Position::~Position()
     //std::cerr <<"Position::update()"<<std::endl;
 }*/
 
-float Position::getX()
-{
+float Position::getX() {
     return x;
 }
-float Position::getY()
-{
+
+float Position::getY() {
     return y;
 }
-void Position::setX(float posX)
-{
+
+void Position::setX(float posX) {
     x = posX;
 }
-void Position::setY(float posY)
-{
-    y = posY;
+
+void Position::setY(float posY) {
+    if(posY != y) {
+        y = posY;
+        entity->setY(posY);
+    }
 }
 

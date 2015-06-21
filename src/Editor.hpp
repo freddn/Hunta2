@@ -30,9 +30,22 @@
 struct Editor : public Screen {
 public:
     Editor();
+
+    /**
+     *
+     */
     void init();
+
+    /**
+     *
+     */
     void update();
+
+    /**
+     *
+     */
     void draw();
+
     ~Editor();
 private:
     SDL_Rect rground;

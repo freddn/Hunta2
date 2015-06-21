@@ -38,7 +38,7 @@ EntityCreator::~EntityCreator() {
 Entity& EntityCreator::createPlayer(EntitySystem::EntityManager &mManager,
                                     EntityCreator &creator,int x,int y) {
     std::cout << " - EntityCreator::createPlayer() ..."<<std::endl;
-    auto& player(mManager.addEntity());
+    auto& player(mManager.addEntity(y));
     //auto& entity = manager.addEntity();
 
     player.addComponent<Position>(x,y);
@@ -47,7 +47,7 @@ Entity& EntityCreator::createPlayer(EntitySystem::EntityManager &mManager,
     player.addComponent<HealthBar>(100);
     player.addComponent<Weapon>("data/sword_red.png", mManager);
     player.addComponent<Character>(mManager,creator);
-    player.setY(y);
+
     //if(!entity.hasGroup(game::PLAYER))
     player.addGroup(game::PLAYER);
     return player;
@@ -55,13 +55,13 @@ Entity& EntityCreator::createPlayer(EntitySystem::EntityManager &mManager,
 
 Entity& EntityCreator::createItem(EntitySystem::EntityManager &mManager,
                                     int itemNumber,int x,int y, bool onGround) {
-    auto& item(mManager.addEntity());
+    auto& item(mManager.addEntity(y));
 
     /* Get right item from a list/file. */
     item.addComponent<Position>(x,y);
     item.addComponent<Texture>("data/stick.png",false); // no clip
     item.addComponent<Item>();
-    item.setY(y);
+
     /* add position */
 
 
@@ -71,7 +71,7 @@ Entity& EntityCreator::createItem(EntitySystem::EntityManager &mManager,
 
 Entity& EntityCreator::createEnemy(EntitySystem::EntityManager &mManager,
                                 int enemyNumber,int x,int y) {
-    auto& enemy(mManager.addEntity());
+    auto& enemy(mManager.addEntity(y));
 
     /* Get right enemy from a list/file. */
     enemy.addComponent<Position>(x,y);
@@ -82,7 +82,7 @@ Entity& EntityCreator::createEnemy(EntitySystem::EntityManager &mManager,
     enemy.addComponent<GPhysics>();
     enemy.addComponent<HealthBar>(100);
     enemy.addComponent<Enemy>(mManager);
-    enemy.setY(y);
+
     /* add position */
 
     enemy.addGroup(game::ENEMY);
@@ -91,13 +91,12 @@ Entity& EntityCreator::createEnemy(EntitySystem::EntityManager &mManager,
 
 Entity& EntityCreator::createEnvironment(EntitySystem::EntityManager &mManager,
                                             int envId,int x,int y) {
-    auto& environment(mManager.addEntity());
+    auto& environment(mManager.addEntity(y));
 
     environment.addComponent<Position>(x,y);
     environment.addComponent<Texture>("data/tree2.png",false); // no clip
     environment.addComponent<GPhysics>();
     environment.addComponent<Environment>();
-    environment.setY(y);
     environment.addGroup(game::ENVIRONMENT);
     return environment;
 }
@@ -106,13 +105,12 @@ void EntityCreator::createProjectile(EntitySystem::EntityManager &mManager,
                                         int x,int y,int destX,int destY) {
 
     if(mManager.canAdd()) {
-        auto& projectile(mManager.addEntity());
+        auto& projectile(mManager.addEntity(y));
 
         projectile.addComponent<Position>(x,y);
         projectile.addComponent<Texture>("data/fireball.png",false); // no clip
         projectile.addComponent<GPhysics>();
         projectile.addComponent<Projectile>(destX,destY,destX-x,destY-y);
-        projectile.setY(y);
         projectile.addGroup(game::PROJECTILE);
     }
 }
