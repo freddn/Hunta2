@@ -38,10 +38,15 @@ void GPhysics::update() {
     }*/
     setYVelocity();
     setXVelocity();
+    if(xVel != 0)
+        position->setX(position->getX()+xVel);
+    if(yVel != 0) {
+        //dirUp = false;
+        //dirDown = false;
+        position->setY(position->getY()+yVel);
 
-    position->setX(position->getX()+xVel);
+    }
 
-    position->setY(position->getY()+yVel);
     //    std::cerr << "pos updated"<<std::endl;
 
     clearCol();
@@ -60,17 +65,25 @@ void GPhysics::init() {
 }*/
 
 bool GPhysics::isColliding(EntitySystem::Entity *e) {
-    Position *tempPos = &e->getComponent<Position>();
-    Texture *tempTexture = &e->getComponent<Texture>();
+    int posX = position->getX();
+    int posY = position->getY();
+
+    int entPosX = e->getComponent<Position>().getX();
+    int entPosY = e->getComponent<Position>().getY();
+    //Texture *tempTexture = &e->getComponent<Texture>();
+
+    int entW = e->getComponent<Texture>().getWidth();
+    int entH = e->getComponent<Texture>().getHeight();
+
     bool colliding = false;
 
     if(dirRight) {
-        if(position->getX()+33 > tempPos->getX() &&
-            position->getX()+16 < tempPos->getX() &&
-            (position->getY()+(vel) > tempPos->getY() ||
-            position->getY()+32-(vel) < tempPos->getY()+tempTexture->getHeight()) &&
-            !(position->getY()+32-(vel) < tempPos->getY() ||
-            position->getY()+(vel) > tempPos->getY()+tempTexture->getHeight())) {
+        if(posX+33 > entPosX &&
+            posX+16 < entPosX &&
+            (posY+24+(vel) > entPosY ||
+            posY+32-24-(vel) < entPosY+entH) &&
+            !(posY+32-24-(vel) < entPosY ||
+            posY+24+(vel) > entPosY+entH)) {
             colRight = true;
             //std::cerr << "--collision-right--"<<std::endl;
             //position->setX(position->getX()-8);
@@ -78,13 +91,14 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
             colliding = true;
         }
     }
+
     if(dirLeft) {
-        if(position->getX()-1 < tempPos->getX()+tempTexture->getWidth() &&
-            position->getX()+16 > tempPos->getX() &&
-            (position->getY()+(vel) > tempPos->getY() ||
-            position->getY()+32-(vel) < tempPos->getY()+tempTexture->getHeight()) &&
-            !(position->getY()+32-(vel) < tempPos->getY() ||
-            position->getY()+(vel) > tempPos->getY()+tempTexture->getHeight())) {
+        if(posX-1 < entPosX+entW &&
+            posX+16 > entPosX &&
+            (posY+24+(vel) > entPosY ||
+            posY-24+32-(vel) < entPosY+entH) &&
+            !(posY-24+32-(vel) < entPosY ||
+            posY+24+(vel) > entPosY+entH)) {
 
             colLeft = true;
             //std::cerr << "--collision-left--"<<std::endl;
@@ -95,12 +109,13 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
     }
 
     if(dirDown) {
-        if(position->getY()+33 > tempPos->getY() &&
-            (position->getY() < tempPos->getY()+16) &&
-            (position->getX()+(vel) > tempPos->getX() ||
-            position->getX()+32-(vel) < tempPos->getX()+tempTexture->getWidth()) &&
-            !(position->getX()+32-(vel) < tempPos->getX() ||
-            position->getX()+(vel) > tempPos->getX()+tempTexture->getWidth())) {
+        //if(posY+33 > entPosY &&
+        if(posY+12 > entPosY &&
+            (posY < entPosY) &&
+            (posX+(vel) > entPosX ||
+            posX+32-(vel) < entPosX+entW) &&
+            !(posX+32-(vel) < entPosX ||
+            posX+(vel) > entPosX+entW)) {
             //std::cerr << "--collision-down--"<<std::endl;
             colDown = true;
             //position->setY(position->getY()-8);
@@ -110,12 +125,13 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
     }
 
     if(dirUp) {
-        if(position->getY()-1 < tempPos->getY()+tempTexture->getHeight() &&
-            (position->getY()-16 > tempPos->getY()) &&
-            (position->getX()+(vel) > tempPos->getX() ||
-            position->getX()+32-(vel) < tempPos->getX()+tempTexture->getWidth()) &&
-            !(position->getX()+32-(vel) < tempPos->getX() ||
-            position->getX()+(vel) > tempPos->getX()+tempTexture->getWidth())) {
+        //if(posY-1 < entPosY+entH &&
+        if(posY+24 < entPosY+entH &&
+            (posY-16 > entPosY) &&
+            (posX+(vel) > entPosX ||
+            posX+32-(vel) < entPosX+entW) &&
+            !(posX+32-(vel) < entPosX ||
+            posX+(vel) > entPosX+entW)) {
             colUp = true;
             //std::cerr << "--collision-up--"<<std::endl;
             //position->setY(position->getY()+8);

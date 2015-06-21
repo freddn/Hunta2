@@ -47,7 +47,7 @@ namespace EntitySystem {
     using Group = std::size_t;
 
     /**
-     *
+     * Used so that all components have a unique id.
      */
     namespace Internal {
         inline ComponentID getUniqueComponentID() noexcept {
@@ -58,7 +58,7 @@ namespace EntitySystem {
     }
 
     /**
-     *
+     * Returns the id of the component.
      */
     template<typename T> inline ComponentID getComponentTypeID() noexcept {
         static_assert(std::is_base_of<Component,T>::value,
@@ -78,7 +78,9 @@ namespace EntitySystem {
     using GroupBitset = std::bitset<maxGroups>;
 
     /**
-     *
+     * Component is a base class for all different classes that an entity can
+     * be built with. A component can for example be Position, Texture, Weapon
+     * and so on.
      */
     struct Component {
         Entity* entity;
@@ -95,11 +97,14 @@ namespace EntitySystem {
     class Entity {
     public:
         Entity(EntityManager &mManager) : manager(mManager){};
+        Entity(EntityManager &mManager,int z) : manager(mManager),yPos(z) {};
         void draw();
         void update();
         bool isAlive() const;
         void destroy();
         void setY(int y);
+        bool isMoved();
+        void setMoved(bool mov);
         void setEntityId(int id);
         int getY();
         int getEntityId();
@@ -136,6 +141,7 @@ namespace EntitySystem {
     private:
         EntityManager &manager;
         int yPos = 0;
+        bool moved = false;
         int entityId = -1;
         bool alive = true;
         std::vector<std::unique_ptr<Component>> components;
@@ -145,22 +151,68 @@ namespace EntitySystem {
         GroupBitset groupBitset;
     };
 
+    /**
+     * EntityManager is the manager of all entities. This manager will
+     * update, draw and refresh all entities.
+     */
     struct EntityManager {
     public:
+        /**
+         * Call update of all entities.
+         */
         void update();
+
+        /**
+         * Call draw of all entities. Will go from top of the screen to bottom.
+         */
         void draw();
+
+        /**
+         * Reserve an amount of entities that later can be added.
+         */
         void reserveEntities(int amount);
+
+        /**
+         * Will move an entity from one position in the entity-map to another.
+         * This is done so the game gets a "z-position" aswell for entities.
+         */
         void moveEntity(int entityId, int srcPos, int destPos);
+
+        /**
+         * Check if maximum amount of entities is reached.
+         */
         bool canAdd();
+
+        /**
+         * Add an entity to a specific group.
+         */
         void addToGroup(Entity *mEntity,Group mGroup);
+
+        /**
+         * Return all entities that belongs to a given group.
+         */
         std::vector<Entity*>& getEntitiesByGroup(Group mGroup);
-        std::map<int, std::vector<std::unique_ptr<Entity>>>* getEntities();
+
+        /**
+         * Return the map containing all entities.
+         */
+         std::map<int, std::vector<std::shared_ptr<Entity>>>* getEntities();
+
+        /**
+         * Remove all entities that is destroyed.
+         */
         void refresh();
-        Entity& addEntity(int yPos);
+
+        /**
+         * Adds a new entity. Will put this entity in a vector that is placed
+         * inside a map with y-position as key. Here y-position is the same
+         * as z-position to get the 3D effect.
+         */
+        Entity& addEntity();
     private:
         int id = 0;
         unsigned int entitiesReserved = 32;
-        std::map<int, std::vector<std::unique_ptr<Entity>>> entities;
+        std::map<int, std::vector<std::shared_ptr<Entity>>> entities;
         std::array<std::vector<Entity*>, maxGroups> groupedEntities;
     };
 }

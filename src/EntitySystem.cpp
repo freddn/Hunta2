@@ -56,10 +56,18 @@ namespace EntitySystem {
     }
 
     void Entity::setY(int y) {
-
+        y = y + getComponent<Texture>().getHeight();
         manager.moveEntity(entityId, yPos, y);
 
         yPos = y;
+    }
+
+    bool Entity::isMoved() {
+        return moved;
+    }
+
+    void Entity::setMoved(bool mov) {
+        moved = mov;
     }
 
     void Entity::setEntityId(int id) {
@@ -78,7 +86,7 @@ namespace EntitySystem {
         for(auto vec = entities.begin(); vec != entities.end(); vec++) {
             vec->second.erase(
                 std::remove_if(std::begin(vec->second), std::end(vec->second),
-                [](const std::unique_ptr<Entity>& mEntity)
+                [](const std::shared_ptr<Entity>& mEntity)
                 {
                     return !mEntity->isAlive();
                 }),
@@ -86,12 +94,14 @@ namespace EntitySystem {
         //std::cerr << entities.size()<< std::endl;
 
             for(auto& ent : vec->second) {
-            //if(e->isAlive())
-                ent->update();
+                if(ent != nullptr) {
+                    if(ent->isMoved())
+                        ent->setMoved(false);
+                    else
+                        ent->update();
+                }
             }
-
         }
-
     }
 
     void EntityManager::draw() {
@@ -112,7 +122,7 @@ namespace EntitySystem {
         return groupedEntities[mGroup];
     }
 
-    std::map<int, std::vector<std::unique_ptr<Entity>>>* EntityManager::getEntities() {
+    std::map<int, std::vector<std::shared_ptr<Entity>>>* EntityManager::getEntities() {
         return &entities;
     }
 
@@ -131,7 +141,7 @@ namespace EntitySystem {
         for( auto vec = entities.begin(); vec != entities.end(); vec++) {
             vec->second.erase(
                 std::remove_if(std::begin(vec->second),std::end(vec->second),
-                [](const std::unique_ptr<Entity>& mEntity)
+                [](const std::shared_ptr<Entity>& mEntity)
                 {
                     return !mEntity->isAlive();
                 }),
@@ -150,13 +160,31 @@ namespace EntitySystem {
     }
 
     void EntityManager::moveEntity(int entityId, int srcPos, int destPos) {
-        /* BREAKS */
+
+        /// Loop through all entitys in the vector at z-pos: srcPos. Stop when
+        /// the entity we are looking for is found or all entitis have been
+        /// iterated.
         for(auto e = entities.at(srcPos).begin(); e != entities.at(srcPos).end(); e++) {
 
+            /// Check if we have found the right entity.
             if((*e)->getEntityId() == entityId) {
-                //std::unique_ptr<Entity> uPtr = (*e).release();
-                entities[destPos].emplace_back(std::move(*e));
+
+                /// Make a new reference to the entity we are moving.
+                std::shared_ptr<Entity> newPtr = (*e);
+
+                /// Remove the reference from the old shared_ptr.
+                e->reset();
+
+                /// We don't need to set moved if moving uppwards because updating
+                /// is made from top to bottom. We used moved bool to avoid recursion.
+                if(srcPos < destPos)
+                    newPtr->setMoved(true);
+
+                /// Place the new entity in the right "z" position.
+                entities[destPos].emplace_back(newPtr);
                 //entities->at(y).emplace_back(**e);
+
+                /// Remove the old (now empty) shared_ptr from the vector.
                 entities.at(srcPos).erase(e);
                 break;
             }
@@ -164,12 +192,16 @@ namespace EntitySystem {
 
     }
 
-    Entity& EntityManager::addEntity(int z) {
+    Entity& EntityManager::addEntity() {
         Entity* e(new Entity(*this));
         //std::cerr << entities.size() << std::endl;
+
+        /// All entities get a unique id.
         e->setEntityId(id++);
-        std::unique_ptr<Entity> uPtr{e};
-        entities[z].emplace_back(std::move(uPtr));
+        std::shared_ptr<Entity> sPtr{e};
+
+        /// Place the entity in a vector at the right z-position.
+        entities[0].emplace_back(sPtr);
 
         return *e;
     }

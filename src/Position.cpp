@@ -18,18 +18,17 @@
 
 #include "Position.hpp"
 
-Position::Position()
-{
+Position::Position() {
     //ctor
 }
-Position::Position(float posX, float posY)
-{
+
+Position::Position(float posX, float posY) {
     x = posX;
     y = posY;
     //ctor
 }
-Position::~Position()
-{
+
+Position::~Position() {
     //dtor
 }
 
@@ -51,9 +50,10 @@ void Position::setX(float posX) {
 }
 
 void Position::setY(float posY) {
-    if(posY != y) {
-        y = posY;
-        entity->setY(posY);
+    if((int)posY != (int)y) {
+    //if(std::abs(entity->getY() - (int)posY) > 2) {
+        entity->setY((int)posY);
     }
+    y = posY;
 }
 

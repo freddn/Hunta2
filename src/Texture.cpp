@@ -83,7 +83,7 @@ void Texture::draw() {
         position->getX() < game::getOffset()->x + game::getWidth() &&
         position->getY()+tHeight > game::getOffset()->y &&
         position->getY() < game::getOffset()->y + game::getHeight())
-    render(game::getRenderer(),position->getX()-game::getOffset()->x,
+        render(game::getRenderer(),position->getX()-game::getOffset()->x,
                 position->getY()-game::getOffset()->y,(SDL_Rect*)nullptr);
 }
 /*
