@@ -31,7 +31,7 @@ void Weapon::init() {
 
 void Weapon::update() {
     //SDL_Event *event = game::getEvent();
-    SDL_PumpEvents();
+    //SDL_PumpEvents();
     const Uint8 *key = SDL_GetKeyboardState(NULL);
 
     weaponImage.setClipY(physics->getDir());

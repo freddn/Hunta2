@@ -27,33 +27,37 @@
 
 using namespace EntitySystem;
 /* The enemy class. */
-struct Enemy : Component
-{
-    public:
-        Enemy(EntityManager &m);
+struct Enemy : Component {
+public:
+    Enemy(EntityManager &m);
 
-        void init();
-        void draw();
-        void update();
+    void init();
+    void draw();
+    void update();
 
-        virtual ~Enemy();
-    protected:
-    private:
+    virtual ~Enemy();
+protected:
+private:
 
-        GPhysics *physics{nullptr};
-        Texture *texture{nullptr};
-        Position *position{nullptr};
+    GPhysics *physics{nullptr};
+    Texture *texture{nullptr};
+    Position *position{nullptr};
 
-        EntityManager *manager{nullptr};
+    EntityManager *manager{nullptr};
 
-        int xPos; // x-position of the enemy.
-        int yPos; // y-position of the enemy.
-        int xSpawnPos;
-        int ySpawnPos;
+    int xPos = 0; // x-position of the enemy.
+    int yPos = 0; // y-position of the enemy.
+    int xSpawnPos = 0;
+    int ySpawnPos = 0;
 
-        int enemyID = -1;
+    int enemyWidth = 0;
+    int enemyHeight = 0;
 
-        bool aggro;
+    int enemyID = -1;
+
+    bool aggro = false;
+    bool aggroX = true;
+    bool aggroY = true;
 };
 
 #endif // ENEMY_H
