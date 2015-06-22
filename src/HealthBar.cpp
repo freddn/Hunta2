@@ -21,9 +21,13 @@ void HealthBar::init() {
     SDL_FillRect(temp,NULL,SDL_MapRGB(temp->format,255,0,0));
     hpBarBG = SDL_CreateTextureFromSurface(game::getRenderer(),temp);
 
+    SDL_FreeSurface(temp);
+
     temp = SDL_CreateRGBSurface(0,hpBarRect.w,hpBarRect.h,32,0,0,0,0);
     SDL_FillRect(temp,NULL,SDL_MapRGB(temp->format,0,255,0));
     hpBar = SDL_CreateTextureFromSurface(game::getRenderer(),temp);
+
+    SDL_FreeSurface(temp);
 
     temp = SDL_CreateRGBSurface(0,hpBarOutlineRect.w,hpBarOutlineRect.h,32,0,0,0,0);
     SDL_FillRect(temp,NULL,SDL_MapRGB(temp->format,0,0,0));
