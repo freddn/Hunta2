@@ -26,6 +26,7 @@ namespace EntitySystem {
 
     void Entity::draw() {
         for(auto& c : components) {
+
             c->draw();
         }
     }
@@ -74,8 +75,16 @@ namespace EntitySystem {
         entityId = id;
     }
 
-    int Entity::getY() {
-        return yPos;
+    void Entity::updateY() {
+        if(hasComponent<Position>() && hasComponent<Texture>()) {
+
+            int y = getComponent<Position>().getY();
+            y += getComponent<Texture>().getHeight();
+            if(y != yPos) {
+                manager.moveEntity(entityId, yPos, y);
+                yPos = y;
+            }
+        }
     }
 
     int Entity::getEntityId() {
@@ -83,22 +92,31 @@ namespace EntitySystem {
     }
 
     void EntityManager::update() {
-        for(auto vec = entities.begin(); vec != entities.end(); vec++) {
-            vec->second.erase(
-                std::remove_if(std::begin(vec->second), std::end(vec->second),
-                [](const std::shared_ptr<Entity>& mEntity)
-                {
-                    return !mEntity->isAlive();
-                }),
-                std::end(vec->second));
-        //std::cerr << entities.size()<< std::endl;
+        if(byIndex) {
+            for(auto &ent : entitiesByIndex) {
+                ent.second->update();
+            }
+        } else {
+            for(auto vec = entities.begin(); vec != entities.end(); vec++) {
+                vec->second.erase(
+                    std::remove_if(std::begin(vec->second), std::end(vec->second),
+                    [](const std::shared_ptr<Entity>& mEntity)
+                    {
+                        return !mEntity->isAlive();
+                    }),
+                    std::end(vec->second));
+            //std::cerr << entities.size()<< std::endl;
 
-            for(auto& ent : vec->second) {
-                if(ent != nullptr) {
-                    if(ent->isMoved())
-                        ent->setMoved(false);
-                    else
-                        ent->update();
+                for(auto& ent : vec->second) {
+                    if(ent != nullptr) {
+                        if(ent->isMoved())
+                            ent->setMoved(false);
+                        else {
+
+                            ent->update();
+                            ent->updateY();
+                        }
+                    }
                 }
             }
         }
@@ -106,12 +124,32 @@ namespace EntitySystem {
 
     void EntityManager::draw() {
         /* Draw after y position. */
-        for(int i = game::getOffset()->y; i < game::getHeight()+game::getOffset()->y;i++) {
-        //for(auto vec = entities.begin(); vec != entities.end(); vec++) {
-            for(auto& e : entities[i])
-                e->draw();
-        }
+        if(byIndex) {
+            for(auto &ent : entitiesByIndex) {
+                //x + y * width
+                int x = 32* (ent.first % 64);
 
+                int y = (ent.first - (ent.first % 64))/2;
+                //std::cerr << y << std::endl;
+                if(x > game::getOffset()->x &&
+                    x < game::getOffset()->x + game::getOffset()->w &&
+                    y > game::getOffset()->y &&
+                    y < game::getOffset()->y + game::getOffset()->h)
+                    ent.second->draw();
+            }
+        } else {
+            for(int i = game::getOffset()->y; i < game::getHeight()+game::getOffset()->y;i++) {
+            //for(auto vec = entities.begin(); vec != entities.end(); vec++) {
+                for(auto& e : entities[i]) {
+                    if(e->hasComponent<Position>()) {
+                        int x = e->getComponent<Position>().getX();
+                        if(x > game::getOffset()->x &&
+                            x < game::getWidth()+game::getOffset()->x)
+                            e->draw();
+                    }
+                }
+            }
+        }
     }
 
     void EntityManager::addToGroup(Entity *mEntity,Group mGroup) {
@@ -126,6 +164,10 @@ namespace EntitySystem {
         return &entities;
     }
 
+    std::map<int, std::shared_ptr<Entity>>* EntityManager::getEntitiesByIndex() {
+        return &entitiesByIndex;
+    }
+
     void EntityManager::refresh() {
         for(auto i(0u); i < maxGroups; ++i) {
             auto& v(groupedEntities[i]);
@@ -138,15 +180,25 @@ namespace EntitySystem {
                 }),
                 std::end(v));
         }
-        for( auto vec = entities.begin(); vec != entities.end(); vec++) {
-            vec->second.erase(
-                std::remove_if(std::begin(vec->second),std::end(vec->second),
-                [](const std::shared_ptr<Entity>& mEntity)
-                {
-                    return !mEntity->isAlive();
-                }),
-                std::end(vec->second));
+        if(byIndex) {
+            for(auto it = entitiesByIndex.begin(),itend = entitiesByIndex.end();it != itend;) {
+                 if(!it->second->isAlive())
+                    it = entitiesByIndex.erase(it);
+                 else
+                    ++it;
+            }
+        } else {
+            for( auto vec = entities.begin(); vec != entities.end(); vec++) {
+                vec->second.erase(
+                    std::remove_if(std::begin(vec->second),std::end(vec->second),
+                    [](const std::shared_ptr<Entity>& mEntity)
+                    {
+                        return !mEntity->isAlive();
+                    }),
+                    std::end(vec->second));
+            }
         }
+
     }
 
     bool EntityManager::canAdd() {
@@ -156,12 +208,12 @@ namespace EntitySystem {
 
     void EntityManager::reserveEntities(int amount) {
         //entities.reserve(amount);
-        //entitiesReserved = amount;
+        entitiesReserved = amount;
     }
 
     void EntityManager::moveEntity(int entityId, int srcPos, int destPos) {
 
-        /// Loop through all entitys in the vector at z-pos: srcPos. Stop when
+        /// Loop through all entitys in the vector at srcPos = z-pos. Stop when
         /// the entity we are looking for is found or all entitis have been
         /// iterated.
         for(auto e = entities.at(srcPos).begin(); e != entities.at(srcPos).end(); e++) {
@@ -189,21 +241,99 @@ namespace EntitySystem {
                 break;
             }
         }
-
     }
 
-    Entity& EntityManager::addEntity() {
+    void EntityManager::setEntitiesByIndex(bool entByIndex) {
+        byIndex = entByIndex;
+    }
+
+    Entity& EntityManager::addEntity(int index) {
+        byIndex = true;
+        if(entitiesByIndex.find(index) != entitiesByIndex.end()) {
+            entitiesByIndex.erase(index);
+        }
         Entity* e(new Entity(*this));
         //std::cerr << entities.size() << std::endl;
 
         /// All entities get a unique id.
+        e->setEntityId(index);
+        std::shared_ptr<Entity> sPtr{e};
+        entitiesByIndex.insert(std::pair<int,std::shared_ptr<Entity>>(index,sPtr));
+
+        return *e;
+    }
+
+    Entity* EntityManager::addEntity(int index,bool i) {
+        if(i) {
+            byIndex = true;
+            if(entitiesByIndex.find(index) != entitiesByIndex.end()) {
+                entitiesByIndex.erase(index);
+            }
+            Entity* e(new Entity(*this));
+            //std::cerr << entities.size() << std::endl;
+
+            /// All entities get a unique id.
+            e->setEntityId(index);
+            std::shared_ptr<Entity> sPtr{e};
+            entitiesByIndex.insert(std::pair<int,std::shared_ptr<Entity>>(index,sPtr));
+            return e;
+        } else {
+            byIndex = false;
+            for(int e : indexes) {
+                if(index == e) {
+                    destroyEntity(index);
+                }
+            }
+            Entity* e(new Entity(*this));
+            //std::cerr << entities.size() << std::endl;
+            /// All entities get a unique id.
+            e->setEntityId(id++);
+            std::shared_ptr<Entity> sPtr{e};
+
+            /// Place the entity in a vector at the right "z-position".
+            entities[0].emplace_back(sPtr);
+            indexes.push_back(index);
+            return e;
+        }
+
+    }
+
+    Entity& EntityManager::addEntity() {
+
+        Entity* e(new Entity(*this));
+        //std::cerr << entities.size() << std::endl;
+        /// All entities get a unique id.
         e->setEntityId(id++);
         std::shared_ptr<Entity> sPtr{e};
 
-        /// Place the entity in a vector at the right z-position.
+        /// Place the entity in a vector at the right "z-position".
         entities[0].emplace_back(sPtr);
+        //indexes.push_back(index);
 
         return *e;
+    }
+
+    void EntityManager::destroyEntity(int index) {
+        int x = 32* (index % 64);
+        int y = (index - (index % 64))/2;
+        destroyEntity(index,x,y);
+    }
+
+    void EntityManager::destroyEntity(int index, int x, int y) {
+        for(auto vec = entities.begin(); vec != entities.end(); ++vec) {
+            for(auto ent : vec->second) {
+                if(ent->getComponent<Position>().getX() == x &&
+                    ent->getComponent<Position>().getY() == y) {
+                    ent->destroy();
+                }
+            }
+        }
+        for(auto it = indexes.begin();it != indexes.end();++it) {
+            if(*it == index) {
+                indexes.erase(it);
+                return;
+            }
+        }
     }
 
     void Entity::addGroup(Group mGroup) noexcept {

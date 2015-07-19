@@ -17,21 +17,18 @@
  */
 
 #include "Environment.hpp"
-#include <iostream>
 
-Environment::Environment()
-{
-    //ctor
+
+Environment::Environment(int id) {
+    environmentID = id;
 }
 
-Environment::~Environment()
-{
+Environment::~Environment() {
     //dtor
 }
 
-void Environment::init()
-{
-    //std::cout << " - Environment::init() ..."<<std::endl;
-    position = &entity->getComponent<Position>();
-    physics = &entity->getComponent<GPhysics>();
+int Environment::getID() {
+    return environmentID;
 }
+
+

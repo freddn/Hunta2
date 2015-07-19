@@ -16,11 +16,14 @@
  * along with Hunta2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- #include "Enemy.hpp"
+#include "Enemy.hpp"
 
-Enemy::Enemy(EntityManager &m) {
+#include "Game.hpp"
+
+Enemy::Enemy(EntityManager &m, int id) {
     //ctor
     manager = &m;
+    enemyID = id;
 }
 
 Enemy::~Enemy() {
@@ -47,11 +50,16 @@ void Enemy::draw() {
 
 void Enemy::update() {
     Position playerPos;
-    auto& player(manager->getEntitiesByGroup(game::PLAYER));
-    playerPos = player[0]->getComponent<Position>();
 
-    int playerW = player[0]->getComponent<Texture>().getWidth();
-    int playerH = player[0]->getComponent<Texture>().getHeight();
+    int playerH = 0;
+    int playerW = 0;
+
+    auto& player(manager->getEntitiesByGroup(game::PLAYER));
+    if(!player.empty()) {
+        playerPos = player[0]->getComponent<Position>();
+        playerW = player[0]->getComponent<Texture>().getWidth();
+        playerH = player[0]->getComponent<Texture>().getHeight();
+    }
     /* Check if player is near */
     if(position->getX() < playerPos.getX()+100+playerW &&
         position->getX()+enemyWidth > playerPos.getX()-100 &&
@@ -149,5 +157,7 @@ void Enemy::update() {
     }
 }
 
-
+int Enemy::getID() {
+    return enemyID;
+}
 

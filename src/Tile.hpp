@@ -23,13 +23,14 @@
 #include "Texture.hpp"
 
 /* Tile class. Images used in background environments. */
-struct Tile : Texture
-{
-    public:
-        Tile();
-        virtual ~Tile();
-    protected:
-    private:
+struct Tile : EntitySystem::Component {
+public:
+    Tile(int id);
+    int getID();
+    virtual ~Tile();
+protected:
+private:
+    int tileID = -1;
     bool solid;
 };
 

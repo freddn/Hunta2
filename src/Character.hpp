@@ -36,7 +36,7 @@ using namespace EntitySystem;
 struct Character: Component {
 public:
     Character();
-    Character(EntityManager &m, EntityCreator &c);
+    Character(EntityManager &m);
 
     /**
      * Init the player component. Gets the entity's other components.
@@ -74,7 +74,7 @@ private:
 
 
     EntityManager *manager{nullptr}; // For (creating and) finding entitys.
-    EntityCreator *creator{nullptr}; // Creating entitys.
+    EntityCreator creator; // Creating entitys.
 
     bool attacking = false;
     int xPos; /* x-position of the player. */

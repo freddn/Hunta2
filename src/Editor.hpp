@@ -19,22 +19,30 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#define MAP_WIDTH 2048
+#define MAP_HEIGHT 2048
+
+//#include <map>
+//#include <memory>
 #include "Screen.hpp"
-#include "Game.hpp"
+
+#include "EntitySystem.hpp"
+#include "Icon.hpp"
+#include "EntityCreator.hpp"
 
 /**
  * This class represents the map-editor.
- * Currently we can only draw the background-tiles.
- * (TODO) Put objects on the map. Trees/houses/enemys.
  */
 struct Editor : public Screen {
 public:
     Editor();
 
     /**
-     *
+     *SDL_MOUSEWHEEL
      */
     void init();
+
+    void loadIcon(std::string img, int id,std::size_t type);
 
     /**
      *
@@ -46,16 +54,51 @@ public:
      */
     void draw();
 
+    /**
+     * Change which icon/tile/entity is selected.
+     */
+    void setSelected(int n);
+
+    /**
+     * Returns selected number.
+     */
+    int getSelected();
+
+    /**
+     * Place an entitiy on the map.
+     */
+    void place();
+
+    /**
+     * Save all changes made.
+     */
+    void save();
+
+    void wheelUp();
+    void wheelDown();
+
     ~Editor();
 private:
-    SDL_Rect rground;
-    SDL_Rect rwater;
-    SDL_Rect rgrass;
-    SDL_Rect sel;
-    bool selBool = false;
-    int selected = 0;
-    SDL_Surface *r_select;
-    SDL_Texture *rect_select;
+    EntitySystem::EntityManager tileManager; /// TODO implement adding to manager
+    EntitySystem::EntityManager environmentManager;
+    EntitySystem::EntityManager itemManager;
+    EntitySystem::EntityManager enemyManager;
+
+    EntityCreator creator;
+
+    std::map<int, std::shared_ptr<Icon>> icons;
+    signed int selected = 0;
+
+    signed int firstIcon = 0;
+    signed int lastIcon = 8;
+    int selectedCount = 0;
+    bool mapUpdated = false;
+
+    int currentMap = 0;
+
+    int mapX = 0;
+    int mapY = 0;
+
 };
 
 #endif // EDITOR_H

@@ -33,7 +33,7 @@ struct Texture : EntitySystem::Component {
 public:
     /** Create a regular texture, size will be set as the size of the image. */
     Texture();
-
+    Texture(int w, int h);
     /** Create a texture and choose if it is clipped, clip = 32 x 32 px. */
     Texture(std::string img,bool clip);
 
@@ -47,11 +47,10 @@ public:
     void draw();
 
     /** Loads an image to the texture. */
-    bool loadFromFile(SDL_Renderer *renderer, std::string path);
+    bool loadFromFile(std::string path);
 
     /** Loads a text string to the texture. */
-    bool loadFromText(SDL_Renderer *renderer, std::string text,
-                        SDL_Color textcolor,TTF_Font *font);
+    bool loadFromText(std::string text, SDL_Color textcolor,TTF_Font *font);
     void free();
     // (
     void setColor(Uint8 red, Uint8 green, Uint8 blue);
@@ -59,13 +58,13 @@ public:
     void setAlpha(Uint8 alpha);
     // )
     /** Renders the texture on the screen at x-position = x and y-position = y. */
-    void render(SDL_Renderer *renderer, int x, int y,
+    void render(int x, int y,
                     SDL_Rect* clip = NULL);/*,double angle = 0.0,
                 SDL_Point* center = NULL,SDL_RendererFlip = SDL_FLIP_NONE);*/
 
     /** Renders the image on the screen at x-position = rect.x and
      * y-position = rect.y. */
-    void render(SDL_Renderer *renderer, SDL_Rect* clip = NULL);
+    void render(SDL_Rect* clip = NULL);
                     /*double angle = 0.0, SDL_Point* center = NULL,
                     SDL_RendererFlip = SDL_FLIP_NONE);*/
 
@@ -93,10 +92,12 @@ public:
 
     /** Gets a new instance of current texture. Shared SDL_Texture so
      * need to keep the original SDL_Texture unfree'd. */
-    Texture *clone() const { return new Texture(*this); }
-
+    //Texture *clone() const { return new Texture(*this); }
+    std::shared_ptr<Texture> clone() const;// {return cloneThis()}
     ~Texture();
 private:
+    virtual std::shared_ptr<Texture> cloneThis() const;
+
     Position *position{nullptr};
 
     SDL_Texture *currentTexture{nullptr};

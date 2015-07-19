@@ -22,27 +22,26 @@
 #include "Screen.hpp"
 
 /* This class represents the main menu. */
-struct MainMenu : public Screen
-{
-    public:
-        MainMenu();
+struct MainMenu : public Screen {
+public:
+    MainMenu();
 
-        void init();
-        void update();
-        void draw();
-        void buildButton();
-        bool mouseOverRect(SDL_Rect r);
-        ~MainMenu();
-    private:
-        Texture frame;
-        Texture text;
-        SDL_Texture *startGame;
-        std::stringstream tempText;
-        SDL_Rect button;
-        SDL_Rect newGame;
-        SDL_Rect loadGame;
-        SDL_Rect settings;
-        SDL_Rect quitGame;
+    void init();
+    void update();
+    void draw();
+    void buildButton();
+    bool mouseOverRect(SDL_Rect r);
+    ~MainMenu();
+private:
+    Texture frame;
+    Texture text;
+    SDL_Texture *startGame;
+    std::stringstream tempText;
+    SDL_Rect button;
+    SDL_Rect newGame;
+    SDL_Rect loadGame;
+    SDL_Rect settings;
+    SDL_Rect quitGame;
 
 };
 

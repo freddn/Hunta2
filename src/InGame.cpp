@@ -34,7 +34,7 @@ void InGame::init() {
 
     // CALL A LUA SCRIPT THAT LOADS ALL ENTITYS!!
 
-    creator.createPlayer(inGameManager,creator,game::getWidth(),game::getHeight());
+    //creator.createPlayer(inGameManager,creator,game::getWidth(),game::getHeight());
     //creator.createPlayer(&inGameManager,20,20);
     creator.createItem(inGameManager,0,100,100,true);
     creator.createItem(inGameManager,0,150,150,true);
@@ -57,20 +57,24 @@ void InGame::init() {
     creator.createEnemy(inGameManager,1,530,300);
     creator.createEnemy(inGameManager,0,790,570);
     creator.createEnemy(inGameManager,0,345,390);
-    //creator.createProjectile(inGameManager,300,300,600,600);
-    //creator.createProjectile(manager,position->getX(),position->getY(),game::getMouseX(),game::getMouseY());
-    //stick_T.loadFromFile(game::getRenderer(),"data/stick.png");
+
+    tInterface.loadFromFile("data/interface.png"); /// Sample interface
 }
 
 void InGame::draw() {
     Screen::renderStart();
+    //game::getTextureMap()->draw();
+    if(game::getTextureMapController()->mapExists(1)) {
+        //std::cerr << "map 1 draw()" << std::endl;
+        game::getTextureMapController()->getMap(1)->draw();
+    }
 
     // Update background tiles.
-    if(game::getHasChanged()) {
+    /*if(game::getHasChanged()) {
         SDL_SetRenderTarget(game::getRenderer(),game::getBuffer());
         for(auto iter = game::getTextureMap()->begin(); iter != game::getTextureMap()->end();iter++) {
             //std::cout << "render texure" << std::endl;
-            ((Texture*)iter->second)->render(game::getRenderer(),(SDL_Rect*)NULL);
+            ((std::shared_ptr<Texture>)iter->second)->render((SDL_Rect*)NULL);
         }
         SDL_SetRenderTarget(game::getRenderer(),NULL);
         game::setHasChanged(false);
@@ -78,10 +82,10 @@ void InGame::draw() {
     // Draw background tiles.
     SDL_RenderCopy(game::getRenderer(),game::getBuffer(),
                     game::getOffset(),game::getBackground());
-
+*/
     // Draw all entities.
-    inGameManager.draw();
-
+    //inGameManager.draw();
+    tInterface.render(0,0,NULL); /// Sample interface
     // Display inventory
     if(showInventory)
         inv.draw();
@@ -90,11 +94,15 @@ void InGame::draw() {
 }
 
 void InGame::update() {
-    inGameManager.refresh(); /* Delete removed entities. */
-    inGameManager.update();
-
-    auto& characters(inGameManager.getEntitiesByGroup(game::PLAYER));
+    //inGameManager.refresh(); /* Delete removed entities. */
+    //inGameManager.update();
+    if(game::getTextureMapController()->mapExists(1)) {
+        //std::cerr << "map 1 draw()" << std::endl;
+        game::getTextureMapController()->getMap(1)->update();
+    }
+    /*auto& characters(inGameManager.getEntitiesByGroup(game::PLAYER));
     //std::cout << "characters " << std::endl;
+    /// TODO implement camera and keyboardcontroller for the player...
     if(!characters.empty() && characters[0]->hasComponent<Position>()) {
 
         //std::cout << "position exist" << std::endl;
@@ -108,7 +116,7 @@ void InGame::update() {
             (playerPos.getY() + (game::getHeight()/2)) < game::getBackground()->h*2) {
             game::getOffset()->y = playerPos.getY() - game::getHeight()/2;
         }
-    }
+    }*/
 
     key = SDL_GetKeyboardState(NULL);
     if(key[SDL_SCANCODE_I]) {

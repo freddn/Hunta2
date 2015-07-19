@@ -29,7 +29,7 @@ MainMenu::~MainMenu() {
 
 void MainMenu::init() {
     std::cout << " - MainMenu::init() ..."<<std::endl;
-    frame.loadFromFile(game::getRenderer(),"data/frame.png");
+    frame.loadFromFile("data/frame.png");
 
     button = {50,50,32*8,32*2};
 
@@ -53,21 +53,21 @@ void MainMenu::draw() {
 
     /* Render the menu */
     SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&newGame);
-    text.loadFromText(game::getRenderer(),"New Game" ,
+    text.loadFromText("New Game" ,
                         *game::getTextColor(),game::getFont());
-    text.render(game::getRenderer(),newGame.x+20,newGame.y+18,(SDL_Rect*)nullptr);
+    text.render(newGame.x+20,newGame.y+18,(SDL_Rect*)nullptr);
     SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&loadGame);
-    text.loadFromText(game::getRenderer(),"Load Game" ,
+    text.loadFromText("Load Game" ,
                         *game::getTextColor(),game::getFont());
-    text.render(game::getRenderer(),loadGame.x+20,loadGame.y+18,(SDL_Rect*)nullptr);
+    text.render(loadGame.x+20,loadGame.y+18,(SDL_Rect*)nullptr);
     SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&settings);
-    text.loadFromText(game::getRenderer(),"Settings" ,
+    text.loadFromText("Settings" ,
                         *game::getTextColor(),game::getFont());
-    text.render(game::getRenderer(),settings.x+20,settings.y+18,(SDL_Rect*)nullptr);
+    text.render(settings.x+20,settings.y+18,(SDL_Rect*)nullptr);
     SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&quitGame);
-    text.loadFromText(game::getRenderer(),"Quit game" ,
+    text.loadFromText("Quit game" ,
                         *game::getTextColor(),game::getFont());
-    text.render(game::getRenderer(),quitGame.x+20,quitGame.y+18,(SDL_Rect*)nullptr);
+    text.render(quitGame.x+20,quitGame.y+18,(SDL_Rect*)nullptr);
 
     Screen::renderEnd();
 }
@@ -140,7 +140,7 @@ void MainMenu::buildButton() {
                 temp.x = 32;
                 temp.y = 10;
             }
-            frame.render(game::getRenderer(),j*32,i*32,&temp);
+            frame.render(j*32,i*32,&temp);
         }
     }
     SDL_SetRenderTarget(game::getRenderer(),NULL);

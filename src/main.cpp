@@ -17,8 +17,6 @@
  */
 
 #include "Game.hpp"
-#include "EntitySystem.hpp"
-
 
 int main(int argc, char *argv[]) {
     bool fullscreen = false;

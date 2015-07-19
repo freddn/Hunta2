@@ -22,6 +22,9 @@
 
 #include "Game.hpp"
 
+/** TODO Add collision rect.
+ * (Setters and getters and change in collision management)*/
+
 
 GPhysics::GPhysics() {
     //ctor
@@ -40,14 +43,8 @@ void GPhysics::update() {
     setXVelocity();
     if(xVel != 0)
         position->setX(position->getX()+xVel);
-    if(yVel != 0) {
-        //dirUp = false;
-        //dirDown = false;
+    if(yVel != 0)
         position->setY(position->getY()+yVel);
-
-    }
-
-    //    std::cerr << "pos updated"<<std::endl;
 
     clearCol();
 }
@@ -68,8 +65,12 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
     int posX = position->getX();
     int posY = position->getY();
 
+    /// TODO sourceCol = physics->getColRect();
+
     int entPosX = e->getComponent<Position>().getX();
     int entPosY = e->getComponent<Position>().getY();
+
+    /// TODO targetCol = e->getComponent<GPhysics>().getColRect();
     //Texture *tempTexture = &e->getComponent<Texture>();
 
     int entW = e->getComponent<Texture>().getWidth();

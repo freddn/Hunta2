@@ -19,7 +19,6 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "Game.hpp"
 #include "Texture.hpp"
 #include "GPhysics.hpp"
 #include "Position.hpp"
@@ -29,12 +28,12 @@ using namespace EntitySystem;
 /* The enemy class. */
 struct Enemy : Component {
 public:
-    Enemy(EntityManager &m);
+    Enemy(EntityManager &m, int id);
 
     void init();
     void draw();
     void update();
-
+    int getID();
     virtual ~Enemy();
 protected:
 private:

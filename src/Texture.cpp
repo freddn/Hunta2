@@ -21,8 +21,14 @@
 
 
 Texture::Texture() {
-    tclip.w = 0;
-    tclip.h = 0;
+    tclip.w = 32;
+    tclip.h = 32;
+}
+
+Texture::Texture(int w, int h) {
+    tclip.w = w;
+    tclip.h = h;
+    isClipped = true;
 }
 
 Texture::Texture(std::string img,bool clip) {
@@ -68,23 +74,25 @@ void Texture::init() {
     rect.y = 0;
     rect.w = 0;
     rect.h = 0;
-
-    position = &entity->getComponent<Position>();
+    if(entity != nullptr && entity->hasComponent<Position>())
+        position = &entity->getComponent<Position>();
 
     if(!isText)
-        loadFromFile(game::getRenderer(),imageName);
+        loadFromFile(imageName);
     else
-        loadFromText(game::getRenderer(),textString,textColor,textFont);
+        loadFromText(textString,textColor,textFont);
 }
 
 void Texture::draw() {
     //std::cerr << "-- Texture::draw"<<std::endl;
-    if(position->getX()+tWidth > game::getOffset()->x &&
+    /*if(position->getX()+tWidth > game::getOffset()->x &&
         position->getX() < game::getOffset()->x + game::getWidth() &&
         position->getY()+tHeight > game::getOffset()->y &&
-        position->getY() < game::getOffset()->y + game::getHeight())
-        render(game::getRenderer(),position->getX()-game::getOffset()->x,
-                position->getY()-game::getOffset()->y,(SDL_Rect*)nullptr);
+        position->getY() < game::getOffset()->y + game::getHeight())*/
+    //std::cerr << game::getOffset()->w << std::endl;
+    //int x = game::getOffset()->x;
+    render(position->getX()-(game::getOffset()->x),
+                position->getY()-(game::getOffset()->y),(SDL_Rect*)nullptr);
 }
 /*
 void Texture::update()
@@ -93,8 +101,9 @@ void Texture::update()
 }
 */
 
-bool Texture::loadFromFile(SDL_Renderer *renderer, std::string path) {
+bool Texture::loadFromFile(std::string path) {
     free();
+    SDL_Renderer *renderer = game::getRenderer();
     imageName = path;
     SDL_Surface *tempSurface = IMG_Load(imageName.c_str());
 
@@ -126,9 +135,10 @@ bool Texture::loadFromFile(SDL_Renderer *renderer, std::string path) {
     return currentTexture != nullptr;
 }
 
-bool Texture::loadFromText( SDL_Renderer *renderer, std::string textureText,
-                            SDL_Color textcolor, TTF_Font * font) {
+bool Texture::loadFromText(std::string textureText, SDL_Color textcolor,
+                            TTF_Font * font) {
     free();
+    SDL_Renderer *renderer = game::getRenderer();
     SDL_Surface *tempSurface = TTF_RenderText_Solid(font,textureText.c_str(), textcolor);
 
     if(tempSurface == nullptr)
@@ -159,12 +169,13 @@ void Texture::free() {
 
 }
 
-void Texture::render(SDL_Renderer *renderer,SDL_Rect *clip) {
-    render(renderer,rect.x, rect.y,clip);
+void Texture::render(SDL_Rect *clip) {
+    render(rect.x, rect.y,clip);
 }
 
 
-void Texture::render(SDL_Renderer *renderer, int x, int y,SDL_Rect *clip) {
+void Texture::render(int x, int y,SDL_Rect *clip) {
+    SDL_Renderer *renderer = game::getRenderer();
     if(renderer != nullptr) {
         rect.x = x;
         rect.y = y;
@@ -268,4 +279,10 @@ void Texture::setClipH(int h) {
     tclip.h = h;
 }
 
+std::shared_ptr<Texture> Texture::clone() const {
+    return cloneThis();
+}
 
+std::shared_ptr<Texture> Texture::cloneThis() const {
+    return (std::shared_ptr<Texture>(new Texture(*this)));
+}

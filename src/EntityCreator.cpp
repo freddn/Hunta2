@@ -26,6 +26,11 @@
 #include "Weapon.hpp"
 #include "HealthBar.hpp"
 #include "Game.hpp"
+#include "Shape.hpp"
+#include "Camera.hpp"
+#include "MouseController.hpp"
+#include "KeyboardController.hpp"
+
 
 EntityCreator::EntityCreator() {
     //ctor
@@ -33,6 +38,69 @@ EntityCreator::EntityCreator() {
 
 EntityCreator::~EntityCreator() {
     //dtor
+}
+
+Entity* EntityCreator::createEntity(EntitySystem::EntityManager &mManager, int index,bool byIndex) {
+    //auto& entity(mManager.addEntity());
+    return mManager.addEntity(index, byIndex);
+}
+
+void EntityCreator::addPosition(Entity *entity,int x, int y) {
+    entity->addComponent<Position>(x,y);
+}
+
+void EntityCreator::addShape(Entity *entity,int w,int h,int r,int g, int b) {
+    entity->addComponent<Shape>(w,h,r,g,b);
+}
+
+void EntityCreator::addTexture(Entity *entity,std::string img,
+                                bool isClipped,int clipW,int clipH) {
+    entity->addComponent<Texture>(img,isClipped,clipW,clipH);
+}
+
+void EntityCreator::addTexture(Entity *entity,std::string img,
+                                bool isClipped) {
+    entity->addComponent<Texture>(img,isClipped);
+}
+
+void EntityCreator::addTexture(Entity *entity,std::string text,SDL_Color textcolor,TTF_Font* font) {
+    entity->addComponent<Texture>(text,textcolor,font);
+}
+void EntityCreator::addTexture(Entity *entity) {
+    entity->addComponent<Texture>();
+}
+
+void EntityCreator::addPhysics(Entity *entity) {
+    entity->addComponent<GPhysics>();
+}
+
+void EntityCreator::addHealthBar(Entity *entity,int hp) {
+    entity->addComponent<HealthBar>(hp);
+}
+
+void EntityCreator::addWeapon(Entity *entity, std::string img,
+                            EntityManager &mManager) {
+    entity->addComponent<Weapon>(img,mManager);
+}
+
+void EntityCreator::addKeyboardController(Entity *entity) {
+    entity->addComponent<KeyboardController>();
+}
+
+void EntityCreator::addMouseController(Entity *entity) {
+    entity->addComponent<MouseController>();
+}
+
+void EntityCreator::addMouseController(Entity *entity,bool x,bool y) {
+    entity->addComponent<MouseController>(x, y);
+}
+
+void EntityCreator::addCamera(Entity *entity) {
+    entity->addComponent<Camera>();
+}
+
+void EntityCreator::addToGroup(Entity *entity, std::size_t group) {
+    entity->addGroup(group);
 }
 
 Entity& EntityCreator::createPlayer(EntitySystem::EntityManager &mManager,
@@ -46,9 +114,9 @@ Entity& EntityCreator::createPlayer(EntitySystem::EntityManager &mManager,
     player.addComponent<GPhysics>();
     player.addComponent<HealthBar>(100);
     player.addComponent<Weapon>("data/sword.png", mManager);
-    player.addComponent<Character>(mManager,creator);
+    player.addComponent<Character>(mManager);
 
-    player.setY(y);//+player.getComponent<Texture>().getHeight());
+    //player.setY(y);//+player.getComponent<Texture>().getHeight());
     //if(!entity.hasGroup(game::PLAYER))
     player.addGroup(game::PLAYER);
     return player;
@@ -63,7 +131,7 @@ Entity& EntityCreator::createItem(EntitySystem::EntityManager &mManager,
     item.addComponent<Texture>("data/stick.png",false); // no clip
     item.addComponent<Item>();
 
-    item.setY(y);//+item.getComponent<Texture>().getHeight());
+    //item.setY(y);//+item.getComponent<Texture>().getHeight());
 
     /* add position */
 
@@ -73,20 +141,20 @@ Entity& EntityCreator::createItem(EntitySystem::EntityManager &mManager,
 }
 
 Entity& EntityCreator::createEnemy(EntitySystem::EntityManager &mManager,
-                                int enemyNumber,int x,int y) {
+                                int enemyID,int x,int y) {
     auto& enemy(mManager.addEntity());
 
     /* Get right enemy from a list/file. */
     enemy.addComponent<Position>(x,y);
-    if(enemyNumber == 1)
-        enemy.addComponent<Texture>("data/goblin.png",true); // 32x32 clip
+    if(enemyID == 1)
+        enemy.addComponent<Texture>("data/enemies/goblin.png",true); // 32x32 clip
     else
-        enemy.addComponent<Texture>("data/wolf.png",true,48,48); // 48x48 clip
+        enemy.addComponent<Texture>("data/enemies/wolf.png",true,48,48); // 48x48 clip
     enemy.addComponent<GPhysics>();
     enemy.addComponent<HealthBar>(100);
-    enemy.addComponent<Enemy>(mManager);
+    enemy.addComponent<Enemy>(mManager, enemyID);
 
-    enemy.setY(y);//+enemy.getComponent<Texture>().getHeight());
+    //enemy.setY(y);//+enemy.getComponent<Texture>().getHeight());
     /* add position */
 
     enemy.addGroup(game::ENEMY);
@@ -98,11 +166,11 @@ Entity& EntityCreator::createEnvironment(EntitySystem::EntityManager &mManager,
     auto& environment(mManager.addEntity());
 
     environment.addComponent<Position>(x,y);
-    environment.addComponent<Texture>("data/tree2.png",false); // no clip
+    environment.addComponent<Texture>("data/environment/tree2.png",false); // no clip
     environment.addComponent<GPhysics>();
-    environment.addComponent<Environment>();
+    environment.addComponent<Environment>(envId);
 
-    environment.setY(y);
+    //environment.setY(y);
 
     environment.addGroup(game::ENVIRONMENT);
     return environment;
@@ -119,9 +187,26 @@ void EntityCreator::createProjectile(EntitySystem::EntityManager &mManager,
         projectile.addComponent<GPhysics>();
         projectile.addComponent<Projectile>(destX,destY,destX-x,destY-y);
 
-        projectile.setY(y);//+projectile.getComponent<Texture>().getHeight());
+        //projectile.setY(y);//+projectile.getComponent<Texture>().getHeight());
 
         projectile.addGroup(game::PROJECTILE);
     }
+}
+
+Entity& EntityCreator::createTile(EntitySystem::EntityManager &mManager,
+                                    int tileId,int x,int y) {
+    auto& tile(mManager.addEntity());
+
+    /* Get right item from a list/file. */
+    tile.addComponent<Position>(x,y);
+    tile.addComponent<Texture>("data/stick.png",false); // no clip
+
+    //tile.setY(y);//+item.getComponent<Texture>().getHeight());
+
+    /* add position */
+
+
+    tile.addGroup(game::TILE);
+    return tile;
 }
 

@@ -102,11 +102,12 @@ namespace EntitySystem {
         void update();
         bool isAlive() const;
         void destroy();
+        void updateY();
         void setY(int y);
         bool isMoved();
         void setMoved(bool mov);
         void setEntityId(int id);
-        int getY();
+        //int getY();
         int getEntityId();
 
         template<typename T, typename... TArgs> T& addComponent(TArgs&&... mArgs) {
@@ -196,22 +197,34 @@ namespace EntitySystem {
         /**
          * Return the map containing all entities.
          */
-         std::map<int, std::vector<std::shared_ptr<Entity>>>* getEntities();
+        std::map<int, std::vector<std::shared_ptr<Entity>>>* getEntities();
+        std::map<int, std::shared_ptr<Entity>>* getEntitiesByIndex();
 
         /**
          * Remove all entities that is destroyed.
          */
         void refresh();
 
+        void setEntitiesByIndex(bool entitiesByInd);
+
         /**
          * Adds a new entity. Will put this entity in a vector that is placed
          * inside a map with y-position as key. Here y-position is the same
          * as z-position to get the 3D effect.
          */
+        Entity* addEntity(int index, bool byIndex);
+
+        Entity& addEntity(int index);
         Entity& addEntity();
+
+        void destroyEntity(int index, int x, int y);
+        void destroyEntity(int index);
     private:
+        bool byIndex = false;
         int id = 0;
         unsigned int entitiesReserved = 32;
+        std::vector<int> indexes;
+        std::map<int,std::shared_ptr<Entity>> entitiesByIndex;
         std::map<int, std::vector<std::shared_ptr<Entity>>> entities;
         std::array<std::vector<Entity*>, maxGroups> groupedEntities;
     };

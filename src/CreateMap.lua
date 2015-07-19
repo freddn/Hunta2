@@ -1,32 +1,37 @@
 
-function AppendTile(filename, index,x,y,z,img,solid)
+function AppendMapData(loadFunc, mapid,file, id,index,x,y)
+	filename = "data/maps/" .. tostring(mapid) .. file
 	file = io.open(filename,"a")
 	if file ~= nil then
 		io.output(file)
-		io.write("index ",index," x ",x," y ",y," z ",z," img ",img," solid ",solid,"\n" )
+		io.write(loadFunc ,"(", mapid,",", id,",", index, ", ", x, ", ", y ,")\n")
+
 		io.close(file)
 	else
 		print("File not found:", filename)
 	end
 end
 
-function ClearMapFile(filename)
+function ClearMapFile(mapid, file)
+	filename = "data/maps/" .. tostring(mapid) .. file
 	if MapFileExist(filename) == 1 then
 		file = io.open(filename,"w+")
 		io.close(file)
 	end
 end
 
-function NewMapFile(filename, width, height)
+function NewMapFile(mapid, file)
+	filename = "data/maps/" .. tostring(mapid) .. file
 	file = io.open(filename, "w")
 	if file ~= nil then
 		io.output(file)
-		io.write("width ",width," height ", height," name ",filename,"\n")
+		io.write(" -- Map data\n")
 		io.close(file)
 	end
 end
 
-function MapFileExist(filename)
+function MapFileExist(mapid, file)
+	filename = "data/maps/" .. tostring(mapid) .. file
 	file = io.open(filename, "r")
 	if file == nil then 
 		io.close(file)

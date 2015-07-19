@@ -1,5 +1,7 @@
 
-function getTiles(filename)
+function getTiles(id)
+	filename = "data/maps/" .. tostring(id) .. "/tiles"
+	print(filename)
 	map = io.open(filename,"r")
 	if map == nil then
 		print("Map not found.")

@@ -21,7 +21,8 @@
 
 #include <vector>
 #include <memory>
-
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include "EntitySystem.hpp"
 
 using namespace EntitySystem;
@@ -30,24 +31,44 @@ using namespace EntitySystem;
  * In this class you can create entitys that will be added to the
  * given manager.
  */
-class EntityCreator
-{
-    public:
-        EntityCreator();
+class EntityCreator {
+public:
+    EntityCreator();
 
-        Entity& createPlayer(EntitySystem::EntityManager &mManager,
-                                EntityCreator &creator,int x,int y);
-        Entity& createItem(EntitySystem::EntityManager &mManager,int itemNumber,
-                                int x,int y, bool onGround);
-        Entity& createEnemy(EntitySystem::EntityManager &mManager,int enemyNumber,
-                                int x,int y);
-        Entity& createEnvironment(EntitySystem::EntityManager &mManager,
-                                    int envNumber,int x,int y);
-        void createProjectile(EntitySystem::EntityManager &mManager,
-                                        int x,int y,int destX,int destY);
-        virtual ~EntityCreator();
-    protected:
-    private:
+    Entity* createEntity(EntitySystem::EntityManager &mManager, int index, bool byIndex);
+
+    void addPosition(Entity *entity,int x, int y);
+    void addShape(Entity *entity,int w,int h,int r,int g, int b);
+    void addTexture(Entity *entity,std::string img, bool isClipped,int clipW,int clipH);
+    void addTexture(Entity *entity,std::string img, bool isClipped);
+    void addTexture(Entity *entity,std::string text,SDL_Color textcolor,TTF_Font* font);
+    void addTexture(Entity *entity);
+    void addPhysics(Entity *entity);
+    void addHealthBar(Entity *entity,int hp);
+    void addWeapon(Entity *entity, std::string img, EntityManager &mManager);
+    void addKeyboardController(Entity *entity);
+    void addKeyboardController(Entity *entity, bool x, bool y);
+    void addMouseController(Entity *entity);
+    void addMouseController(Entity *entity, bool x, bool y);
+    void addCamera(Entity *entity);
+    void addToGroup(Entity *entity,std::size_t group);
+
+
+    Entity& createPlayer(EntitySystem::EntityManager &mManager,
+                            EntityCreator &creator,int x,int y);
+    Entity& createItem(EntitySystem::EntityManager &mManager,int itemNumber,
+                            int x,int y, bool onGround);
+    Entity& createEnemy(EntitySystem::EntityManager &mManager,int enemyNumber,
+                            int x,int y);
+    Entity& createEnvironment(EntitySystem::EntityManager &mManager,
+                                int envNumber,int x,int y);
+    void createProjectile(EntitySystem::EntityManager &mManager,
+                                    int x,int y,int destX,int destY);
+    Entity& createTile(EntitySystem::EntityManager &mManager,
+                                int tileId,int x,int y);
+    virtual ~EntityCreator();
+protected:
+private:
 };
 
 #endif // ENTITYCREATOR_H

@@ -1,24 +1,13 @@
 #include "Tile.hpp"
 
-Tile::Tile() //: Texture()
-{
-
+Tile::Tile(int id) {
+    tileID = id;
 }
 
-Tile::~Tile()
-{
+Tile::~Tile() {
     //dtor
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+int Tile::getID() {
+    return tileID;
+}

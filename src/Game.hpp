@@ -19,6 +19,9 @@
 #ifndef GAME_H
 #define GAME_H
 
+#define SCREEN_FPS 60
+#define TICKS_PER_FRAME (1000 / SCREEN_FPS)
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -27,15 +30,20 @@
 
 #include "LTimer.hpp"
 #include "MapClass.hpp"
-
+#include "Editor.hpp"
 
 /**
  * Game class. Contains game-loop. State of the game. Init of map/data.
  * This class holds alot of important game related objects.
  */
 namespace game {
-    /** Will init the needed states and then start the game-loop. */
+    /**
+     * Will init the needed states and then start the game-loop.
+     */
     void start();
+
+    /** Check for SDL events */
+    void pollEvents();
 
     /** Initiates SDL, creates a window, buffer and so on. */
     bool init_game(bool fullscreen);
@@ -44,18 +52,34 @@ namespace game {
     void close();
 
     /** The different states of the game. */
-    enum State {MAINMENU,INGAME,PAUSED,GAMEOVER, EDITOR};
+    enum State {    MAINMENU,
+                    INGAME,
+                    PAUSED,
+                    GAMEOVER,
+                    EDITOR };
 
     /** Some directions the character can have. */
-    enum Direction {NORTH,SOUTH,WEST,EAST};
+    enum Direction {    NORTH,
+                        SOUTH,
+                        WEST,
+                        EAST };
 
     /** Different tiles used by the Editor. */
-    enum Selected {GRASS,GROUND,WATER};
+    enum Selected { GRASS,
+                    GROUND,
+                    WATER };
 
     /** Different entity types. */
-    enum EntityGroup : std::size_t {PLAYER, ITEM, ENEMY, ENVIRONMENT,PROJECTILE};
+    enum EntityGroup : std::size_t {    PLAYER,
+                                        ITEM,
+                                        ENEMY,
+                                        ENVIRONMENT,
+                                        PROJECTILE,
+                                        TILE,
+                                        X };
 
     /** Getters for important game variables/objects. */
+    Editor *getEditor();
     SDL_Event *getEvent();
     SDL_Rect *getOffset();
     SDL_Rect *getBackground();
@@ -65,8 +89,8 @@ namespace game {
     SDL_Color *getTextColor();
     TTF_Font *getFont();
     int getCurrentState();
-    MapClass *getTextureMapObject();
-    std::map<int,Texture*> *getTextureMap();
+    MapClass *getTextureMapController();
+    std::shared_ptr<Map> getTextureMap();
     int getWidth();
     int getTWidth();
     int getHeight();
@@ -80,7 +104,7 @@ namespace game {
 
     /** Setters. */
     void setHasChanged(bool boolean);
-    void setTextureMap(std::map<int,Texture*> *temp_map);
+    void setTextureMap(std::shared_ptr<Map> temp_map);
     void setBuffer(SDL_Texture *temp);
     void setCurrent_state(int temp);
     void setMouseX(int x);

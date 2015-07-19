@@ -17,172 +17,166 @@
  */
 
 #include "Editor.hpp"
-
+#include "Game.hpp"
 
 Editor::Editor() {
 }
 
 Editor::~Editor() {
-    //dtor
-
-    SDL_DestroyTexture(rect_select);
 }
 
 void Editor::init() {
-    r_select = SDL_CreateRGBSurface(0,36,36,32,0,0,0,0);
-    SDL_FillRect(r_select,NULL,SDL_MapRGB(r_select->format,255,0,0));
-    rect_select = SDL_CreateTextureFromSurface(game::getRenderer(),r_select);
-    //
-    SDL_FreeSurface(r_select);
-    rground.x = 0;
-    rground.y = 2;
-    rground.w = 32;
-    rground.h = 32;
+    loadIcon("data/x.png", 0,game::X);
+    game::getTextureMapController()->getMap(1)->update();
+}
 
-    rwater.x = 32*2;
-    rwater.y = 2;
-    rwater.w = 32;
-    rwater.h = 32;
+void Editor::loadIcon(std::string img, int id, std::size_t type) {
+    Icon* tempIcon(new Icon(img));
+    tempIcon->setID(id);
+    tempIcon->setType(type);
+    if(selectedCount == 0)
+        tempIcon->setSelected(true);
+    std::shared_ptr<Icon> temp {tempIcon};
 
-    rgrass.x = 32*4;
-    rgrass.y = 2;
-    rgrass.w = 32;
-    rgrass.h = 32;
-
-    sel.y = 0;
-    sel.w = 36;
-    sel.h = 36;
+    icons.insert(std::pair<int,std::shared_ptr<Icon>>(selectedCount, temp));
+    selectedCount++;
 }
 
 void Editor::draw() {
     Screen::renderStart();
 
-    switch(selected) {
-    case(game::GRASS):
-        sel.x = rgrass.x -2;
-        break;
+    //tileManager.draw();
 
-    case(game::GROUND):
-        sel.x = rground.x -2;
-        break;
-
-    case(game::WATER):
-        sel.x = rwater.x -2;
-        break;
+    //environmentManager.draw();
+    //enemyManager.draw();
+    //itemManager.draw();
+    game::getTextureMapController()->getMap(1)->draw();
+    //int pos = 5;
+    for(int pos = 5,i = firstIcon;i < lastIcon;i++) {
+        icons.at(i)->setY(60);
+        icons.at(i)->setX(pos*34);
+        icons.at(i)->draw();
+        pos++;
     }
-
-    if(game::getHasChanged()) {
-        SDL_SetRenderTarget(game::getRenderer(),game::getBuffer());
-
-        for(auto iter = game::getTextureMap()->begin();
-                iter != game::getTextureMap()->end(); iter++) {
-            if(((Texture *)iter->second)->getX() > -32 &&
-                    ((Texture *)iter->second)->getX() < game::getBackground()->w &&
-                    ((Texture *)iter->second)->getY() > -32 &&
-                    ((Texture *)iter->second)->getY() < game::getBackground()->h) {
-
-                ((Texture *)iter->second)->render(game::getRenderer(),(SDL_Rect *)NULL);
-            }
-        }
-
-        SDL_SetRenderTarget(game::getRenderer(),NULL);
-        game::setHasChanged(false);
-    }
-
-    SDL_RenderCopy( game::getRenderer(),game::getBuffer(),
-                    game::getOffset(),game::getBackground());
-    SDL_RenderCopy(game::getRenderer(),rect_select,NULL,&sel);
-
-    game::getTextureMapObject()->getGroundTile()->render( game::getRenderer(),rground.x,
-            rground.y,(SDL_Rect *)NULL);
-    game::getTextureMapObject()->getWaterTile()->render(game::getRenderer(),rwater.x,
-            rwater.y,(SDL_Rect *)NULL);
-    game::getTextureMapObject()->getGrassTile()->render(  game::getRenderer(),rgrass.x,
-            rgrass.y,(SDL_Rect *)NULL);
 
     //CLICK EVENT..
     Screen::renderEnd();
 }
 
 void Editor::update() {
-    int mouseX;
-    int mouseY;
+    //SDL_PumpEvents();
     SDL_Rect* offset = game::getOffset();
     const Uint8 *key = SDL_GetKeyboardState(NULL);
 
     if(key[SDL_SCANCODE_UP]) {
-        if(offset->y > 0)
+        //if(offset->y > 0)
             offset->y = offset->y - 4;
     } else if(key[SDL_SCANCODE_DOWN]) {
-        if(offset->y < game::getHeight())
+        //if(offset->y < game::getHeight())
             offset->y = offset->y + 4;
     } else if(key[SDL_SCANCODE_LEFT]) {
-        if(offset->x > 0)
+        //if(offset->x > 0)
             offset->x = offset->x - 4;
     } else if(key[SDL_SCANCODE_RIGHT]) {
-        if(offset->x < game::getWidth())
+        //if(offset->x < game::getWidth())
             offset->x = offset->x + 4;
+    } else if(key[SDL_SCANCODE_S]) {
+
+        if(mapUpdated) {
+            /// Save map.. TODO move to game::pollEvents and implement a saving
+            /// function in editor..
+        }
     }
-
-    if(SDL_GetMouseState(&mouseX, &mouseY) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-        int tempX = (mouseX+offset->x)-((mouseX+offset->x)%32);
-        int tempY = (mouseY+offset->y)-((mouseY+offset->y)%32);
-        int index = (tempX/32)+((tempY/32)*40);
-
-        //std::cerr << "before:" <<game::getTextureMap()->count(index);
-        if(game::getTextureMap()->count(index) < 2) {
-            if(game::getTextureMap()->count(index) > 0) {
-                if(game::getTextureMap()->at(index) != nullptr)
-                    delete game::getTextureMap()->at(index);
-
-                //delete (Texture*)iter->second;
-                game::getTextureMap()->erase(index);
-            }
-
-            Texture *temp;
-
-            switch(selected) {
-            case game::GROUND:
-                temp = game::getTextureMapObject()->getGroundTile()->clone();
-                break;
-
-            case game::WATER:
-                temp = game::getTextureMapObject()->getWaterTile()->clone();
-                break;
-
-            case game::GRASS:
-                temp = game::getTextureMapObject()->getGrassTile()->clone();
-                break;
-            }
-
-            temp->setXRect(tempX);
-            temp->setYRect(tempY);
-            game::getTextureMap()->insert(std::pair<int,Texture *>(index,temp));
-
-            game::setHasChanged(true);
-        }
-
-        //std::cerr << "after:" <<game::getTextureMap()->count(index) << std::endl;
-    } else if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
-        if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
-            //std::cerr << selected;
-            if(!selBool) {
-                selBool = true;
-
-                if(selected == game::GROUND)
-                    selected = game::WATER;
-                else if(selected == game::WATER)
-                    selected = game::GRASS;
-                else// if(selected == game::GRASS)
-                    selected = game::GROUND;
-            }
-        }
-    } else
-        selBool = false;
-
+    game::getTextureMapController()->getMap(1)->update();
     Screen::update();
 }
 
+void Editor::setSelected(int n) {
+    icons.at(selected)->setSelected(false);
+    selected = n;
+    if(selected >= lastIcon && lastIcon < icons.size()) {
+        lastIcon++;
+        firstIcon++;
+    } else if(selected < firstIcon && selected >= 0) {
+        lastIcon--;
+        firstIcon--;
+    }
 
+    if(selected < 0)
+        selected = 0;
 
+    if(selected == icons.size())
+        selected = icons.size()-1;
+
+    icons.at(selected)->setSelected(true);
+}
+
+int Editor::getSelected() {
+    return selected;
+}
+
+/// Place a tile, environment or enemy..
+void Editor::place() {
+    int mouseX = 0;
+    int mouseY = 0;
+    int tempX = 0;
+    int tempY = 0;
+    int index = 0;
+    SDL_GetMouseState(&mouseX, &mouseY);
+
+    /// Get the position on the map that was pressed.
+    if(mouseX+game::getOffset()->x >= 0) {
+        tempX = (mouseX+game::getOffset()->x)-((mouseX+game::getOffset()->x)%32);
+    }
+    else
+        tempX = (mouseX+game::getOffset()->x-32)-((mouseX+game::getOffset()->x)%32);
+
+    if(mouseY+game::getOffset()->y >= 0)
+        tempY = (mouseY+game::getOffset()->y)-((mouseY+game::getOffset()->y)%32);
+    else
+        tempY = (mouseY+game::getOffset()->y-32)-((mouseY+game::getOffset()->y)%32);
+
+    /// Check what map to edit
+    if(tempX < 0 && tempX >= -MAP_WIDTH)
+        mapX = -1;
+    else if(tempX >= 0 && tempX < MAP_WIDTH)
+        mapX = 0;
+    else if(tempX < 0 && tempX < (mapX+2)*MAP_WIDTH)
+        mapX = ((tempX - (tempX % MAP_WIDTH)) / MAP_WIDTH) - 1;
+    else if(tempX >= MAP_WIDTH && tempX >= (mapX-2)*MAP_WIDTH)
+        mapX = ((tempX - (tempX % MAP_WIDTH)) / MAP_WIDTH);
+
+    if(tempY < 0 && tempY >= -MAP_HEIGHT)
+        mapY = -1;
+    else if(tempY >= 0 && tempY < MAP_HEIGHT)
+        mapY = 0;
+    else if(tempY < 0 && tempY < (mapY+2)*MAP_HEIGHT)
+        mapY = ((tempY - (tempY % MAP_HEIGHT)) / MAP_HEIGHT) - 1;
+    else if(tempY >= MAP_HEIGHT && tempY >= (mapY-2)*MAP_HEIGHT)
+        mapY = ((tempY - (tempY % MAP_HEIGHT)) / MAP_HEIGHT);
+
+    /// Set x and y pos according to current map.
+    tempX = tempX - mapX*MAP_WIDTH;
+    tempY = tempY - mapY*MAP_HEIGHT;
+
+    index = (tempX/32)+((tempY/32)*64);
+
+    /// Load the entity onto the map
+    switch(icons.at(selected)->getType()) {
+    case game::TILE:
+        game::getTextureMapController()->loadTile(1,icons.at(selected)->getID(), index, tempX,tempY);
+        break;
+    case game::ENVIRONMENT:
+        game::getTextureMapController()->loadEnvironment(1,icons.at(selected)->getID(), index, tempX,tempY);
+        break;
+    case game::ENEMY:
+        game::getTextureMapController()->loadEnemy(1, icons.at(selected)->getID(),index, tempX,tempY);
+        break;
+    case game::X:
+        game::getTextureMapController()->getMap(1)->removeEntity(index, tempX,tempY);
+    }
+
+    mapUpdated = true;
+    game::setHasChanged(true);
+}
 

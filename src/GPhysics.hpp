@@ -39,10 +39,14 @@ public:
 
     /** Clears all collision booleans. */
     void clearCol();
-    bool isColliding(int x, int y);
-    bool isColliding(EntitySystem::Entity *e);
+
+    /** Check for collision */
+    bool isColliding(int x, int y); /// Current entity is inside this position?
+    bool isColliding(EntitySystem::Entity *e); /// Current entity is colliding with given one?
+    bool isColliding(SDL_Rect src, SDL_Rect dest); /// TODO Implement
 
     /** Getters. */
+    SDL_Rect getColRect(); /// TODO Implement
     int getDir();
     float getXVel();
     float getYVel();

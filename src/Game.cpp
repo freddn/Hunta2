@@ -20,7 +20,7 @@
 
 #include <string>
 
-#include "Editor.hpp"
+
 #include "InGame.hpp"
 #include "MainMenu.hpp"
 
@@ -35,10 +35,14 @@ namespace game {
     SDL_Renderer *renderer = nullptr;
     SDL_Texture *buffer = nullptr;
     TTF_Font *font = nullptr;
+    Screen screen;
+    Editor editor;
+    InGame inGame;
+    MainMenu mMenu;
 
-    int current_state = INGAME;
-    MapClass textureMap;
-    std::map<int,Texture*> *texture_map;
+    int current_state = EDITOR;
+    MapClass textureMapController;
+    std::shared_ptr<Map> textureMap;
     int width = 640;
     int t_width = width/32;
     int height = 480;
@@ -46,45 +50,42 @@ namespace game {
     int maxFPS = 45;
     bool hasChanged = true;
 
-    int countedFrames = 0;
+    int countedFrames = 1;
     float currentFPS = 0.f;
     float avgFPS = 0.f;
     LTimer timer;
     LTimer fpsTimer;
-    int currentTick;
+    int currentTick = 0;
     int selected;
     const Uint8 *key = nullptr;
 
-    SDL_Color text_color = {255,255,255,0};
-
+    SDL_Color textColor = {255,255,255,0};
     bool running = true;
 
     void start() {
         std::cerr << " - game::start() ..." << std::endl;
         key = SDL_GetKeyboardState(nullptr);
-        textureMap.init();
+        textureMapController.init();
         std::cerr << " - game::start() (load map) ..."<<std::endl;
         std::string map2 = "data/map2";
-        if(!textureMap.loadMap(map2)) {
+        if(!textureMapController.loadMap(1)) {
             std::cerr << "Map could not be loaded" << std::endl;
         }
         //std::map<int,Texture*> textures;
         std::cerr << " - game::start() (creating states) ..."<<std::endl;
-        Screen screen;
-        Editor editor;
-        InGame in_game;
-        MainMenu mMenu;
+        //interface.loadFromFile("data/interface.png");
         editor.init();
-        in_game.init();
+        inGame.init();
         mMenu.init();
-        texture_map = textureMap.getMap();
+        textureMap = textureMapController.getMap(1);
 
         fpsTimer.start();
         std::cerr << " - game::start() (main loop) ..."<<std::endl;
         while(running) {
             /* Get current time */
-            currentTick = (int)SDL_GetTicks();
+            currentTick = fpsTimer.getTicks();
 
+            pollEvents();
             switch(current_state) {
             case(MAINMENU):
                 /* Show the main menu */
@@ -92,8 +93,9 @@ namespace game {
                 mMenu.draw();
                 break;
             case(INGAME):
-                in_game.update();
-                in_game.draw();
+
+                inGame.update();
+                inGame.draw();
                 break;
             case(PAUSED):
                 screen.update();
@@ -109,15 +111,83 @@ namespace game {
                 editor.draw(); // SELECTED
                 break;
             }
-
             avgFPS = countedFrames / (fpsTimer.getTicks() / 1000.f);
             if(avgFPS > 2000000) {
                 avgFPS = 0;
             }
-            if(((int)SDL_GetTicks() - currentTick) < 1000/game::getMaxFPS()) {
-                SDL_Delay((int)((1000/game::getMaxFPS())-((int)SDL_GetTicks()-currentTick)));
+            //avgFPS = 1000.f / (fpsTimer.getTicks() - currentTick);
+
+
+            if((fpsTimer.getTicks() - currentTick) < TICKS_PER_FRAME) {
+                SDL_Delay((TICKS_PER_FRAME-(fpsTimer.getTicks()-currentTick)));
             }
-            countedFrames ++;
+            //SDL_Delay(5);
+            ++countedFrames;
+        }
+    }
+
+    void pollEvents() {
+        const Uint8 *key = SDL_GetKeyboardState(NULL);
+
+        while(SDL_PollEvent(&event) != 0) {
+            if(event.type == SDL_QUIT)
+                running = false;//game::setRunning(false);
+            else if(event.type == SDL_KEYDOWN) {
+                if(key[SDL_SCANCODE_ESCAPE])
+                    running = false;//game::setRunning(false);
+                else if(key[SDL_SCANCODE_S]) {
+                    if (timer.isStarted())
+                        timer.stop();
+                    else
+                        timer.start();
+                } else if(key[SDL_SCANCODE_P]) {
+                    if(timer.isPaused())
+                        timer.unpause();
+                    else
+                        timer.pause();
+                } else if(key[SDL_SCANCODE_2])
+                    current_state = MAINMENU;
+                else if(key[SDL_SCANCODE_1]) {
+                    if(current_state == EDITOR) {
+                        /* Save as map_y_x */
+                        //std::cout << "save map size: " << textures.size() << std::endl;
+                        offset.x = game::getWidth();
+                        offset.y = game::getHeight();
+
+                        textureMapController.saveMaps();
+
+                        textureMapController.loadMap(1);
+                        //textureMap = textureMapController.getMap(1);
+                        textureMapController.getMap(1)->loadPlayer(100,100);
+                        //std::cout << "loaded map size: " << textures.size() << std::endl;
+                    }
+                    game::setCurrent_state(game::INGAME);
+                    // LOAD MAP
+                } else if(key[SDL_SCANCODE_3])
+                    current_state = game::PAUSED;
+                else if(key[SDL_SCANCODE_0])
+                    current_state = game::GAMEOVER;
+                else if(key[SDL_SCANCODE_4]) {
+                    textureMapController.getMap(1)->destroyPlayer();
+                    textureMapController.getMap(1)->update();
+                    current_state = game::EDITOR;
+                    // LOAD MAP.
+                    // SAVE MAP.
+                }
+            } else if(current_state == EDITOR && SDL_GetMouseState(NULL,NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+                editor.place();
+            } else if(event.type == SDL_MOUSEWHEEL && current_state == EDITOR) {
+
+                //if(event.wheel.y > 0 && editor.getSelected() < 2)
+                    //editor.setSelected(editor.getSelected()+event.wheel.y);
+                //else if(event.wheel.y < 0 && editor.getSelected() > 0)
+                editor.setSelected(editor.getSelected()+event.wheel.y);
+
+                //std::cerr << "MOUSEWHEEL!!" << "sel: " <<editor.getSelected()<<"y: "<<event.wheel.y << std::endl;
+            } else if(event.type == SDL_MOUSEMOTION) {
+                SDL_GetMouseState(&mouseX,&mouseY);
+            }
+
         }
     }
 
@@ -198,11 +268,13 @@ namespace game {
     }
 
     void close() {
-        for(auto iter = game::getTextureMap()->begin(); iter != game::getTextureMap()->end();iter++){
+        //for(auto iter = game::getTextureMap()->begin(); iter != game::getTextureMap()->end();iter++){
             //((Texture*)iter->second)->free();
             //free((Texture*)iter->second);
-            delete (Texture*)iter->second;
-        }
+            //delete (Texture*)iter->second;
+        game::getTextureMap()->close();
+        //erase(game::getTextureMap()->begin(),game::getTextureMap()->end());
+        //}
 
         SDL_DestroyTexture(buffer);
         buffer = nullptr;
@@ -220,6 +292,10 @@ namespace game {
         SDL_Quit();
     }
 
+    Editor *getEditor() {
+        return &editor;
+    }
+
     SDL_Event *getEvent() {
         return &event;
     }
@@ -233,7 +309,7 @@ namespace game {
     }
 
     SDL_Color *getTextColor() {
-        return &text_color;
+        return &textColor;
     }
 
     int getMouseX() {
@@ -280,16 +356,16 @@ namespace game {
         current_state = temp;
     }
 
-    MapClass *getTextureMapObject()  {
-        return &textureMap;
+    MapClass *getTextureMapController()  {
+        return &textureMapController;
     }
 
-    std::map<int,Texture*> *getTextureMap() {
-        return texture_map;
+    std::shared_ptr<Map> getTextureMap() {
+        return textureMap;
     }
 
-    void setTextureMap(std::map<int,Texture*> *temp_map) {
-        texture_map = temp_map;
+    void setTextureMap(std::shared_ptr<Map> tempMap) {
+        textureMap = tempMap;
     }
 
     int getWidth() {

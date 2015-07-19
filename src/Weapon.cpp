@@ -26,7 +26,7 @@ void Weapon::init() {
     weaponImage.setClipW(32);
     weaponImage.setClipX(0);
     weaponImage.setClipY(physics->getDir());
-    weaponImage.loadFromFile(game::getRenderer(),imgPath);
+    weaponImage.loadFromFile(imgPath);
 }
 
 void Weapon::update() {
@@ -110,8 +110,6 @@ bool Weapon::attack() {
         Position enemyPos = e->getComponent<Position>();
         int width = e->getComponent<Texture>().getWidth();
         int height = e->getComponent<Texture>().getHeight();
-        /* Right attack */
-
 
         if((enemyPos.getX() < weaponImage.getX()+weaponImage.getWidth()+game::getOffset()->x &&
             enemyPos.getX()+width > weaponImage.getX()+game::getOffset()->x) &&
@@ -130,26 +128,24 @@ void Weapon::draw() {
     switch(physics->getDir()) {
     case game::NORTH:
         posY = playerPosition->getY() - 16 - game::getOffset()->y;
-        weaponImage.render(game::getRenderer(),
-                            playerPosition->getX() - game::getOffset()->x,
+        weaponImage.render(playerPosition->getX() - game::getOffset()->x,
                             posY, nullptr);
         break;
     case game::SOUTH:
         posY = playerPosition->getY() + 16 - game::getOffset()->y;
-        weaponImage.render(game::getRenderer(),
-                            playerPosition->getX() - game::getOffset()->x,
+        weaponImage.render(playerPosition->getX() - game::getOffset()->x,
                             posY, nullptr);
         break;
     case game::WEST:
 
         posX = playerPosition->getX() - 16 - game::getOffset()->x;
-        weaponImage.render(game::getRenderer(), posX,
-                       playerPosition->getY() - game::getOffset()->y, nullptr);
+        weaponImage.render(posX, playerPosition->getY() - game::getOffset()->y,
+                            nullptr);
         break;
     case game::EAST:
         posX = playerPosition->getX() + 16 - game::getOffset()->x;
-        weaponImage.render(game::getRenderer(), posX,
-                       playerPosition->getY() - game::getOffset()->y, nullptr);
+        weaponImage.render(posX, playerPosition->getY() - game::getOffset()->y,
+                            nullptr);
         break;
 
     }

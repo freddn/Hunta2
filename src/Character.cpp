@@ -23,9 +23,8 @@
 Character::Character() {
 }
 
-Character::Character(EntityManager &m, EntityCreator &c) {
+Character::Character(EntityManager &m) {
     manager = &m;
-    creator = &c;
 }
 
 Character::~Character() {
@@ -91,7 +90,7 @@ void Character::update() {
             /* Fire a projectile.. */
 
             //std::cerr << "create a projectile." << std::endl;
-            creator->createProjectile(*manager,position->getX(),position->getY(),
+            creator.createProjectile(*manager,position->getX(),position->getY(),
                                       game::getMouseX()+game::getOffset()->x,game::getMouseY()+game::getOffset()->y);
             //std::cerr << "created a projectile." << std::endl;
         }

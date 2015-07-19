@@ -29,7 +29,7 @@ Screen::~Screen() {
 void Screen::init() {}
 
 void Screen::update() {
-    key = SDL_GetKeyboardState(NULL);
+    /*key = SDL_GetKeyboardState(NULL);
     SDL_Event *event = game::getEvent();
     while(SDL_PollEvent(event) != 0) {
         if(event->type == SDL_QUIT)
@@ -51,13 +51,13 @@ void Screen::update() {
                 game::setCurrent_state(game::MAINMENU);
             else if(key[SDL_SCANCODE_1]) {
                 if(game::getCurrentState() == game::EDITOR) {
-                    /* Save as .. */
+                    // Save as map_y_x
                     //std::cout << "save map size: " << textures.size() << std::endl;
                     game::getOffset()->x = game::getWidth();
                     game::getOffset()->y = game::getHeight();
-                    game::getTextureMapObject()->saveMap(game::getTextureMap(),"data/map2",40,30);
-                    game::getTextureMapObject()->loadMap("data/map2");
-                    game::setTextureMap(game::getTextureMapObject()->getMap());
+                    game::getTextureMapController()->saveMap(game::getTextureMap(),"data/map2",40,30);
+                    game::getTextureMapController()->loadMap("data/map2");
+                    game::setTextureMap(game::getTextureMapController()->getMap());
                     //std::cout << "loaded map size: " << textures.size() << std::endl;
                 }
                 game::setCurrent_state(game::INGAME);
@@ -76,7 +76,7 @@ void Screen::update() {
             game::setMouseX(x);
             game::setMouseY(y);
         }
-    }
+    }*/
 }
 
 void Screen::draw() {
@@ -87,20 +87,19 @@ void Screen::renderStart() {
 }
 
 void Screen::renderEnd() {
-    SDL_Renderer *renderer = game::getRenderer();
     tempText.str("");
     tempText << "FPS: " << game::getAvgFPS();
-    fpsText.loadFromText(renderer,tempText.str(), *game::getTextColor(),game::getFont());
+    fpsText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
 
     tempText.str("");
     tempText << "Time: " << (game::getTimer()->getTicks() / 1000.f);
-    timerText.loadFromText(renderer,tempText.str(), *game::getTextColor(),game::getFont());
+    timerText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
 
-    fpsText.render(game::getRenderer(),200,30,nullptr);
-    timerText.render(renderer,350,30,nullptr);
+    fpsText.render(200,30,nullptr);
+    timerText.render(350,30,nullptr);
 
 
-    SDL_RenderPresent(renderer);
+    SDL_RenderPresent(game::getRenderer());
 }
 
 

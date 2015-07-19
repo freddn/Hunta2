@@ -9,9 +9,12 @@ HealthBar::HealthBar(int hp) {
 }
 
 HealthBar::~HealthBar() {
-    SDL_DestroyTexture(hpBarBG);
-    SDL_DestroyTexture(hpBar);
-    SDL_DestroyTexture(hpBarOutline);
+    //SDL_DestroyTexture(hpBarBG);
+    hpBarBG = nullptr;
+    //SDL_DestroyTexture(hpBar);
+    hpBar = nullptr;
+    //SDL_DestroyTexture(hpBarOutline);
+    hpBarOutline = nullptr;
 }
 
 void HealthBar::init() {

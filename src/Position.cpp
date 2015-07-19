@@ -46,14 +46,19 @@ float Position::getY() {
 }
 
 void Position::setX(float posX) {
+    //if((int)posX != (int)x) {
     x = posX;
+        //entity->setX((int)posX);
+    //}
+
 }
 
 void Position::setY(float posY) {
-    if((int)posY != (int)y) {
+    //if((int)posY != (int)y) {
     //if(std::abs(entity->getY() - (int)posY) > 2) {
-        entity->setY((int)posY);
-    }
+        //entity->setY((int)posY);
     y = posY;
+    //}
+
 }
 

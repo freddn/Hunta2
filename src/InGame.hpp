@@ -66,6 +66,7 @@ private:
     Inventory inv{445,150};
     int buf = 0;
     EntityCreator creator;
+    Texture tInterface;
     EntityManager inGameManager;
     Item stick_T;
     Position playerPos;

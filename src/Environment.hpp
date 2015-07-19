@@ -24,23 +24,18 @@
 #include "GPhysics.hpp"
 
 
-struct Environment : EntitySystem::Component
-{
-    public:
-        Environment();
+struct Environment : EntitySystem::Component {
+public:
+    Environment(int id);
 
-        void init();
+    int getID();
 
-        bool isSolid();
-
-        Position* getPosition();
-
-        virtual ~Environment();
-    protected:
-    private:
-    Position *position{nullptr};
-    GPhysics *physics{nullptr};
-    bool solid{true};
+    virtual ~Environment();
+protected:
+private:
+    int environmentID = -1;
 };
 
 #endif // ENVIRONMENT_H
+
+

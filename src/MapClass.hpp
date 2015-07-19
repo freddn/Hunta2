@@ -19,10 +19,18 @@
 #ifndef MAPCLASS_H
 #define MAPCLASS_H
 
+#define TILE_WIDTH 32
+#define TILE_HEIGHT 32
+#define MAP_WIDTH 2048
+#define MAP_HEIGHT 2048
+#define MAP_TILE_WIDTH 64
+#define MAP_TILE_HEIGHT 64
+
 #include <map>
 
 #include "Tile.hpp"
 #include "LuaInterface.hpp"
+#include "Map.hpp"
 
 /**
  * Load a map, save a map, change a map.
@@ -40,7 +48,7 @@ public:
      * Make a call to the script that loads the tiles. Then we get the map from
      * the lua namespace.
      */
-    bool loadMap(std::string filename);
+    bool loadMap(int id);
 
     /**
      * Will erase and delete all tiles of the map.
@@ -50,16 +58,38 @@ public:
     /**
      * Will create a new map and replace existing ones with same name.
      */
-    void saveMap(std::map<int,Texture*> *loadedMap,
-                const char*filename, int width, int height);
+    void saveMap(std::map<int,std::shared_ptr<Texture>> *loadedMap,
+                int mapID, int width, int height);
 
-    void insertTile(Texture &texture); // maby remove
+    /**
+     * Saves all maps to files.
+     */
+    void saveMaps();
 
     /**
      * Sets the current map.
      */
-    void setMap(std::map<int,Texture*> *textureMap);
-    std::map<int,Texture*> *getMap();
+    void setMap(std::shared_ptr<Map> tempMap);
+    bool mapExists(int mapID);
+    std::shared_ptr<Map> getMap(int mapID);
+
+    void loadTile(int mapID, int id, int index, int x,int y);
+    void loadEnvironment(int mapID, int id, int index, int x,int y);
+    void loadEnemy(int mapID, int id, int index, int x,int y);
+
+    void loadTileTexture(std::string img);
+    void loadTileData(int id, std::string img, bool solid);
+
+    void loadEnvironmentTexture(std::string img);
+    void loadEnvironmentData(int id, std::string img, bool solid);
+
+    void loadEnemyTexture(std::string img);
+    void loadEnemyData(int id, std::string img, int hp,int level, int atk);
+
+    void loadMapData(int id, int x,int y, int n,int e, int s, int w);
+    void saveMap(int id, int x,int y, int n, int e, int s, int w);
+
+    int getMapID(int x, int y);
 
     Texture *tileAtIndex();
     Texture *getGrassTile();
@@ -69,9 +99,16 @@ public:
     void changeMap(const char *mapName);
     ~MapClass();
 private:
-    std::map<std::string,std::map<int,Texture*>*> mapContainer;
+    std::map<int,std::shared_ptr<Map>> mapContainer;
     LuaInterface l_interface;
-    std::map<int,Texture*> *currentMap;
+    //std::map<int,std::shared_ptr<Texture>> *currentMap;
+    std::shared_ptr<Map> currentMap;
+
+    std::map<std::string, std::shared_ptr<Texture>> loadedTextures;
+    std::map<int, std::string> tiles;
+    std::map<int, std::string> environment;
+    std::map<int, std::string> enemies;
+
     Texture grass_T;
     Texture ground_T;
     Texture water_T;

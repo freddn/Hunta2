@@ -20,4 +20,12 @@ SRC = src/Character.cpp \
       src/Tile.cpp \
       src/Projectile.cpp \
 	  src/HealthBar.cpp \
-	  src/Weapon.cpp
+	  src/Weapon.cpp \
+	  src/Map.cpp \
+	  src/Shape.cpp \
+	  src/Global.cpp \
+	  src/KeyboardController.cpp \
+	  src/MouseController.cpp \
+	  src/Sound.cpp \
+	  src/Camera.cpp \
+	  src/Icon.cpp

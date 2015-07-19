@@ -33,7 +33,7 @@ Inventory::Inventory(int x, int y) {
 Inventory::~Inventory() {}
 
 void Inventory::init() {
-    frame.loadFromFile(game::getRenderer(),"data/frame.png");
+    frame.loadFromFile("data/frame.png");
     inventoryRect.w = sizeX*32;
     inventoryRect.h = sizeY*32;
     inv_bg = SDL_CreateTexture(game::getRenderer(), SDL_PIXELFORMAT_RGBA8888,
@@ -43,17 +43,21 @@ void Inventory::init() {
 
     buildInventory();
     l_interface.initLua();
-    if(!l_interface.load_File("src/LoadInventory.lua"))
+    if(!l_interface.loadFile("src/LoadInventory.lua"))
         std::cerr << "Failed to Load LoadInventory.lua" << std::endl;
 
-    if(!l_interface.load_File("src/InventoryFunctions.lua"))
+    if(!l_interface.loadFile("src/InventoryFunctions.lua"))
         std::cerr << "Failed to Load InventoryFunctions.lua" << std::endl;
 }
 
 void Inventory::loadInventory() {
     l_interface.loadInventory("data/inventory1");
-    inventoryItem *items = lua_functions::getItems();
+    /// CHANGE TO OTHER FORMAT
+    /// Inventoryclass should have a loadItem function and be
+    /// accessed by game::getInventory()->loadItem from LuaInterface
+    inventoryItem *items; // = lua_functions::getItems();
     //l_interface.addItem("data/inventory1",12,4,4,6);
+    return;
     int i = 0;
     while(items[i].id!= -1 && i < 20) {
         std::cerr << "item id: "<<items[i].id << std::endl;
@@ -62,7 +66,7 @@ void Inventory::loadInventory() {
 }
 
 int Inventory::addItem(int id,int amount,int x, int y) {
-    if(lua_functions::getItemCount() < 20)
+    if(itemCount < 20)//lua_functions::getItemCount() < 20)
         l_interface.addItem("data/inventory1",id,amount,x,y);
     else
         return -1;
@@ -90,13 +94,13 @@ void Inventory::buildInventory() {
     clip.h = 32;
 
     SDL_SetRenderTarget(game::getRenderer(),inv_bg);
-    frame.render(game::getRenderer(),0,0,&clip);
+    frame.render(0,0,&clip);
     clip.x = 64;
-    frame.render(game::getRenderer(),inventoryRect.w-32,0,&clip);
+    frame.render(inventoryRect.w-32,0,&clip);
     for(int j = 1;j<((inventoryRect.w-32) / 32);j++) {
         clip.x = 32;
         clip.y = 0;
-        frame.render(game::getRenderer(),j*32,0,&clip);
+        frame.render(j*32,0,&clip);
     }
 
     for(int i = 1;i<=(inventoryRect.h / 32);i++) {
@@ -130,13 +134,13 @@ void Inventory::buildInventory() {
                 clip.x = 32;
                 clip.y = 10;
             }
-            frame.render(game::getRenderer(),j*32,i*32,&clip);
+            frame.render(j*32,i*32,&clip);
         }
     }
 
-    text.loadFromText(game::getRenderer(),"Inventory" ,
+    text.loadFromText("Inventory" ,
                         *game::getTextColor(),game::getFont());
-    text.render(game::getRenderer(),10,4,nullptr);
+    text.render(10,4,nullptr);
     SDL_SetRenderTarget(game::getRenderer(),nullptr);
 }
 
