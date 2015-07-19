@@ -84,7 +84,7 @@
 		<Unit filename="data/stickman.png" />
 		<Unit filename="data/water.png" />
 		<Unit filename="src/Camera.cpp" />
-		<Unit filename="src/Camera.h" />
+		<Unit filename="src/Camera.hpp" />
 		<Unit filename="src/Character.cpp" />
 		<Unit filename="src/Character.hpp" />
 		<Unit filename="src/Editor.cpp" />
@@ -114,7 +114,7 @@
 		<Unit filename="src/Item.cpp" />
 		<Unit filename="src/Item.hpp" />
 		<Unit filename="src/KeyboardController.cpp" />
-		<Unit filename="src/KeyboardController.h" />
+		<Unit filename="src/KeyboardController.hpp" />
 		<Unit filename="src/LTimer.cpp" />
 		<Unit filename="src/LTimer.hpp" />
 		<Unit filename="src/LuaInterface.cpp" />
@@ -122,13 +122,14 @@
 		<Unit filename="src/MainMenu.cpp" />
 		<Unit filename="src/MainMenu.hpp" />
 		<Unit filename="src/Map.cpp" />
-		<Unit filename="src/Map.h" />
+		<Unit filename="src/Map.hpp" />
 		<Unit filename="src/MapClass.cpp" />
 		<Unit filename="src/MapClass.hpp" />
 		<Unit filename="src/Melee.cpp" />
 		<Unit filename="src/Melee.hpp" />
 		<Unit filename="src/MouseController.cpp" />
 		<Unit filename="src/MouseController.h" />
+		<Unit filename="src/MouseController.hpp" />
 		<Unit filename="src/Position.cpp" />
 		<Unit filename="src/Position.hpp" />
 		<Unit filename="src/Projectile.cpp" />
@@ -138,9 +139,9 @@
 		<Unit filename="src/Screen.cpp" />
 		<Unit filename="src/Screen.hpp" />
 		<Unit filename="src/Shape.cpp" />
-		<Unit filename="src/Shape.h" />
+		<Unit filename="src/Shape.hpp" />
 		<Unit filename="src/Sound.cpp" />
-		<Unit filename="src/Sound.h" />
+		<Unit filename="src/Sound.hpp" />
 		<Unit filename="src/Texture.cpp" />
 		<Unit filename="src/Texture.hpp" />
 		<Unit filename="src/Tile.cpp" />
