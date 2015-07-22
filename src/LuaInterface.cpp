@@ -124,6 +124,7 @@ namespace lua_functions {
             int atk = lua_tonumber(l_state,7); // atk
             int def = lua_tonumber(l_state,8); // def
             int hp = lua_tonumber(l_state,9); // hp
+
         }
         return 0;
     }
@@ -149,7 +150,6 @@ namespace lua_functions {
             int id = lua_tonumber(l_state,1); // id
             std::string name = lua_tostring(l_state,2); // name
             int level = lua_tonumber(l_state,3); // id
-
             std::string img = lua_tostring(l_state,4); // image
             std::string desc = lua_tostring(l_state,5); // desc
             int price = lua_tonumber(l_state,6); // price
@@ -282,6 +282,25 @@ void LuaInterface::appendMapData(const char* loadFunc, int mapId, const char* fi
     report_errors(l_state,p);
     //std::cout << std::endl;
 }
+void LuaInterface::appendMapDataInfo(const char* filename, int mapId, int x,int y,
+                                int n, int e, int s, int w) {
+    lua_pushstring(l_state,"AppendMapDataInfo");
+
+    lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1
+    //lua_getglobal(l_state,"_G"); // lua5.2 not working
+    //lua_pushglobaltable(l_state); // lua5.2 not working
+    lua_pushstring(l_state, filename);
+    lua_pushnumber(l_state, mapId);
+    lua_pushnumber(l_state, x);
+    lua_pushnumber(l_state, y);
+    lua_pushnumber(l_state, n);
+    lua_pushnumber(l_state, e);
+    lua_pushnumber(l_state, s);
+    lua_pushnumber(l_state, w);
+    int p = lua_pcall(l_state,8,0,0);
+    report_errors(l_state,p);
+    //std::cout << std::endl;
+}
 
 void LuaInterface::clearMapFile(int mapID, const char* filename) {
     lua_pushstring(l_state,"ClearMapFile");
@@ -304,6 +323,16 @@ void LuaInterface::newMapFile(int mapId, const char* filename) {
     lua_pushnumber(l_state,mapId);
     lua_pushstring(l_state,filename);
     int p = lua_pcall(l_state,2,0,0);
+    report_errors(l_state,p);
+}
+
+void LuaInterface::newMapDataFile(const char* filename) {
+    lua_pushstring(l_state,"NewMapDataFile");
+    lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1 working
+    //lua_getglobal(l_state,"_G"); // lua5.2 not working
+    //lua_pushglobaltable(l_state); // lua5.2 not working
+    lua_pushstring(l_state,filename);
+    int p = lua_pcall(l_state,1,0,0);
     report_errors(l_state,p);
 }
 

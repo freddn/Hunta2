@@ -38,13 +38,16 @@ void MouseController::update() {
         position->setX(mouseX - (width/2));
     if(tempY != mouseY && controllY)
         position->setY(mouseY - (height/2));
-
 }
 
 
-void MouseController::setMouseX(int x) {}
+void MouseController::setMouseX(int x) {
+    mouseX = x;
+}
 
-void MouseController::setMouseY(int y) {}
+void MouseController::setMouseY(int y) {
+    mouseY = y;
+}
 
 int MouseController::getMouseX() {
     return mouseX;

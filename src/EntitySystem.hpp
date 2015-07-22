@@ -219,9 +219,12 @@ namespace EntitySystem {
 
         void destroyEntity(int index, int x, int y);
         void destroyEntity(int index);
+        void setOffset(int x,int y);
     private:
         bool byIndex = false;
         int id = 0;
+        int offsetX = 0;
+        int offsetY = 0;
         unsigned int entitiesReserved = 32;
         std::vector<int> indexes;
         std::map<int,std::shared_ptr<Entity>> entitiesByIndex;

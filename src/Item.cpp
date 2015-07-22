@@ -19,8 +19,13 @@
 #include "Item.hpp"
 
 
-Item::Item()
-{
+Item::Item() {
+    //ctor
+}
+
+Item::Item(int id, bool ground) {
+    onGround = ground;
+    itemID = id;
     //ctor
 }
 

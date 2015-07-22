@@ -55,7 +55,7 @@ public:
 
 
     Entity& createPlayer(EntitySystem::EntityManager &mManager,
-                            EntityCreator &creator,int x,int y);
+                            int x,int y);
     Entity& createItem(EntitySystem::EntityManager &mManager,int itemNumber,
                             int x,int y, bool onGround);
     Entity& createEnemy(EntitySystem::EntityManager &mManager,int enemyNumber,

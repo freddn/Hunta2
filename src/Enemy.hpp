@@ -23,6 +23,7 @@
 #include "GPhysics.hpp"
 #include "Position.hpp"
 #include "EntitySystem.hpp"
+#include "LTimer.hpp"
 
 using namespace EntitySystem;
 /* The enemy class. */
@@ -33,7 +34,10 @@ public:
     void init();
     void draw();
     void update();
+    void knockBack(int dir);
+    void setAggressive(bool aggressive);
     int getID();
+    void onDeath();
     virtual ~Enemy();
 protected:
 private:
@@ -53,10 +57,13 @@ private:
     int enemyHeight = 0;
 
     int enemyID = -1;
-
+    bool isAggressive = false;
     bool aggro = false;
     bool aggroX = true;
     bool aggroY = true;
+    bool isKnockedBack = false;
+    int knockBackDir = 0;
+    LTimer knockBackTimer;
 };
 
 #endif // ENEMY_H

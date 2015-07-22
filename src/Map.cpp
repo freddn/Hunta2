@@ -20,11 +20,26 @@ Map::Map() {
 Map::~Map() {
     //dtor
 }
+
+void Map::init() {
+    std::cerr << "id: "<< mapID << " x: " << mapX << " y: " << mapY<< std::endl;
+    tiles.setOffset(mapX*MAP_WIDTH,mapY*MAP_HEIGHT);
+}
+
 void Map::setMapID(int id) { mapID = id; }
 int Map::getMapID() { return mapID; }
 
 void Map::setActive(bool active) {
     mapIsActive = active;
+}
+
+void Map::setMapAt(int dir, int mapID) {
+    if(dir >= 0 && dir < 4)
+        neighbors[dir] = mapID;
+}
+
+int Map::getMapAt(int dir) {
+    return neighbors[dir];
 }
 
 bool Map::isActive() {
@@ -56,8 +71,8 @@ bool Map::hasEntities() {
         return false;
     }
 
-    if(tiles.getEntities() && !tiles.getEntities()->empty() ||
-        tiles.getEntitiesByIndex() != nullptr && !tiles.getEntitiesByIndex()->empty())
+    if((tiles.getEntities() && !tiles.getEntities()->empty()) ||
+        (tiles.getEntitiesByIndex() != nullptr && !tiles.getEntitiesByIndex()->empty()))
         entities = true;
     if(!manager.getEntities()->empty() ||
         !manager.getEntitiesByIndex()->empty())
@@ -65,7 +80,7 @@ bool Map::hasEntities() {
     return entities;
 }
 
-void Map::loadTile(int mapID, int id, int index, int x,int y, std::string img) {
+void Map::loadTile(int id, int index, int x,int y, std::string img) {
     //std::cerr << "loaded tile " <<index<<" to map:"<<mapID << std::endl;
     Entity *tile = &tiles.addEntity(index);
     tile->addComponent<Position>(x, y);
@@ -73,7 +88,7 @@ void Map::loadTile(int mapID, int id, int index, int x,int y, std::string img) {
     tile->addComponent<Tile>(id);
 }
 
-void Map::loadEnvironment(int mapID, int id, int index, int x,int y, std::string img) {
+void Map::loadEnvironment(int id, int index, int x,int y, std::string img) {
     Entity *env = manager.addEntity(index,false);
     if(env != nullptr) {
         //std::cerr << "environment added..."<<std::endl;
@@ -85,7 +100,7 @@ void Map::loadEnvironment(int mapID, int id, int index, int x,int y, std::string
     }
 }
 
-void Map::loadEnemy(int mapID, int id, int index, int x,int y, std::string img) {
+void Map::loadEnemy(int id, int index, int x,int y, std::string img) {
     Entity *enemy = manager.addEntity(index,false);
     if(enemy != nullptr) {
         enemy->addComponent<Position>(x,y);
@@ -166,4 +181,21 @@ void Map::save(LuaInterface *lInterface) {
         int index = (x/32) + (y/32)*(MAP_WIDTH/32);
         lInterface->appendMapData("loadEnemy", mapID,"/enemies.lua",id,index,x,y);
     }
+
+    lInterface->appendMapDataInfo("data/maps/maps.lua",mapID,mapX,mapY,neighbors[game::NORTH],
+                                    neighbors[game::EAST],neighbors[game::SOUTH],neighbors[game::WEST]);
+
 }
+
+void Map::loadNeighbors(LuaInterface *lInterface) {
+    for(int i = 0;i<4;i++){
+        if(neighbors[i] != 0)
+            lInterface->loadMap(neighbors[i]);
+    }
+
+}
+
+
+
+
+

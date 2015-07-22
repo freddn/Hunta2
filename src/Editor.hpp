@@ -87,10 +87,10 @@ private:
     EntityCreator creator;
 
     std::map<int, std::shared_ptr<Icon>> icons;
-    signed int selected = 0;
+    unsigned int selected = 0;
 
-    signed int firstIcon = 0;
-    signed int lastIcon = 8;
+    unsigned int firstIcon = 0;
+    unsigned int lastIcon = 8;
     int selectedCount = 0;
     bool mapUpdated = false;
 

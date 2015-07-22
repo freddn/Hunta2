@@ -33,15 +33,8 @@ public:
     void setMapID(int id);
     int getMapID();
 
-    void setNorth(int id) {north = id;};
-    void setSouth(int id) {south = id;};
-    void setWest(int id) {west = id;};
-    void setEast(int id) {east = id;};
-
-    int getNorth() {return north;};
-    int getSouth() {return south;};
-    int getWest() {return west;};
-    int getEast() {return east;};
+    void setMapAt(int dir, int mapID);
+    int getMapAt(int dir);
 
     void setX(int x) {mapX = x;};
     void setY(int y) {mapY = y;};
@@ -50,10 +43,11 @@ public:
     int getY() {return mapY;};
 
     void save(LuaInterface *lInterface);
+    void loadNeighbors(LuaInterface *lInterface);
 
-    void loadTile(int mapID, int id, int index, int x,int y, std::string img);
-    void loadEnvironment(int mapID,int id, int index, int x,int y, std::string img);
-    void loadEnemy(int mapID, int id, int index, int x,int y, std::string img);
+    void loadTile(int id, int index, int x,int y, std::string img);
+    void loadEnvironment(int id, int index, int x,int y, std::string img);
+    void loadEnemy(int id, int index, int x,int y, std::string img);
 
     void loadPlayer(int x,int y);
     void destroyPlayer();
@@ -71,10 +65,7 @@ private:
     int mapX = 0;
     int mapY = 0;
 
-    int north = 0;
-    int west = 0;
-    int south = 0;
-    int east = 0;
+    int neighbors[4] = {0,0,0,0};
     bool mapIsActive = false;
 
     EntityManager tiles;

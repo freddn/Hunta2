@@ -113,6 +113,8 @@
 		<Unit filename="src/Inventory.hpp" />
 		<Unit filename="src/Item.cpp" />
 		<Unit filename="src/Item.hpp" />
+		<Unit filename="src/ItemManager.cpp" />
+		<Unit filename="src/ItemManager.hpp" />
 		<Unit filename="src/KeyboardController.cpp" />
 		<Unit filename="src/KeyboardController.hpp" />
 		<Unit filename="src/LTimer.cpp" />
@@ -128,7 +130,6 @@
 		<Unit filename="src/Melee.cpp" />
 		<Unit filename="src/Melee.hpp" />
 		<Unit filename="src/MouseController.cpp" />
-		<Unit filename="src/MouseController.h" />
 		<Unit filename="src/MouseController.hpp" />
 		<Unit filename="src/Position.cpp" />
 		<Unit filename="src/Position.hpp" />

@@ -1,7 +1,9 @@
 #include "HealthBar.hpp"
 
 #include "Game.hpp"
+#include <stdlib.h>
 
+/// TODO change name to Health
 HealthBar::HealthBar(int hp) {
     maxHP = hp;
     health = hp;
@@ -19,6 +21,10 @@ HealthBar::~HealthBar() {
 
 void HealthBar::init() {
     position = &entity->getComponent<Position>();
+    dmgFont = TTF_OpenFont("freefont/FreeMonoBold.ttf",9);
+    dmgBg.loadFromFile("data/bloodSplash2.png");
+    healBg.loadFromFile("data/heal.png");
+    defBg.loadFromFile("data/shield.png");
 
     SDL_Surface *temp = SDL_CreateRGBSurface(0,hpBarBGRect.w,hpBarBGRect.h,32,0,0,0,0);
     SDL_FillRect(temp,NULL,SDL_MapRGB(temp->format,255,0,0));
@@ -66,20 +72,61 @@ void HealthBar::draw() {
         SDL_RenderCopy(game::getRenderer(),hpBar,NULL,&hpBarRect);
     }
 
-
-
+    if(displayDmgDone) {
+        if(!hpTimer.isStarted()) {
+            hpTimer.start();
+        } else if(hpTimer.getTicks() > 600) {
+            displayDmgDone = false;
+            hpTimer.stop();
+        }
+        if(dmgDone < 0)
+            dmgBg.render(position->getX() +9- game::getOffset()->x,position->getY() -33 - game::getOffset()->y,nullptr);
+        else if(dmgDone > 0)
+            healBg.render(position->getX() +9- game::getOffset()->x,position->getY() -33 - game::getOffset()->y,nullptr);
+        else
+            defBg.render(position->getX() +9- game::getOffset()->x,position->getY() -33 - game::getOffset()->y,nullptr);
+        dmgDisplay.render(position->getX() +14 - game::getOffset()->x,position->getY() -30 - game::getOffset()->y,nullptr);
+    }
 }
 
 void HealthBar::update() {
 
 }
 
+
+
 void HealthBar::setHp(int hp) {
+    displayDamage(hp - health);
     health = hp;
     hpBarRect.w = 32 * ((float)health/(float)maxHP);
-    if(hpBarRect.w < 1) {
-        entity->destroy();
+    if(health < 1) {
+        if(entity->hasComponent<Enemy>())
+            entity->getComponent<Enemy>().onDeath();
     }
+}
+
+void HealthBar::damage(int atk, int seed) {
+    isDisplayed = true;
+    srand(seed);
+    int atkVal = rand() % atk - 2;
+    setHp(health-atkVal);
+}
+
+void HealthBar::displayDamage(int damage) {
+    dmgDone = damage;
+    displayDmgDone = true;
+    dmgText.str("");
+    dmgText << std::abs(damage);
+    SDL_Color dmgColor;
+    if(damage < 0)
+        dmgColor = {0,0,0,0}; /// (Red, Green, Blue, Alpha)
+    else if(damage > 0)
+        dmgColor = {0,0,0,0};
+    else
+        dmgColor = {255,255,255,0};
+
+    dmgDisplay.loadFromText(dmgText.str(),dmgColor,dmgFont);
+    hpTimer.start();
 }
 
 void HealthBar::setMaxHp(int maxhealth) {
@@ -87,7 +134,7 @@ void HealthBar::setMaxHp(int maxhealth) {
 }
 
 void HealthBar::setDisplay(bool display) {
-
+    isDisplayed = display;
 }
 
 int HealthBar::getHp() {

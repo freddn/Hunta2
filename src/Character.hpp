@@ -37,6 +37,7 @@ struct Character: Component {
 public:
     Character();
     Character(EntityManager &m);
+    Character(EntityManager &m, std::string name);
 
     /**
      * Init the player component. Gets the entity's other components.
@@ -61,7 +62,7 @@ public:
     /**
      * Load saved data.
      */
-    void loadSaveFile(std::string char_name);
+    void loadSaveFile(std::string name);
 
     ~Character();
 
@@ -72,13 +73,18 @@ private:
     Position *position{nullptr};
     HealthBar *hpBar{nullptr};
 
+    std::string charName = "";
 
     EntityManager *manager{nullptr}; // For (creating and) finding entitys.
     EntityCreator creator; // Creating entitys.
 
+    int level = 1;
+    int experience = 0;
+
     bool attacking = false;
-    int xPos; /* x-position of the player. */
-    int yPos; /* y-position of the player. */
+
+    int xPos = 0; /* x-position of the player. */
+    int yPos = 0; /* y-position of the player. */
 };
 
 #endif /* CHARACTER_HPP */

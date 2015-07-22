@@ -1,0 +1,13 @@
+ -- Map data
+loadEnemy(2,2,310, -320, 160)
+loadEnemy(2,2,183, -288, 96)
+loadEnemy(2,2,313, -224, 160)
+loadEnemy(2,2,443, -160, 224)
+loadEnemy(2,2,564, -384, 288)
+loadEnemy(2,2,566, -320, 288)
+loadEnemy(2,2,241, -480, 128)
+loadEnemy(2,2,569, -224, 288)
+loadEnemy(2,2,436, -384, 224)
+loadEnemy(2,2,319, -32, 160)
+loadEnemy(2,2,319, -32, 160)
+loadEnemy(2,2,826, -192, 416)

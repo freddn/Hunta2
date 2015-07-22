@@ -51,8 +51,10 @@ public:
     bool loadFile(const char *filename);
     void appendMapData(const char* loadFunc, int mapId, const char* filename,
                         int id, int index, int x, int y);
+    void appendMapDataInfo(const char* filename,int mapID,int x,int y,int n,int e,int s,int w);
     void clearMapFile(int mapID, const char* filename);
     void newMapFile(int mapID, const char* filename);
+    void newMapDataFile(const char* filename);
     bool mapFileExist(int mapID, const char* filename);
 
     void addItem(const char *filename,int id, int amount, int x, int y);

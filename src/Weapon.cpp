@@ -21,6 +21,7 @@ Weapon::~Weapon() {
 void Weapon::init() {
     playerPosition = &entity->getComponent<Position>();
     physics = &entity->getComponent<GPhysics>();
+    seedTimer.start();
     weaponImage.setClipped(true);
     weaponImage.setClipH(32);
     weaponImage.setClipW(32);
@@ -86,7 +87,7 @@ void Weapon::update() {
         case 4:
             if(!attackTimer.isStarted())
                 attackTimer.start();
-            if(attackTimer.getTicks() > INTERVALL) {
+            if(attackTimer.getTicks() > INTERVALL*3) {
                 attackState = 0;
                 attackTimer.stop();
                 isAttacking = false;
@@ -106,6 +107,8 @@ void Weapon::update() {
 bool Weapon::attack() {
     bool hit = false;
     // If this is a player:
+    int seed = 12345;
+    seed += seedTimer.getTicks();
     for(auto& e: manager->getEntitiesByGroup(game::ENEMY)) {
         Position enemyPos = e->getComponent<Position>();
         int width = e->getComponent<Texture>().getWidth();
@@ -115,9 +118,14 @@ bool Weapon::attack() {
             enemyPos.getX()+width > weaponImage.getX()+game::getOffset()->x) &&
            (enemyPos.getY() < weaponImage.getY()+weaponImage.getHeight()+game::getOffset()->y &&
             enemyPos.getY()+height > weaponImage.getY()+game::getOffset()->y)) {
-            e->getComponent<HealthBar>().setHp(e->getComponent<HealthBar>().getHp()-4);
+
+            e->getComponent<HealthBar>().damage(atk,enemyPos.getX()+enemyPos.getY()+seed);
+            e->getComponent<Enemy>().knockBack(physics->getDir());
+            e->getComponent<Enemy>().setAggressive(true);
             hit = true;
+            seed -= 1237;
         }
+
     }
     return hit;
 }

@@ -43,7 +43,8 @@ public:
      * Loads tiles and set up lua-scripts.
      */
     void init();
-
+    void draw();
+    void update();
     /**
      * Make a call to the script that loads the tiles. Then we get the map from
      * the lua namespace.
@@ -88,14 +89,11 @@ public:
 
     void loadMapData(int id, int x,int y, int n,int e, int s, int w);
     void saveMap(int id, int x,int y, int n, int e, int s, int w);
-
+    int getCurrentMap();
+    void setCurrentMap(int id);
     int getMapID(int x, int y);
 
     Texture *tileAtIndex();
-    Texture *getGrassTile();
-    Texture *getGroundTile();
-    Texture *getWaterTile();
-
     void changeMap(const char *mapName);
     ~MapClass();
 private:
@@ -103,15 +101,11 @@ private:
     LuaInterface l_interface;
     //std::map<int,std::shared_ptr<Texture>> *currentMap;
     std::shared_ptr<Map> currentMap;
-
+    int currentMapID = 1;
     std::map<std::string, std::shared_ptr<Texture>> loadedTextures;
     std::map<int, std::string> tiles;
     std::map<int, std::string> environment;
     std::map<int, std::string> enemies;
-
-    Texture grass_T;
-    Texture ground_T;
-    Texture water_T;
 };
 
 #endif // MAPCLASS_H

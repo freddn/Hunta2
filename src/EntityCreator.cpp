@@ -104,7 +104,7 @@ void EntityCreator::addToGroup(Entity *entity, std::size_t group) {
 }
 
 Entity& EntityCreator::createPlayer(EntitySystem::EntityManager &mManager,
-                                    EntityCreator &creator,int x,int y) {
+                                        int x,int y) {
     std::cout << " - EntityCreator::createPlayer() ..."<<std::endl;
     auto& player(mManager.addEntity());
     //auto& entity = manager.addEntity();
@@ -123,13 +123,13 @@ Entity& EntityCreator::createPlayer(EntitySystem::EntityManager &mManager,
 }
 
 Entity& EntityCreator::createItem(EntitySystem::EntityManager &mManager,
-                                    int itemNumber,int x,int y, bool onGround) {
+                                    int itemID,int x,int y, bool onGround) {
     auto& item(mManager.addEntity());
 
     /* Get right item from a list/file. */
     item.addComponent<Position>(x,y);
     item.addComponent<Texture>("data/stick.png",false); // no clip
-    item.addComponent<Item>();
+    item.addComponent<Item>(itemID,onGround);
 
     //item.setY(y);//+item.getComponent<Texture>().getHeight());
 
@@ -200,7 +200,7 @@ Entity& EntityCreator::createTile(EntitySystem::EntityManager &mManager,
     /* Get right item from a list/file. */
     tile.addComponent<Position>(x,y);
     tile.addComponent<Texture>("data/stick.png",false); // no clip
-
+    tile.addComponent<Tile>(tileId);
     //tile.setY(y);//+item.getComponent<Texture>().getHeight());
 
     /* add position */

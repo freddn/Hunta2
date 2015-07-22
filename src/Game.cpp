@@ -40,7 +40,7 @@ namespace game {
     InGame inGame;
     MainMenu mMenu;
 
-    int current_state = EDITOR;
+    int current_state = INGAME;
     MapClass textureMapController;
     std::shared_ptr<Map> textureMap;
     int width = 640;
@@ -67,7 +67,7 @@ namespace game {
         key = SDL_GetKeyboardState(nullptr);
         textureMapController.init();
         std::cerr << " - game::start() (load map) ..."<<std::endl;
-        std::string map2 = "data/map2";
+        //std::string map2 = "data/map2";
         if(!textureMapController.loadMap(1)) {
             std::cerr << "Map could not be loaded" << std::endl;
         }
@@ -78,7 +78,8 @@ namespace game {
         inGame.init();
         mMenu.init();
         textureMap = textureMapController.getMap(1);
-
+        if(current_state == INGAME)
+            textureMapController.getMap(1)->loadPlayer(100,100);
         fpsTimer.start();
         std::cerr << " - game::start() (main loop) ..."<<std::endl;
         while(running) {
@@ -132,6 +133,8 @@ namespace game {
         while(SDL_PollEvent(&event) != 0) {
             if(event.type == SDL_QUIT)
                 running = false;//game::setRunning(false);
+            else if(current_state == EDITOR && SDL_GetMouseState(NULL,NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
+                editor.place();
             else if(event.type == SDL_KEYDOWN) {
                 if(key[SDL_SCANCODE_ESCAPE])
                     running = false;//game::setRunning(false);
@@ -174,8 +177,6 @@ namespace game {
                     // LOAD MAP.
                     // SAVE MAP.
                 }
-            } else if(current_state == EDITOR && SDL_GetMouseState(NULL,NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-                editor.place();
             } else if(event.type == SDL_MOUSEWHEEL && current_state == EDITOR) {
 
                 //if(event.wheel.y > 0 && editor.getSelected() < 2)
@@ -198,8 +199,8 @@ namespace game {
         offset.h = height;
         background.x = 0;
         background.y = 0;
-        background.w = width;
-        background.h = height;
+        background.w = 2048;
+        background.h = 2048;
         rect.x = 400;
         rect.y = 400;
         rect.h = 32;

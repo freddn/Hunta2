@@ -61,7 +61,19 @@ void MapClass::init() {
     l_interface.loadFile("data/items/usables/usables.lua");
 
 
+    mapContainer.at(1)->loadNeighbors(&l_interface);
+}
 
+void MapClass::draw() {
+    for(auto &m : mapContainer) {
+        m.second->draw();
+    }
+}
+
+void MapClass::update() {
+    for(auto &m : mapContainer) {
+        m.second->update();
+    }
 }
 
 MapClass::~MapClass() {
@@ -76,11 +88,10 @@ bool MapClass::loadMap(int mapID) {
     if(mapContainer.find(mapID) == mapContainer.end()) {
         std::cout << "Map not found: " << mapID << std::endl;
         return false;
+    } else {
+        l_interface.loadMap(mapID);
+        return true;
     }
-    l_interface.loadMap(mapID);
-    //l_interface.load_tiles(id);
-
-    return true;
 }
 
 void MapClass::clearCurrentMap() {
@@ -92,16 +103,14 @@ void MapClass::clearCurrentMap() {
     //}
 }
 
-void MapClass::saveMap(std::map<int,std::shared_ptr<Texture>> *temp_map,
-                        int mapID, int width, int height) {
-    std::cout << " - MapClass::saveMap() ..."<<std::endl;
-}
-
 void MapClass::saveMaps() {
+    l_interface.newMapDataFile("data/maps/maps.lua");
     for(auto &m : mapContainer) {
         std::cerr << "Save map: " << m.second->getMapID() << std::endl;
         m.second->save(&l_interface);
     }
+
+
 }
 
 void MapClass::setMap(std::shared_ptr<Map> tempMap) {
@@ -111,8 +120,6 @@ void MapClass::setMap(std::shared_ptr<Map> tempMap) {
 bool MapClass::mapExists(int mapID) {
     //std::cerr << mapContainer.count(mapID) << std::endl;
     //std::cerr << "map empty " << mapContainer.size() << std::endl;
-    if(mapContainer.empty())
-        return false;
     //std::cerr << "map count" << std::endl;
     if(mapContainer.count(mapID) < 1)
         return false;
@@ -145,12 +152,13 @@ std::shared_ptr<Map> MapClass::getMap(int mapID) {
 void MapClass::loadTile(int mapID,int id, int index,int x,int y) {
     if(mapContainer.find(mapID) == mapContainer.end()) {
         Map* tempMap(new Map());
+        std::cerr << "New map but not complete......."<< std::endl;
         tempMap->setMapID(mapID);
         tempMap->setActive(true);
         std::shared_ptr<Map> temp{tempMap};
         mapContainer.insert(std::pair<int,std::shared_ptr<Map>>(mapID,temp));
     }
-    mapContainer.at(mapID)->loadTile(mapID,id,index,x,y,tiles.at(id));
+    mapContainer.at(mapID)->loadTile(id,index,x,y,tiles.at(id));
 }
 
 void MapClass::loadEnvironment(int mapID,int id, int index,int x,int y) {
@@ -161,7 +169,7 @@ void MapClass::loadEnvironment(int mapID,int id, int index,int x,int y) {
         std::shared_ptr<Map> temp {tempMap};
         mapContainer.insert(std::pair<int,std::shared_ptr<Map>>(mapID,temp));
     }
-    mapContainer.at(mapID)->loadEnvironment(mapID,id,index,x,y,environment.at(id));
+    mapContainer.at(mapID)->loadEnvironment(id,index,x,y,environment.at(id));
 }
 
 void MapClass::loadEnemy(int mapID, int id, int index,int x,int y) {
@@ -172,7 +180,7 @@ void MapClass::loadEnemy(int mapID, int id, int index,int x,int y) {
         std::shared_ptr<Map> temp {tempMap};
         mapContainer.insert(std::pair<int,std::shared_ptr<Map>>(mapID,temp));
     }
-    mapContainer.at(mapID)->loadEnemy(mapID,id,index,x,y,enemies.at(id));
+    mapContainer.at(mapID)->loadEnemy(id,index,x,y,enemies.at(id));
 }
 
 /// Loads a tile texture
@@ -181,7 +189,6 @@ void MapClass::loadTileData(int id, std::string img, bool solid) {
 
     texture->loadFromFile(img);
     texture->setSolid(solid);
-
 
     std::shared_ptr<Texture> temp {texture};
     loadedTextures.insert(std::pair<std::string, std::shared_ptr<Texture>>(img,temp));
@@ -194,7 +201,6 @@ void MapClass::loadEnvironmentData(int id, std::string img, bool solid) {
 
     texture->loadFromFile(img);
     texture->setSolid(solid);
-
 
     std::shared_ptr<Texture> temp {texture};
     loadedTextures.insert(std::pair<std::string, std::shared_ptr<Texture>>(img,temp));
@@ -219,10 +225,11 @@ void MapClass::loadMapData(int id, int x,int y,int n,int e, int s, int w) {
     tempMap->setMapID(id);
     tempMap->setX(x);
     tempMap->setY(y);
-    tempMap->setNorth(n);
-    tempMap->setSouth(s);
-    tempMap->setEast(e);
-    tempMap->setWest(w);
+    tempMap->setMapAt(game::NORTH,n);
+    tempMap->setMapAt(game::SOUTH,s);
+    tempMap->setMapAt(game::EAST,e);
+    tempMap->setMapAt(game::WEST,w);
+    tempMap->init();
     tempMap->setActive(true);
     std::cerr << "MAP LOADED!!!!!!!!!! : " << id<< std::endl;
 
@@ -235,23 +242,18 @@ int MapClass::getMapID(int x, int y) {
         if(m.second->getX() == x && m.second->getY() == y)
             return m.second->getMapID();
     }
-    return -1;
+    return 0;
 }
 
 Texture* MapClass::tileAtIndex() {
     return NULL;
 }
 
-Texture* MapClass::getGrassTile() {
-    return &grass_T;
+int MapClass::getCurrentMap() {
+    return currentMapID;
 }
 
-Texture* MapClass::getGroundTile() {
-    return &ground_T;
+void MapClass::setCurrentMap(int mapID) {
+    currentMapID = mapID;
 }
-
-Texture* MapClass::getWaterTile() {
-    return &water_T;
-}
-
 

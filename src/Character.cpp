@@ -80,19 +80,29 @@ void Character::update() {
         }
     }
 
+    /// Look for items to pick up.
+    for(auto& e: manager->getEntitiesByGroup(game::ITEM)) {
+        Position temp = e->getComponent<Position>();
+        int width = e->getComponent<Texture>().getWidth();
+        int height = e->getComponent<Texture>().getHeight();
+
+        if((position->getX()-10 < temp.getX()+width &&
+                position->getX()+42 > temp.getX()) &&
+                (position->getY()-10 < temp.getY()+height &&
+                 position->getY()+42 > temp.getY())) {
+            /// pick up item
+        }
+    }
+
     //if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
     /// Check if left mouse button is pressed.
     if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
         //std::cerr << selected;
-
         if(!attacking) {
             attacking = true;
             /* Fire a projectile.. */
-
-            //std::cerr << "create a projectile." << std::endl;
             creator.createProjectile(*manager,position->getX(),position->getY(),
                                       game::getMouseX()+game::getOffset()->x,game::getMouseY()+game::getOffset()->y);
-            //std::cerr << "created a projectile." << std::endl;
         }
     } else
         attacking = false;
@@ -104,14 +114,6 @@ void Character::moveChar(const Uint8 *key) {
         physics->setDir(game::SOUTH,true); /// Set this walking direction true.
         texture->setClipX(0);
         texture->setClipY(0);
-
-        //position->setY(position->getY()+vel);
-        /// Check if end of map is reached.
-        if(position->getY() > (game::getHeight()*2-(game::getHeight()/2))) // Mapheight - screenheight
-            texture->setYRect(position->getY()-game::getHeight());
-
-        if(position->getY() < game::getHeight()/2)
-            texture->setYRect(position->getY());
     } else
         physics->setDir(game::SOUTH,false); /// Set this walking direction false.
 
@@ -120,14 +122,6 @@ void Character::moveChar(const Uint8 *key) {
         physics->setDir(game::NORTH,true); /// Set this walking direction true.
         texture->setClipX(1);
         texture->setClipY(0);
-
-        //position->setY(position->getY()-vel);
-        /// Check if end of map is reached.
-        if(position->getY() < (game::getHeight()/2))
-            texture->setYRect(position->getY());
-
-        if(position->getY() > (game::getHeight()*2-(game::getHeight()/2)))
-            texture->setYRect(position->getY()-game::getHeight());
     } else
         physics->setDir(game::NORTH,false); /// Set this walking direction false.
 
@@ -136,14 +130,6 @@ void Character::moveChar(const Uint8 *key) {
         physics->setDir(game::EAST,true); /// Set this walking direction true.
         texture->setClipX(1);
         texture->setClipY(1);
-
-        //position->setX(position->getX()+vel);
-        /// Check if end of map is reached.
-        if(position->getX() > game::getWidth()*2-(game::getWidth()/2)) // Mapheight - screenheight
-            texture->setXRect(position->getX()-game::getWidth());
-
-        if(position->getX() < game::getWidth()/2)
-            texture->setXRect(position->getX());
     } else
         physics->setDir(game::EAST,false); /// Set this walking direction false.
 
@@ -152,14 +138,6 @@ void Character::moveChar(const Uint8 *key) {
         physics->setDir(game::WEST,true); /// Set this walking direction true.
         texture->setClipX(0);
         texture->setClipY(1);
-
-        //position->setX(position->getX()-vel);
-        /// Check if end of map is reached.
-        if(position->getX() < game::getWidth()/2)
-            texture->setXRect(position->getX());
-
-        if(position->getX() > game::getWidth()*2-(game::getWidth()/2))
-            texture->setXRect(position->getX() - game::getWidth());
     } else
         physics->setDir(game::WEST,false); /// Set this walking direction false.
 }

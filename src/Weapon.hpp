@@ -42,13 +42,14 @@ private:
 
     int weaponX = 0;
     int weaponY = 0;
-
+    LTimer seedTimer;
     LTimer attackTimer;
     Texture weaponImage;
     std::string imgPath = "";
     bool isAttacking = false;
     int attackState = 0;
-
+    int atk = 12;
+    int minAtk = 0;
 };
 
 #endif // WEAPON_H

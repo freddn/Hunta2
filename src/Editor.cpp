@@ -27,7 +27,7 @@ Editor::~Editor() {
 
 void Editor::init() {
     loadIcon("data/x.png", 0,game::X);
-    game::getTextureMapController()->getMap(1)->update();
+    game::getTextureMapController()->update();
 }
 
 void Editor::loadIcon(std::string img, int id, std::size_t type) {
@@ -50,9 +50,9 @@ void Editor::draw() {
     //environmentManager.draw();
     //enemyManager.draw();
     //itemManager.draw();
-    game::getTextureMapController()->getMap(1)->draw();
+    game::getTextureMapController()->draw();
     //int pos = 5;
-    for(int pos = 5,i = firstIcon;i < lastIcon;i++) {
+    for(unsigned int pos = 5,i = firstIcon;i < lastIcon;i++) {
         icons.at(i)->setY(60);
         icons.at(i)->setX(pos*34);
         icons.at(i)->draw();
@@ -87,23 +87,24 @@ void Editor::update() {
             /// function in editor..
         }
     }
-    game::getTextureMapController()->getMap(1)->update();
+    game::getTextureMapController()->update();
     Screen::update();
 }
 
 void Editor::setSelected(int n) {
     icons.at(selected)->setSelected(false);
-    selected = n;
+    if(n < 0)
+        selected = 0;
+    else
+        selected = n;
+
     if(selected >= lastIcon && lastIcon < icons.size()) {
         lastIcon++;
         firstIcon++;
-    } else if(selected < firstIcon && selected >= 0) {
+    } else if(selected < firstIcon) {
         lastIcon--;
         firstIcon--;
     }
-
-    if(selected < 0)
-        selected = 0;
 
     if(selected == icons.size())
         selected = icons.size()-1;
@@ -155,25 +156,47 @@ void Editor::place() {
     else if(tempY >= MAP_HEIGHT && tempY >= (mapY-2)*MAP_HEIGHT)
         mapY = ((tempY - (tempY % MAP_HEIGHT)) / MAP_HEIGHT);
 
+    MapClass *mapController = game::getTextureMapController();
+    int mapID = mapController->getMapID(mapX,mapY);
+    if(mapID == 0) {
+        int i = 1;
+        while(mapController->mapExists(i)) {
+            i++;
+        }
+        mapID = i;
+        int n = mapController->getMapID(mapX,mapY-1);
+        int s = mapController->getMapID(mapX,mapY+1);
+        int w = mapController->getMapID(mapX-1,mapY);
+        int e = mapController->getMapID(mapX+1,mapY);
+        if(n != 0)
+            mapController->getMap(n)->setMapAt(game::SOUTH,mapID);
+        if(e != 0)
+            mapController->getMap(e)->setMapAt(game::WEST,mapID);
+        if(s != 0)
+            mapController->getMap(s)->setMapAt(game::NORTH,mapID);
+        if(w != 0)
+            mapController->getMap(w)->setMapAt(game::EAST,mapID);
+        mapController->loadMapData(mapID,mapX,mapY,n,e,s,w);
+    }
     /// Set x and y pos according to current map.
-    tempX = tempX - mapX*MAP_WIDTH;
-    tempY = tempY - mapY*MAP_HEIGHT;
+    int relX = tempX - mapX*MAP_WIDTH;
+    int relY = tempY - mapY*MAP_HEIGHT;
 
-    index = (tempX/32)+((tempY/32)*64);
-
+    index = (relX/32)+((relY/32)*64);
+    std::cerr << mapID << " " << tempX << " " << tempY << " index " << index<< " " << mapY << std::endl;
     /// Load the entity onto the map
     switch(icons.at(selected)->getType()) {
     case game::TILE:
-        game::getTextureMapController()->loadTile(1,icons.at(selected)->getID(), index, tempX,tempY);
+        mapController->loadTile(mapID,icons.at(selected)->getID(), index, tempX,tempY);
         break;
     case game::ENVIRONMENT:
-        game::getTextureMapController()->loadEnvironment(1,icons.at(selected)->getID(), index, tempX,tempY);
+        mapController->loadEnvironment(mapID,icons.at(selected)->getID(), index, tempX,tempY);
         break;
     case game::ENEMY:
-        game::getTextureMapController()->loadEnemy(1, icons.at(selected)->getID(),index, tempX,tempY);
+        mapController->loadEnemy(mapID, icons.at(selected)->getID(),index, tempX,tempY);
         break;
     case game::X:
-        game::getTextureMapController()->getMap(1)->removeEntity(index, tempX,tempY);
+        mapController->getMap(mapID)->removeEntity(index, tempX,tempY);
     }
 
     mapUpdated = true;

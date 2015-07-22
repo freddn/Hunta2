@@ -29,54 +29,6 @@ Screen::~Screen() {
 void Screen::init() {}
 
 void Screen::update() {
-    /*key = SDL_GetKeyboardState(NULL);
-    SDL_Event *event = game::getEvent();
-    while(SDL_PollEvent(event) != 0) {
-        if(event->type == SDL_QUIT)
-            game::setRunning(false);
-        else if(event->type == SDL_KEYDOWN) {
-            if(key[SDL_SCANCODE_ESCAPE])
-                game::setRunning(false);
-            else if(key[SDL_SCANCODE_S]) {
-                if (game::getTimer()->isStarted())
-                    game::getTimer()->stop();
-                else
-                    game::getTimer()->start();
-            } else if(key[SDL_SCANCODE_P]) {
-                if(game::getTimer()->isPaused())
-                    game::getTimer()->unpause();
-                else
-                    game::getTimer()->pause();
-            } else if(key[SDL_SCANCODE_2])
-                game::setCurrent_state(game::MAINMENU);
-            else if(key[SDL_SCANCODE_1]) {
-                if(game::getCurrentState() == game::EDITOR) {
-                    // Save as map_y_x
-                    //std::cout << "save map size: " << textures.size() << std::endl;
-                    game::getOffset()->x = game::getWidth();
-                    game::getOffset()->y = game::getHeight();
-                    game::getTextureMapController()->saveMap(game::getTextureMap(),"data/map2",40,30);
-                    game::getTextureMapController()->loadMap("data/map2");
-                    game::setTextureMap(game::getTextureMapController()->getMap());
-                    //std::cout << "loaded map size: " << textures.size() << std::endl;
-                }
-                game::setCurrent_state(game::INGAME);
-                // LOAD MAP
-            } else if(key[SDL_SCANCODE_3])
-                game::setCurrent_state(game::PAUSED);
-            else if(key[SDL_SCANCODE_0])
-                game::setCurrent_state(game::GAMEOVER);
-            else if(key[SDL_SCANCODE_4]) {
-                game::setCurrent_state(game::EDITOR);
-                // LOAD MAP.
-                // SAVE MAP.
-            }
-        } else if(event->type == SDL_MOUSEMOTION) {
-            SDL_GetMouseState(&x,&y);
-            game::setMouseX(x);
-            game::setMouseY(y);
-        }
-    }*/
 }
 
 void Screen::draw() {

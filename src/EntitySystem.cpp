@@ -127,9 +127,12 @@ namespace EntitySystem {
         if(byIndex) {
             for(auto &ent : entitiesByIndex) {
                 //x + y * width
-                int x = 32* (ent.first % 64);
+                int index = ent.first;
 
-                int y = (ent.first - (ent.first % 64))/2;
+                int x = 32* (index % 64);
+                x += offsetX;
+                int y = 32*(index)/64;
+                y += offsetY;
                 //std::cerr << y << std::endl;
                 if(x > game::getOffset()->x &&
                     x < game::getOffset()->x + game::getOffset()->w &&
@@ -334,6 +337,11 @@ namespace EntitySystem {
                 return;
             }
         }
+    }
+
+    void EntityManager::setOffset(int x, int y) {
+        offsetX = x;
+        offsetY = y;
     }
 
     void Entity::addGroup(Group mGroup) noexcept {

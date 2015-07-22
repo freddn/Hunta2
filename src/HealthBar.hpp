@@ -3,11 +3,13 @@
 
 #include "EntitySystem.hpp"
 #include "Position.hpp"
+#include "Texture.hpp"
 #include <SDL2/SDL.h>
-
+#include <sstream>
+#include <SDL2/SDL_ttf.h>
+#include <LTimer.hpp>
 
 using namespace EntitySystem;
-
 
 /**
  * Represents the HP-bar of living things. This is a component that can be added
@@ -27,9 +29,11 @@ public:
     void update();
 
     void setHp(int health);
+    void damage(int atk, int seed);
     void setMaxHp(int maxhealth);
     void setDisplay(bool display);
     int getHp();
+    void displayDamage(int damage);
     virtual ~HealthBar();
 protected:
 private:
@@ -42,9 +46,18 @@ private:
     SDL_Texture *hpBar;
     SDL_Texture *hpBarOutline;
 
+    std::stringstream dmgText;
+    TTF_Font *dmgFont = nullptr;
+    Texture dmgDisplay;
+    Texture dmgBg;
+    Texture healBg;
+    Texture defBg;
+    int dmgDone = 0;
+    bool displayDmgDone = false;
     int health = 0;
     int maxHP = 0;
-    bool isDisplayed = true;
+    bool isDisplayed = false;
+    LTimer hpTimer;
 };
 
 #endif // HEALTHBAR_H

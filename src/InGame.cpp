@@ -36,27 +36,6 @@ void InGame::init() {
 
     //creator.createPlayer(inGameManager,creator,game::getWidth(),game::getHeight());
     //creator.createPlayer(&inGameManager,20,20);
-    creator.createItem(inGameManager,0,100,100,true);
-    creator.createItem(inGameManager,0,150,150,true);
-
-    creator.createEnvironment(inGameManager,0,400,130);
-    creator.createEnvironment(inGameManager,0,130,300);
-    creator.createEnvironment(inGameManager,0,300,200);
-    creator.createEnvironment(inGameManager,0,220,300);
-    creator.createEnvironment(inGameManager,0,220,600);
-    creator.createEnvironment(inGameManager,0,720,300);
-    creator.createEnvironment(inGameManager,0,4,400);
-    creator.createEnvironment(inGameManager,0,1,300);
-    creator.createEnvironment(inGameManager,0,220,600);
-    creator.createEnvironment(inGameManager,0,7,300);
-    creator.createEnvironment(inGameManager,0,9,400);
-    creator.createEnvironment(inGameManager,0,1100,1200);
-
-    creator.createEnemy(inGameManager,1,300,300);
-    creator.createEnemy(inGameManager,0,345,290);
-    creator.createEnemy(inGameManager,1,530,300);
-    creator.createEnemy(inGameManager,0,790,570);
-    creator.createEnemy(inGameManager,0,345,390);
 
     tInterface.loadFromFile("data/interface.png"); /// Sample interface
 }
@@ -64,10 +43,8 @@ void InGame::init() {
 void InGame::draw() {
     Screen::renderStart();
     //game::getTextureMap()->draw();
-    if(game::getTextureMapController()->mapExists(1)) {
-        //std::cerr << "map 1 draw()" << std::endl;
-        game::getTextureMapController()->getMap(1)->draw();
-    }
+    game::getTextureMapController()->draw();
+
 
     // Update background tiles.
     /*if(game::getHasChanged()) {
@@ -96,10 +73,8 @@ void InGame::draw() {
 void InGame::update() {
     //inGameManager.refresh(); /* Delete removed entities. */
     //inGameManager.update();
-    if(game::getTextureMapController()->mapExists(1)) {
-        //std::cerr << "map 1 draw()" << std::endl;
-        game::getTextureMapController()->getMap(1)->update();
-    }
+    game::getTextureMapController()->update();
+
     /*auto& characters(inGameManager.getEntitiesByGroup(game::PLAYER));
     //std::cout << "characters " << std::endl;
     /// TODO implement camera and keyboardcontroller for the player...

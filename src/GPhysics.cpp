@@ -128,7 +128,7 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
     if(dirUp) {
         //if(posY-1 < entPosY+entH &&
         if(posY+23 < entPosY+entH &&
-            (posY-16 > entPosY) &&
+            (posY > entPosY+16) &&
             (posX+(vel) > entPosX ||
             posX+32-(vel) < entPosX+entW) &&
             !(posX+32-(vel) < entPosX ||
