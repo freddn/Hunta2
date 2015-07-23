@@ -68,9 +68,6 @@ namespace game {
         textureMapController.init();
         std::cerr << " - game::start() (load map) ..."<<std::endl;
         //std::string map2 = "data/map2";
-        if(!textureMapController.loadMap(1)) {
-            std::cerr << "Map could not be loaded" << std::endl;
-        }
         //std::map<int,Texture*> textures;
         std::cerr << " - game::start() (creating states) ..."<<std::endl;
         //interface.loadFromFile("data/interface.png");

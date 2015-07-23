@@ -83,7 +83,7 @@ bool Map::hasEntities() {
 void Map::loadTile(int id, int index, int x,int y, std::string img) {
     //std::cerr << "loaded tile " <<index<<" to map:"<<mapID << std::endl;
     Entity *tile = &tiles.addEntity(index);
-    tile->addComponent<Position>(x, y);
+    tile->addComponent<Position>(x + mapX*MAP_WIDTH, y + mapY*MAP_HEIGHT);
     tile->addComponent<Texture>(img,false);
     tile->addComponent<Tile>(id);
 }
@@ -92,7 +92,7 @@ void Map::loadEnvironment(int id, int index, int x,int y, std::string img) {
     Entity *env = manager.addEntity(index,false);
     if(env != nullptr) {
         //std::cerr << "environment added..."<<std::endl;
-        env->addComponent<Position>(x,y);
+        env->addComponent<Position>(x + mapX*MAP_WIDTH,y + mapY*MAP_HEIGHT);
         env->addComponent<Texture>(img,false);
         env->addComponent<GPhysics>();
         env->addComponent<Environment>(id);
@@ -103,7 +103,7 @@ void Map::loadEnvironment(int id, int index, int x,int y, std::string img) {
 void Map::loadEnemy(int id, int index, int x,int y, std::string img) {
     Entity *enemy = manager.addEntity(index,false);
     if(enemy != nullptr) {
-        enemy->addComponent<Position>(x,y);
+        enemy->addComponent<Position>(x + mapX*MAP_WIDTH,y + mapY*MAP_HEIGHT);
         enemy->addComponent<Texture>(img,true);
         enemy->addComponent<GPhysics>();
         enemy->addComponent<HealthBar>(20);
@@ -118,7 +118,7 @@ void Map::loadPlayer(int x,int y) {
 
     Entity *player = &manager.addEntity();
     if(player != nullptr) {
-        player->addComponent<Position>(x,y);
+        player->addComponent<Position>(x + mapX*MAP_WIDTH,y + mapY*MAP_HEIGHT);
         player->addComponent<Texture>("data/gubbe_box1.png",true); // 32x32 clip
         player->addComponent<GPhysics>();
         player->addComponent<HealthBar>(100);
@@ -150,9 +150,9 @@ void Map::save(LuaInterface *lInterface) {
 
         int id = tile.second->getComponent<Tile>().getID();
         int x = tile.second->getComponent<Position>().getX();
-        x = x - (x%32);
+        x = x - (x%32) - mapX*MAP_WIDTH;
         int y = tile.second->getComponent<Position>().getY();
-        y = y - (y%32);
+        y = y - (y%32) - mapY*MAP_HEIGHT;
         int index = (x/32) + (y/32)*(MAP_WIDTH/32);
         //std::cerr << "id " << mapID << " i " << index << " x "<< x<< " y " << y << std::endl;
         lInterface->appendMapData("loadTile",mapID,"/tiles.lua",id,index,x,y);
@@ -163,9 +163,9 @@ void Map::save(LuaInterface *lInterface) {
     for(auto &ent : manager.getEntitiesByGroup(game::ENVIRONMENT)) {
         int id = ent->getComponent<Environment>().getID();
         int x = ent->getComponent<Position>().getX();
-        x = x - (x%32);
+        x = x - (x%32) - mapX*MAP_WIDTH;
         int y = ent->getComponent<Position>().getY();
-        y = y - (y%32);
+        y = y - (y%32) - mapY*MAP_HEIGHT;
         int index = (x/32) + (y/32)*(MAP_WIDTH/32);
         lInterface->appendMapData("loadEnvironment", mapID,"/environment.lua",id,index,x,y);
     }
@@ -175,9 +175,9 @@ void Map::save(LuaInterface *lInterface) {
     for(auto &ent : manager.getEntitiesByGroup(game::ENEMY)) {
         int id = ent->getComponent<Enemy>().getID();
         int x = ent->getComponent<Position>().getX();
-        x = x - (x%32);
+        x = x - (x%32) - mapX*MAP_WIDTH;
         int y = ent->getComponent<Position>().getY();
-        y = y - (y%32);
+        y = y - (y%32) - mapY*MAP_HEIGHT;
         int index = (x/32) + (y/32)*(MAP_WIDTH/32);
         lInterface->appendMapData("loadEnemy", mapID,"/enemies.lua",id,index,x,y);
     }

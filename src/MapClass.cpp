@@ -59,9 +59,13 @@ void MapClass::init() {
     l_interface.loadFile("data/items/misc/misc.lua");
     std::cerr << " ... Loading usables data ..." << std::endl;
     l_interface.loadFile("data/items/usables/usables.lua");
-
-
-    mapContainer.at(1)->loadNeighbors(&l_interface);
+    int i = 1;
+    while(mapExists(i)) {
+        l_interface.loadMap(i);
+        i++;
+    }
+    //mapContainer.at(1)->loadNeighbors(&l_interface);
+    //mapContainer.at(2)->loadNeighbors(&l_interface);
 }
 
 void MapClass::draw() {

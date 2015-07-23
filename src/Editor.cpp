@@ -183,17 +183,18 @@ void Editor::place() {
     int relY = tempY - mapY*MAP_HEIGHT;
 
     index = (relX/32)+((relY/32)*64);
-    std::cerr << mapID << " " << tempX << " " << tempY << " index " << index<< " " << mapY << std::endl;
+    std::cerr << mapID << " relX " << relX << " relY " << relY << " index " << index
+                <<" currX " << tempX << " currY "<<tempY<< std::endl;
     /// Load the entity onto the map
     switch(icons.at(selected)->getType()) {
     case game::TILE:
-        mapController->loadTile(mapID,icons.at(selected)->getID(), index, tempX,tempY);
+        mapController->loadTile(mapID,icons.at(selected)->getID(), index, relX,relY);
         break;
     case game::ENVIRONMENT:
-        mapController->loadEnvironment(mapID,icons.at(selected)->getID(), index, tempX,tempY);
+        mapController->loadEnvironment(mapID,icons.at(selected)->getID(), index, relX,relY);
         break;
     case game::ENEMY:
-        mapController->loadEnemy(mapID, icons.at(selected)->getID(),index, tempX,tempY);
+        mapController->loadEnemy(mapID, icons.at(selected)->getID(),index, relX,relY);
         break;
     case game::X:
         mapController->getMap(mapID)->removeEntity(index, tempX,tempY);
