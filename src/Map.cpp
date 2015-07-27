@@ -11,7 +11,9 @@
 #include "Weapon.hpp"
 #include "Camera.hpp"
 
-
+#include "Tile.hpp"
+#include "Environment.hpp"
+#include "Enemy.hpp"
 
 Map::Map() {
     //ctor

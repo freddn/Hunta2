@@ -32,7 +32,6 @@ void InGame::init() {
     inv.init();
     inGameManager.reserveEntities(300);
 
-    // CALL A LUA SCRIPT THAT LOADS ALL ENTITYS!!
 
     //creator.createPlayer(inGameManager,creator,game::getWidth(),game::getHeight());
     //creator.createPlayer(&inGameManager,20,20);

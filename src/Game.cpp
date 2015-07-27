@@ -19,7 +19,7 @@
 #include "Game.hpp"
 
 #include <string>
-
+#include <iostream>
 
 #include "InGame.hpp"
 #include "MainMenu.hpp"
@@ -35,13 +35,17 @@ namespace game {
     SDL_Renderer *renderer = nullptr;
     SDL_Texture *buffer = nullptr;
     TTF_Font *font = nullptr;
+    TTF_Font *dmgFont = nullptr;
     Screen screen;
     Editor editor;
     InGame inGame;
     MainMenu mMenu;
 
     int current_state = INGAME;
-    MapClass textureMapController;
+    MapController mapController;
+    TextureManager textureManager;
+    PlayerController playerController;
+    ItemManager itemManager;
     std::shared_ptr<Map> textureMap;
     int width = 640;
     int t_width = width/32;
@@ -65,7 +69,8 @@ namespace game {
     void start() {
         std::cerr << " - game::start() ..." << std::endl;
         key = SDL_GetKeyboardState(nullptr);
-        textureMapController.init();
+        mapController.init();
+        itemManager.init();
         std::cerr << " - game::start() (load map) ..."<<std::endl;
         //std::string map2 = "data/map2";
         //std::map<int,Texture*> textures;
@@ -74,9 +79,9 @@ namespace game {
         editor.init();
         inGame.init();
         mMenu.init();
-        textureMap = textureMapController.getMap(1);
+        textureMap = mapController.getMap(1);
         if(current_state == INGAME)
-            textureMapController.getMap(1)->loadPlayer(100,100);
+            mapController.getMap(1)->loadPlayer(100,100);
         fpsTimer.start();
         std::cerr << " - game::start() (main loop) ..."<<std::endl;
         while(running) {
@@ -154,11 +159,11 @@ namespace game {
                         offset.x = game::getWidth();
                         offset.y = game::getHeight();
 
-                        textureMapController.saveMaps();
+                        mapController.saveMaps();
 
-                        textureMapController.loadMap(1);
+                        mapController.loadMap(1);
                         //textureMap = textureMapController.getMap(1);
-                        textureMapController.getMap(1)->loadPlayer(100,100);
+                        mapController.getMap(1)->loadPlayer(100,100);
                         //std::cout << "loaded map size: " << textures.size() << std::endl;
                     }
                     game::setCurrent_state(game::INGAME);
@@ -168,8 +173,8 @@ namespace game {
                 else if(key[SDL_SCANCODE_0])
                     current_state = game::GAMEOVER;
                 else if(key[SDL_SCANCODE_4]) {
-                    textureMapController.getMap(1)->destroyPlayer();
-                    textureMapController.getMap(1)->update();
+                    mapController.getMap(1)->destroyPlayer();
+                    mapController.getMap(1)->update();
                     current_state = game::EDITOR;
                     // LOAD MAP.
                     // SAVE MAP.
@@ -248,7 +253,8 @@ namespace game {
         }
 
         font = TTF_OpenFont("freefont/FreeSans.ttf",24);
-        if(font == nullptr) {
+        dmgFont = TTF_OpenFont("freefont/FreeMonoBold.ttf",9);
+        if(font == nullptr || dmgFont == nullptr) {
             std::cerr << "No font" << std::endl;
             return false;
         }
@@ -283,7 +289,9 @@ namespace game {
         renderer = nullptr;
         gWindow = nullptr;
         TTF_CloseFont(font);
+        TTF_CloseFont(dmgFont);
         font = nullptr;
+        dmgFont = nullptr;
 
         TTF_Quit();
         IMG_Quit();
@@ -346,6 +354,10 @@ namespace game {
         return font;
     }
 
+    TTF_Font * getDmgFont() {
+        return dmgFont;
+    }
+
     int getCurrentState() {
         return current_state;
     }
@@ -354,8 +366,16 @@ namespace game {
         current_state = temp;
     }
 
-    MapClass *getTextureMapController()  {
-        return &textureMapController;
+    PlayerController *getPlayerController() {
+        return &playerController;
+    }
+
+    MapController *getTextureMapController()  {
+        return &mapController;
+    }
+
+    ItemManager *getItemManager() {
+        return &itemManager;
     }
 
     std::shared_ptr<Map> getTextureMap() {
@@ -364,6 +384,10 @@ namespace game {
 
     void setTextureMap(std::shared_ptr<Map> tempMap) {
         textureMap = tempMap;
+    }
+
+    TextureManager *getTextureManager() {
+        return &textureManager;
     }
 
     int getWidth() {

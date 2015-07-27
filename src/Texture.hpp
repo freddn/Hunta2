@@ -89,6 +89,7 @@ public:
     std::string getImgPath();
     bool isSolid();
     void setSolid(bool solidBool);
+    SDL_Texture *getTexture();
 
     /** Gets a new instance of current texture. Shared SDL_Texture so
      * need to keep the original SDL_Texture unfree'd. */

@@ -2,7 +2,7 @@
 
 #include "Game.hpp"
 #include "HealthBar.hpp"
-
+#include "Enemy.hpp"
 
 Weapon::Weapon() {
     //ctor

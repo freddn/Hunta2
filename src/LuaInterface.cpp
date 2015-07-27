@@ -33,7 +33,6 @@ namespace lua_functions {
             int index = lua_tonumber(l_state,3); // index
             int x = lua_tonumber(l_state,4); // x
             int y = lua_tonumber(l_state,5); // y
-
             game::getTextureMapController()->loadTile(mapID,id,index,x,y);
             return 0;
         }
@@ -94,6 +93,7 @@ namespace lua_functions {
             int id = lua_tonumber(l_state,1); // id
             std::string img = lua_tostring(l_state,2); // image
             int solid = lua_tonumber(l_state,3); // solid
+            game::getTextureManager()->loadTexture(img);
             game::getTextureMapController()->loadTileData(id,img,solid == 1);
             game::getEditor()->loadIcon(img,id,game::TILE);
         }
@@ -106,6 +106,7 @@ namespace lua_functions {
             int id = lua_tonumber(l_state,1); // id
             std::string img = lua_tostring(l_state,2); // image
             int solid = lua_tonumber(l_state,3); // solid
+            game::getTextureManager()->loadTexture(img);
             game::getTextureMapController()->loadEnvironmentData(id,img,solid == 1);
             game::getEditor()->loadIcon(img,id,game::ENVIRONMENT);
         }
@@ -115,16 +116,15 @@ namespace lua_functions {
     int loadArmorData(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 9) {
-            int id = lua_tonumber(l_state,1); // id
-            std::string name = lua_tostring(l_state,2); // name
-            int level = lua_tonumber(l_state,3); // id
-            std::string img = lua_tostring(l_state,4); // image
-            std::string desc = lua_tostring(l_state,5); // desc
-            int price = lua_tonumber(l_state,6); // price
-            int atk = lua_tonumber(l_state,7); // atk
-            int def = lua_tonumber(l_state,8); // def
-            int hp = lua_tonumber(l_state,9); // hp
-
+            //int id = lua_tonumber(l_state,1); // id
+            //std::string name = lua_tostring(l_state,2); // name
+            //int level = lua_tonumber(l_state,3); // id
+            //std::string img = lua_tostring(l_state,4); // image
+            //std::string desc = lua_tostring(l_state,5); // desc
+            //int price = lua_tonumber(l_state,6); // price
+            //int atk = lua_tonumber(l_state,7); // atk
+            //int def = lua_tonumber(l_state,8); // def
+            //int hp = lua_tonumber(l_state,9); // hp
         }
         return 0;
     }
@@ -132,14 +132,14 @@ namespace lua_functions {
     int loadUsablesData(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 8) {
-            int id = lua_tonumber(l_state,1); // id
-            std::string name = lua_tostring(l_state,2); // name
-            int level = lua_tonumber(l_state,3);
-            int maxStack = lua_tonumber(l_state,4);
-            std::string img = lua_tostring(l_state,5); // image
-            std::string desc = lua_tostring(l_state,6); // desc
-            int price = lua_tonumber(l_state,7); // price
-            int heal = lua_tonumber(l_state,8); // atk
+            //int id = lua_tonumber(l_state,1); // id
+            //std::string name = lua_tostring(l_state,2); // name
+            //int level = lua_tonumber(l_state,3);
+            //int maxStack = lua_tonumber(l_state,4);
+            //std::string img = lua_tostring(l_state,5); // image
+            //std::string desc = lua_tostring(l_state,6); // desc
+            //int price = lua_tonumber(l_state,7); // price
+            //int heal = lua_tonumber(l_state,8); // atk
         }
         return 0;
     }
@@ -147,15 +147,15 @@ namespace lua_functions {
     int loadWeaponsData(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 9) {
-            int id = lua_tonumber(l_state,1); // id
-            std::string name = lua_tostring(l_state,2); // name
-            int level = lua_tonumber(l_state,3); // id
-            std::string img = lua_tostring(l_state,4); // image
-            std::string desc = lua_tostring(l_state,5); // desc
-            int price = lua_tonumber(l_state,6); // price
-            int atk = lua_tonumber(l_state,7); // atk
-            int def = lua_tonumber(l_state,8); // def
-            int hp = lua_tonumber(l_state,9); // hp
+            //int id = lua_tonumber(l_state,1); // id
+            //std::string name = lua_tostring(l_state,2); // name
+            //int level = lua_tonumber(l_state,3); // id
+            //std::string img = lua_tostring(l_state,4); // image
+            //std::string desc = lua_tostring(l_state,5); // desc
+            //int price = lua_tonumber(l_state,6); // price
+            //int atk = lua_tonumber(l_state,7); // atk
+            //int def = lua_tonumber(l_state,8); // def
+            //int hp = lua_tonumber(l_state,9); // hp
         }
         return 0;
     }
@@ -180,10 +180,11 @@ namespace lua_functions {
         if(argc == 5) {
             int id = lua_tonumber(l_state,1); // id
             std::string img = lua_tostring(l_state,2); // image
-            int hp = lua_tonumber(l_state,3); // hp
-            int level = lua_tonumber(l_state,4); // level
-            int atk = lua_tonumber(l_state,5); // atk
-            game::getTextureMapController()->loadEnemyData(id,img,hp,level,atk);
+            //int hp = lua_tonumber(l_state,3); // hp
+            //int level = lua_tonumber(l_state,4); // level
+            //int atk = lua_tonumber(l_state,5); // atk
+            game::getTextureManager()->loadTexture(img);
+            game::getTextureMapController()->loadEnemyData(id,img);
             game::getEditor()->loadIcon(img,id,game::ENEMY);
         }
         return 0;
@@ -192,12 +193,12 @@ namespace lua_functions {
     int loadMiscItemData(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 6) {
-            int id = lua_tonumber(l_state,1); // id
-            std::string name = lua_tostring(l_state,2); // name
-            int maxStack = lua_tonumber(l_state,3); // stack
-            std::string img = lua_tostring(l_state,4); // image
-            std::string desc = lua_tostring(l_state,5); // desc
-            int sellprice = lua_tonumber(l_state,6); // price
+            //int id = lua_tonumber(l_state,1); // id
+            //std::string name = lua_tostring(l_state,2); // name
+            //int maxStack = lua_tonumber(l_state,3); // stack
+            //std::string img = lua_tostring(l_state,4); // image
+            //std::string desc = lua_tostring(l_state,5); // desc
+            //int sellprice = lua_tonumber(l_state,6); // price
         }
         return 0;
     }

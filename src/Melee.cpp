@@ -2,7 +2,7 @@
 
 /** DONT KNOW IF NEEDED, WILL LEAVE IT HERE JUST IN CASE */
 
-Melee::Melee(std::string img) {
+Melee::Melee() {
     //ctor
 }
 

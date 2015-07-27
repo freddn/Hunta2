@@ -13,7 +13,7 @@ SRC = src/Character.cpp \
       src/LuaInterface.cpp \
       src/main.cpp \
       src/MainMenu.cpp \
-      src/MapClass.cpp \
+      src/MapController.cpp \
       src/Position.cpp \
       src/Screen.cpp \
       src/Texture.cpp \
@@ -28,4 +28,7 @@ SRC = src/Character.cpp \
 	  src/MouseController.cpp \
 	  src/Sound.cpp \
 	  src/Camera.cpp \
-	  src/Icon.cpp
+	  src/Icon.cpp \
+	  src/TextureManager.cpp \
+	  src/ItemManager.cpp \
+	  src/PlayerController.cpp

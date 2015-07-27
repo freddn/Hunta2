@@ -19,10 +19,6 @@
 #ifndef LUAINTERFACE_H
 #define LUAINTERFACE_H
 
-#include <iostream>
-#include <map>
-#include <string>
-
 #include "lua.hpp"
 
 struct inventoryItem {

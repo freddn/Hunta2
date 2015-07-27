@@ -125,12 +125,14 @@
 		<Unit filename="src/MainMenu.hpp" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/Map.hpp" />
-		<Unit filename="src/MapClass.cpp" />
-		<Unit filename="src/MapClass.hpp" />
+		<Unit filename="src/MapController.cpp" />
+		<Unit filename="src/MapController.hpp" />
 		<Unit filename="src/Melee.cpp" />
 		<Unit filename="src/Melee.hpp" />
 		<Unit filename="src/MouseController.cpp" />
 		<Unit filename="src/MouseController.hpp" />
+		<Unit filename="src/PlayerController.cpp" />
+		<Unit filename="src/PlayerController.hpp" />
 		<Unit filename="src/Position.cpp" />
 		<Unit filename="src/Position.hpp" />
 		<Unit filename="src/Projectile.cpp" />
@@ -145,6 +147,8 @@
 		<Unit filename="src/Sound.hpp" />
 		<Unit filename="src/Texture.cpp" />
 		<Unit filename="src/Texture.hpp" />
+		<Unit filename="src/TextureManager.cpp" />
+		<Unit filename="src/TextureManager.hpp" />
 		<Unit filename="src/Tile.cpp" />
 		<Unit filename="src/Tile.hpp" />
 		<Unit filename="src/Weapon.cpp" />

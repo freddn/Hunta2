@@ -134,9 +134,9 @@ namespace EntitySystem {
                 int y = 32*(index)/64;
                 y += offsetY;
                 //std::cerr << y << std::endl;
-                if(x > game::getOffset()->x &&
+                if(x >= game::getOffset()->x &&
                     x < game::getOffset()->x + game::getOffset()->w &&
-                    y > game::getOffset()->y &&
+                    y >= game::getOffset()->y &&
                     y < game::getOffset()->y + game::getOffset()->h)
                     ent.second->draw();
             }
@@ -146,7 +146,7 @@ namespace EntitySystem {
                 for(auto& e : entities[i]) {
                     if(e->hasComponent<Position>()) {
                         int x = e->getComponent<Position>().getX();
-                        if(x > game::getOffset()->x &&
+                        if(x >= game::getOffset()->x &&
                             x < game::getWidth()+game::getOffset()->x)
                             e->draw();
                     }

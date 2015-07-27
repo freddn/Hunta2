@@ -25,12 +25,13 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include <iostream>
-#include <map>
 
 #include "LTimer.hpp"
-#include "MapClass.hpp"
+#include "MapController.hpp"
 #include "Editor.hpp"
+#include "TextureManager.hpp"
+#include "ItemManager.hpp"
+#include "PlayerController.hpp"
 
 /**
  * Game class. Contains game-loop. State of the game. Init of map/data.
@@ -88,8 +89,12 @@ namespace game {
     SDL_Texture *getBuffer();
     SDL_Color *getTextColor();
     TTF_Font *getFont();
+    TTF_Font * getDmgFont();
     int getCurrentState();
-    MapClass *getTextureMapController();
+    PlayerController *getPlayerController();
+    MapController *getTextureMapController();
+    ItemManager *getItemManager();
+    TextureManager *getTextureManager();
     std::shared_ptr<Map> getTextureMap();
     int getWidth();
     int getTWidth();

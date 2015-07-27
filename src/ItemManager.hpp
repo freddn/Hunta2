@@ -2,7 +2,7 @@
 #define ITEMMANAGER_H
 
 #include "LuaInterface.hpp"
-
+#include <map>
 
 class ItemManager {
 public:
@@ -22,6 +22,8 @@ public:
 protected:
 private:
     LuaInterface lInterface;
+
+    std::map<int, std::string> itemImages;
 };
 
 #endif // ITEMMANAGER_H

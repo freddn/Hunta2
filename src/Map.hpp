@@ -10,9 +10,7 @@
 #include "EntitySystem.hpp"
 #include "LuaInterface.hpp"
 
-#include "Tile.hpp"
-#include "Environment.hpp"
-#include "Enemy.hpp"
+
 
 
 using namespace EntitySystem;

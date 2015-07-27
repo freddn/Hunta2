@@ -2,6 +2,7 @@
 
 #include "Game.hpp"
 #include <stdlib.h>
+#include "Enemy.hpp"
 
 /// TODO change name to Health
 HealthBar::HealthBar(int hp) {
@@ -21,7 +22,7 @@ HealthBar::~HealthBar() {
 
 void HealthBar::init() {
     position = &entity->getComponent<Position>();
-    dmgFont = TTF_OpenFont("freefont/FreeMonoBold.ttf",9);
+
     dmgBg.loadFromFile("data/bloodSplash2.png");
     healBg.loadFromFile("data/heal.png");
     defBg.loadFromFile("data/shield.png");
@@ -125,7 +126,7 @@ void HealthBar::displayDamage(int damage) {
     else
         dmgColor = {255,255,255,0};
 
-    dmgDisplay.loadFromText(dmgText.str(),dmgColor,dmgFont);
+    dmgDisplay.loadFromText(dmgText.str(),dmgColor,game::getDmgFont());
     hpTimer.start();
 }
 

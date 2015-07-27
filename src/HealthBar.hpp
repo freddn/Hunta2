@@ -7,7 +7,7 @@
 #include <SDL2/SDL.h>
 #include <sstream>
 #include <SDL2/SDL_ttf.h>
-#include <LTimer.hpp>
+#include "LTimer.hpp"
 
 using namespace EntitySystem;
 
@@ -47,7 +47,6 @@ private:
     SDL_Texture *hpBarOutline;
 
     std::stringstream dmgText;
-    TTF_Font *dmgFont = nullptr;
     Texture dmgDisplay;
     Texture dmgBg;
     Texture healBg;

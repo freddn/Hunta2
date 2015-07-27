@@ -156,7 +156,7 @@ void Editor::place() {
     else if(tempY >= MAP_HEIGHT && tempY >= (mapY-2)*MAP_HEIGHT)
         mapY = ((tempY - (tempY % MAP_HEIGHT)) / MAP_HEIGHT);
 
-    MapClass *mapController = game::getTextureMapController();
+    MapController *mapController = game::getTextureMapController();
     int mapID = mapController->getMapID(mapX,mapY);
     if(mapID == 0) {
         int i = 1;

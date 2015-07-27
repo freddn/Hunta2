@@ -1,10 +1,2 @@
  -- Maps
-loadMapData(1,0,0,3,5,6,2)
-loadMapData(2,-1,0,4,1,7,0)
-loadMapData(3,0,-1,0,8,1,4)
-loadMapData(4,-1,-1,0,3,2,0)
-loadMapData(5,1,0,8,0,9,1)
-loadMapData(6,0,1,1,9,0,7)
-loadMapData(7,-1,1,2,6,0,0)
-loadMapData(8,1,-1,0,0,5,3)
-loadMapData(9,1,1,5,0,0,6)
+loadMapData(1,0,0,0,0,0,0)

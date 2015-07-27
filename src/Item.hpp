@@ -24,17 +24,15 @@
 
 using namespace EntitySystem;
 
-/*
+/**
  * The item-class. An item can be picked up if it's on the ground. It will go
  * to the inventory if picked up.
  */
 struct Item : Component {
 public:
-    Item();
+    Item(int id);
     Item(int id, bool ground);
     void init();
-    void collision(); // remove?
-    void action(); // remove?
     void pickUp();
     void getInfo();
     void draw();

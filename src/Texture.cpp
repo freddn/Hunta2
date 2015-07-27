@@ -49,8 +49,6 @@ Texture::Texture(std::string img,bool clip, int w,int h) {
 
     tclip.w = w;
     tclip.h = h;
-
-
 }
 
 Texture::Texture(std::string text,SDL_Color textcolor,TTF_Font* font) {
@@ -103,36 +101,41 @@ void Texture::update()
 
 bool Texture::loadFromFile(std::string path) {
     free();
-    SDL_Renderer *renderer = game::getRenderer();
-    imageName = path;
-    SDL_Surface *tempSurface = IMG_Load(imageName.c_str());
+    if(!game::getTextureManager()->hasTexture(path)) {
+        SDL_Renderer *renderer = game::getRenderer();
+        imageName = path;
+        SDL_Surface *tempSurface = IMG_Load(imageName.c_str());
 
-    if(tempSurface == nullptr)
-        std::cerr << "IMG_Load() failed. Image: "<< path << std::endl;
-    else {
+        if(tempSurface == nullptr) {
+            std::cerr << "IMG_Load() failed. Image: "<< path << std::endl;
+            return false;
+        }
         SDL_SetColorKey(tempSurface,SDL_TRUE,
             SDL_MapRGB(tempSurface->format,0xFF,0,0xFF));
         currentTexture = SDL_CreateTextureFromSurface(renderer,tempSurface);
-
-        if(currentTexture == nullptr) {
-            std::cerr << "SDL_CreateTextureFromSurface() failed" << std::endl;
-        } else {
-            tWidth = tempSurface->w;
-            tHeight = tempSurface->h;
-
-            if(isClipped) {
-                rect.w = tclip.w; // tWidth
-                rect.h = tclip.h; // tWidth
-            } else {
-                rect.w = tWidth;
-                rect.h = tHeight;
-            }
-            tclip.x = 0;
-            tclip.y = 0;
-        }
         SDL_FreeSurface(tempSurface);
+    } else {
+        currentTexture = game::getTextureManager()->getTexture(path);
     }
-    return currentTexture != nullptr;
+
+    if(currentTexture == nullptr) {
+        std::cerr << "SDL_CreateTextureFromSurface() failed" << std::endl;
+        return false;
+    }
+
+    SDL_QueryTexture(currentTexture,NULL,NULL,&tWidth,&tHeight);
+
+    if(isClipped) {
+        rect.w = tclip.w;
+        rect.h = tclip.h;
+    } else {
+        rect.w = tWidth;
+        rect.h = tHeight;
+    }
+    tclip.x = 0;
+    tclip.y = 0;
+
+    return true;
 }
 
 bool Texture::loadFromText(std::string textureText, SDL_Color textcolor,
@@ -277,6 +280,10 @@ void Texture::setClipW(int w) {
 
 void Texture::setClipH(int h) {
     tclip.h = h;
+}
+
+SDL_Texture * Texture::getTexture() {
+    return currentTexture;
 }
 
 std::shared_ptr<Texture> Texture::clone() const {

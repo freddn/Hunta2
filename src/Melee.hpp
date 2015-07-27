@@ -7,7 +7,7 @@
 
 class Melee : Weapon {
 public:
-    Melee(std::string img);
+    Melee();
     void init();
 
     virtual ~Melee();
