@@ -81,10 +81,10 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
     if(dirRight) {
         if(posX+33 > entPosX &&
             posX+16 < entPosX &&
-            (posY+24+(vel) > entPosY ||
-            posY+12-(vel) < entPosY+entH) &&
-            !(posY+12-(vel) < entPosY ||
-            posY+24+(vel) > entPosY+entH)) {
+            (posY+22+(vel) > entPosY ||
+            posY+14-(vel) < entPosY+entH) &&
+            !(posY+14-(vel) < entPosY ||
+            posY+22+(vel) > entPosY+entH)) {
             colRight = true;
             //std::cerr << "--collision-right--"<<std::endl;
             //position->setX(position->getX()-8);
@@ -96,10 +96,10 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
     if(dirLeft) {
         if(posX-1 < entPosX+entW &&
             posX+16 > entPosX &&
-            (posY+24+(vel) > entPosY ||
-            posY+12-(vel) < entPosY+entH) &&
-            !(posY+12-(vel) < entPosY ||
-            posY+24+(vel) > entPosY+entH)) {
+            (posY+22+(vel) > entPosY ||
+            posY+14-(vel) < entPosY+entH) &&
+            !(posY+14-(vel) < entPosY ||
+            posY+22+(vel) > entPosY+entH)) {
 
             colLeft = true;
             //std::cerr << "--collision-left--"<<std::endl;
@@ -111,7 +111,7 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
 
     if(dirDown) {
         //if(posY+33 > entPosY &&
-        if(posY+13 > entPosY &&
+        if(posY+14 > entPosY &&
             (posY < entPosY) &&
             (posX+(vel) > entPosX ||
             posX+32-(vel) < entPosX+entW) &&
@@ -127,7 +127,7 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
 
     if(dirUp) {
         //if(posY-1 < entPosY+entH &&
-        if(posY+23 < entPosY+entH &&
+        if(posY+22 < entPosY+entH &&
             (posY > entPosY+16) &&
             (posX+(vel) > entPosX ||
             posX+32-(vel) < entPosX+entW) &&

@@ -8,7 +8,7 @@ class ItemManager {
 public:
     ItemManager();
 
-    void init();
+    void init(LuaInterface *lInterface);
 
     void loadArmor(int id, std::string name, int levelReq, std::string img,
                     std::string desc, int price, int atk, int def,int hp);
@@ -21,7 +21,7 @@ public:
     virtual ~ItemManager();
 protected:
 private:
-    LuaInterface lInterface;
+    LuaInterface *lInterface{nullptr};
 
     std::map<int, std::string> itemImages;
 };

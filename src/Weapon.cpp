@@ -1,7 +1,7 @@
 #include "Weapon.hpp"
 
 #include "Game.hpp"
-#include "HealthBar.hpp"
+#include "Health.hpp"
 #include "Enemy.hpp"
 
 Weapon::Weapon() {
@@ -44,63 +44,48 @@ void Weapon::update() {
     }
 
     if(isAttacking) {
+        if(!attackTimer.isStarted())
+            attackTimer.start();
         switch(attackState) {
         case 0:
-            if(!attackTimer.isStarted())
-                attackTimer.start();
             if(attackTimer.getTicks() > INTERVALL) {
-                attackState++;
                 attackTimer.stop();
+                attackState++;
             }
-            weaponImage.setClipX(attackState);
             break;
         case 1:
-            if(!attackTimer.isStarted())
-                attackTimer.start();
             if(attackTimer.getTicks() > INTERVALL) {
-                attackState++;
                 attackTimer.stop();
+                attackState++;
             }
-            weaponImage.setClipX(attackState);
             break;
         case 2:
-            if(!attackTimer.isStarted())
-                attackTimer.start();
             if(attackTimer.getTicks() > INTERVALL) {
-                attackState++;
                 attackTimer.stop();
+                attackState++;
             }
-            weaponImage.setClipX(attackState);
             break;
         case 3:
             /* Damage to enemies */
-            if(!attackTimer.isStarted())
-                attackTimer.start();
             if(attackTimer.getTicks() > INTERVALL) {
-                //std::cout << "Attack!" << std::endl;
+                attackTimer.stop();
                 attack();
                 attackState++;
-                attackTimer.stop();
             }
-            weaponImage.setClipX(attackState);
             break;
         case 4:
-            if(!attackTimer.isStarted())
-                attackTimer.start();
             if(attackTimer.getTicks() > INTERVALL*3) {
-                attackState = 0;
                 attackTimer.stop();
+                attackState = 0;
                 isAttacking = false;
             }
-            weaponImage.setClipX(attackState);
-
             break;
         default:
             attackState = 0;
-            weaponImage.setClipX(attackState);
             isAttacking = false;
             break;
         }
+        weaponImage.setClipX(attackState);
     }
 }
 
@@ -110,18 +95,18 @@ bool Weapon::attack() {
     int seed = 12345;
     seed += seedTimer.getTicks();
     for(auto& e: manager->getEntitiesByGroup(game::ENEMY)) {
-        Position enemyPos = e->getComponent<Position>();
-        int width = e->getComponent<Texture>().getWidth();
-        int height = e->getComponent<Texture>().getHeight();
+        int ex = e->getComponent<Position>().getX();
+        int ey = e->getComponent<Position>().getY();
+        int ew = e->getComponent<Texture>().getWidth();
+        int eh = e->getComponent<Texture>().getHeight();
 
-        if((enemyPos.getX() < weaponImage.getX()+weaponImage.getWidth()+game::getOffset()->x &&
-            enemyPos.getX()+width > weaponImage.getX()+game::getOffset()->x) &&
-           (enemyPos.getY() < weaponImage.getY()+weaponImage.getHeight()+game::getOffset()->y &&
-            enemyPos.getY()+height > weaponImage.getY()+game::getOffset()->y)) {
+        if((ex < weaponImage.getX()+weaponImage.getWidth()+game::getOffset()->x &&
+            ex+ew > weaponImage.getX()+game::getOffset()->x) &&
+           (ey < weaponImage.getY()+weaponImage.getHeight()+game::getOffset()->y &&
+            ey+eh > weaponImage.getY()+game::getOffset()->y)) {
 
-            e->getComponent<HealthBar>().damage(atk,enemyPos.getX()+enemyPos.getY()+seed);
+            e->getComponent<Health>().damage(atk,ex+ey+seed);
             e->getComponent<Enemy>().knockBack(physics->getDir());
-            e->getComponent<Enemy>().setAggressive(true);
             hit = true;
             seed -= 1237;
         }

@@ -35,6 +35,7 @@ public:
     void draw();
     void update();
     void knockBack(int dir);
+    void setExpGain(int xp);
     void setAggressive(bool aggressive);
     int getID();
     void onDeath();
@@ -56,14 +57,18 @@ private:
     int enemyWidth = 0;
     int enemyHeight = 0;
 
+    int experienceGain = 5;
+
     int enemyID = -1;
     bool isAggressive = false;
     bool aggro = false;
     bool aggroX = true;
     bool aggroY = true;
     bool isKnockedBack = false;
+    bool alive = true;
     int knockBackDir = 0;
     LTimer knockBackTimer;
+    LTimer deathTimer;
 };
 
 #endif // ENEMY_H

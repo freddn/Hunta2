@@ -9,17 +9,17 @@ ItemManager::~ItemManager() {
     //dtor
 }
 
-void ItemManager::init() {
-    lInterface.initLua();
+void ItemManager::init(LuaInterface *lInterface) {
 
+    this->lInterface = lInterface;
     std::cerr << " ... Loading weapon data ..." << std::endl;
-    lInterface.loadFile("data/items/weapons/weapons.lua");
+    lInterface->loadFile("data/items/weapons/weapons.lua");
     std::cerr << " ... Loading armor data ..." << std::endl;
-    lInterface.loadFile("data/items/armor/armor.lua");
+    lInterface->loadFile("data/items/armor/armor.lua");
     std::cerr << " ... Loading misc item data ..." << std::endl;
-    lInterface.loadFile("data/items/misc/misc.lua");
+    lInterface->loadFile("data/items/misc/misc.lua");
     std::cerr << " ... Loading usables data ..." << std::endl;
-    lInterface.loadFile("data/items/usables/usables.lua");
+    lInterface->loadFile("data/items/usables/usables.lua");
 }
 
 /*

@@ -20,7 +20,7 @@
 
 #include <string>
 #include <iostream>
-
+#include <cmath>
 #include "InGame.hpp"
 #include "MainMenu.hpp"
 
@@ -42,6 +42,7 @@ namespace game {
     MainMenu mMenu;
 
     int current_state = INGAME;
+    LuaInterface lInterface;
     MapController mapController;
     TextureManager textureManager;
     PlayerController playerController;
@@ -61,16 +62,21 @@ namespace game {
     LTimer fpsTimer;
     int currentTick = 0;
     int selected;
-    const Uint8 *key = nullptr;
 
     SDL_Color textColor = {255,255,255,0};
     bool running = true;
 
     void start() {
         std::cerr << " - game::start() ..." << std::endl;
-        key = SDL_GetKeyboardState(nullptr);
-        mapController.init();
-        itemManager.init();
+        lInterface.initLua();
+        playerController.setName("freddun");
+        //playerController.save(&lInterface);
+        playerController.load("nooobn", &lInterface);
+        std::cout << playerController.getName() << " exp: "<<playerController.getExperience() << std::endl;
+
+        mapController.init(&lInterface);
+        itemManager.init(&lInterface);
+        //playerController.load("Freddun", &lInterface);
         std::cerr << " - game::start() (load map) ..."<<std::endl;
         //std::string map2 = "data/map2";
         //std::map<int,Texture*> textures;

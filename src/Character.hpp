@@ -22,14 +22,14 @@
 
 #include "Texture.hpp"
 #include "GPhysics.hpp"
-#include "HealthBar.hpp"
+#include "Health.hpp"
 #include "EntitySystem.hpp"
 #include "EntityCreator.hpp"
 
 using namespace EntitySystem;
 
 /**
- * Character class. Draw the player on the screen.
+ * Character class.
  * Character is a component. Need a position and physics
  * component aswell to function.
  */
@@ -71,15 +71,12 @@ private:
     GPhysics *physics{nullptr};
     Texture *texture{nullptr};
     Position *position{nullptr};
-    HealthBar *hpBar{nullptr};
+    Health *hpBar{nullptr};
 
     std::string charName = "";
 
     EntityManager *manager{nullptr}; // For (creating and) finding entitys.
     EntityCreator creator; // Creating entitys.
-
-    int level = 1;
-    int experience = 0;
 
     bool attacking = false;
 

@@ -6,7 +6,7 @@
 #include "Texture.hpp"
 #include "GPhysics.hpp"
 #include "Enemy.hpp"
-#include "HealthBar.hpp"
+#include "Health.hpp"
 #include "Character.hpp"
 #include "Weapon.hpp"
 #include "Camera.hpp"
@@ -108,7 +108,7 @@ void Map::loadEnemy(int id, int index, int x,int y, std::string img) {
         enemy->addComponent<Position>(x + mapX*MAP_WIDTH,y + mapY*MAP_HEIGHT);
         enemy->addComponent<Texture>(img,true);
         enemy->addComponent<GPhysics>();
-        enemy->addComponent<HealthBar>(20);
+        enemy->addComponent<Health>(20);
         enemy->addComponent<Enemy>(manager, id);
         enemy->addGroup(game::ENEMY);
     }
@@ -123,7 +123,7 @@ void Map::loadPlayer(int x,int y) {
         player->addComponent<Position>(x + mapX*MAP_WIDTH,y + mapY*MAP_HEIGHT);
         player->addComponent<Texture>("data/gubbe_box1.png",true); // 32x32 clip
         player->addComponent<GPhysics>();
-        player->addComponent<HealthBar>(100);
+        player->addComponent<Health>(100);
         player->addComponent<Weapon>("data/sword.png", manager);
         player->addComponent<Camera>();
         player->addComponent<Character>(manager);

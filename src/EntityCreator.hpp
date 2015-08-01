@@ -26,7 +26,7 @@
 #include "EntitySystem.hpp"
 
 using namespace EntitySystem;
-
+/** TODO remove? */
 /*
  * In this class you can create entitys that will be added to the
  * given manager.
