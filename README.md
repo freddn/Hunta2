@@ -1,4 +1,4 @@
-# Hunta2
+# Hunta v0.1
 Game in very early stages. SDL2/C++/Lua
 
 ## Keys
