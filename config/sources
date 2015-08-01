@@ -19,16 +19,16 @@ SRC = src/Character.cpp \
       src/Texture.cpp \
       src/Tile.cpp \
       src/Projectile.cpp \
-	  src/HealthBar.cpp \
-	  src/Weapon.cpp \
-	  src/Map.cpp \
-	  src/Shape.cpp \
-	  src/Global.cpp \
-	  src/KeyboardController.cpp \
-	  src/MouseController.cpp \
-	  src/Sound.cpp \
-	  src/Camera.cpp \
-	  src/Icon.cpp \
-	  src/TextureManager.cpp \
-	  src/ItemManager.cpp \
-	  src/PlayerController.cpp
+      src/Health.cpp \
+      src/Weapon.cpp \
+      src/Map.cpp \
+      src/Shape.cpp \
+      src/Global.cpp \
+      src/KeyboardController.cpp \
+      src/MouseController.cpp \
+      src/Sound.cpp \
+      src/Camera.cpp \
+      src/Icon.cpp \
+      src/TextureManager.cpp \
+      src/ItemManager.cpp \
+      src/PlayerController.cpp
