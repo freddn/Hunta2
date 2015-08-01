@@ -69,10 +69,10 @@ namespace game {
     void start() {
         std::cerr << " - game::start() ..." << std::endl;
         lInterface.initLua();
-        playerController.setName("freddun");
+        playerController.setName("assdd");
         //playerController.save(&lInterface);
         playerController.load("nooobn", &lInterface);
-        std::cout << playerController.getName() << " exp: "<<playerController.getExperience() << std::endl;
+        std::cout <<"Saved game '" <<playerController.getName() << "' Loaded! Level: "<<playerController.getLevel() << std::endl;
 
         mapController.init(&lInterface);
         itemManager.init(&lInterface);

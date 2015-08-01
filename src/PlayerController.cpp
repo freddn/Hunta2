@@ -80,24 +80,26 @@ int getMaxExperience(int lv) {
 /** --------------- Setters --------------- */
 
 void PlayerController::increaseExperience(int e) {
-    std::cout << "Got " << e << " xp!" << std::endl;
-    setExperience(e);
+    std::cout << "-- Got " << e << " xp! --" << std::endl;
+    setExperience(experience+e);
 }
 
 void PlayerController::setExperience(int e) {
-    if(experience + e >= getMaxExperience(level)) {
+    if(e >= getMaxExperience(level)) {
         level+=1;
-        experience += e;
-        int inc = experience - getMaxExperience(level-1);
+        int inc = e - getMaxExperience(level-1);
         experience = 0;
         if(inc > 0) {
-            increaseExperience(inc);
+            setExperience(inc);
         }
-        std::cout << "LEVELUP!!!!"<< std::endl;
+        std::cout << "-----------------------------\n"<<
+                     "|         LEVELUP!!!\n"<<
+                     "|          "<<level<<"\n" <<
+                     "-----------------------------" <<std::endl;
 
     } else {
-        experience += e;
-        std::cout << "Level: "<< level<<" Exp: " << experience << "/" << getMaxExperience(level)<< std::endl;
+        experience = e;
+        std::cout << "!! LV: "<< level<<" XP: " << experience << "/" << getMaxExperience(level)<<" !!"<< std::endl;
     }
 }
 

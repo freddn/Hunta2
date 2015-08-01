@@ -98,6 +98,7 @@ namespace lua_functions {
             game::getPlayerController()->setPosX(lua_tonumber(l_state,8));
             game::getPlayerController()->setPosY(lua_tonumber(l_state,9));
         }
+        return 0;
     }
 
     /// ASSET LOADING

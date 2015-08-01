@@ -134,19 +134,19 @@ namespace EntitySystem {
                 int y = 32*(index)/64;
                 y += offsetY;
                 //std::cerr << y << std::endl;
-                if(x >= game::getOffset()->x &&
+                if(x+96 >= game::getOffset()->x &&
                     x < game::getOffset()->x + game::getOffset()->w &&
-                    y >= game::getOffset()->y &&
-                    y < game::getOffset()->y + game::getOffset()->h)
+                    y+96 >= game::getOffset()->y &&
+                    y-96 < game::getOffset()->y + game::getOffset()->h)
                     ent.second->draw();
             }
         } else {
-            for(int i = game::getOffset()->y; i < game::getHeight()+game::getOffset()->y;i++) {
+            for(int i = game::getOffset()->y; i < game::getHeight()+game::getOffset()->y+96;i++) {
             //for(auto vec = entities.begin(); vec != entities.end(); vec++) {
                 for(auto& e : entities[i]) {
                     if(e->hasComponent<Position>()) {
                         int x = e->getComponent<Position>().getX();
-                        if(x >= game::getOffset()->x &&
+                        if(x+96 >= game::getOffset()->x &&
                             x < game::getWidth()+game::getOffset()->x)
                             e->draw();
                     }

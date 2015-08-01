@@ -19,7 +19,7 @@ SRC = src/Character.cpp \
       src/Texture.cpp \
       src/Tile.cpp \
       src/Projectile.cpp \
-	  src/HealthBar.cpp \
+	  src/Health.cpp \
 	  src/Weapon.cpp \
 	  src/Map.cpp \
 	  src/Shape.cpp \
@@ -31,4 +31,5 @@ SRC = src/Character.cpp \
 	  src/Icon.cpp \
 	  src/TextureManager.cpp \
 	  src/ItemManager.cpp \
-	  src/PlayerController.cpp
+	  src/PlayerController.cpp \
+	  src/UIController.cpp

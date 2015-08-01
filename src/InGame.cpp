@@ -61,7 +61,7 @@ void InGame::draw() {
 */
     // Draw all entities.
     //inGameManager.draw();
-    tInterface.render(0,0,NULL); /// Sample interface
+    //tInterface.render(0,0,NULL); /// Sample interface
     // Display inventory
     if(showInventory)
         inv.draw();
