@@ -21,8 +21,6 @@ public:
 protected:
 private:
     Position *position = nullptr;
-    int posX = 0;
-    int posY = 0;
     int width = 32;
     int height = 32;
     int red = 0;

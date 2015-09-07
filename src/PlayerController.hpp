@@ -59,8 +59,6 @@ private:
     int currentHp = hp;
     int posX = 50;
     int posY = 50;
-
-    int temp = 0;
 };
 
 #endif // PLAYERCONTROLLER_H

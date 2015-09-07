@@ -156,7 +156,7 @@ namespace EntitySystem {
      * EntityManager is the manager of all entities. This manager will
      * update, draw and refresh all entities.
      */
-    struct EntityManager {
+    class EntityManager {
     public:
         /**
          * Call update of all entities.
