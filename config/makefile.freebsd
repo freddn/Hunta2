@@ -25,7 +25,7 @@ options:
 
 hunta2: ${OBJ}
 	@echo runnin CC -o $@
-	@${CC} -o $@ ${SRC} ${CFLAGS} ${LDFLAGS}
+	@${CC} -o $@ ${OBJ} ${CFLAGS} ${LDFLAGS}
 
 clean:
 	@echo cleaning
