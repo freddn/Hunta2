@@ -31,15 +31,6 @@ public:
 protected:
 private:
     int tileID = -1;
-    bool solid;
 };
 
 #endif // TILE_H
-
-
-
-
-
-
-
-
