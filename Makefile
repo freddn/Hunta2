@@ -17,3 +17,7 @@ freebsd:
 
 dragonfly:
 	$(MAKE) -f config/makefile.dragonfly
+	
+travis:
+    $(MAKE) -f config/makefile.travis
+

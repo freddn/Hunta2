@@ -7,8 +7,8 @@ before_install:
 
 install:
 - sudo apt-get install -qq g++-4.8
-- export g++="g++-4.8"
+- export CC="g++-4.8"
 
 script:
-    - make linux
+    - make travis
     
