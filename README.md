@@ -1,5 +1,8 @@
 # Hunta v0.1
+[![Build Status](https://travis-ci.org/freddn/Hunta2.svg)](https://travis-ci.org/freddn/Hunta2)
+
 Game in very early stages. SDL2/C++/Lua
+
 
 ## Keys
  - Main Menu, 2
