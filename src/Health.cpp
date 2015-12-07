@@ -4,19 +4,14 @@
 #include <stdlib.h>
 #include "Enemy.hpp"
 
-/// TODO change name to Health
 Health::Health(int hp) {
     maxHP = hp;
     health = hp;
-    //ctor
 }
 
 Health::~Health() {
-    //SDL_DestroyTexture(hpBarBG);
     hpBarBG = nullptr;
-    //SDL_DestroyTexture(hpBar);
     hpBar = nullptr;
-    //SDL_DestroyTexture(hpBarOutline);
     hpBarOutline = nullptr;
 }
 
@@ -53,7 +48,6 @@ void Health::init() {
 
     hpBarOutlineRect.y = position->getY() - 11;
     hpBarOutlineRect.x = position->getX()- 1;
-
 }
 
 void Health::draw() {
@@ -111,7 +105,7 @@ void Health::damage(int atk, int seed) {
     if(alive) {
         isDisplayed = true;
         srand(seed);
-        int atkVal = rand() % atk - 2;
+        int atkVal = rand() % atk;
         setHp(health-atkVal);
     }
 }

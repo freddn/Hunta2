@@ -21,18 +21,14 @@
 #include "Game.hpp"
 
 Enemy::Enemy(EntityManager &m, int id) {
-    //ctor
     manager = &m;
     enemyID = id;
 }
 
-Enemy::~Enemy() {
-    //dtor
-}
+Enemy::~Enemy() {}
 
 void Enemy::init() {
     experienceGain = enemyID*5;
-    //std::cout << " - Enemy::init() ..."<<std::endl;
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
     enemyHeight = texture->getHeight();
@@ -90,15 +86,11 @@ void Enemy::update() {
                 position->getX()+enemyWidth > px-100 &&
                 position->getY() < py+100+ph &&
                 position->getY()+enemyHeight > py-100) {
-                if(aggro == false) {
+                if(aggro == false)
                     aggro = true;
-                    /* FIXME: Replace the position with an ID. */
-                }
             } else {
-                if(aggro == true) {
+                if(aggro == true)
                     aggro = false;
-                    /* FIXME: Replace the position with an ID. */
-                }
             }
 
             if(aggro) {     /* Follow player */

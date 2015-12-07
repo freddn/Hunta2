@@ -55,14 +55,10 @@ void Inventory::loadInventory() {
     /// CHANGE TO OTHER FORMAT
     /// Inventoryclass should have a loadItem function and be
     /// accessed by game::getInventory()->loadItem from LuaInterface
-    inventoryItem *items; // = lua_functions::getItems();
+    //inventoryItem *items; // = lua_functions::getItems();
     //l_interface.addItem("data/inventory1",12,4,4,6);
+
     return;
-    int i = 0;
-    while(items[i].id!= -1 && i < 20) {
-        std::cerr << "item id: "<<items[i].id << std::endl;
-        i++;
-    }
 }
 
 int Inventory::addItem(int id,int amount,int x, int y) {

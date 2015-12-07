@@ -19,7 +19,6 @@
 #include "Texture.hpp"
 #include "Game.hpp"
 
-
 Texture::Texture() {
     tclip.w = 32;
     tclip.h = 32;
@@ -42,11 +41,8 @@ Texture::Texture(std::string img,bool clip) {
 
 Texture::Texture(std::string img,bool clip, int w,int h) {
     isClipped = clip;
-
     isText = false;
     imageName = img;
-    //currentTexture = nullptr;
-
     tclip.w = w;
     tclip.h = h;
 }
@@ -56,16 +52,11 @@ Texture::Texture(std::string text,SDL_Color textcolor,TTF_Font* font) {
     textFont = font;
     textColor = textcolor;
     textString = text;
-    //currentTexture = nullptr;
 }
 
-Texture::~Texture() {
-    //free();
-    //SDL_DestroyTexture(currentTexture);
-}
+Texture::~Texture() {}
 
 void Texture::init() {
-    //std::cout << " - Texture::init() ..." << std::endl;
     tWidth = 0;
     tHeight = 0;
     rect.x = 0;
@@ -74,7 +65,6 @@ void Texture::init() {
     rect.h = 0;
     if(entity != nullptr && entity->hasComponent<Position>())
         position = &entity->getComponent<Position>();
-
     if(!isText)
         loadFromFile(imageName);
     else
@@ -82,7 +72,7 @@ void Texture::init() {
 }
 
 void Texture::draw() {
-    //std::cerr << "-- Texture::draw"<<std::endl;
+    // draw only on screen ..
     /*if(position->getX()+tWidth > game::getOffset()->x &&
         position->getX() < game::getOffset()->x + game::getWidth() &&
         position->getY()+tHeight > game::getOffset()->y &&
@@ -92,12 +82,6 @@ void Texture::draw() {
     render(position->getX()-(game::getOffset()->x),
                 position->getY()-(game::getOffset()->y),(SDL_Rect*)nullptr);
 }
-/*
-void Texture::update()
-{
-    //std::cerr<< "Texture::update()"<<std::endl;
-}
-*/
 
 bool Texture::loadFromFile(std::string path) {
     free();
@@ -163,19 +147,13 @@ bool Texture::loadFromText(std::string textureText, SDL_Color textcolor,
 }
 
 void Texture::free() {
-
-    //if(currentTexture != nullptr) {
-        SDL_DestroyTexture(currentTexture);
-
-        currentTexture = nullptr;
-    //}
-
+    SDL_DestroyTexture(currentTexture);
+    currentTexture = nullptr;
 }
 
 void Texture::render(SDL_Rect *clip) {
     render(rect.x, rect.y,clip);
 }
-
 
 void Texture::render(int x, int y,SDL_Rect *clip) {
     SDL_Renderer *renderer = game::getRenderer();
@@ -218,14 +196,11 @@ int Texture::getHeight() {
 }
 
 int Texture::getX() {
-    //return xPos;
     return rect.x;
 }
 
 void Texture::setXPos(int x) {
     xPos = x;
-    //position->setX(x);
-    //rect.x = x;
 }
 
 void Texture::setXRect(int x) {
@@ -233,13 +208,11 @@ void Texture::setXRect(int x) {
 }
 
 int Texture::getY() {
-    //return yPos;
     return rect.y;
 }
 
 void Texture::setYPos(int y) {
     yPos = y;
-    //rect.y = y;
 }
 
 void Texture::setYRect(int y) {

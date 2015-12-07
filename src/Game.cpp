@@ -23,6 +23,8 @@
 #include <cmath>
 #include "InGame.hpp"
 #include "MainMenu.hpp"
+#include "UIController.hpp"
+#include <unistd.h>
 
 namespace game {
     SDL_Event event;
@@ -47,6 +49,7 @@ namespace game {
     TextureManager textureManager;
     PlayerController playerController;
     ItemManager itemManager;
+    UIController uiController;
     std::shared_ptr<Map> textureMap;
     int width = 640;
     int t_width = width/32;
@@ -78,13 +81,11 @@ namespace game {
         itemManager.init(&lInterface);
         //playerController.load("Freddun", &lInterface);
         std::cerr << " - game::start() (load map) ..."<<std::endl;
-        //std::string map2 = "data/map2";
-        //std::map<int,Texture*> textures;
         std::cerr << " - game::start() (creating states) ..."<<std::endl;
-        //interface.loadFromFile("data/interface.png");
         editor.init();
         inGame.init();
         mMenu.init();
+        uiController.init();
         textureMap = mapController.getMap(1);
         if(current_state == INGAME)
             mapController.getMap(1)->loadPlayer(100,100);
@@ -102,9 +103,13 @@ namespace game {
                 mMenu.draw();
                 break;
             case(INGAME):
-
-                inGame.update();
+                inGame.renderStart();
                 inGame.draw();
+                uiController.draw();
+                inGame.renderEnd();
+
+                uiController.update();
+                inGame.update();
                 break;
             case(PAUSED):
                 screen.update();
@@ -161,7 +166,6 @@ namespace game {
                 else if(key[SDL_SCANCODE_1]) {
                     if(current_state == EDITOR) {
                         /* Save as map_y_x */
-                        //std::cout << "save map size: " << textures.size() << std::endl;
                         offset.x = game::getWidth();
                         offset.y = game::getHeight();
 
@@ -170,7 +174,6 @@ namespace game {
                         mapController.loadMap(1);
                         //textureMap = textureMapController.getMap(1);
                         mapController.getMap(1)->loadPlayer(100,100);
-                        //std::cout << "loaded map size: " << textures.size() << std::endl;
                     }
                     game::setCurrent_state(game::INGAME);
                     // LOAD MAP
@@ -185,18 +188,10 @@ namespace game {
                     // LOAD MAP.
                     // SAVE MAP.
                 }
-            } else if(event.type == SDL_MOUSEWHEEL && current_state == EDITOR) {
-
-                //if(event.wheel.y > 0 && editor.getSelected() < 2)
-                    //editor.setSelected(editor.getSelected()+event.wheel.y);
-                //else if(event.wheel.y < 0 && editor.getSelected() > 0)
+            } else if(event.type == SDL_MOUSEWHEEL && current_state == EDITOR)
                 editor.setSelected(editor.getSelected()+event.wheel.y);
-
-                //std::cerr << "MOUSEWHEEL!!" << "sel: " <<editor.getSelected()<<"y: "<<event.wheel.y << std::endl;
-            } else if(event.type == SDL_MOUSEMOTION) {
+            else if(event.type == SDL_MOUSEMOTION)
                 SDL_GetMouseState(&mouseX,&mouseY);
-            }
-
         }
     }
 
@@ -261,6 +256,10 @@ namespace game {
         font = TTF_OpenFont("freefont/FreeSans.ttf",24);
         dmgFont = TTF_OpenFont("freefont/FreeMonoBold.ttf",9);
         if(font == nullptr || dmgFont == nullptr) {
+            char buf[255];
+            getcwd(buf,255);
+            printf("path: %s\n",buf);
+            perror("NOFONT ");
             std::cerr << "No font" << std::endl;
             return false;
         }
@@ -278,13 +277,7 @@ namespace game {
     }
 
     void close() {
-        //for(auto iter = game::getTextureMap()->begin(); iter != game::getTextureMap()->end();iter++){
-            //((Texture*)iter->second)->free();
-            //free((Texture*)iter->second);
-            //delete (Texture*)iter->second;
         game::getTextureMap()->close();
-        //erase(game::getTextureMap()->begin(),game::getTextureMap()->end());
-        //}
 
         SDL_DestroyTexture(buffer);
         buffer = nullptr;

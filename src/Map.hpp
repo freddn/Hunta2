@@ -10,9 +10,6 @@
 #include "EntitySystem.hpp"
 #include "LuaInterface.hpp"
 
-
-
-
 using namespace EntitySystem;
 
 class Map {
@@ -68,8 +65,6 @@ private:
 
     EntityManager tiles;
     EntityManager manager;
-
-
 };
 
 #endif // MAP_H

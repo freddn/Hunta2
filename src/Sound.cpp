@@ -1,11 +1,5 @@
 #include "Sound.hpp"
 
-Sound::Sound()
-{
-    //ctor
-}
+Sound::Sound() {}
 
-Sound::~Sound()
-{
-    //dtor
-}
+Sound::~Sound() {}

@@ -32,6 +32,7 @@
 #include "TextureManager.hpp"
 #include "ItemManager.hpp"
 #include "PlayerController.hpp"
+#include "UIController.hpp"
 
 /**
  * Game class. Contains game-loop. State of the game. Init of map/data.

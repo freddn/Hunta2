@@ -81,6 +81,10 @@ private:
     float xVel{0.0f};
     float yVel{0.0f};
     float vel{4};
+    int north = 0;
+    int south = 1;
+    int west = 2;
+    int east = 3;
 };
 
 #endif // GPHYSICS_H

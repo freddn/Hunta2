@@ -15,13 +15,9 @@
 #include "Environment.hpp"
 #include "Enemy.hpp"
 
-Map::Map() {
-    //ctor
-}
+Map::Map() {}
 
-Map::~Map() {
-    //dtor
-}
+Map::~Map() {}
 
 void Map::init() {
     std::cerr << "id: "<< mapID << " x: " << mapX << " y: " << mapY<< std::endl;
@@ -69,9 +65,8 @@ void Map::close() {
 /// Just to be safe..
 bool Map::hasEntities() {
     bool entities = false;
-    if(!mapIsActive) {
+    if(!mapIsActive)
         return false;
-    }
 
     if((tiles.getEntities() && !tiles.getEntities()->empty()) ||
         (tiles.getEntitiesByIndex() != nullptr && !tiles.getEntitiesByIndex()->empty()))

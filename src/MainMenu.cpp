@@ -94,11 +94,8 @@ void MainMenu::update() {
 }
 
 bool MainMenu::mouseOverRect(SDL_Rect r) {
-    if(game::getMouseX() < r.x+r.w && game::getMouseX() > r.x &&
-        game::getMouseY() < r.y+r.h && game::getMouseY() > r.y) {
-       return true;
-    }
-    return false;
+    return game::getMouseX() < r.x+r.w && game::getMouseX() > r.x &&
+     game::getMouseY() < r.y+r.h && game::getMouseY() > r.y;
 }
 
 void MainMenu::buildButton() {

@@ -59,7 +59,6 @@ void Editor::draw() {
         pos++;
     }
 
-    //CLICK EVENT..
     Screen::renderEnd();
 }
 
@@ -83,8 +82,8 @@ void Editor::update() {
     } else if(key[SDL_SCANCODE_S]) {
 
         if(mapUpdated) {
-            /// Save map.. TODO move to game::pollEvents and implement a saving
-            /// function in editor..
+            /*TODO move to game::pollEvents and implement a saving function
+             in editor */
         }
     }
     game::getTextureMapController()->update();

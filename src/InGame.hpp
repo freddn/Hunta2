@@ -63,7 +63,7 @@ public:
 private:
     bool showInventory = false;
 
-    Inventory inv{445,150};
+
     int buf = 0;
     Texture tInterface;
     EntityManager inGameManager;

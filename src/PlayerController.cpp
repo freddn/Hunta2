@@ -74,7 +74,7 @@ std::string PlayerController::getName() {
 
 int getMaxExperience(int lv) {
     // return 16+std::pow(lv, 3) / 2; // Bigger exp curve
-    return 16+std::pow(lv, 2.5) / 2; // More linear than above
+    return (int)(16+std::pow(lv, 2.5) / 2); // More linear than above
 }
 
 /** --------------- Setters --------------- */

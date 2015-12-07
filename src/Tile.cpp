@@ -4,9 +4,7 @@ Tile::Tile(int id) {
     tileID = id;
 }
 
-Tile::~Tile() {
-    //dtor
-}
+Tile::~Tile() { }
 
 int Tile::getID() {
     return tileID;

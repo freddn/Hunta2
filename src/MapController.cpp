@@ -30,14 +30,6 @@ void MapController::init(LuaInterface *lInterface) {
     this->lInterface = lInterface;
 
     std::cout << " - MapController::init() ..."<<std::endl;
-    /*ground_T.loadFromFile("data/ground.png");
-    water_T.loadFromFile("data/water.png");
-    grass_T.loadFromFile("data/grass.png");
-
-    lua_functions::setGrass(grass_T);
-    lua_functions::setGround(ground_T);
-    lua_functions::setWater(water_T);
-*/
 
     std::cerr << " ... Loading map data ..." << std::endl;
     lInterface->loadFile("data/maps/maps.lua");
@@ -77,12 +69,7 @@ void MapController::update() {
     }
 }
 
-MapController::~MapController() {
-    //currentMap.erase(currentMap.begin(),currentMap.end());
-    //grass_T.free();
-    //ground_T.free();
-    //water_T.free();
-}
+MapController::~MapController() {}
 
 bool MapController::loadMap(int mapID) {
     std::cout << " - MapClass::loadMap() ... " << std::endl;
@@ -93,15 +80,6 @@ bool MapController::loadMap(int mapID) {
         lInterface->loadMap(mapID);
         return true;
     }
-}
-
-void MapController::clearCurrentMap() {
-    //for(auto iter = currentMap->begin(); iter != currentMap->end();iter++) {
-        //if(iter->second != nullptr) {
-        //    delete (Texture*)iter->second;
-        //}
-        //currentMap->erase(currentMap->begin(),currentMap->end());
-    //}
 }
 
 void MapController::saveMaps() {
@@ -119,25 +97,14 @@ void MapController::setMap(std::shared_ptr<Map> tempMap) {
 }
 
 bool MapController::mapExists(int mapID) {
-    //std::cerr << mapContainer.count(mapID) << std::endl;
-    //std::cerr << "map empty " << mapContainer.size() << std::endl;
-    //std::cerr << "map count" << std::endl;
     if(mapContainer.count(mapID) < 1)
         return false;
-    //std::cerr << "map end" << std::endl;
     if(mapContainer.find(mapID) == mapContainer.end())
         return false;
-    //std::cerr << "map null" << std::endl;
     if(mapContainer.at(mapID) == nullptr)
         return false;
-    //std::cerr << "map id" << std::endl;
-
     if(mapContainer.at(mapID)->getMapID() != mapID)
         return false;
-    //std::cerr << "entities" << std::endl;
-    //if(!mapContainer.at(mapID)->hasEntities())
-     //   return false;
-    //std::cerr << "pass" << std::endl;
     return true;
 }
 
@@ -232,7 +199,7 @@ void MapController::loadMapData(int id, int x,int y,int n,int e, int s, int w) {
     tempMap->setMapAt(game::WEST,w);
     tempMap->init();
     tempMap->setActive(true);
-    std::cerr << "MAP LOADED!!!!!!!!!! : " << id<< std::endl;
+    std::cerr << " ... map loaded:" << id<< std::endl;
 
     std::shared_ptr<Map> temp {tempMap};
     mapContainer.insert(std::pair<int,std::shared_ptr<Map>>(id,temp));

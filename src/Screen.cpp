@@ -20,19 +20,13 @@
 #include "Game.hpp"
 
 
-Screen::~Screen() {
-    //dtor
-    //fpsText.free();
-    //timerText.free();
-}
+Screen::~Screen() {}
 
 void Screen::init() {}
 
-void Screen::update() {
-}
+void Screen::update() {}
 
-void Screen::draw() {
-}
+void Screen::draw() {}
 
 void Screen::renderStart() {
     SDL_RenderClear(game::getRenderer());

@@ -2,12 +2,9 @@
 
 #include "Game.hpp"
 
-Shape::Shape() {
-    //ctor
-}
+Shape::Shape() {}
 
 Shape::~Shape() {
-    //dtor
     SDL_DestroyTexture(shape);
 }
 
@@ -31,11 +28,9 @@ void Shape::init() {
     SDL_FreeSurface(temp);
 }
 
-
 void Shape::draw() {
     SDL_Rect rect{(int)position->getX(),(int)position->getY(),width,height};
     SDL_RenderCopy(game::getRenderer(),shape,NULL,&rect);
-
 }
 
 int Shape::getWidth() {

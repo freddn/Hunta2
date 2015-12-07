@@ -3,7 +3,6 @@
 
 #include "EntitySystem.hpp"
 #include "Position.hpp"
-#include "Texture.hpp"
 #include "GPhysics.hpp"
 #include "LTimer.hpp"
 
@@ -26,7 +25,6 @@ private:
     int range = 200;
     GPhysics *physics{nullptr};
     LTimer timer;
-    //Texture *texture{nullptr};
     Position *position{nullptr};
 };
 

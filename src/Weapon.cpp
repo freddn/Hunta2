@@ -4,19 +4,14 @@
 #include "Health.hpp"
 #include "Enemy.hpp"
 
-Weapon::Weapon() {
-    //ctor
-}
+Weapon::Weapon() {}
 
 Weapon::Weapon(std::string img,EntityManager &mgr) {
     imgPath = img;
     manager = &mgr;
-    //ctor
 }
 
-Weapon::~Weapon() {
-    //dtor
-}
+Weapon::~Weapon() {}
 
 void Weapon::init() {
     playerPosition = &entity->getComponent<Position>();
@@ -31,12 +26,9 @@ void Weapon::init() {
 }
 
 void Weapon::update() {
-    //SDL_Event *event = game::getEvent();
-    //SDL_PumpEvents();
     const Uint8 *key = SDL_GetKeyboardState(NULL);
 
     weaponImage.setClipY(physics->getDir());
-
 
     if(key[SDL_SCANCODE_SPACE]) {
         if(!isAttacking)
@@ -110,7 +102,6 @@ bool Weapon::attack() {
             hit = true;
             seed -= 1237;
         }
-
     }
     return hit;
 }
@@ -140,8 +131,5 @@ void Weapon::draw() {
         weaponImage.render(posX, playerPosition->getY() - game::getOffset()->y,
                             nullptr);
         break;
-
     }
-
-
 }

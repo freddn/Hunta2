@@ -54,6 +54,10 @@ void GPhysics::init() {
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
     currentDir = game::SOUTH;
+    north = game::NORTH;
+    south = game::SOUTH;
+    west = game::WEST;
+    east = game::EAST;
 }
 
 /*bool GPhysics::isColliding(int x, int y) {
@@ -86,9 +90,6 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
             !(posY+14-(vel) < entPosY ||
             posY+22+(vel) > entPosY+entH)) {
             colRight = true;
-            //std::cerr << "--collision-right--"<<std::endl;
-            //position->setX(position->getX()-8);
-            //xVel--;
             colliding = true;
         }
     }
@@ -102,31 +103,23 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
             posY+22+(vel) > entPosY+entH)) {
 
             colLeft = true;
-            //std::cerr << "--collision-left--"<<std::endl;
-            //position->setX(position->getX()+8);
-            //xVel++;
             colliding = true;
         }
     }
 
     if(dirDown) {
-        //if(posY+33 > entPosY &&
         if(posY+14 > entPosY &&
             (posY < entPosY) &&
             (posX+(vel) > entPosX ||
             posX+32-(vel) < entPosX+entW) &&
             !(posX+32-(vel) < entPosX ||
             posX+(vel) > entPosX+entW)) {
-            //std::cerr << "--collision-down--"<<std::endl;
             colDown = true;
-            //position->setY(position->getY()-8);
-            //yVel--;
             colliding = true;
         }
     }
 
     if(dirUp) {
-        //if(posY-1 < entPosY+entH &&
         if(posY+22 < entPosY+entH &&
             (posY > entPosY+16) &&
             (posX+(vel) > entPosX ||
@@ -134,16 +127,13 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
             !(posX+32-(vel) < entPosX ||
             posX+(vel) > entPosX+entW)) {
             colUp = true;
-            //std::cerr << "--collision-up--"<<std::endl;
-            //position->setY(position->getY()+8);
-            //yVel++;
             colliding = true;
         }
     }
     return colliding;
 }
 
-void GPhysics::clearCol() {
+inline void GPhysics::clearCol() {
     colDown = false;
     colUp = false;
     colLeft = false;
@@ -151,36 +141,22 @@ void GPhysics::clearCol() {
 }
 
 void GPhysics::setDir(int dir, bool isMoving) {
-    //std::cerr << "dir: "<<dir<<" isMoving: "<<isMoving<<" game::N "<<game::NORTH<<std::endl;
-    switch(dir) {
-    case (game::NORTH):
-        //std::cerr << "position: "<<&position<<std::endl;
-        //std::cerr << "north"<<" up: "<<this->dirUp<<" = "<< isMoving<<std::endl;
-        if(isMoving)
+    if(dir == north) {
+        if (isMoving)
             currentDir = dir;
         dirUp = isMoving;
-        //std::cerr << "north set"<<std::endl;
-        break;
-    case (game::SOUTH):
-        if(isMoving)
+    } else if(dir == south) {
+        if (isMoving)
             currentDir = dir;
-        //std::cerr << "south"<<std::endl;
         dirDown = isMoving;
-        break;
-    case (game::EAST):
-        if(isMoving)
+    } else if(dir == east) {
+        if (isMoving)
             currentDir = dir;
-        //std::cerr << "east"<<std::endl;
         dirRight = isMoving;
-        break;
-    case (game::WEST):
-        if(isMoving)
+    } else if(dir == west) {
+        if (isMoving)
             currentDir = dir;
-        //std::cerr << "west"<<std::endl;
         dirLeft = isMoving;
-        break;
-    default:
-        break;
     }
 }
 
@@ -188,7 +164,7 @@ void GPhysics::setVelocity(float v) {
     vel = v;
 }
 
-void GPhysics::setXVelocity() {
+inline void GPhysics::setXVelocity() {
     if(!movedByKey) {
         if(destX != 0) {
             if(destY != 0) {
@@ -220,7 +196,7 @@ void GPhysics::setXVelocity() {
     }
 }
 
-void GPhysics::setYVelocity() {
+inline void GPhysics::setYVelocity() {
     if(!movedByKey) {
         if(destY != 0) {
             if(destX != 0) {
