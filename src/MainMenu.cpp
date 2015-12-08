@@ -38,10 +38,10 @@ void MainMenu::init() {
     settings = {32*6, 260,button.w,button.h};
     quitGame = {32*6, 340,button.w,button.h};
 
-    startGame = SDL_CreateTexture(game::getRenderer(), SDL_PIXELFORMAT_RGBA8888,
+    buttonBg = SDL_CreateTexture(game::getRenderer(), SDL_PIXELFORMAT_RGBA8888,
                                SDL_TEXTUREACCESS_TARGET, button.w, button.h);
 
-    if(startGame == 0) {
+    if(buttonBg == 0) {
         std::cerr << "Failed to create Start Game button" << std::endl;
     }
 
@@ -52,19 +52,22 @@ void MainMenu::draw() {
     Screen::renderStart();
 
     /* Render the menu */
-    SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&newGame);
+    SDL_RenderCopy(game::getRenderer(),buttonBg,nullptr,&newGame);
     text.loadFromText("New Game" ,
                         *game::getTextColor(),game::getFont());
     text.render(newGame.x+20,newGame.y+18,(SDL_Rect*)nullptr);
-    SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&loadGame);
+
+    SDL_RenderCopy(game::getRenderer(),buttonBg,nullptr,&loadGame);
     text.loadFromText("Load Game" ,
                         *game::getTextColor(),game::getFont());
     text.render(loadGame.x+20,loadGame.y+18,(SDL_Rect*)nullptr);
-    SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&settings);
+
+    SDL_RenderCopy(game::getRenderer(),buttonBg,nullptr,&settings);
     text.loadFromText("Settings" ,
                         *game::getTextColor(),game::getFont());
     text.render(settings.x+20,settings.y+18,(SDL_Rect*)nullptr);
-    SDL_RenderCopy(game::getRenderer(),startGame,nullptr,&quitGame);
+
+    SDL_RenderCopy(game::getRenderer(),buttonBg,nullptr,&quitGame);
     text.loadFromText("Quit game" ,
                         *game::getTextColor(),game::getFont());
     text.render(quitGame.x+20,quitGame.y+18,(SDL_Rect*)nullptr);
@@ -105,7 +108,7 @@ void MainMenu::buildButton() {
     temp.w = 32;
     temp.h = 32;
 
-    SDL_SetRenderTarget(game::getRenderer(),startGame);
+    SDL_SetRenderTarget(game::getRenderer(),buttonBg);
 
     for(int i = 0;i<=(button.h / 32);i++) {
         for(int j = 0;j<=(button.w / 32);j++) {

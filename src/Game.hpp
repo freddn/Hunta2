@@ -33,6 +33,7 @@
 #include "ItemManager.hpp"
 #include "PlayerController.hpp"
 #include "UIController.hpp"
+#include "EnemyDataController.hpp"
 
 /**
  * Game class. Contains game-loop. State of the game. Init of map/data.
@@ -94,6 +95,7 @@ namespace game {
     int getCurrentState();
     PlayerController *getPlayerController();
     MapController *getTextureMapController();
+    EnemyDataController *getEnemyDataController();
     ItemManager *getItemManager();
     TextureManager *getTextureManager();
     std::shared_ptr<Map> getTextureMap();

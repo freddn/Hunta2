@@ -20,9 +20,9 @@
 #include "Game.hpp"
 #include "EntitySystem.hpp"
 
-MapController::MapController() {
+MapController::MapController() {}
 
-}
+MapController::~MapController() {}
 
 void MapController::init(LuaInterface *lInterface) {
 
@@ -69,8 +69,6 @@ void MapController::update() {
     }
 }
 
-MapController::~MapController() {}
-
 bool MapController::loadMap(int mapID) {
     std::cout << " - MapClass::loadMap() ... " << std::endl;
     if(mapContainer.find(mapID) == mapContainer.end()) {
@@ -88,8 +86,6 @@ void MapController::saveMaps() {
         std::cerr << "Save map: " << m.second->getMapID() << std::endl;
         m.second->save(lInterface);
     }
-
-
 }
 
 void MapController::setMap(std::shared_ptr<Map> tempMap) {
@@ -148,7 +144,9 @@ void MapController::loadEnemy(int mapID, int id, int index,int x,int y) {
         std::shared_ptr<Map> temp {tempMap};
         mapContainer.insert(std::pair<int,std::shared_ptr<Map>>(mapID,temp));
     }
-    mapContainer.at(mapID)->loadEnemy(id,index,x,y,enemies.at(id));
+    EnemyData data = game::getEnemyDataController()->getEnemyData(id);
+
+    mapContainer.at(mapID)->loadEnemy(id,index,x,y,enemies.at(id), data.width, data.height);
 }
 
 /// Loads a tile texture
@@ -176,8 +174,10 @@ void MapController::loadEnvironmentData(int id, std::string img, bool solid) {
 }
 /// Load an enemy texture
 void MapController::loadEnemyData(int id, std::string img) {
-    Texture *texture(new Texture());
+    std::cout << id << std::endl;
 
+    Texture *texture;
+    texture = new Texture();
     texture->loadFromFile(img);
 
     std::shared_ptr<Texture> temp {texture};

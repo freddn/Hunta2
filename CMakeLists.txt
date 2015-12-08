@@ -7,84 +7,9 @@ include_directories(${FREETYPE_INCLUDE_DIRS})
 set(CMAKE_CXX_FLAGS "-std=c++11 -I/usr/include/lua5.1 -Wall -pedantic")
 
 SET(CMAKE_EXE_LINKER_FLAGS "-llua5.1 -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf")
+
+
 set(SOURCE_FILES
-    include/SDL2/begin_code.h
-    include/SDL2/close_code.h
-    include/SDL2/SDL.h
-    include/SDL2/SDL_assert.h
-    include/SDL2/SDL_atomic.h
-    include/SDL2/SDL_audio.h
-    include/SDL2/SDL_bits.h
-    include/SDL2/SDL_blendmode.h
-    include/SDL2/SDL_clipboard.h
-    include/SDL2/SDL_config.h
-    include/SDL2/SDL_config_android.h
-    include/SDL2/SDL_config_iphoneos.h
-    include/SDL2/SDL_config_macosx.h
-    include/SDL2/SDL_config_minimal.h
-    include/SDL2/SDL_config_pandora.h
-    include/SDL2/SDL_config_psp.h
-    include/SDL2/SDL_config_windows.h
-    include/SDL2/SDL_config_winrt.h
-    include/SDL2/SDL_config_wiz.h
-    include/SDL2/SDL_copying.h
-    include/SDL2/SDL_cpuinfo.h
-    include/SDL2/SDL_egl.h
-    include/SDL2/SDL_endian.h
-    include/SDL2/SDL_error.h
-    include/SDL2/SDL_events.h
-    include/SDL2/SDL_filesystem.h
-    include/SDL2/SDL_gamecontroller.h
-    include/SDL2/SDL_gesture.h
-    include/SDL2/SDL_haptic.h
-    include/SDL2/SDL_hints.h
-    include/SDL2/SDL_image.h
-    include/SDL2/SDL_joystick.h
-    include/SDL2/SDL_keyboard.h
-    include/SDL2/SDL_keycode.h
-    include/SDL2/SDL_loadso.h
-    include/SDL2/SDL_log.h
-    include/SDL2/SDL_main.h
-    include/SDL2/SDL_messagebox.h
-    include/SDL2/SDL_mixer.h
-    include/SDL2/SDL_mouse.h
-    include/SDL2/SDL_mutex.h
-    include/SDL2/SDL_name.h
-    include/SDL2/SDL_net.h
-    include/SDL2/SDL_opengl.h
-    include/SDL2/SDL_opengl_glext.h
-    include/SDL2/SDL_opengles.h
-    include/SDL2/SDL_opengles2.h
-    include/SDL2/SDL_opengles2_gl2.h
-    include/SDL2/SDL_opengles2_gl2ext.h
-    include/SDL2/SDL_opengles2_gl2platform.h
-    include/SDL2/SDL_opengles2_khrplatform.h
-    include/SDL2/SDL_pixels.h
-    include/SDL2/SDL_platform.h
-    include/SDL2/SDL_power.h
-    include/SDL2/SDL_quit.h
-    include/SDL2/SDL_rect.h
-    include/SDL2/SDL_render.h
-    include/SDL2/SDL_revision.h
-    include/SDL2/SDL_rwops.h
-    include/SDL2/SDL_scancode.h
-    include/SDL2/SDL_shape.h
-    include/SDL2/SDL_stdinc.h
-    include/SDL2/SDL_surface.h
-    include/SDL2/SDL_system.h
-    include/SDL2/SDL_syswm.h
-    include/SDL2/SDL_thread.h
-    include/SDL2/SDL_timer.h
-    include/SDL2/SDL_touch.h
-    include/SDL2/SDL_ttf.h
-    include/SDL2/SDL_types.h
-    include/SDL2/SDL_version.h
-    include/SDL2/SDL_video.h
-    include/lauxlib.h
-    include/lua.h
-    include/lua.hpp
-    include/luaconf.h
-    include/lualib.h
     src/Camera.cpp
     src/Camera.hpp
     src/Character.cpp
@@ -162,7 +87,7 @@ set(SOURCE_FILES
     src/UIController.cpp
     src/UIController.hpp
     src/Weapon.cpp
-    src/Weapon.hpp)
+    src/Weapon.hpp src/EnemyDataController.cpp src/EnemyDataController.hpp)
 
 add_executable(Hunta2 ${SOURCE_FILES})
 target_link_libraries(Hunta2 ${FREETYPE_LIBRARIES})

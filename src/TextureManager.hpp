@@ -18,6 +18,7 @@ class TextureManager {
 public:
     TextureManager();
     void loadTexture(std::string img);
+    void loadTexture(std::string img, int w, int h);
     void loadTexture(std::string img, bool clip);
     void loadTexture(std::string img, bool clip, int w, int h);
     bool hasTexture(std::string img);

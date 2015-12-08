@@ -31,7 +31,12 @@ void Editor::init() {
 }
 
 void Editor::loadIcon(std::string img, int id, std::size_t type) {
-    Icon* tempIcon(new Icon(img));
+    Icon* tempIcon;
+    if(type == game::ENEMY) {
+        EnemyData data = game::getEnemyDataController()->getEnemyData(id);
+        tempIcon = new Icon(img,data.width,data.height);
+    } else
+        tempIcon = new Icon(img);
     tempIcon->setID(id);
     tempIcon->setType(type);
     if(selectedCount == 0)

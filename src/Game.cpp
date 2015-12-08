@@ -48,6 +48,7 @@ namespace game {
     MapController mapController;
     TextureManager textureManager;
     PlayerController playerController;
+    EnemyDataController enemyController;
     ItemManager itemManager;
     UIController uiController;
     std::shared_ptr<Map> textureMap;
@@ -371,6 +372,10 @@ namespace game {
 
     MapController *getTextureMapController()  {
         return &mapController;
+    }
+
+    EnemyDataController *getEnemyDataController() {
+        return &enemyController;
     }
 
     ItemManager *getItemManager() {

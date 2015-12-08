@@ -13,7 +13,19 @@ Icon::Icon(std::string img) {
     rSelect = SDL_CreateTextureFromSurface(game::getRenderer(),temp);
 
     SDL_FreeSurface(temp);
-    //ctor
+}
+
+Icon::Icon(std::string img, int width, int height) {
+    iconImage.setClipped(true);
+    iconImage.loadFromFile(img);
+    iconImage.setClipW(width);
+    iconImage.setClipH(height);
+
+    SDL_Surface * temp = SDL_CreateRGBSurface(0,36,36,32,0,0,0,0);
+    SDL_FillRect(temp,NULL,SDL_MapRGB(temp->format,255,0,0));
+    rSelect = SDL_CreateTextureFromSurface(game::getRenderer(),temp);
+
+    SDL_FreeSurface(temp);
 }
 
 void Icon::init() {

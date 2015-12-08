@@ -94,9 +94,9 @@ void Enemy::update() {
             }
 
             if(aggro) {     /* Follow player */
-                if((position->getY()+5 > py &&
+                if((position->getY()-5 > py &&
                     position->getY()+5 < py+ph) ||
-                    (position->getY()+(enemyHeight-5) < py+ph &&
+                    (position->getY()+(enemyHeight+10) < py+ph &&
                     position->getY()+(enemyHeight-5) > py )) {
                     aggroY = false;
                     physics->setDestY(0);
@@ -182,4 +182,8 @@ void Enemy::onDeath() {
     alive = false;
     game::getPlayerController()->increaseExperience(experienceGain);
     deathTimer.start();
+}
+
+void Enemy::setExpGain(int xp) {
+    experienceGain = xp;
 }

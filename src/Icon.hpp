@@ -7,6 +7,7 @@
 class Icon {
 public:
     Icon(std::string img);
+    Icon(std::string img, int width, int height);
     void init();
     void draw();
 

@@ -42,7 +42,7 @@ public:
 
     void loadTile(int id, int index, int x,int y, std::string img);
     void loadEnvironment(int id, int index, int x,int y, std::string img);
-    void loadEnemy(int id, int index, int x,int y, std::string img);
+    void loadEnemy(int id, int index, int x,int y, std::string img, int width = 0, int height = 0);
 
     void loadPlayer(int x,int y);
     void destroyPlayer();

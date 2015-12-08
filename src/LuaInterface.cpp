@@ -33,6 +33,7 @@ namespace lua_functions {
             int index = lua_tonumber(l_state,3); // index
             int x = lua_tonumber(l_state,4); // x
             int y = lua_tonumber(l_state,5); // y
+
             game::getTextureMapController()->loadTile(mapID,id,index,x,y);
             return 0;
         }
@@ -192,12 +193,18 @@ namespace lua_functions {
 
     int loadEnemiesData(lua_State *l_state) {
         int argc = lua_gettop(l_state);
-        if(argc == 5) {
+        if(argc == 9) {
             int id = lua_tonumber(l_state,1); // id
-            std::string img = lua_tostring(l_state,2); // image
-            //int hp = lua_tonumber(l_state,3); // hp
-            //int level = lua_tonumber(l_state,4); // level
-            //int atk = lua_tonumber(l_state,5); // atk
+            std::string name = lua_tostring(l_state,2); // name
+            std::string img = lua_tostring(l_state,3); // image
+            int hp = lua_tonumber(l_state,4); // hp
+            int level = lua_tonumber(l_state,5); // level
+            int atk = lua_tonumber(l_state,6); // atk
+            int exp = lua_tonumber(l_state,7);
+            int width = lua_tonumber(l_state,8);
+            int height = lua_tonumber(l_state,9);
+            game::getEnemyDataController()->loadEnemy(id, name, img, hp, level, atk,exp, width, height);
+
             game::getTextureManager()->loadTexture(img);
             game::getTextureMapController()->loadEnemyData(id,img);
             game::getEditor()->loadIcon(img,id,game::ENEMY);
@@ -231,8 +238,6 @@ LuaInterface::LuaInterface() { }
 
 void LuaInterface::initLua() {
     std::cout << " - LuaInterface::initLua() ..." << std::endl;
-
-
 
     l_state = luaL_newstate();
     luaL_openlibs(l_state);

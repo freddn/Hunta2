@@ -7,16 +7,12 @@ before_install:
 - sudo apt-get update -qq
 
 install:
-- sudo apt-get install libfreetype6-dev
-- sudo apt-get install libsdl2-dev
-- sudo apt-get install libsdl2-image-dev
-- sudo apt-get install libsdl2-ttf-dev
-- sudo apt-get install libsdl2-mixer-dev
-- sudo apt-get install libsdl2-net-dev
-- sudo apt-get install liblua5.1-0-dev
-- sudo apt-get install -qq g++-4.8
+- sudo apt-get install -qq libfreetype6-dev libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+- sudo apt-get install -qq libsdl2-mixer-dev libsdl2-net-dev liblua5.1-0-dev g++-4.8
+- sudo apt-get install -qq cppcheck
 - export CC="g++-4.8"
 
-script:
-    - make travis
-    
+script: make travis
+
+after_script: cppcheck --verbose --enable=all --std=posix --quiet `git ls-files src/\*.cpp`
+
