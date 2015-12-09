@@ -20,6 +20,8 @@
 #include "Game.hpp"
 #include "EntitySystem.hpp"
 
+#include <iostream>
+
 MapController::MapController() {}
 
 MapController::~MapController() {}
@@ -187,8 +189,7 @@ void MapController::loadEnemyData(int id, std::string img) {
 
 /// Load info about existing maps.
 void MapController::loadMapData(int id, int x,int y,int n,int e, int s, int w) {
-    if(mapContainer.find(id) != mapContainer.end())
-        mapContainer.erase(id);
+    mapContainer.erase(id);
     Map* tempMap(new Map());
     tempMap->setMapID(id);
     tempMap->setX(x);

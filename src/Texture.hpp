@@ -23,7 +23,6 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
-#include <iostream>
 
 #include "EntitySystem.hpp"
 #include "Position.hpp"
@@ -104,17 +103,19 @@ private:
     SDL_Texture *currentTexture{nullptr};
     SDL_Rect rect;
     SDL_Rect tclip;
-    SDL_Color textColor;
+
     TTF_Font* textFont{nullptr};
+    SDL_Color textColor;
+
     bool isClipped = false;
     bool isText = false;
     bool solid = false; // texture is solid?
-    std::string imageName = "image_name";
-    std::string textString;
-    int xPos;
-    int yPos;
-    int tWidth; //texture width
-    int tHeight; //texture height
+    std::string imageName = "-";
+    std::string textString = "-";
+    int xPos = -1;
+    int yPos = -1;
+    int tWidth = -1; //texture width
+    int tHeight = -1; //texture height
 };
 
 #endif // TEXTURE_H

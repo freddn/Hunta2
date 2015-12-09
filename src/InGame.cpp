@@ -18,12 +18,13 @@
 
 #include "InGame.hpp"
 
+#include "Game.hpp"
+
 InGame::InGame() {}
 
 InGame::~InGame() {}
 
 void InGame::init() {
-    std::cout << " - InGame::init() ..."<<std::endl;
     inGameManager.reserveEntities(300);
 }
 

@@ -1,19 +1,20 @@
 #include "UIController.hpp"
 
 UIController::UIController() {
-    //ctor
     inventory = new Inventory(445,150);
 }
 
+UIController::UIController( const UIController &obj) {
+    inventory = new Inventory(445,150);
+    *inventory = *obj.inventory;
+}
+
 UIController::~UIController() {
-    //dtor
     delete inventory;
 }
 
 void UIController::init() {
-
     inventory->init();
-
     tInterface.loadFromFile("data/interface.png"); /// Sample interface
 }
 

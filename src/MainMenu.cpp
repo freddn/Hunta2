@@ -18,6 +18,7 @@
 
 #include "MainMenu.hpp"
 #include "Game.hpp"
+#include <iostream>
 
 MainMenu::MainMenu() {
 
@@ -28,7 +29,7 @@ MainMenu::~MainMenu() {
 }
 
 void MainMenu::init() {
-    std::cout << " - MainMenu::init() ..."<<std::endl;
+    std::cerr << " - MainMenu::init() ..."<<std::endl;
     frame.loadFromFile("data/frame.png");
 
     button = {50,50,32*8,32*2};
@@ -41,9 +42,8 @@ void MainMenu::init() {
     buttonBg = SDL_CreateTexture(game::getRenderer(), SDL_PIXELFORMAT_RGBA8888,
                                SDL_TEXTUREACCESS_TARGET, button.w, button.h);
 
-    if(buttonBg == 0) {
+    if(buttonBg == 0)
         std::cerr << "Failed to create Start Game button" << std::endl;
-    }
 
     buildButton();
 }
@@ -81,14 +81,14 @@ void MainMenu::update() {
         if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
             if(mouseOverRect(newGame)) {
                 game::setCurrent_state(game::INGAME);
-                std::cerr << "new game\n";
+                std::cout << "new game\n";
             } else if(mouseOverRect(loadGame)) {
                 game::setCurrent_state(game::INGAME);
-                std::cerr << "load game\n";
+                std::cout << "load game\n";
             } else if(mouseOverRect(settings)) {
-                std::cerr << "settings\n";
+                std::cout << "settings\n";
             } else if(mouseOverRect(quitGame)) {
-                std::cerr << "quit game\n";
+                std::cout << "quit game\n";
             }
         }
     }

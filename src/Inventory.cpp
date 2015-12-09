@@ -17,9 +17,9 @@
  */
 
 #include "Inventory.hpp"
-
 #include "Game.hpp"
 
+#include <iostream>
 
 using namespace EntitySystem;
 

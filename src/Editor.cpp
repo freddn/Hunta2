@@ -187,8 +187,7 @@ void Editor::place() {
     int relY = tempY - mapY*MAP_HEIGHT;
 
     index = (relX/32)+((relY/32)*64);
-    std::cerr << mapID << " relX " << relX << " relY " << relY << " index " << index
-                <<" currX " << tempX << " currY "<<tempY<< std::endl;
+
     /// Load the entity onto the map
     switch(icons.at(selected)->getType()) {
     case game::TILE:

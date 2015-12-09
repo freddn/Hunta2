@@ -28,7 +28,6 @@
 
 #include "EntitySystem.hpp"
 #include "Icon.hpp"
-#include "EntityCreator.hpp"
 
 /**
  * This class represents the map-editor.
@@ -83,8 +82,6 @@ private:
     EntitySystem::EntityManager environmentManager;
     EntitySystem::EntityManager itemManager;
     EntitySystem::EntityManager enemyManager;
-
-    EntityCreator creator;
 
     std::map<int, std::shared_ptr<Icon>> icons;
     unsigned int selected = 0;

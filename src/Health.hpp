@@ -28,6 +28,7 @@ public:
     void draw();
     void update();
 
+    void initHpBar();
     void setHp(int health);
     void damage(int atk, int seed);
     void setMaxHp(int maxhealth);

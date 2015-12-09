@@ -1,12 +1,13 @@
+
 #include "PlayerController.hpp"
 #include <cmath>
+#include <iostream>
 
 PlayerController::PlayerController() {
     //ctor
 }
 
-PlayerController::PlayerController(std::string n) {
-    playerName = n;
+PlayerController::PlayerController(std::string n) : playerName(n) {
 }
 
 PlayerController::~PlayerController() {

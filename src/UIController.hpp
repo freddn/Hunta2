@@ -7,6 +7,7 @@
 class UIController {
 public:
     UIController();
+    UIController( const UIController &obj);
 
     void init();
     void draw();
@@ -19,7 +20,7 @@ private:
 
     Inventory *inventory{nullptr};
     bool showInventory = false;
-    const Uint8 *key;
+    const Uint8 *key = 0;
     int buf = 0;
 };
 

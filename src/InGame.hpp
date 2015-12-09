@@ -21,14 +21,10 @@
 
 #include <memory>
 #include <vector>
-#include "Inventory.hpp"
-#include "Screen.hpp"
-#include "Game.hpp"
-#include "Item.hpp"
-#include "Character.hpp"
 
+
+#include "Screen.hpp"
 #include "EntitySystem.hpp"
-#include "EntityCreator.hpp"
 
 using namespace EntitySystem;
 
@@ -68,7 +64,7 @@ private:
     Texture tInterface;
     EntityManager inGameManager;
 
-    const Uint8 *key;
+    const Uint8 *key = 0;
 };
 
 #endif // INGAME_H

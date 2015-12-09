@@ -19,8 +19,6 @@ set(SOURCE_FILES
     src/Editor.hpp
     src/Enemy.cpp
     src/Enemy.hpp
-    src/EntityCreator.cpp
-    src/EntityCreator.hpp
     src/EntitySystem.cpp
     src/EntitySystem.hpp
     src/Environment.cpp

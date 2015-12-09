@@ -19,6 +19,8 @@
 #include "Texture.hpp"
 #include "Game.hpp"
 
+#include <iostream>
+
 Texture::Texture() {
     tclip.w = 32;
     tclip.h = 32;
@@ -30,28 +32,26 @@ Texture::Texture(int w, int h) {
     isClipped = true;
 }
 
-Texture::Texture(std::string img,bool clip) {
+Texture::Texture(std::string img,bool clip) : imageName(img) {
     isClipped = clip;
     isText = false;
-    imageName = img;
     //currentTexture = nullptr;
     tclip.w = 32;
     tclip.h = 32;
 }
 
-Texture::Texture(std::string img,bool clip, int w,int h) {
+Texture::Texture(std::string img,bool clip, int w,int h) : imageName(img) {
     isClipped = clip;
     isText = false;
-    imageName = img;
     tclip.w = w;
     tclip.h = h;
 }
 
-Texture::Texture(std::string text,SDL_Color textcolor,TTF_Font* font) {
+Texture::Texture(std::string text,SDL_Color textcolor,TTF_Font* font) :
+                                        textFont(font),
+                                        textColor(textcolor),
+                                        textString(text) {
     isText = true;
-    textFont = font;
-    textColor = textcolor;
-    textString = text;
 }
 
 Texture::~Texture() {}

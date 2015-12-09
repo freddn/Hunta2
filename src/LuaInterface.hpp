@@ -66,7 +66,7 @@ public:
     virtual ~LuaInterface();
 private:
     //std::vector<std::pair<int,Texture*>> texture_map;
-    lua_State *l_state;
+    lua_State *l_state{nullptr};
 };
 
 #endif // LUAINTERFACE_H

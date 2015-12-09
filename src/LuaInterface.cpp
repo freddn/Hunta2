@@ -17,8 +17,8 @@
  */
 
 #include "LuaInterface.hpp"
-
 #include "Game.hpp"
+#include <iostream>
 
 namespace lua_functions {
 

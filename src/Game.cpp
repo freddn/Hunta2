@@ -18,13 +18,11 @@
 
 #include "Game.hpp"
 
-#include <string>
-#include <iostream>
-#include <cmath>
 #include "InGame.hpp"
 #include "MainMenu.hpp"
-#include "UIController.hpp"
 #include <unistd.h>
+
+#include <iostream>
 
 namespace game {
     SDL_Event event;
@@ -130,13 +128,10 @@ namespace game {
             if(avgFPS > 2000000) {
                 avgFPS = 0;
             }
-            //avgFPS = 1000.f / (fpsTimer.getTicks() - currentTick);
-
 
             if((fpsTimer.getTicks() - currentTick) < TICKS_PER_FRAME) {
                 SDL_Delay((TICKS_PER_FRAME-(fpsTimer.getTicks()-currentTick)));
             }
-            //SDL_Delay(5);
             ++countedFrames;
         }
     }
@@ -146,12 +141,12 @@ namespace game {
 
         while(SDL_PollEvent(&event) != 0) {
             if(event.type == SDL_QUIT)
-                running = false;//game::setRunning(false);
+                running = false;
             else if(current_state == EDITOR && SDL_GetMouseState(NULL,NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
                 editor.place();
             else if(event.type == SDL_KEYDOWN) {
                 if(key[SDL_SCANCODE_ESCAPE])
-                    running = false;//game::setRunning(false);
+                    running = false;
                 else if(key[SDL_SCANCODE_S]) {
                     if (timer.isStarted())
                         timer.stop();
@@ -171,7 +166,6 @@ namespace game {
                         offset.y = game::getHeight();
 
                         mapController.saveMaps();
-
                         mapController.loadMap(1);
                         //textureMap = textureMapController.getMap(1);
                         mapController.getMap(1)->loadPlayer(100,100);

@@ -44,7 +44,7 @@ public:
     ~Inventory();
 private:
     LuaInterface l_interface;
-    SDL_Texture *inv_bg;
+    SDL_Texture *inv_bg{nullptr};
     Texture frame;
     Texture text;
     int sizeX = 6;

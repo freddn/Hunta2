@@ -252,9 +252,8 @@ namespace EntitySystem {
 
     Entity& EntityManager::addEntity(int index) {
         byIndex = true;
-        if(entitiesByIndex.find(index) != entitiesByIndex.end()) {
-            entitiesByIndex.erase(index);
-        }
+        entitiesByIndex.erase(index);
+
         Entity* e(new Entity(*this));
         //std::cerr << entities.size() << std::endl;
 
@@ -269,9 +268,8 @@ namespace EntitySystem {
     Entity* EntityManager::addEntity(int index,bool i) {
         if(i) {
             byIndex = true;
-            if(entitiesByIndex.find(index) != entitiesByIndex.end()) {
-                entitiesByIndex.erase(index);
-            }
+            entitiesByIndex.erase(index);
+
             Entity* e(new Entity(*this));
             //std::cerr << entities.size() << std::endl;
 

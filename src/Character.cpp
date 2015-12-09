@@ -18,7 +18,9 @@
 
 #include "Character.hpp"
 #include "Game.hpp"
+#include "Projectile.hpp"
 
+#include <iostream>
 
 Character::Character() {
 }
@@ -101,9 +103,19 @@ void Character::update() {
         if(!attacking) {
             attacking = true;
             /* Fire a projectile.. */
-
-            creator.createProjectile(*manager,position->getX(),position->getY(),
-                                      game::getMouseX()+game::getOffset()->x,game::getMouseY()+game::getOffset()->y);
+            if(manager->canAdd()) {
+                auto &projectile(manager->addEntity());
+                projectile.addComponent<Position>(position->getX(),
+                                                  position->getY());
+                projectile.addComponent<Texture>("data/fireball.png",false);
+                projectile.addComponent<GPhysics>();
+                projectile.addComponent<Projectile>(
+                        game::getMouseX()+game::getOffset()->x,
+                        game::getMouseY()+game::getOffset()->y,
+                        game::getMouseX()+game::getOffset()->x-position->getX(),
+                        game::getMouseY()+game::getOffset()->y-position->getY());
+                projectile.addGroup(game::PROJECTILE);
+            }
         }
     } else
         attacking = false;

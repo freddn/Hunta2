@@ -24,7 +24,6 @@
 #include "GPhysics.hpp"
 #include "Health.hpp"
 #include "EntitySystem.hpp"
-#include "EntityCreator.hpp"
 
 using namespace EntitySystem;
 
@@ -76,7 +75,6 @@ private:
     std::string charName = "";
 
     EntityManager *manager{nullptr}; // For (creating and) finding entitys.
-    EntityCreator creator; // Creating entitys.
 
     bool attacking = false;
 

@@ -1,7 +1,6 @@
 SRC = src/Character.cpp \
       src/Editor.cpp \
       src/Enemy.cpp \
-      src/EntityCreator.cpp \
       src/EntitySystem.cpp \
       src/Environment.cpp \
       src/Game.cpp \

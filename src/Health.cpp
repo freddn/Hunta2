@@ -7,6 +7,7 @@
 Health::Health(int hp) {
     maxHP = hp;
     health = hp;
+    initHpBar();
 }
 
 Health::~Health() {
@@ -15,9 +16,7 @@ Health::~Health() {
     hpBarOutline = nullptr;
 }
 
-void Health::init() {
-    position = &entity->getComponent<Position>();
-
+void Health::initHpBar() {
     dmgBg.loadFromFile("data/bloodSplash2.png");
     healBg.loadFromFile("data/heal.png");
     defBg.loadFromFile("data/shield.png");
@@ -39,6 +38,13 @@ void Health::init() {
     hpBarOutline = SDL_CreateTextureFromSurface(game::getRenderer(),temp);
 
     SDL_FreeSurface(temp);
+
+}
+
+void Health::init() {
+    position = &entity->getComponent<Position>();
+
+
 
     hpBarRect.y = position->getY()-10;
     hpBarRect.x = position->getX();

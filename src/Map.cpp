@@ -20,7 +20,6 @@ Map::Map() {}
 Map::~Map() {}
 
 void Map::init() {
-    std::cerr << "id: "<< mapID << " x: " << mapX << " y: " << mapY<< std::endl;
     tiles.setOffset(mapX*MAP_WIDTH,mapY*MAP_HEIGHT);
 }
 

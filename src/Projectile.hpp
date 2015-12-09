@@ -20,8 +20,8 @@ private:
     int destY;
     int posY;
     int posX;
-    int startX;
-    int startY;
+    int startX = 0;
+    int startY = 0;
     int range = 200;
     GPhysics *physics{nullptr};
     LTimer timer;

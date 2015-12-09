@@ -35,7 +35,7 @@ public:
 private:
     Texture frame;
     Texture text;
-    SDL_Texture *buttonBg;
+    SDL_Texture *buttonBg{nullptr};
     std::stringstream tempText;
     SDL_Rect button;
     SDL_Rect newGame;

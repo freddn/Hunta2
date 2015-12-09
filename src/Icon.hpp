@@ -29,8 +29,8 @@ public:
 protected:
 private:
     bool selected = false;
-    std::size_t type;
-    int iconID;
+    std::size_t type = -1;
+    int iconID = -1;
     int posX = 0;
     int posY = 0;
     Texture iconImage;
