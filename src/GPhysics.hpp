@@ -41,7 +41,7 @@ public:
     void clearCol();
 
     /** Check for collision */
-    bool isColliding(int x, int y); /// Current entity is inside this position?
+    bool isColliding(float x, float y); /// Current entity is inside this position?
     bool isColliding(EntitySystem::Entity *e); /// Current entity is colliding with given one?
     bool isColliding(SDL_Rect src, SDL_Rect dest); /// TODO Implement
 

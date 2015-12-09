@@ -21,3 +21,7 @@ dragonfly:
 travis:
 	$(MAKE) -f config/makefile.travis
 
+clean:
+	@echo cleaning
+	@rm -f hunta2
+	@rm -f src/*.o

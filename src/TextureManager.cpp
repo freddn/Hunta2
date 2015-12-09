@@ -25,4 +25,3 @@ SDL_Texture * TextureManager::getTexture(std::string img) {
         return loadedTextures.at(img);
     return nullptr;
 }
-

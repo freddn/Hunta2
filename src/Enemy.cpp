@@ -20,9 +20,15 @@
 
 #include "Game.hpp"
 
-Enemy::Enemy(EntityManager &m, int id) {
-    manager = &m;
+Enemy::Enemy(EntityManager &m, int id) : manager(&m){
     enemyID = id;
+}
+
+Enemy::Enemy(EntityManager &m, int id, int exp, std::string name, int atk) :
+                        manager(&m), enemyName(name){
+    enemyID = id;
+    experienceGain = exp;
+    enemyAttack = atk;
 }
 
 Enemy::~Enemy() {}

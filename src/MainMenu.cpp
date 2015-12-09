@@ -20,54 +20,75 @@
 #include "Game.hpp"
 #include <iostream>
 
-MainMenu::MainMenu() {
+MainMenu::MainMenu() {}
 
-}
-
-MainMenu::~MainMenu() {
-
-}
+MainMenu::~MainMenu() {}
 
 void MainMenu::init() {
     std::cerr << " - MainMenu::init() ..."<<std::endl;
     frame.loadFromFile("data/frame.png");
 
-    button = {50,50,32*8,32*2};
+    button.x = 0;
+    button.y = 0;
+    button.h = 64;
+    button.w = 256;
 
     newGame =  {32*6, 100,button.w,button.h};
     loadGame = {32*6, 180,button.w,button.h};
     settings = {32*6, 260,button.w,button.h};
     quitGame = {32*6, 340,button.w,button.h};
 
-    buttonBg = SDL_CreateTexture(game::getRenderer(), SDL_PIXELFORMAT_RGBA8888,
-                               SDL_TEXTUREACCESS_TARGET, button.w, button.h);
-
-    if(buttonBg == 0)
-        std::cerr << "Failed to create Start Game button" << std::endl;
-
-    buildButton();
+    buttonBg.setClipped(true);
+    buttonBg.setClipW(256);
+    buttonBg.setClipH(64);
+    buttonBg.loadFromFile("data/button.png");
 }
 
 void MainMenu::draw() {
     Screen::renderStart();
 
     /* Render the menu */
-    SDL_RenderCopy(game::getRenderer(),buttonBg,nullptr,&newGame);
+
+    if(newGamePressed)
+        buttonBg.setClipY(2);
+    else if(newGameHoover)
+        buttonBg.setClipY(1);
+    else
+        buttonBg.setClipY(0);
+    buttonBg.render(newGame.x, newGame.y,nullptr);
     text.loadFromText("New Game" ,
                         *game::getTextColor(),game::getFont());
     text.render(newGame.x+20,newGame.y+18,(SDL_Rect*)nullptr);
 
-    SDL_RenderCopy(game::getRenderer(),buttonBg,nullptr,&loadGame);
+    if(loadGamePressed)
+        buttonBg.setClipY(2);
+    else if(loadGameHoover)
+        buttonBg.setClipY(1);
+    else
+        buttonBg.setClipY(0);
+    buttonBg.render(loadGame.x,loadGame.y, nullptr);
     text.loadFromText("Load Game" ,
                         *game::getTextColor(),game::getFont());
     text.render(loadGame.x+20,loadGame.y+18,(SDL_Rect*)nullptr);
 
-    SDL_RenderCopy(game::getRenderer(),buttonBg,nullptr,&settings);
+    if(settingsPressed)
+        buttonBg.setClipY(2);
+    else if(settingsHoover)
+        buttonBg.setClipY(1);
+    else
+        buttonBg.setClipY(0);
+    buttonBg.render(settings.x,settings.y,nullptr);
     text.loadFromText("Settings" ,
                         *game::getTextColor(),game::getFont());
     text.render(settings.x+20,settings.y+18,(SDL_Rect*)nullptr);
 
-    SDL_RenderCopy(game::getRenderer(),buttonBg,nullptr,&quitGame);
+    if(quitGamePressed)
+        buttonBg.setClipY(2);
+    else if(quitGameHoover)
+        buttonBg.setClipY(1);
+    else
+        buttonBg.setClipY(0);
+    buttonBg.render(quitGame.x,quitGame.y,nullptr);
     text.loadFromText("Quit game" ,
                         *game::getTextColor(),game::getFont());
     text.render(quitGame.x+20,quitGame.y+18,(SDL_Rect*)nullptr);
@@ -77,19 +98,73 @@ void MainMenu::draw() {
 
 void MainMenu::update() {
     /* Check if button is pressed. */
+    if(mouseOverRect(newGame))
+        newGameHoover = true;
+    else {
+        newGameHoover = false;
+        newGamePressed = false;
+    }
+    if(mouseOverRect(loadGame))
+        loadGameHoover = true;
+    else {
+        loadGameHoover = false;
+        loadGamePressed = false;
+    }
+    if(mouseOverRect(settings))
+        settingsHoover = true;
+    else {
+        settingsHoover = false;
+        settingsPressed = false;
+    }
+    if(mouseOverRect(quitGame))
+        quitGameHoover = true;
+    else {
+        quitGameHoover = false;
+        quitGamePressed = false;
+    }
+
     if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
         if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+            if(mouseOverRect(newGame))
+                newGamePressed = true;
+            else
+                newGamePressed = false;
+            if(mouseOverRect(loadGame))
+                loadGamePressed = true;
+            else
+                loadGamePressed = false;
+            if(mouseOverRect(settings))
+                settingsPressed = true;
+            else
+                settingsPressed = false;
+            if(mouseOverRect(quitGame))
+                quitGamePressed = true;
+            else
+                quitGamePressed = false;
+        }
+    }
+    if(game::getEvent()->type == SDL_MOUSEBUTTONUP) {
+        if(SDL_BUTTON(SDL_BUTTON_LEFT)) {
             if(mouseOverRect(newGame)) {
+                // TODO Add character selection screen
+                game::getTextureMapController()->getMap(1)->loadPlayer(100,100);
                 game::setCurrent_state(game::INGAME);
-                std::cout << "new game\n";
-            } else if(mouseOverRect(loadGame)) {
+            } else
+                newGamePressed = false;
+            if(mouseOverRect(loadGame)) {
+                // TODO Add saved game screen
+                game::getTextureMapController()->getMap(1)->loadPlayer(100,100);
                 game::setCurrent_state(game::INGAME);
-                std::cout << "load game\n";
-            } else if(mouseOverRect(settings)) {
-                std::cout << "settings\n";
-            } else if(mouseOverRect(quitGame)) {
-                std::cout << "quit game\n";
-            }
+            } else
+                loadGamePressed = false;
+            if(mouseOverRect(settings)) {
+                // TODO Add settings panel
+            } else
+                settingsPressed = false;
+            if(mouseOverRect(quitGame)) {
+                game::setRunning(false);
+            } else
+                quitGamePressed = false;
         }
     }
 
@@ -101,7 +176,7 @@ bool MainMenu::mouseOverRect(SDL_Rect r) {
      game::getMouseY() < r.y+r.h && game::getMouseY() > r.y;
 }
 
-void MainMenu::buildButton() {
+/*void MainMenu::buildButton() {
     SDL_Rect temp;
     temp.x = 0;
     temp.y = 0;
@@ -146,4 +221,4 @@ void MainMenu::buildButton() {
     SDL_SetRenderTarget(game::getRenderer(),NULL);
 }
 
-
+*/

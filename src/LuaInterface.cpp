@@ -194,15 +194,15 @@ namespace lua_functions {
     int loadEnemiesData(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 9) {
-            int id = lua_tonumber(l_state,1); // id
+            int id = lua_tointeger(l_state,1); // id
             std::string name = lua_tostring(l_state,2); // name
             std::string img = lua_tostring(l_state,3); // image
-            int hp = lua_tonumber(l_state,4); // hp
-            int level = lua_tonumber(l_state,5); // level
-            int atk = lua_tonumber(l_state,6); // atk
-            int exp = lua_tonumber(l_state,7);
-            int width = lua_tonumber(l_state,8);
-            int height = lua_tonumber(l_state,9);
+            int hp = lua_tointeger(l_state,4); // hp
+            int level = lua_tointeger(l_state,5); // level
+            int atk = lua_tointeger(l_state,6); // atk
+            int exp = lua_tointeger(l_state,7); // exp
+            int width = lua_tointeger(l_state,8); // width
+            int height = lua_tointeger(l_state,9); // height
             game::getEnemyDataController()->loadEnemy(id, name, img, hp, level, atk,exp, width, height);
 
             game::getTextureManager()->loadTexture(img);

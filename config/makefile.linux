@@ -30,6 +30,6 @@ hunta2: ${OBJ}
 clean:
 	@echo cleaning
 	@rm -f hunta2
-	@rm src/*.o
+	@rm -f src/*.o
 
 .PHONY: all hunta2 options clean

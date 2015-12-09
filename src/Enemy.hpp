@@ -30,6 +30,7 @@ using namespace EntitySystem;
 struct Enemy : Component {
 public:
     Enemy(EntityManager &m, int id);
+    Enemy(EntityManager &m, int id, int exp, std::string name, int atk);
 
     void init();
     void draw();
@@ -48,7 +49,7 @@ private:
     Position *position{nullptr};
 
     EntityManager *manager{nullptr};
-
+    std::string enemyName = "-";
     int xPos = 0; // x-position of the enemy.
     int yPos = 0; // y-position of the enemy.
     int xSpawnPos = 0;
@@ -57,8 +58,8 @@ private:
     int enemyWidth = 0;
     int enemyHeight = 0;
 
-    int experienceGain = 5;
-
+    int experienceGain = 0;
+    int enemyAttack = 0;
     int enemyID = -1;
     bool isAggressive = false;
     bool aggro = false;

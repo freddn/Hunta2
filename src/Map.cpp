@@ -107,8 +107,7 @@ void Map::loadEnemy(int id, int index, int x,int y, std::string img, int width, 
             enemy->addComponent<Texture>(img,true);
         enemy->addComponent<GPhysics>();
         enemy->addComponent<Health>(data.hp);
-        enemy->addComponent<Enemy>(manager, id);
-        enemy->getComponent<Enemy>().setExpGain(data.exp);
+        enemy->addComponent<Enemy>(manager, id, data.exp, data.name, data.atk);
         enemy->addGroup(game::ENEMY);
     }
 }

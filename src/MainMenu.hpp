@@ -29,20 +29,27 @@ public:
     void init();
     void update();
     void draw();
-    void buildButton();
     bool mouseOverRect(SDL_Rect r);
     ~MainMenu();
 private:
     Texture frame;
     Texture text;
-    SDL_Texture *buttonBg{nullptr};
-    std::stringstream tempText;
-    SDL_Rect button;
-    SDL_Rect newGame;
-    SDL_Rect loadGame;
-    SDL_Rect settings;
-    SDL_Rect quitGame;
+    Texture buttonBg;
 
+    SDL_Rect button;
+
+    SDL_Rect newGame;
+    bool newGameHoover = false;
+    bool newGamePressed = false;
+    SDL_Rect loadGame;
+    bool loadGameHoover = false;
+    bool loadGamePressed = false;
+    SDL_Rect settings;
+    bool settingsHoover = false;
+    bool settingsPressed = false;
+    SDL_Rect quitGame;
+    bool quitGameHoover = false;
+    bool quitGamePressed = false;
 };
 
 #endif // MAINMENU_H

@@ -41,7 +41,8 @@ namespace game {
     InGame inGame;
     MainMenu mMenu;
 
-    int current_state = INGAME;
+    //int current_state = INGAME;
+    int current_state = MAINMENU;
     LuaInterface lInterface;
     MapController mapController;
     TextureManager textureManager;
@@ -95,10 +96,11 @@ namespace game {
             currentTick = fpsTimer.getTicks();
 
             pollEvents();
+
             switch(current_state) {
             case(MAINMENU):
                 /* Show the main menu */
-                mMenu.update();
+                //mMenu.update();
                 mMenu.draw();
                 break;
             case(INGAME):
@@ -140,6 +142,8 @@ namespace game {
         const Uint8 *key = SDL_GetKeyboardState(NULL);
 
         while(SDL_PollEvent(&event) != 0) {
+            if(current_state == MAINMENU)
+                mMenu.update();
             if(event.type == SDL_QUIT)
                 running = false;
             else if(current_state == EDITOR && SDL_GetMouseState(NULL,NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
@@ -161,17 +165,11 @@ namespace game {
                     current_state = MAINMENU;
                 else if(key[SDL_SCANCODE_1]) {
                     if(current_state == EDITOR) {
-                        /* Save as map_y_x */
-                        offset.x = game::getWidth();
-                        offset.y = game::getHeight();
-
                         mapController.saveMaps();
                         mapController.loadMap(1);
-                        //textureMap = textureMapController.getMap(1);
-                        mapController.getMap(1)->loadPlayer(100,100);
                     }
+                    mapController.getMap(1)->loadPlayer(100,100);
                     game::setCurrent_state(game::INGAME);
-                    // LOAD MAP
                 } else if(key[SDL_SCANCODE_3])
                     current_state = game::PAUSED;
                 else if(key[SDL_SCANCODE_0])
@@ -180,8 +178,6 @@ namespace game {
                     mapController.getMap(1)->destroyPlayer();
                     mapController.getMap(1)->update();
                     current_state = game::EDITOR;
-                    // LOAD MAP.
-                    // SAVE MAP.
                 }
             } else if(event.type == SDL_MOUSEWHEEL && current_state == EDITOR)
                 editor.setSelected(editor.getSelected()+event.wheel.y);

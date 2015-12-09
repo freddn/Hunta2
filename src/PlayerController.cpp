@@ -98,7 +98,6 @@ void PlayerController::setExperience(int e) {
                      "|         LEVELUP!!!\n"<<
                      "|          "<<level<<"\n" <<
                      "-----------------------------" <<std::endl;
-
     } else {
         experience = e;
         std::cout << "!! LV: "<< level<<" XP: " << experience << "/" << getMaxExperience(level)<<" !!"<< std::endl;
