@@ -30,7 +30,7 @@ public:
 
     void initHpBar();
     void setHp(int health);
-    void damage(int atk, int seed);
+    int damage(int atk, int seed);
     void setMaxHp(int maxhealth);
     void setDisplay(bool display);
     int getHp();

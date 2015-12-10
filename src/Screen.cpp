@@ -37,13 +37,7 @@ void Screen::renderEnd() {
     tempText << "FPS: " << game::getAvgFPS();
     fpsText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
 
-    tempText.str("");
-    tempText << "Time: " << (game::getTimer()->getTicks() / 1000.f);
-    timerText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
-
-    fpsText.render(200,30,nullptr);
-    timerText.render(350,30,nullptr);
-
+    fpsText.render(10,30,nullptr);
 
     SDL_RenderPresent(game::getRenderer());
 }

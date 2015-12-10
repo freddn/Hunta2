@@ -38,14 +38,10 @@ void Health::initHpBar() {
     hpBarOutline = SDL_CreateTextureFromSurface(game::getRenderer(),temp);
 
     SDL_FreeSurface(temp);
-
 }
 
 void Health::init() {
     position = &entity->getComponent<Position>();
-
-
-
     hpBarRect.y = position->getY()-10;
     hpBarRect.x = position->getX();
 
@@ -104,16 +100,20 @@ void Health::setHp(int hp) {
         alive = false;
         if(entity->hasComponent<Enemy>())
             entity->getComponent<Enemy>().onDeath();
+        else
+            game::setCurrent_state(game::MAINMENU);
     }
 }
 
-void Health::damage(int atk, int seed) {
+int Health::damage(int atk, int seed) {
+    int atkVal = 0;
     if(alive) {
         isDisplayed = true;
         srand(seed);
-        int atkVal = rand() % atk;
+        atkVal = rand() % atk;
         setHp(health-atkVal);
     }
+    return atkVal;
 }
 
 void Health::displayDamage(int damage) {

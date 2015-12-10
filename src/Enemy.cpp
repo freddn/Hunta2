@@ -34,7 +34,9 @@ Enemy::Enemy(EntityManager &m, int id, int exp, std::string name, int atk) :
 Enemy::~Enemy() {}
 
 void Enemy::init() {
-    experienceGain = enemyID*5;
+    enemyAttack = game::getEnemyDataController()->getAtk(enemyID);
+    experienceGain = game::getEnemyDataController()->getExperience(enemyID);
+
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
     enemyHeight = texture->getHeight();
@@ -106,6 +108,7 @@ void Enemy::update() {
                     position->getY()+(enemyHeight-5) > py )) {
                     aggroY = false;
                     physics->setDestY(0);
+                    isAttacking = true;
                 } else
                     aggroY = true;
                 if((position->getX()+5 > px &&
@@ -114,6 +117,7 @@ void Enemy::update() {
                     position->getX()+(enemyWidth-5) > px )) {
                     aggroX = false;
                     physics->setDestX(0);
+                    isAttacking = true;
                 }
                 else
                     aggroX = true;
@@ -140,6 +144,18 @@ void Enemy::update() {
                         physics->setDestX((px-pw+5) - position->getX());
                     texture->setClipX(0);
                     texture->setClipY(1);
+                }
+                if(isAttacking) {
+                    if(!attackTimer.isStarted()) {
+                        attackTimer.start();
+                        player[0]->getComponent<Health>().damage(
+                                enemyAttack, game::getTimer()->getTicks());
+                        game::getPlayerController()->setCurrentHp(
+                                player[0]->getComponent<Health>().getHp());
+                    } else if(attackTimer.getTicks() > 800) {
+                        attackTimer.stop();
+                        isAttacking = false;
+                    }
                 }
             } else {        /* Return home */
                 aggroX = true;
@@ -187,6 +203,8 @@ void Enemy::onDeath() {
     /// Corpse??
     alive = false;
     game::getPlayerController()->increaseExperience(experienceGain);
+    knockBackTimer.stop();
+    isKnockedBack = false;
     deathTimer.start();
 }
 

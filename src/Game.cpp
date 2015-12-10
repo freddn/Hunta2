@@ -62,6 +62,7 @@ namespace game {
     float currentFPS = 0.f;
     float avgFPS = 0.f;
     LTimer timer;
+
     LTimer fpsTimer;
     int currentTick = 0;
     int selected;
@@ -90,6 +91,7 @@ namespace game {
         if(current_state == INGAME)
             mapController.getMap(1)->loadPlayer(100,100);
         fpsTimer.start();
+        timer.start();
         std::cerr << " - game::start() (main loop) ..."<<std::endl;
         while(running) {
             /* Get current time */
@@ -150,18 +152,8 @@ namespace game {
                 editor.place();
             else if(event.type == SDL_KEYDOWN) {
                 if(key[SDL_SCANCODE_ESCAPE])
-                    running = false;
-                else if(key[SDL_SCANCODE_S]) {
-                    if (timer.isStarted())
-                        timer.stop();
-                    else
-                        timer.start();
-                } else if(key[SDL_SCANCODE_P]) {
-                    if(timer.isPaused())
-                        timer.unpause();
-                    else
-                        timer.pause();
-                } else if(key[SDL_SCANCODE_2])
+                    current_state = MAINMENU;
+                else if(key[SDL_SCANCODE_2])
                     current_state = MAINMENU;
                 else if(key[SDL_SCANCODE_1]) {
                     if(current_state == EDITOR) {
@@ -184,6 +176,12 @@ namespace game {
             else if(event.type == SDL_MOUSEMOTION)
                 SDL_GetMouseState(&mouseX,&mouseY);
         }
+    }
+    void newGame() {
+        playerController.load("nooobn",&lInterface);
+        mapController.loadMap(1);
+        mapController.getMap(1)->loadPlayer(100,100);
+        game::setCurrent_state(game::INGAME);
     }
 
     bool init_game(bool fullscreen) {

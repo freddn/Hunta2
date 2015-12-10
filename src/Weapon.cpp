@@ -96,7 +96,8 @@ bool Weapon::attack() {
            (ey < weaponImage.getY()+weaponImage.getHeight()+game::getOffset()->y &&
             ey+eh > weaponImage.getY()+game::getOffset()->y)) {
 
-            e->getComponent<Health>().damage(atk,ex+ey+seed);
+            e->getComponent<Health>().damage(
+                    atk+game::getPlayerController()->getAtk(),ex+ey+seed);
             e->getComponent<Enemy>().knockBack(physics->getDir());
             hit = true;
             seed -= 1237;

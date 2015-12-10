@@ -48,6 +48,8 @@ namespace game {
     /** Check for SDL events */
     void pollEvents();
 
+    void newGame();
+
     /** Initiates SDL, creates a window, buffer and so on. */
     bool init_game(bool fullscreen);
 

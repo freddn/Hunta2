@@ -58,7 +58,9 @@ void Map::draw() {
 }
 
 void Map::close() {
-
+    EntityManager empty;
+    tiles = empty;
+    manager = empty;
 }
 
 /// Just to be safe..
@@ -121,7 +123,7 @@ void Map::loadPlayer(int x,int y) {
         player->addComponent<Position>(x + mapX*MAP_WIDTH,y + mapY*MAP_HEIGHT);
         player->addComponent<Texture>("data/gubbenew.png",true); // 32x32 clip
         player->addComponent<GPhysics>();
-        player->addComponent<Health>(100);
+        player->addComponent<Health>(game::getPlayerController()->getHp());
         player->addComponent<Weapon>("data/sword.png", manager);
         player->addComponent<Camera>();
         player->addComponent<Character>(manager);

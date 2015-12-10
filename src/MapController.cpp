@@ -77,6 +77,7 @@ bool MapController::loadMap(int mapID) {
         std::cout << "Map not found: " << mapID << std::endl;
         return false;
     } else {
+        mapContainer.at(mapID)->close();
         lInterface->loadMap(mapID);
         return true;
     }

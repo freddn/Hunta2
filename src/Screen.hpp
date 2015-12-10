@@ -42,7 +42,6 @@ struct Screen
         int x = 0;
         int y = 0;
         //int selected = 0;
-        Texture timerText;
         Texture fpsText;
 };
 

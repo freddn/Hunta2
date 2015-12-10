@@ -30,6 +30,17 @@ void InGame::init() {
 
 void InGame::draw() {
     game::getTextureMapController()->draw();
+    if(updateFreq%10 == 0) {
+        update_interface();
+        updateFreq = 1;
+    }
+    nameText.render(450,30,nullptr);
+    lvText.render(450,50,nullptr);
+    hpText.render(450,70,nullptr);
+    expText.render(450,90,nullptr);
+    atkText.render(450,110,nullptr);
+    defText.render(450,130,nullptr);
+    updateFreq++;
 }
 
 void InGame::update() {
@@ -38,6 +49,35 @@ void InGame::update() {
     Screen::update();
 }
 
+void InGame::update_interface() {
+    tempText.str("");
+    tempText << "Name: "<<game::getPlayerController()->getName();
+    nameText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
 
+    tempText.str("");
+    tempText << "LV:      "<<game::getPlayerController()->getLevel();
+    lvText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
+
+    tempText.str("");
+    tempText << "HP:      "<<game::getPlayerController()->getCurrentHp()
+            << "/"<<game::getPlayerController()->getHp();
+    hpText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
+
+    tempText.str("");
+    tempText << "EXP:    "<<game::getPlayerController()->getExperience()
+                << "/"<<game::getPlayerController()->getMaxExperience(
+                    game::getPlayerController()->getLevel());
+    expText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
+
+    tempText.str("");
+    tempText << "ATK:    "<<game::getPlayerController()->getAtk();
+    atkText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
+
+    tempText.str("");
+    tempText << "DEF:    "<<game::getPlayerController()->getDef();
+    defText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
+
+
+}
 
 

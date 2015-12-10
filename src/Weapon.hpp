@@ -48,7 +48,7 @@ private:
     std::string imgPath = "";
     bool isAttacking = false;
     int attackState = 0;
-    int atk = 12; /// Weapon attack
+    int atk = 5; /// Weapon attack
     int minAtk = 0;
 };
 

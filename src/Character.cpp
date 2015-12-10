@@ -37,11 +37,11 @@ void Character::init() {
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
     physics = &entity->getComponent<GPhysics>();
-    hpBar = &entity->getComponent<Health>();
+    health = &entity->getComponent<Health>();
+
+    level = game::getPlayerController()->getLevel();
 
     physics->setKeyControlled(true);
-    //position->setX(game::getWidth());
-    //position->setY(game::getHeight());
     /// Set the right offset.
     if(position->getX()-(game::getWidth()/2) < 0)
         game::getOffset()->x = 0;
@@ -60,13 +60,17 @@ void Character::init() {
     /// Set the position of the texture.
     texture->setXRect(game::getWidth()-game::getOffset()->x);
     texture->setYRect(game::getHeight()-game::getOffset()->y);
-    //game::getOffset().x
 }
 
 void Character::update() {
     //SDL_PumpEvents();
     const Uint8 *key = SDL_GetKeyboardState(NULL);
     moveChar(key);
+    if(game::getPlayerController()->getLevel() != level) {
+        health->setMaxHp(game::getPlayerController()->getHp());
+        health->setHp(game::getPlayerController()->getCurrentHp());
+        level = game::getPlayerController()->getLevel();
+    }
 
     /// Get all environment entities and check collision of the ones nearby.
     for(auto& e: manager->getEntitiesByGroup(game::ENVIRONMENT)) {

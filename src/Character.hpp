@@ -70,12 +70,12 @@ private:
     GPhysics *physics{nullptr};
     Texture *texture{nullptr};
     Position *position{nullptr};
-    Health *hpBar{nullptr};
+    Health *health{nullptr};
 
     std::string charName = "";
 
     EntityManager *manager{nullptr}; // For (creating and) finding entitys.
-
+    int level = 0;
     bool attacking = false;
 
     int xPos = 0; /* x-position of the player. */

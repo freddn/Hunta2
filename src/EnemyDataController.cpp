@@ -12,6 +12,7 @@ void EnemyDataController::loadEnemy(int id, std::string name, std::string img,
     data.name = name;
     data.img = img;
     data.hp = hp;
+    data.exp = exp;
     data.level = level;
     data.atk = atk;
     data.width = width;
@@ -21,14 +22,14 @@ void EnemyDataController::loadEnemy(int id, std::string name, std::string img,
 }
 
 /** --------------- Getters --------------- */
-//int EnemyDataController::getHp(int id){ return enemies.find(id) != enemies.end() ? enemies.at(id).hp : -1; }
-//int EnemyDataController::getLevel(int id){return enemies.find(id) != enemies.end() ? enemies.at(id).level : -1;}
-//int EnemyDataController::getExperience(int id){return enemies.find(id) != enemies.end() ? enemies.at(id).exp : -1;}
-//int EnemyDataController::getAtk(int id){return enemies.find(id) != enemies.end() ? enemies.at(id).atk : -1;}
+int EnemyDataController::getHp(int id){ return enemies.find(id) != enemies.end() ? enemies.at(id).hp : -1; }
+int EnemyDataController::getLevel(int id){return enemies.find(id) != enemies.end() ? enemies.at(id).level : -1;}
+int EnemyDataController::getExperience(int id){return enemies.find(id) != enemies.end() ? enemies.at(id).exp : -1;}
+int EnemyDataController::getAtk(int id){return enemies.find(id) != enemies.end() ? enemies.at(id).atk : -1;}
 int EnemyDataController::getWidth(int id){return enemies.find(id) != enemies.end() ? enemies.at(id).width : -1;}
 int EnemyDataController::getHeight(int id){return enemies.find(id) != enemies.end() ? enemies.at(id).height : -1;}
-//std::string EnemyDataController::getName(int id){return enemies.find(id) != enemies.end() ? enemies.at(id).name : "-";}
-//std::string EnemyDataController::getImg(int id) {return enemies.find(id) != enemies.end() ? enemies.at(id).img : "-";}
+std::string EnemyDataController::getName(int id){return enemies.find(id) != enemies.end() ? enemies.at(id).name : "-";}
+std::string EnemyDataController::getImg(int id) {return enemies.find(id) != enemies.end() ? enemies.at(id).img : "-";}
 EnemyData EnemyDataController::getEnemyData(int id) { return enemies.at(id); }
 
-//std::map<int, EnemyData>*EnemyDataController::getAllENemyData() { return &enemies;}
+std::map<int, EnemyData>*EnemyDataController::getAllENemyData() { return &enemies;}

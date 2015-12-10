@@ -29,6 +29,7 @@ public:
     int getPosX();
     int getPosY();
     std::string getName();
+    int getMaxExperience(int lv);
 
     /** --------------- Setters --------------- */
     void increaseExperience(int e);
@@ -45,12 +46,14 @@ public:
     virtual ~PlayerController();
 protected:
 private:
+    int getMaxHp(int lv);
     std::string playerName;
 
     Texture hpBar;
     Texture expBar;
 
     /// Stats
+    int hpBase = 15;
     int level = 1;
     int experience = 0;
     int atk = 1;

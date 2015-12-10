@@ -51,6 +51,8 @@ public:
      */
     void draw();
 
+    void update_interface();
+
     /**
      *
      */
@@ -63,7 +65,14 @@ private:
     int buf = 0;
     Texture tInterface;
     EntityManager inGameManager;
-
+    std::stringstream tempText;
+    Texture nameText;
+    Texture lvText;
+    Texture hpText;
+    Texture expText;
+    Texture atkText;
+    Texture defText;
+    int updateFreq = 0;
     const Uint8 *key = 0;
 };
 

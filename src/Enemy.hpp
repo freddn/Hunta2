@@ -58,7 +58,7 @@ private:
     int enemyWidth = 0;
     int enemyHeight = 0;
 
-    int experienceGain = 0;
+    int experienceGain = 1;
     int enemyAttack = 0;
     int enemyID = -1;
     bool isAggressive = false;
@@ -68,6 +68,8 @@ private:
     bool isKnockedBack = false;
     bool alive = true;
     int knockBackDir = 0;
+    bool isAttacking = false;
+    LTimer attackTimer;
     LTimer knockBackTimer;
     LTimer deathTimer;
 };

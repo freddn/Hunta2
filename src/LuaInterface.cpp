@@ -90,6 +90,7 @@ namespace lua_functions {
     int loadCharacter(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 9) {
+            game::getPlayerController()->setName(lua_tostring(l_state,1));
             game::getPlayerController()->setLevel(lua_tonumber(l_state,2));
             game::getPlayerController()->setExperience(lua_tonumber(l_state,3));
             game::getPlayerController()->setHp(lua_tonumber(l_state,4));
@@ -98,6 +99,7 @@ namespace lua_functions {
             game::getPlayerController()->setDef(lua_tonumber(l_state,7));
             game::getPlayerController()->setPosX(lua_tonumber(l_state,8));
             game::getPlayerController()->setPosY(lua_tonumber(l_state,9));
+            std::cout << "ATK" << game::getPlayerController()->getAtk()<<std::endl;
         }
         return 0;
     }

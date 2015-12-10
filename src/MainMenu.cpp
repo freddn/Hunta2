@@ -148,7 +148,7 @@ void MainMenu::update() {
             if(mouseOverRect(newGame)) {
                 // TODO Add character selection screen
                 game::getTextureMapController()->getMap(1)->loadPlayer(100,100);
-                game::setCurrent_state(game::INGAME);
+                game::newGame();
             } else
                 newGamePressed = false;
             if(mouseOverRect(loadGame)) {
