@@ -1,8 +1,6 @@
 # Hunta v0.1
 [![Build Status](https://travis-ci.org/freddn/Hunta2.svg)](https://travis-ci.org/freddn/Hunta2)
 
-Game in very early stages. SDL2/C++/Lua
-
 ## Keys
  - Main Menu, 2
  - Leveleditor, 4
@@ -20,7 +18,7 @@ Game in very early stages. SDL2/C++/Lua
  - C++11
 
 ## Dependencies
-`liblua5.1-dev libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer libfreetype6-dev`
+`liblua5.1-dev libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev libfreetype6-dev`
 
 ## How to build on BSD/Linux
 Either use the Code::Blocks project file or run `make system', where system is one of the following:
