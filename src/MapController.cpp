@@ -77,7 +77,7 @@ bool MapController::loadMap(int mapID) {
         std::cout << "Map not found: " << mapID << std::endl;
         return false;
     } else {
-        mapContainer.at(mapID)->close();
+        mapContainer.at(mapID)->clear();
         lInterface->loadMap(mapID);
         return true;
     }
@@ -95,6 +95,13 @@ void MapController::setMap(std::shared_ptr<Map> tempMap) {
     currentMap = tempMap;
 }
 
+void MapController::clearMap(int mapID) {
+    if (mapContainer.find(mapID) == mapContainer.end()) {
+        std::cerr << "Map " << mapID << " = mapContainer.end()" << std::endl;
+    } else
+        mapContainer.at(mapID)->clear();
+}
+
 bool MapController::mapExists(int mapID) {
     if(mapContainer.count(mapID) < 1)
         return false;
@@ -108,11 +115,14 @@ bool MapController::mapExists(int mapID) {
 }
 
 std::shared_ptr<Map> MapController::getMap(int mapID) {
-    if(mapContainer.find(mapID) == mapContainer.end()) {
-        std::cerr << "Map "<<mapID << " = mapContainer.end()" << std::endl;
+    if(!mapContainer.empty()) {
+        if (mapContainer.find(mapID) == mapContainer.end()) {
+            std::cerr << "Map " << mapID << " = mapContainer.end()" << std::endl;
+            return nullptr;
+        }
+        return mapContainer.at(mapID);
+    } else
         return nullptr;
-    }
-    return mapContainer.at(mapID);
 }
 
 /// Inserts a tile into current map

@@ -71,6 +71,7 @@ public:
      * Sets the current map.
      */
     void setMap(std::shared_ptr<Map> tempMap);
+    void clearMap(int mapID);
     bool mapExists(int mapID);
     std::shared_ptr<Map> getMap(int mapID);
 

@@ -35,6 +35,9 @@ private:
     Texture frame;
     Texture text;
     Texture buttonBg;
+    Texture background;
+
+    SDL_Rect backgroundRect;
 
     SDL_Rect button;
 

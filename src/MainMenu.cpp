@@ -33,19 +33,25 @@ void MainMenu::init() {
     button.h = 64;
     button.w = 256;
 
-    newGame =  {32*6, 100,button.w,button.h};
-    loadGame = {32*6, 180,button.w,button.h};
-    settings = {32*6, 260,button.w,button.h};
-    quitGame = {32*6, 340,button.w,button.h};
+    newGame =  {32*6, 120,button.w,button.h};
+    loadGame = {32*6, 200,button.w,button.h};
+    settings = {32*6, 280,button.w,button.h};
+    quitGame = {32*6, 360,button.w,button.h};
 
     buttonBg.setClipped(true);
     buttonBg.setClipW(256);
     buttonBg.setClipH(64);
     buttonBg.loadFromFile("data/button.png");
+
+    background.loadFromFile("data/wolf.png");
+    backgroundRect = {0,0,game::getWidth(),game::getHeight()};
+    background.setDestRect(&backgroundRect);
 }
 
 void MainMenu::draw() {
     Screen::renderStart();
+
+    background.render(0,0,nullptr);
 
     /* Render the menu */
 

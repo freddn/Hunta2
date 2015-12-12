@@ -57,7 +57,10 @@ void Map::draw() {
     manager.draw();
 }
 
-void Map::close() {
+void Map::clear() {
+    tiles.clear();
+    manager.clear();
+    return;
     EntityManager empty;
     tiles = empty;
     manager = empty;

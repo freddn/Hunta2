@@ -83,7 +83,7 @@ public:
     void setClipY(int y);
     void setClipW(int w);
     void setClipH(int h);
-    void setClip(SDL_Rect *clip);
+    void setDestRect(SDL_Rect *clip);
 
     std::string getImgPath();
     bool isSolid();

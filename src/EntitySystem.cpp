@@ -296,7 +296,6 @@ namespace EntitySystem {
             indexes.push_back(index);
             return e;
         }
-
     }
 
     Entity& EntityManager::addEntity() {
@@ -345,6 +344,19 @@ namespace EntitySystem {
     void Entity::addGroup(Group mGroup) noexcept {
         groupBitset[mGroup] = true;
         manager.addToGroup(this,mGroup);
+    }
+
+    void EntityManager::clear() {
+        byIndex = false;
+        id = 0;
+        offsetX = 0;
+        offsetY = 0;
+        entitiesReserved = 32;
+        indexes.clear();
+        entitiesByIndex.clear();
+        entities.clear();
+        for(unsigned int i = 0;i < groupedEntities.size();i++)
+            groupedEntities.at(i).clear();
     }
 }
 

@@ -223,11 +223,11 @@ void Texture::setClipped(bool clipped) {
     isClipped = clipped;
 }
 
-void Texture::setClip(SDL_Rect *clip) {
-    rect.h = clip->h;
-    rect.w = clip->w;
-    rect.x = clip->x;
-    rect.y = clip->y;
+void Texture::setDestRect(SDL_Rect *destRect) {
+    rect.h = destRect->h;
+    rect.w = destRect->w;
+    rect.x = destRect->x;
+    rect.y = destRect->y;
 }
 
 SDL_Rect Texture::getRect() {

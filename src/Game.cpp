@@ -87,7 +87,7 @@ namespace game {
         inGame.init();
         mMenu.init();
         uiController.init();
-        textureMap = mapController.getMap(1);
+        //textureMap = mapController.getMap(1);
         if(current_state == INGAME)
             mapController.getMap(1)->loadPlayer(100,100);
         fpsTimer.start();
@@ -151,7 +151,9 @@ namespace game {
             else if(current_state == EDITOR && SDL_GetMouseState(NULL,NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
                 editor.place();
             else if(event.type == SDL_KEYDOWN) {
-                if(key[SDL_SCANCODE_ESCAPE])
+                if(key[SDL_SCANCODE_T]) {
+                    mapController.getMap(1)->clear();
+                }else if(key[SDL_SCANCODE_ESCAPE])
                     current_state = MAINMENU;
                 else if(key[SDL_SCANCODE_2])
                     current_state = MAINMENU;
@@ -266,7 +268,7 @@ namespace game {
     }
 
     void close() {
-        game::getTextureMap()->close();
+        game::getTextureMap()->clear();
 
         SDL_DestroyTexture(buffer);
         buffer = nullptr;

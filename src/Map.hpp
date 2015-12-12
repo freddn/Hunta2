@@ -18,7 +18,7 @@ public:
     void init();
     void draw();
     void update();
-    void close();
+    void clear();
 
     bool hasEntities();
 

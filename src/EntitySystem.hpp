@@ -216,7 +216,7 @@ namespace EntitySystem {
 
         Entity& addEntity(int index);
         Entity& addEntity();
-
+        void clear();
         void destroyEntity(int index, int x, int y);
         void destroyEntity(int index);
         void setOffset(int x,int y);
