@@ -86,7 +86,6 @@ bool MapController::loadMap(int mapID) {
 void MapController::saveMaps() {
     lInterface->newMapDataFile("data/maps/maps.lua");
     for(auto &m : mapContainer) {
-        std::cerr << "Save map: " << m.second->getMapID() << std::endl;
         m.second->save(lInterface);
     }
 }

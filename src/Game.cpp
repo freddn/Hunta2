@@ -65,7 +65,6 @@ namespace game {
     float currentFPS = 0.f;
     float avgFPS = 0.f;
     LTimer timer;
-
     LTimer fpsTimer;
     int currentTick = 0;
     int selected;
@@ -278,7 +277,7 @@ namespace game {
     }
 
     void close() {
-        game::getTextureMap()->clear();
+        game::getTextureMapController()->getMap(1)->clear();
 
         SDL_DestroyTexture(buffer);
         buffer = nullptr;
