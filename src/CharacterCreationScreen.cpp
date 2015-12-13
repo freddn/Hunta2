@@ -19,23 +19,28 @@ void CharacterCreationScreen::update() {
 
 }
 
+// TODO add background
+// TODO class selection
+// TODO start game button
+// TODO add textbox
+// TODO add back to menu button
+
 void CharacterCreationScreen::createCharacter() {
-    bool renderText = false;
+    unsigned int maxlen = 14;
     SDL_Event e;
     SDL_Color textColor = {0xFF,0xFF,0xFF,0xFF};
 
-    std::string inputText = "Some text";
-
+    std::string inputText = "wolfhunter";
     Texture text;
     Texture desc;
-    desc.loadFromText("Enter name:",textColor,game::getFont());
+    desc.loadFromText("Enter name:  _____________________",textColor,game::getFont());
 
     text.loadFromText(inputText.c_str(),textColor,game::getFont());
 
     SDL_StartTextInput();
     bool running = true;
     while(running) {
-        renderText = false;
+        bool renderText = false;
 
         while(SDL_PollEvent(&e) != 0) {
             if(e.type == SDL_KEYDOWN) {
@@ -52,7 +57,8 @@ void CharacterCreationScreen::createCharacter() {
                 } else if(e.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL)
                     SDL_SetClipboardText(inputText.c_str());
                 else if(e.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL) {
-                    inputText = SDL_GetClipboardText();
+                    std::string temp = SDL_GetClipboardText();
+                    inputText.append(temp,0,maxlen-inputText.length());
                     renderText = true;
                 }
             }
@@ -60,7 +66,8 @@ void CharacterCreationScreen::createCharacter() {
             if(e.type == SDL_TEXTINPUT) {
                 if(!( (e.text.text[0] == 'c' || e.text.text[0] == 'C') &&
                             (e.text.text[0] == 'v' || e.text.text[0] == 'V') &&
-                        SDL_GetModState() & KMOD_CTRL)) {
+                        SDL_GetModState() & KMOD_CTRL) &&
+                        inputText.length() < maxlen) {
                     inputText += e.text.text;
                     renderText = true;
                 }

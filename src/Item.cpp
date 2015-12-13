@@ -23,28 +23,25 @@ Item::Item(int id) {
     itemID = id;
 }
 
-Item::Item(int id, bool ground, EntityManager *mgr) {
+Item::Item(int id, bool ground) {
     onGround = ground;
     itemID = id;
-    manager = mgr; // TODO asd
+}
+
+Item::Item(int id, bool ground, int amt) {
+    onGround = ground;
+    itemID = id;
+    amount = amt;
 }
 
 Item::~Item() {
     //dtor
 }
 
-void Item::init() {
-
-    //loadFromFile(game::getRenderer(),"data/stick.png");
+int Item::getID() {
+    return itemID;
 }
-
-void Item::draw() {
-
+int Item::getAmount() {
+    return amount;
 }
-
-void Item::update() {
-    // TODO Check if player is standing on item..
-}
-
-
 

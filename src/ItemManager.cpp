@@ -1,5 +1,6 @@
 #include "ItemManager.hpp"
 #include <iostream>
+#include "HelperFunctions.hpp"
 
 ItemManager::ItemManager() {
     //ctor
@@ -12,7 +13,7 @@ ItemManager::~ItemManager() {
 void ItemManager::init(LuaInterface *lInterface) {
 
     this->lInterface = lInterface;
-    std::cerr << " ... Loading item data ..." << std::endl;
+    HelperFunctions::log("Loading item data ...");
     lInterface->loadFile("data/items/items.lua");
 }
 

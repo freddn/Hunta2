@@ -6,7 +6,7 @@ all:
 	@echo freebsd
 	@echo dragonfly
 	@echo Building linux by default
-	$(MAKE) linux
+	$(MAKE) -f config/makefile.linux
 
 linux:
 	$(MAKE) -f config/makefile.linux

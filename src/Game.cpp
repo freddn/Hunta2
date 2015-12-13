@@ -21,6 +21,7 @@
 #include "InGame.hpp"
 #include "MainMenu.hpp"
 #include "CharacterCreationScreen.hpp"
+#include "HelperFunctions.hpp"
 #include <unistd.h>
 
 #include <iostream>
@@ -54,9 +55,9 @@ namespace game {
     CharacterCreationScreen creationScreen;
     Inventory inventory(400,160);
     std::shared_ptr<Map> textureMap;
-    int width = 640;
+    int width = 800;
     int t_width = width/32;
-    int height = 480;
+    int height = 600;
     int t_height = height/32;
     int maxFPS = 45;
     bool hasChanged = true;
@@ -73,18 +74,21 @@ namespace game {
     bool running = true;
 
     void start() {
-        std::cerr << " - game::start() ..." << std::endl;
+        HelperFunctions::log("game::start()");
         lInterface.initLua();
         playerController.setName("assdd");
         //playerController.save(&lInterface);
         playerController.load("nooobn", &lInterface);
-        std::cout <<"Saved game '" <<playerController.getName() << "' Loaded! Level: "<<playerController.getLevel() << std::endl;
+        std::stringstream temp;
+        temp << "Saved game '" <<playerController.getName() << "' Loaded!";
+        HelperFunctions::log(temp.str());
 
+        HelperFunctions::log("game::start() (load map)");
         mapController.init(&lInterface);
         itemManager.init(&lInterface);
         //playerController.load("Freddun", &lInterface);
-        std::cerr << " - game::start() (load map) ..."<<std::endl;
-        std::cerr << " - game::start() (creating states) ..."<<std::endl;
+
+        HelperFunctions::log("game::start() (creating states)");
         editor.init();
         inGame.init();
         mMenu.init();
@@ -95,7 +99,7 @@ namespace game {
             mapController.getMap(1)->loadPlayer(100,100);
         fpsTimer.start();
         timer.start();
-        std::cerr << " - game::start() (main loop) ..."<<std::endl;
+        HelperFunctions::log("game::start() (main loop)");
         while(running) {
             /* Get current time */
             currentTick = fpsTimer.getTicks();
@@ -162,9 +166,12 @@ namespace game {
             else if(event.type == SDL_KEYDOWN) {
                 if(key[SDL_SCANCODE_T]) {
                     mapController.getMap(1)->clear();
-                }else if(key[SDL_SCANCODE_ESCAPE])
-                    current_state = MAINMENU;
-                else if(key[SDL_SCANCODE_2])
+                } else if(key[SDL_SCANCODE_ESCAPE]) {
+                    if(uiController.inventoryIsDisplayed()) {
+                        uiController.setInventoryDisplayed(false);
+                    } else
+                        current_state = MAINMENU;
+                } else if(key[SDL_SCANCODE_2])
                     current_state = MAINMENU;
                 else if(key[SDL_SCANCODE_1]) {
                     if(current_state == EDITOR) {
@@ -210,7 +217,7 @@ namespace game {
         rect.w = 32;
 
         if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-            std::cerr << "Init video failed." << std::endl;
+            HelperFunctions::log(HelperFunctions::ERROR, "Init video failed." );
             return false;
         }
         if(fullscreen) {
@@ -225,31 +232,33 @@ namespace game {
                                    SDL_WINDOW_RESIZABLE); //SDL_WINDOW_SHOWN);
 
         if(gWindow == nullptr) {
-            std::cerr << "Window could not be created." << std::endl;
+            HelperFunctions::log(HelperFunctions::ERROR,"Window could not be created.");
             return false;
         }
 
         renderer = SDL_CreateRenderer(gWindow,-1,SDL_RENDERER_ACCELERATED);
 
         if(renderer == nullptr) {
-            std::cerr << "Renderer could not be created "
-                        <<"(SDL_RENDERER_ACCELERATED)" << std::endl;
+            HelperFunctions::log(HelperFunctions::WARNING,
+                                 "Could not initiate hardware rendered.");
             /* Testing software rendering instead.. */
             renderer = SDL_CreateRenderer(gWindow,-1,SDL_RENDERER_SOFTWARE);
             if(renderer == nullptr) {
-                std::cerr << "Renderer could not be created "
-                        <<"(SDL_RENDERER_SOFTWARE)" << std::endl;
+                HelperFunctions::log(HelperFunctions::ERROR,
+                                     "Could not initiate software renderer.");
                 return false;
             }
         }
 
         if(IMG_Init(IMG_INIT_PNG) < 0) {
-            std::cerr << "IMG_Init() failed." << std::endl;
+            HelperFunctions::log(HelperFunctions::ERROR,
+                                 "IMG_Init() failed.");
             return false;
         }
 
         if(TTF_Init() != 0) {
-            std::cerr << "TTF_Init() failed" << std::endl;
+            HelperFunctions::log(HelperFunctions::ERROR,
+                                 "TTF_Init() failed");
             return false;
         }
 
@@ -260,7 +269,7 @@ namespace game {
             getcwd(buf,255);
             printf("path: %s\n",buf);
             perror("NOFONT ");
-            std::cerr << "No font" << std::endl;
+            HelperFunctions::log(HelperFunctions::ERROR, "No font");
             return false;
         }
 
@@ -268,7 +277,8 @@ namespace game {
                                    SDL_TEXTUREACCESS_TARGET, width*2, height*2);
 
         if(buffer == 0) {
-            std::cerr << "Failed to create buffer" << std::endl;
+            HelperFunctions::log(HelperFunctions::ERROR,
+                                 "Failed to create texture buffer");
             return false;
         }
 

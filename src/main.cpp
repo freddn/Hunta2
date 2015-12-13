@@ -17,12 +17,14 @@
  */
 
 #include "Game.hpp"
+#include "HelperFunctions.hpp"
 #include <iostream>
 
 int main(int argc, char *argv[]) {
     bool fullscreen = false;
     if(argc > 2) {
-        std::cerr << "Wrong amount of arguments, run: " << argv[0] << std::endl;
+        HelperFunctions::log(HelperFunctions::WARNING,
+                             "Wrong amount of arguments, run: ./hunta2 or ./hunta2 f");
         return 0;
     } else if(argc == 2) {
         if(*argv[1] == 'f')
@@ -32,7 +34,7 @@ int main(int argc, char *argv[]) {
 
 
     if(!game::init_game(fullscreen)) {
-        std::cerr << "Init failed." << std::endl;
+        HelperFunctions::log(HelperFunctions::ERROR,"Init failed.");
         game::close();
         return 0;
     }

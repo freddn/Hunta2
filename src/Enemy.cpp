@@ -201,7 +201,7 @@ void Enemy::onDeath() {
     /// Drop?
     /// Death animation?
     /// Corpse??
-    game::getTextureMapController()->getMap(1)->loadItem(200,position->getX(),position->getY(),1);
+    game::getTextureMapController()->getMap(1)->loadItem(200,position->getX(),position->getY(),3);
     alive = false;
     game::getPlayerController()->increaseExperience(experienceGain);
     knockBackTimer.stop();

@@ -87,7 +87,6 @@ int PlayerController::getMaxHp(int lv) {
 /** --------------- Setters --------------- */
 
 void PlayerController::increaseExperience(int e) {
-    std::cout << "-- Got " << e << " xp! --" << std::endl;
     setExperience(experience+e);
 }
 

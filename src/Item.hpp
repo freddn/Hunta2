@@ -31,18 +31,17 @@ using namespace EntitySystem;
 struct Item : Component {
 public:
     Item(int id);
-    Item(int id, bool ground, EntityManager *manager);
-    void init();
-    void pickUp();
-    void getInfo();
-    void draw();
-    void update();
+    Item(int id, bool ground, int amount);
+    Item(int id, bool ground);
+    int getID();
+    int getAmount();
     virtual ~Item();
 protected:
 private:
     int itemID = -1;
     bool onGround = false;
-    EntityManager *manager;
+    int amount = 1;
+    //EntityManager *manager;
 };
 
 #endif // ITEM_HPP

@@ -18,6 +18,7 @@
 
 #include "Inventory.hpp"
 #include "Game.hpp"
+#include "HelperFunctions.hpp"
 
 #include <iostream>
 
@@ -34,54 +35,72 @@ Inventory::~Inventory() {}
 
 void Inventory::init() {
     frame.loadFromFile("data/inventory.png");
-    inventoryLocation = "data/savedata/"+game::getPlayerController()->getName()+"_inventory.lua";
-    //inventoryRect.w = sizeX*32;
-    //inventoryRect.h = sizeY*32;
-    //inv_bg = SDL_CreateTexture(game::getRenderer(), SDL_PIXELFORMAT_RGBA8888,
-    //                                SDL_TEXTUREACCESS_TARGET, sizeX*32, sizeY*32);
-    //if(inv_bg == 0)
-    //    std::cerr << "Failed to create inventory" << std::endl;
+    inventoryLocation = "data/savedata/"+
+            game::getPlayerController()->getName()+
+            "_inventory.lua";
 
-    //buildInventory();
-    //loadInventory();
     text.loadFromText("Inventory" ,
                       *game::getTextColor(),game::getFont());
     l_interface.initLua();
 
     if(!l_interface.loadFile(inventoryLocation.c_str()))
-        std::cerr << "Failed to Load LoadInventory.lua" << std::endl;
+        HelperFunctions::log(HelperFunctions::ERROR,
+                             "Failed to Load LoadInventory.lua");
 
     if(!l_interface.loadFile("src/InventoryFunctions.lua"))
-        std::cerr << "Failed to Load InventoryFunctions.lua" << std::endl;
+        HelperFunctions::log(HelperFunctions::ERROR,
+                             "Failed to Load InventoryFunctions.lua");
 }
 
 void Inventory::loadInventory() {
     l_interface.loadFile(inventoryLocation.c_str());
-   // l_interface.loadInventory(inventoryLocation.c_str());
-    /// CHANGE TO OTHER FORMAT
-    /// Inventoryclass should have a loadItem function and be
-    /// accessed by game::getInventory()->loadItem from LuaInterface
-    //inventoryItem *items; // = lua_functions::getItems();
-    //l_interface.addItem("data/inventory1",12,4,4,6);
+    //l_interface.addItem("data/inventory1",12,4,4,6); // TODO save
 
     return;
+}
+
+void Inventory::addItem(int id, int amount) {
+    ItemData data = game::getItemManager()->getItem(id);
+    for(int i = 0;i< 12;i++) {
+        if(items.find(i) != items.end()) {
+            if(items.at(i).id >= 200 && items.at(i).id == id) {
+                int amt = 1;
+                if(stackedItems.find(i) != stackedItems.end()) {
+                    amt = stackedItems.at(i);
+                    stackedItems.erase(i);
+                } else
+                    items.emplace(std::pair<int, ItemData>(i,data));
+                stackedItems.emplace(std::pair<int, int>(i,amt+1));
+                return;
+            }
+        }
+    }
+    for(int i = 0;i< 12;i++) {
+        if (items.find(i) == items.end()) {
+            items.emplace(std::pair<int, ItemData>(i,data));
+            return;
+        }
+    }
+
+
 }
 
 int Inventory::addItem(int id,int amount,int x, int y) {
     if(itemCount < 20) {//lua_functions::getItemCount() < 20)
         ItemData data = game::getItemManager()->getItem(id);
-        if(items.find(x+y*6) != items.end()) {
-            if(items.at(x+y*6).id >= 200 && items.at(x+y*6).id ==id) {
-                int amt = 0;
-                if(stackedItems.find(x+y*6) != stackedItems.end()) {
-                    amt = stackedItems.at(x+y*6);
-                    stackedItems.erase(x + y * 6);
+        if(items.find(x+(y*3)) != items.end()) {
+            if(items.at(x+(y*3)).id >= 200 && items.at(x+(y*3)).id ==id) {
+                int amt = 1;
+                if(stackedItems.find(x+(y*3)) != stackedItems.end()) {
+                    amt = stackedItems.at(x+(y*3));
+                    stackedItems.erase(x + (y * 3));
                 } else
-                    items.emplace(std::pair<int, ItemData>(x+y*6, data));
-                stackedItems.emplace(std::pair<int,int>(x+y*6,amt+1));
+                    items.emplace(std::pair<int, ItemData>(x+(y*3), data));
+                stackedItems.emplace(std::pair<int,int>(x+(y*3),amt+1));
             }
-        } else
-            items.emplace(std::pair<int, ItemData>(x+y*6, data));
+        } else {
+            items.emplace(std::pair<int, ItemData>(x + (y * 3), data));
+        }
     } else
         return -1;
     return 0;
@@ -104,14 +123,20 @@ void Inventory::draw() {
 }
 
 void Inventory::renderItems() {
+    SDL_Rect srcRect{0,0,32,32};
     for(auto item : items) {
-        SDL_Rect itemRect{20+inventoryRect.x+((item.first%6)*16)+(item.first%6)*6,
-                          inventoryRect.y+183+(((item.first-item.first%6)/6)*16)+
-                                  ((item.first-item.first%6)/6)*5, 16,16};
+        SDL_Rect itemRect{20+inventoryRect.x+((item.first%3)*32)+(item.first%3)*3,
+                          inventoryRect.y+183+(((item.first-item.first%3)/3)*32)+
+                                  ((item.first-item.first%3)/3)*5, 32,32};
         SDL_RenderCopy(game::getRenderer(),
                        game::getTextureManager()->getTexture(item.second.img),
-                       nullptr,&itemRect);
+                       &srcRect,&itemRect);
         if(stackedItems.find(item.first) != stackedItems.end()) {
+            std::stringstream amt;
+            amt.str("");
+            amt << stackedItems.at(item.first);
+            amount.loadFromText(amt.str(),*game::getTextColor(),game::getDmgFont());
+            amount.render(itemRect.x,itemRect.y,nullptr);
             // TODO Print amt of items
         }
     }

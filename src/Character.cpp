@@ -19,6 +19,8 @@
 #include "Character.hpp"
 #include "Game.hpp"
 #include "Projectile.hpp"
+#include "Item.hpp"
+#include "HelperFunctions.hpp"
 
 #include <iostream>
 
@@ -33,7 +35,7 @@ Character::~Character() {
 }
 
 void Character::init() {
-    std::cout << " - Character::init() ..."<<std::endl;
+    HelperFunctions::log("Character::init() ...");
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
     physics = &entity->getComponent<GPhysics>();
@@ -92,11 +94,14 @@ void Character::update() {
         int width = e->getComponent<Texture>().getWidth();
         int height = e->getComponent<Texture>().getHeight();
 
-        if((position->getX()-10 < temp.getX()+width &&
-                position->getX()+42 > temp.getX()) &&
-                (position->getY()-10 < temp.getY()+height &&
-                 position->getY()+42 > temp.getY())) {
-            /// pick up item
+        if((position->getX()+10 < temp.getX()+width &&
+                position->getX()+22 > temp.getX()) &&
+                (position->getY()+10 < temp.getY()+height &&
+                 position->getY()+22 > temp.getY())) {
+
+            game::getInventory()->addItem(e->getComponent<Item>().getID(),
+                                          e->getComponent<Item>().getAmount());
+            e->destroy();
         }
     }
 

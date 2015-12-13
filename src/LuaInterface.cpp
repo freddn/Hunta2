@@ -18,6 +18,7 @@
 
 #include "LuaInterface.hpp"
 #include "Game.hpp"
+#include "HelperFunctions.hpp"
 #include <iostream>
 
 namespace lua_functions {
@@ -67,14 +68,20 @@ namespace lua_functions {
 
     int loadItem(lua_State *l_state) {
         int argc = lua_gettop(l_state);
-        if(argc == 5) {
+        if(argc > 2) {
             int id =  lua_tonumber(l_state,1);
             int amount = lua_tonumber(l_state,2);
             int onGround = lua_tonumber(l_state,3);
-            int x = lua_tonumber(l_state,4);
-            int y = lua_tonumber(l_state,5);
-            if(onGround == 0)
-                game::getInventory()->addItem(id, amount, x, y);
+            if(argc > 4) {
+                int x = lua_tonumber(l_state,4);
+                int y = lua_tonumber(l_state,5);
+                if(onGround == 0)
+                    game::getInventory()->addItem(id, amount, x, y);
+            } else {
+                if(onGround == 0)
+                    game::getInventory()->addItem(id, amount);
+            }
+
         }
         return 0;
     }
@@ -230,7 +237,7 @@ namespace lua_functions {
 LuaInterface::LuaInterface() { }
 
 void LuaInterface::initLua() {
-    std::cout << " - LuaInterface::initLua() ..." << std::endl;
+    HelperFunctions::log("LuaInterface::initLua() ...");
 
     l_state = luaL_newstate();
     luaL_openlibs(l_state);
@@ -262,7 +269,7 @@ void LuaInterface::initLua() {
 
 void LuaInterface::report_errors(lua_State *l_state, int status) {
     if(status != 0) {
-        std::cerr << " - " << lua_tostring(l_state,-1) << std::endl;
+        HelperFunctions::log(HelperFunctions::ERROR,lua_tostring(l_state,-1));
         lua_pop(l_state,1);
     }
 }
@@ -277,13 +284,14 @@ bool LuaInterface::loadFile(const char *filename) {
     if(s == 0) {
         if((s = lua_pcall(l_state,0,LUA_MULTRET,0)) != 0) {
             success = false;
-            std::cerr << "Could not execute lua-script: " << filename << std::endl;
+            std::stringstream err;
+            err << "Could not execute lua-script: " << filename;
+            HelperFunctions::log(HelperFunctions::ERROR,err.str());
         }
     } else {
         success = false;
     }
     report_errors(l_state,s);
-    //std::cerr << std::endl;
     return success;
 }
 
@@ -439,8 +447,9 @@ void LuaInterface::newInventory(const char *filename) {
 }
 
 void LuaInterface::loadMap(int mapID) {
-
-    std::cout << " - LuaInterface::Map() ... map: "<< mapID << std::endl;
+    std::stringstream msg;
+    msg << "LuaInterface::Map() ... map: " << mapID;
+    HelperFunctions::log(HelperFunctions::MESSAGE, msg.str());
 
     std::string filename = "data/maps/" + std::to_string(mapID);
     std::string tiles = filename + "/tiles.lua";

@@ -19,6 +19,7 @@
 #include "MapController.hpp"
 #include "Game.hpp"
 #include "EntitySystem.hpp"
+#include "HelperFunctions.hpp"
 
 #include <iostream>
 
@@ -30,25 +31,24 @@ void MapController::init(LuaInterface *lInterface) {
 
     /// Traverse all maps and check neighbors (?)
     this->lInterface = lInterface;
+    HelperFunctions::log("MapController::init() ...");
 
-    std::cout << " - MapController::init() ..."<<std::endl;
-
-    std::cerr << " ... Loading map data ..." << std::endl;
+    HelperFunctions::log("Loading map data ...");
     lInterface->loadFile("data/maps/maps.lua");
-    std::cerr << " ... Loading tile data ..." << std::endl;
+    HelperFunctions::log("Loading tile data ...");
     lInterface->loadFile("data/tiles/tiles.lua");
-    std::cerr << " ... Loading environment data ..." << std::endl;
+    HelperFunctions::log( "Loading environment data ...");
     lInterface->loadFile("data/environment/environment.lua");
-    std::cerr << " ... Loading enemy data ..." << std::endl;
+    HelperFunctions::log("Loading enemy data ...");
     lInterface->loadFile("data/enemies/enemies.lua");
 
-    std::cerr << " ... Loading weapon data ..." << std::endl;
+    HelperFunctions::log("Loading weapon data ...");
     lInterface->loadFile("data/items/weapons/weapons.lua");
-    std::cerr << " ... Loading armor data ..." << std::endl;
+    HelperFunctions::log("Loading armor data ...");
     lInterface->loadFile("data/items/armor/armor.lua");
-    std::cerr << " ... Loading misc item data ..." << std::endl;
+    HelperFunctions::log("Loading misc item data ...");
     lInterface->loadFile("data/items/misc/misc.lua");
-    std::cerr << " ... Loading usables data ..." << std::endl;
+    HelperFunctions::log("Loading usables data ...");
     lInterface->loadFile("data/items/usables/usables.lua");
     int i = 1;
     while(mapExists(i)) {
@@ -72,9 +72,9 @@ void MapController::update() {
 }
 
 bool MapController::loadMap(int mapID) {
-    std::cout << " - MapClass::loadMap() ... " << std::endl;
+    HelperFunctions::log("MapClass::loadMap() ... ");
     if(mapContainer.find(mapID) == mapContainer.end()) {
-        std::cout << "Map not found: " << mapID << std::endl;
+        HelperFunctions::log(HelperFunctions::ERROR, "Map could not be found.");
         return false;
     } else {
         mapContainer.at(mapID)->clear();
@@ -96,7 +96,7 @@ void MapController::setMap(std::shared_ptr<Map> tempMap) {
 
 void MapController::clearMap(int mapID) {
     if (mapContainer.find(mapID) == mapContainer.end()) {
-        std::cerr << "Map " << mapID << " = mapContainer.end()" << std::endl;
+        HelperFunctions::log(HelperFunctions::ERROR, "Map could not be loaded.");
     } else
         mapContainer.at(mapID)->clear();
 }
@@ -116,7 +116,7 @@ bool MapController::mapExists(int mapID) {
 std::shared_ptr<Map> MapController::getMap(int mapID) {
     if(!mapContainer.empty()) {
         if (mapContainer.find(mapID) == mapContainer.end()) {
-            std::cerr << "Map " << mapID << " = mapContainer.end()" << std::endl;
+            HelperFunctions::log(HelperFunctions::ERROR, "Map could not be loaded.");
             return nullptr;
         }
         return mapContainer.at(mapID);
@@ -128,7 +128,7 @@ std::shared_ptr<Map> MapController::getMap(int mapID) {
 void MapController::loadTile(int mapID,int id, int index,int x,int y) {
     if(mapContainer.find(mapID) == mapContainer.end()) {
         Map* tempMap(new Map());
-        std::cerr << "New map but not complete......."<< std::endl;
+        HelperFunctions::log(HelperFunctions::WARNING,"Map not found, creating new empty map.");
         tempMap->setMapID(mapID);
         tempMap->setActive(true);
         std::shared_ptr<Map> temp{tempMap};
@@ -186,8 +186,6 @@ void MapController::loadEnvironmentData(int id, std::string img, bool solid) {
 }
 /// Load an enemy texture
 void MapController::loadEnemyData(int id, std::string img) {
-    std::cout << id << std::endl;
-
     Texture *texture;
     texture = new Texture();
     texture->loadFromFile(img);
@@ -210,7 +208,9 @@ void MapController::loadMapData(int id, int x,int y,int n,int e, int s, int w) {
     tempMap->setMapAt(game::WEST,w);
     tempMap->init();
     tempMap->setActive(true);
-    std::cerr << " ... map loaded:" << id<< std::endl;
+    std::stringstream msg;
+    msg <<  "Map loaded, id: " << id;
+    HelperFunctions::log(msg.str());
 
     std::shared_ptr<Map> temp {tempMap};
     mapContainer.insert(std::pair<int,std::shared_ptr<Map>>(id,temp));

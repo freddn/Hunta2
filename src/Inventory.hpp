@@ -38,6 +38,7 @@ public:
     void loadInventory();
 
     int addItem(int id,int amount,int x, int y);
+    void addItem(int id,int amount);
     void deleteItem(int id,int amount,int x, int y);
 
     void saveInventory();
@@ -53,6 +54,7 @@ private:
     int sizeY = 9;
     int itemCount = 0;
     SDL_Rect inventoryRect;
+    Texture amount;
     std::string inventoryLocation;
     std::map<int, ItemData> items;
     std::map<int, int> stackedItems;

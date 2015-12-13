@@ -13,6 +13,8 @@ public:
     void draw();
     void update();
 
+    bool inventoryIsDisplayed();
+    void setInventoryDisplayed(bool displayed);
     virtual ~UIController();
 protected:
 private:

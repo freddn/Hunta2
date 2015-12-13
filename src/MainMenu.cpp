@@ -18,6 +18,7 @@
 
 #include "MainMenu.hpp"
 #include "Game.hpp"
+#include "HelperFunctions.hpp"
 #include <iostream>
 
 MainMenu::MainMenu() {}
@@ -25,7 +26,7 @@ MainMenu::MainMenu() {}
 MainMenu::~MainMenu() {}
 
 void MainMenu::init() {
-    std::cerr << " - MainMenu::init() ..."<<std::endl;
+    HelperFunctions::log("MainMenu::init() ...");
     frame.loadFromFile("data/frame.png");
 
     button.x = 0;
@@ -182,50 +183,3 @@ bool MainMenu::mouseOverRect(SDL_Rect r) {
     return game::getMouseX() < r.x+r.w && game::getMouseX() > r.x &&
      game::getMouseY() < r.y+r.h && game::getMouseY() > r.y;
 }
-
-/*void MainMenu::buildButton() {
-    SDL_Rect temp;
-    temp.x = 0;
-    temp.y = 0;
-    temp.w = 32;
-    temp.h = 32;
-
-    SDL_SetRenderTarget(game::getRenderer(),buttonBg);
-
-    for(int i = 0;i<=(button.h / 32);i++) {
-        for(int j = 0;j<=(button.w / 32);j++) {
-            if(i == 0 && j == 0) {
-                temp.x = 0;
-                temp.y = 0;
-            } else if(i == ((button.h-32)/32) && j == 0) {
-                temp.x = 0;
-                temp.y = 32;
-            } else if(i == 0 && j == ((button.w-32)/32)) {
-                temp.x = 64;
-                temp.y = 0;
-            } else if(i == ((button.h-32)/32) && j == ((button.w-32)/32)) {
-                temp.x = 64;
-                temp.y = 32;
-            } else if(i == 0) {
-                temp.x = 32;
-                temp.y = 0;
-            } else if(i == ((button.h-32)/32)) {
-                temp.x = 32;
-                temp.y = 32;
-            } else if(j == 0) {
-                temp.x = 0;
-                temp.y = 10;
-            } else if(j == ((button.w-32)/32)) {
-                temp.x = 64;
-                temp.y = 10;
-            } else {
-                temp.x = 32;
-                temp.y = 10;
-            }
-            frame.render(j*32,i*32,&temp);
-        }
-    }
-    SDL_SetRenderTarget(game::getRenderer(),NULL);
-}
-
-*/

@@ -33,4 +33,5 @@ SRC = src/Character.cpp \
       src/PlayerController.cpp \
       src/UIController.cpp \
       src/EnemyDataController.cpp \
-      src/CharacterCreationScreen.cpp
+      src/CharacterCreationScreen.cpp \
+      src/HelperFunctions.cpp

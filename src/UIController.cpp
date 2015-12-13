@@ -1,5 +1,6 @@
 #include "UIController.hpp"
 #include "Game.hpp"
+#include "HelperFunctions.hpp"
 #include <iostream>
 UIController::UIController() {
 }
@@ -11,7 +12,7 @@ UIController::~UIController() {
 }
 
 void UIController::init() {
-    std::cerr << "UIController.init()" << std::endl;
+    HelperFunctions::log("UIController.init()");
     tInterface.loadFromFile("data/interface.png"); /// Sample interface
 }
 
@@ -39,4 +40,12 @@ void UIController::update() {
     /* Inventory input */
     if(showInventory)
         game::getInventory()->update();
+}
+
+bool UIController::inventoryIsDisplayed() {
+    return showInventory;
+}
+
+void UIController::setInventoryDisplayed(bool displayed) {
+    showInventory = displayed;
 }
