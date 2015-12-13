@@ -17,6 +17,9 @@
  - SDL2
  - C++11
 
+## Requirements
+On Debian-derived systems make sure you have `build-essential` installed.
+
 ## Dependencies
 `liblua5.1-dev libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev libfreetype6-dev`
 
