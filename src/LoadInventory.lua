@@ -29,7 +29,7 @@ function loadInventory(filename)
 			print("Bad item format.")
 			return
 		elseif a == 4 then
-			loadItem(filename,item[1],item[2],item[3],item[4])
+			loadItem(item[1],item[2],item[3],item[4])
 		end
 		i = i + 1
 	end

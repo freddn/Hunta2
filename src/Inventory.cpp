@@ -33,17 +33,22 @@ Inventory::Inventory(int x, int y) {
 Inventory::~Inventory() {}
 
 void Inventory::init() {
-    frame.loadFromFile("data/frame.png");
-    inventoryRect.w = sizeX*32;
-    inventoryRect.h = sizeY*32;
-    inv_bg = SDL_CreateTexture(game::getRenderer(), SDL_PIXELFORMAT_RGBA8888,
-                                    SDL_TEXTUREACCESS_TARGET, sizeX*32, sizeY*32);
-    if(inv_bg == 0)
-        std::cerr << "Failed to create inventory" << std::endl;
+    frame.loadFromFile("data/inventory.png");
+    inventoryLocation = "data/savedata/"+game::getPlayerController()->getName()+"_inventory.lua";
+    //inventoryRect.w = sizeX*32;
+    //inventoryRect.h = sizeY*32;
+    //inv_bg = SDL_CreateTexture(game::getRenderer(), SDL_PIXELFORMAT_RGBA8888,
+    //                                SDL_TEXTUREACCESS_TARGET, sizeX*32, sizeY*32);
+    //if(inv_bg == 0)
+    //    std::cerr << "Failed to create inventory" << std::endl;
 
-    buildInventory();
+    //buildInventory();
+    //loadInventory();
+    text.loadFromText("Inventory" ,
+                      *game::getTextColor(),game::getFont());
     l_interface.initLua();
-    if(!l_interface.loadFile("src/LoadInventory.lua"))
+
+    if(!l_interface.loadFile(inventoryLocation.c_str()))
         std::cerr << "Failed to Load LoadInventory.lua" << std::endl;
 
     if(!l_interface.loadFile("src/InventoryFunctions.lua"))
@@ -51,7 +56,8 @@ void Inventory::init() {
 }
 
 void Inventory::loadInventory() {
-    l_interface.loadInventory("data/inventory1");
+    l_interface.loadFile(inventoryLocation.c_str());
+   // l_interface.loadInventory(inventoryLocation.c_str());
     /// CHANGE TO OTHER FORMAT
     /// Inventoryclass should have a loadItem function and be
     /// accessed by game::getInventory()->loadItem from LuaInterface
@@ -62,27 +68,60 @@ void Inventory::loadInventory() {
 }
 
 int Inventory::addItem(int id,int amount,int x, int y) {
-    if(itemCount < 20)//lua_functions::getItemCount() < 20)
-        l_interface.addItem("data/inventory1",id,amount,x,y);
-    else
+    if(itemCount < 20) {//lua_functions::getItemCount() < 20)
+        ItemData data = game::getItemManager()->getItem(id);
+        if(items.find(x+y*6) != items.end()) {
+            if(items.at(x+y*6).id >= 200 && items.at(x+y*6).id ==id) {
+                int amt = 0;
+                if(stackedItems.find(x+y*6) != stackedItems.end()) {
+                    amt = stackedItems.at(x+y*6);
+                    stackedItems.erase(x + y * 6);
+                } else
+                    items.emplace(std::pair<int, ItemData>(x+y*6, data));
+                stackedItems.emplace(std::pair<int,int>(x+y*6,amt+1));
+            }
+        } else
+            items.emplace(std::pair<int, ItemData>(x+y*6, data));
+    } else
         return -1;
     return 0;
 }
 
 void Inventory::deleteItem(int id,int amount,int x,int y) {
-    l_interface.deleteItem("data/inventory1",id,amount,x,y);
+
+    l_interface.deleteItem(inventoryLocation.c_str(),id,amount,x,y);
+    items.erase(y*6+x);
 }
 
 void Inventory::draw() {
     //frame.render(game::getRenderer(),(SDL_Rect*)NULL);
-    SDL_RenderCopy(game::getRenderer(),inv_bg,nullptr,&inventoryRect);
+    //SDL_RenderCopy(game::getRenderer(),inv_bg,nullptr,&inventoryRect);
+    frame.render(inventoryRect.x,inventoryRect.y,nullptr);
+    text.render(inventoryRect.x+20,inventoryRect.y+20,nullptr);
+
+
+    renderItems();
+}
+
+void Inventory::renderItems() {
+    for(auto item : items) {
+        SDL_Rect itemRect{20+inventoryRect.x+((item.first%6)*16)+(item.first%6)*6,
+                          inventoryRect.y+183+(((item.first-item.first%6)/6)*16)+
+                                  ((item.first-item.first%6)/6)*5, 16,16};
+        SDL_RenderCopy(game::getRenderer(),
+                       game::getTextureManager()->getTexture(item.second.img),
+                       nullptr,&itemRect);
+        if(stackedItems.find(item.first) != stackedItems.end()) {
+            // TODO Print amt of items
+        }
+    }
 }
 
 void Inventory::update() {
     //check if item is dropped or if new items arrive
 }
 
-void Inventory::buildInventory() {
+/*void Inventory::buildInventory() {
     SDL_Rect clip;
     clip.x = 0;
     clip.y = 0;
@@ -141,3 +180,4 @@ void Inventory::buildInventory() {
 }
 
 
+*/

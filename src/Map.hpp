@@ -43,6 +43,7 @@ public:
     void loadTile(int id, int index, int x,int y, std::string img);
     void loadEnvironment(int id, int index, int x,int y, std::string img);
     void loadEnemy(int id, int index, int x,int y, std::string img, int width = 0, int height = 0);
+    void loadItem(int id, int x, int y, int amount);
 
     void loadPlayer(int x,int y);
     void destroyPlayer();
@@ -62,7 +63,7 @@ private:
 
     int neighbors[4] = {0,0,0,0};
     bool mapIsActive = false;
-
+    EntityManager items;
     EntityManager tiles;
     EntityManager manager;
 };

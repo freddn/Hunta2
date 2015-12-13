@@ -31,7 +31,7 @@ using namespace EntitySystem;
 struct Item : Component {
 public:
     Item(int id);
-    Item(int id, bool ground);
+    Item(int id, bool ground, EntityManager *manager);
     void init();
     void pickUp();
     void getInfo();
@@ -42,6 +42,7 @@ protected:
 private:
     int itemID = -1;
     bool onGround = false;
+    EntityManager *manager;
 };
 
 #endif // ITEM_HPP

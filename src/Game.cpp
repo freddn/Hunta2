@@ -20,6 +20,7 @@
 
 #include "InGame.hpp"
 #include "MainMenu.hpp"
+#include "CharacterCreationScreen.hpp"
 #include <unistd.h>
 
 #include <iostream>
@@ -50,6 +51,8 @@ namespace game {
     EnemyDataController enemyController;
     ItemManager itemManager;
     UIController uiController;
+    CharacterCreationScreen creationScreen;
+    Inventory inventory(400,160);
     std::shared_ptr<Map> textureMap;
     int width = 640;
     int t_width = width/32;
@@ -87,6 +90,7 @@ namespace game {
         inGame.init();
         mMenu.init();
         uiController.init();
+        inventory.init();
         //textureMap = mapController.getMap(1);
         if(current_state == INGAME)
             mapController.getMap(1)->loadPlayer(100,100);
@@ -104,6 +108,9 @@ namespace game {
                 /* Show the main menu */
                 //mMenu.update();
                 mMenu.draw();
+                break;
+            case(CHARCREATION):
+                creationScreen.createCharacter();
                 break;
             case(INGAME):
                 inGame.renderStart();
@@ -129,8 +136,11 @@ namespace game {
                 break;
             }
             avgFPS = countedFrames / (fpsTimer.getTicks() / 1000.f);
-            if(avgFPS > 2000000) {
+            if(countedFrames > 500) {
                 avgFPS = 0;
+                countedFrames = 0;
+                fpsTimer.stop();
+                fpsTimer.start();
             }
 
             if((fpsTimer.getTicks() - currentTick) < TICKS_PER_FRAME) {
@@ -179,8 +189,8 @@ namespace game {
                 SDL_GetMouseState(&mouseX,&mouseY);
         }
     }
-    void newGame() {
-        playerController.load("nooobn",&lInterface);
+    void newGame(std::string nick) {
+        playerController.load(nick,&lInterface);
         mapController.loadMap(1);
         mapController.getMap(1)->loadPlayer(100,100);
         game::setCurrent_state(game::INGAME);
@@ -370,6 +380,10 @@ namespace game {
 
     ItemManager *getItemManager() {
         return &itemManager;
+    }
+
+    Inventory *getInventory() {
+        return &inventory;
     }
 
     std::shared_ptr<Map> getTextureMap() {

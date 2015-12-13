@@ -23,29 +23,27 @@ Item::Item(int id) {
     itemID = id;
 }
 
-Item::Item(int id, bool ground) {
+Item::Item(int id, bool ground, EntityManager *mgr) {
     onGround = ground;
     itemID = id;
+    manager = mgr; // TODO asd
 }
 
-Item::~Item()
-{
+Item::~Item() {
     //dtor
 }
 
-void Item::init()
-{
+void Item::init() {
+
     //loadFromFile(game::getRenderer(),"data/stick.png");
 }
 
-void Item::draw()
-{
+void Item::draw() {
 
 }
 
-void Item::update()
-{
-
+void Item::update() {
+    // TODO Check if player is standing on item..
 }
 
 

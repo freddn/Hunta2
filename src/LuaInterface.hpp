@@ -21,21 +21,6 @@
 
 #include "lua.hpp"
 
-struct inventoryItem {
-    int id;
-    int amount;
-    int x;
-    int y;
-};
-
-/* Getters for data gathered with lua.
-namespace lua_functions {
-    int getItemCount();
-    inventoryItem* getItems();
-    int getHeight();
-    int getWidth();
-}*/
-
 /* Functions that will execute lua-scripts. */
 class LuaInterface {
 public:

@@ -22,6 +22,7 @@
 #include "Texture.hpp"
 #include "EntitySystem.hpp"
 #include "LuaInterface.hpp"
+#include "ItemManager.hpp"
 
 using namespace EntitySystem;
 
@@ -40,7 +41,8 @@ public:
     void deleteItem(int id,int amount,int x, int y);
 
     void saveInventory();
-    void buildInventory();
+    void renderItems();
+    //void buildInventory();
     ~Inventory();
 private:
     LuaInterface l_interface;
@@ -51,6 +53,9 @@ private:
     int sizeY = 9;
     int itemCount = 0;
     SDL_Rect inventoryRect;
+    std::string inventoryLocation;
+    std::map<int, ItemData> items;
+    std::map<int, int> stackedItems;
 };
 
 #endif // INVENTORY_H

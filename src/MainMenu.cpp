@@ -153,8 +153,9 @@ void MainMenu::update() {
         if(SDL_BUTTON(SDL_BUTTON_LEFT)) {
             if(mouseOverRect(newGame)) {
                 // TODO Add character selection screen
-                game::getTextureMapController()->getMap(1)->loadPlayer(100,100);
-                game::newGame();
+                game::setCurrent_state(game::CHARCREATION);
+                //game::getTextureMapController()->getMap(1)->loadPlayer(100,100);
+
             } else
                 newGamePressed = false;
             if(mouseOverRect(loadGame)) {

@@ -4,7 +4,7 @@ function AddItem(filename, id,count,x,y)
 	file = io.open(filename,"a")
 	if file ~= nil then
 		io.output(file)
-		io.write(id," ",count," ",x," ",y,"\n")
+		io.write("loadItem(",id,", ",count,", ",x,", ",y,")\n")
 		io.close(file)
 	else
 		print("File not found:", filename)
@@ -30,7 +30,7 @@ function DeleteItem(filename, id, count, x, y)
 				if i == 0 then
 					-- do nothning
 				else
-					content[#content+1] = item[1] .. " " .. i .. " " .. item[3] .. " " .. item[4]
+					content[#content+1] = "loadItem(" .. item[1] .. ", " .. i .. ", " .. item[3] .. ", " .. item[4] .. ")"
 				end
 			else
 				content[#content+1] = line -- add line to vector
@@ -62,7 +62,7 @@ function NewInventoryFile(filename)
 	file = io.open(filename, "w")
 	if file == nil then
 		io.output(file)
-		io.write("ItemID count x y\n")
+		io.write("-- ItemID count x y\n")
 		io.close(file)
 	else
 		print("File already exists.")

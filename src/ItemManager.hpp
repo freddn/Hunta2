@@ -4,26 +4,76 @@
 #include "LuaInterface.hpp"
 #include <map>
 
+struct ItemData {
+    int id;
+    std::string name;
+    std::string img;
+    std::string desc;
+};
+
+struct ArmorItem : ItemData{
+    int levelReq;
+    int atk;
+    int def;
+    int hp;
+    int price;
+};
+
+
+struct WeaponItem : ItemData {
+    int levelReq;
+    int atk;
+    int def;
+    int hp;
+    int price;
+};
+
+
+struct UsableItem : ItemData {
+    int levelReq;
+    int stackSize;
+    int heal;
+    int price;
+};
+
+struct MiscItem : ItemData {
+    int stackSize;
+    int price;
+};
+
 class ItemManager {
 public:
     ItemManager();
 
     void init(LuaInterface *lInterface);
 
-    void loadArmor(int id, std::string name, int levelReq, std::string img,
-                    std::string desc, int price, int atk, int def,int hp);
-    void loadWeapon(int id, std::string name, int levelReq, std::string img,
-                    std::string desc, int price, int atk, int def, int hp);
-    void loadUsable(int id, std::string name, int levelReq, int stackSize,
-                    std::string img, std::string desc, int price, int heal);
-    void loadMisc(int id, std::string name, int stackSize, std::string img,
-                    std::string desc, int price);
+    void loadArmor(int id, const std::string &name, int levelReq, const std::string &img,
+                   const std::string &desc, int price, int atk, int def,int hp);
+    void loadWeapon(int id, const std::string &name, int levelReq, const std::string &img,
+                    const std::string &desc, int price, int atk, int def, int hp);
+    void loadUsable(int id, const std::string &name, int levelReq, int stackSize,
+                    const std::string &img, const std::string &desc, int price, int heal);
+    void loadMisc(int id, const std::string &name, int stackSize, const std::string &img,
+                  const std::string &desc, int price);
+
+    ArmorItem &getArmor(int id);
+    WeaponItem &getWeapon(int id);
+    UsableItem &getUsable(int id);
+    MiscItem &getMisc(int id);
+    ItemData &getItem(int id);
     virtual ~ItemManager();
-protected:
 private:
     LuaInterface *lInterface{nullptr};
 
-    std::map<int, std::string> itemImages;
+    std::map<int, std::string> armorImages;
+    std::map<int, std::string> weaporImages;
+    std::map<int, std::string> usableImages;
+    std::map<int, std::string> miscImages;
+
+    std::map<int, ArmorItem> armor;
+    std::map<int, WeaponItem> weapons;
+    std::map<int, UsableItem> usables;
+    std::map<int, MiscItem> misc;
 };
 
 #endif // ITEMMANAGER_H

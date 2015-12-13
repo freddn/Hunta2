@@ -14,6 +14,7 @@
 #include "Tile.hpp"
 #include "Environment.hpp"
 #include "Enemy.hpp"
+#include "Item.hpp"
 
 Map::Map() {}
 
@@ -55,6 +56,7 @@ void Map::update() {
 void Map::draw() {
     tiles.draw();
     manager.draw();
+
 }
 
 void Map::clear() {
@@ -82,7 +84,6 @@ bool Map::hasEntities() {
 }
 
 void Map::loadTile(int id, int index, int x,int y, std::string img) {
-    //std::cerr << "loaded tile " <<index<<" to map:"<<mapID << std::endl;
     Entity *tile = &tiles.addEntity(index);
     tile->addComponent<Position>(x + mapX*MAP_WIDTH, y + mapY*MAP_HEIGHT);
     tile->addComponent<Texture>(img,false);
@@ -92,7 +93,6 @@ void Map::loadTile(int id, int index, int x,int y, std::string img) {
 void Map::loadEnvironment(int id, int index, int x,int y, std::string img) {
     Entity *env = manager.addEntity(index,false);
     if(env != nullptr) {
-        //std::cerr << "environment added..."<<std::endl;
         env->addComponent<Position>(x + mapX*MAP_WIDTH,y + mapY*MAP_HEIGHT);
         env->addComponent<Texture>(img,false);
         env->addComponent<GPhysics>();
@@ -114,6 +114,17 @@ void Map::loadEnemy(int id, int index, int x,int y, std::string img, int width, 
         enemy->addComponent<Health>(data.hp);
         enemy->addComponent<Enemy>(manager, id, data.exp, data.name, data.atk);
         enemy->addGroup(game::ENEMY);
+    }
+}
+
+void Map::loadItem(int id, int x, int y, int amount) {
+    Entity *item = manager.addEntity(x+y*MAP_WIDTH,false);
+    ItemData data = game::getItemManager()->getItem(id);
+    if(item != nullptr) {
+        item->addComponent<Position>(x+ mapX*MAP_WIDTH,y+ mapY*MAP_HEIGHT);
+        item->addComponent<Texture>(data.img,false);
+        item->addComponent<Item>(id);
+        item->addGroup(game::ITEM);
     }
 }
 

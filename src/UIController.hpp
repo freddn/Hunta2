@@ -17,8 +17,6 @@ public:
 protected:
 private:
     Texture tInterface;
-
-    Inventory *inventory{nullptr};
     bool showInventory = false;
     const Uint8 *key = 0;
     int buf = 0;

@@ -22,9 +22,6 @@
 
 namespace lua_functions {
 
-    inventoryItem items[20]; /* */
-    int itemNo = 0;
-
     int loadTile(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 5) {
@@ -71,18 +68,13 @@ namespace lua_functions {
     int loadItem(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 5) {
-            inventoryItem temp;
-            temp.id =  lua_tonumber(l_state,2);
-            temp.amount = lua_tonumber(l_state,3);
-            temp.x = lua_tonumber(l_state,4);
-            temp.y = lua_tonumber(l_state,5);
-
-            if(itemNo > 19) {
-                std::cerr << "Too many items in inventory" << std::endl;
-                return 1;
-            }
-            items[itemNo] = temp;
-            itemNo++;
+            int id =  lua_tonumber(l_state,1);
+            int amount = lua_tonumber(l_state,2);
+            int onGround = lua_tonumber(l_state,3);
+            int x = lua_tonumber(l_state,4);
+            int y = lua_tonumber(l_state,5);
+            if(onGround == 0)
+                game::getInventory()->addItem(id, amount, x, y);
         }
         return 0;
     }
@@ -99,7 +91,6 @@ namespace lua_functions {
             game::getPlayerController()->setDef(lua_tonumber(l_state,7));
             game::getPlayerController()->setPosX(lua_tonumber(l_state,8));
             game::getPlayerController()->setPosY(lua_tonumber(l_state,9));
-            std::cout << "ATK" << game::getPlayerController()->getAtk()<<std::endl;
         }
         return 0;
     }
@@ -134,15 +125,17 @@ namespace lua_functions {
     int loadArmorData(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 9) {
-            //int id = lua_tonumber(l_state,1); // id
-            //std::string name = lua_tostring(l_state,2); // name
-            //int level = lua_tonumber(l_state,3); // id
-            //std::string img = lua_tostring(l_state,4); // image
-            //std::string desc = lua_tostring(l_state,5); // desc
-            //int price = lua_tonumber(l_state,6); // price
-            //int atk = lua_tonumber(l_state,7); // atk
-            //int def = lua_tonumber(l_state,8); // def
-            //int hp = lua_tonumber(l_state,9); // hp
+            int id = lua_tonumber(l_state,1); // id
+            std::string name = lua_tostring(l_state,2); // name
+            int level = lua_tonumber(l_state,3); // id
+            std::string img = lua_tostring(l_state,4); // image
+            std::string desc = lua_tostring(l_state,5); // desc
+            int price = lua_tonumber(l_state,6); // price
+            int atk = lua_tonumber(l_state,7); // atk
+            int def = lua_tonumber(l_state,8); // def
+            int hp = lua_tonumber(l_state,9); // hp
+            game::getTextureManager()->loadTexture(img);
+            game::getItemManager()->loadArmor(id,name,level,img,desc,price,atk,def,hp);
         }
         return 0;
     }
@@ -150,14 +143,16 @@ namespace lua_functions {
     int loadUsablesData(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 8) {
-            //int id = lua_tonumber(l_state,1); // id
-            //std::string name = lua_tostring(l_state,2); // name
-            //int level = lua_tonumber(l_state,3);
-            //int maxStack = lua_tonumber(l_state,4);
-            //std::string img = lua_tostring(l_state,5); // image
-            //std::string desc = lua_tostring(l_state,6); // desc
-            //int price = lua_tonumber(l_state,7); // price
-            //int heal = lua_tonumber(l_state,8); // atk
+            int id = lua_tonumber(l_state,1); // id
+            std::string name = lua_tostring(l_state,2); // name
+            int level = lua_tonumber(l_state,3);
+            int maxStack = lua_tonumber(l_state,4);
+            std::string img = lua_tostring(l_state,5); // image
+            std::string desc = lua_tostring(l_state,6); // desc
+            int price = lua_tonumber(l_state,7); // price
+            int heal = lua_tonumber(l_state,8); // atk
+            game::getTextureManager()->loadTexture(img);
+            game::getItemManager()->loadUsable(id,name,level,maxStack,img,desc,price,heal);
         }
         return 0;
     }
@@ -165,15 +160,17 @@ namespace lua_functions {
     int loadWeaponsData(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 9) {
-            //int id = lua_tonumber(l_state,1); // id
-            //std::string name = lua_tostring(l_state,2); // name
-            //int level = lua_tonumber(l_state,3); // id
-            //std::string img = lua_tostring(l_state,4); // image
-            //std::string desc = lua_tostring(l_state,5); // desc
-            //int price = lua_tonumber(l_state,6); // price
-            //int atk = lua_tonumber(l_state,7); // atk
-            //int def = lua_tonumber(l_state,8); // def
-            //int hp = lua_tonumber(l_state,9); // hp
+            int id = lua_tonumber(l_state,1); // id
+            std::string name = lua_tostring(l_state,2); // name
+            int level = lua_tonumber(l_state,3); // id
+            std::string img = lua_tostring(l_state,4); // image
+            std::string desc = lua_tostring(l_state,5); // desc
+            int price = lua_tonumber(l_state,6); // price
+            int atk = lua_tonumber(l_state,7); // atk
+            int def = lua_tonumber(l_state,8); // def
+            int hp = lua_tonumber(l_state,9); // hp
+            game::getTextureManager()->loadTexture(img);
+            game::getItemManager()->loadWeapon(id,name,level,img,desc,price,atk,def,hp);
         }
         return 0;
     }
@@ -217,22 +214,16 @@ namespace lua_functions {
     int loadMiscItemData(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 6) {
-            //int id = lua_tonumber(l_state,1); // id
-            //std::string name = lua_tostring(l_state,2); // name
-            //int maxStack = lua_tonumber(l_state,3); // stack
-            //std::string img = lua_tostring(l_state,4); // image
-            //std::string desc = lua_tostring(l_state,5); // desc
-            //int sellprice = lua_tonumber(l_state,6); // price
+            int id = lua_tonumber(l_state,1); // id
+            std::string name = lua_tostring(l_state,2); // name
+            int maxStack = lua_tonumber(l_state,3); // stack
+            std::string img = lua_tostring(l_state,4); // image
+            std::string desc = lua_tostring(l_state,5); // desc
+            int price = lua_tonumber(l_state,6); // price
+            game::getTextureManager()->loadTexture(img);
+            game::getItemManager()->loadMisc(id,name,maxStack,img,desc,price);
         }
         return 0;
-    }
-
-    int getItemCount() {
-        return itemNo;
-    }
-
-    inventoryItem* getItems() {
-        return items;
     }
 }
 
@@ -461,15 +452,6 @@ void LuaInterface::loadMap(int mapID) {
 }
 
 void LuaInterface::loadInventory(const char *filename) {
-    for(int i = 0;i<20;i++) {
-        lua_functions::items[i].id = -1;
-        lua_functions::items[i].amount = -1;
-        lua_functions::items[i].x = -1;
-        lua_functions::items[i].y = -1;
-    }
-
-    lua_functions::itemNo = 0;
-
     lua_pushstring(l_state,"loadInventory");
     lua_gettable(l_state,LUA_GLOBALSINDEX);
     lua_pushstring(l_state,filename);

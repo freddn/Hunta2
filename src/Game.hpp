@@ -48,7 +48,7 @@ namespace game {
     /** Check for SDL events */
     void pollEvents();
 
-    void newGame();
+    void newGame(std::string nick);
 
     /** Initiates SDL, creates a window, buffer and so on. */
     bool init_game(bool fullscreen);
@@ -58,6 +58,7 @@ namespace game {
 
     /** The different states of the game. */
     enum State {    MAINMENU,
+                    CHARCREATION,
                     INGAME,
                     PAUSED,
                     GAMEOVER,
@@ -100,6 +101,7 @@ namespace game {
     EnemyDataController *getEnemyDataController();
     ItemManager *getItemManager();
     TextureManager *getTextureManager();
+    Inventory *getInventory();
     std::shared_ptr<Map> getTextureMap();
     int getWidth();
     int getTWidth();
