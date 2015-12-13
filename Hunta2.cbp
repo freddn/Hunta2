@@ -92,8 +92,8 @@
 		<Unit filename="src/Editor.hpp" />
 		<Unit filename="src/Enemy.cpp" />
 		<Unit filename="src/Enemy.hpp" />
-		<Unit filename="src/EntityCreator.cpp" />
-		<Unit filename="src/EntityCreator.hpp" />
+		<Unit filename="src/EnemyDataController.cpp" />
+		<Unit filename="src/EnemyDataController.hpp" />
 		<Unit filename="src/EntitySystem.cpp" />
 		<Unit filename="src/EntitySystem.hpp" />
 		<Unit filename="src/Environment.cpp" />
@@ -104,8 +104,8 @@
 		<Unit filename="src/Game.hpp" />
 		<Unit filename="src/Global.cpp" />
 		<Unit filename="src/Global.hpp" />
-		<Unit filename="src/HealthBar.cpp" />
-		<Unit filename="src/HealthBar.hpp" />
+		<Unit filename="src/Health.cpp" />
+		<Unit filename="src/Health.hpp" />
 		<Unit filename="src/Icon.cpp" />
 		<Unit filename="src/Icon.hpp" />
 		<Unit filename="src/InGame.cpp" />
@@ -152,12 +152,15 @@
 		<Unit filename="src/TextureManager.hpp" />
 		<Unit filename="src/Tile.cpp" />
 		<Unit filename="src/Tile.hpp" />
+		<Unit filename="src/UIController.cpp" />
+		<Unit filename="src/UIController.hpp" />
 		<Unit filename="src/Weapon.cpp" />
 		<Unit filename="src/Weapon.hpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
