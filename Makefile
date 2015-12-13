@@ -5,6 +5,8 @@ all:
 	@echo slackware
 	@echo freebsd
 	@echo dragonfly
+	@echo Building linux by default
+	$(MAKE) linux
 
 linux:
 	$(MAKE) -f config/makefile.linux
