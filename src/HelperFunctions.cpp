@@ -4,11 +4,19 @@
 
 #include "HelperFunctions.hpp"
 
+#include <time.h>
+#include <stdlib.h>
+
 #if defined(DEBUG) || defined(DEBUG_LESS)
 #include <iostream>
 #endif
 namespace HelperFunctions {
 
+    int random(int from, int to, int seed) {
+        srand (seed);
+        return (rand()%(to-from+1)) + from;
+
+    }
 #if defined(DEBUG_LESS)
     void log(std::string str) {
             log(MESSAGE,str);

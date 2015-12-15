@@ -29,9 +29,7 @@ int main(int argc, char *argv[]) {
     } else if(argc == 2) {
         if(*argv[1] == 'f')
             fullscreen = true;
-
     }
-
 
     if(!game::init_game(fullscreen)) {
         HelperFunctions::log(HelperFunctions::ERROR,"Init failed.");
@@ -41,7 +39,6 @@ int main(int argc, char *argv[]) {
 
     game::start();
     game::close();
-
     return 0;
 }
 

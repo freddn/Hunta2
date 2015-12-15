@@ -99,9 +99,10 @@ void Character::update() {
                 (position->getY()+10 < temp.getY()+height &&
                  position->getY()+22 > temp.getY())) {
 
-            game::getInventory()->addItem(e->getComponent<Item>().getID(),
+            int success = game::getInventory()->addItem(e->getComponent<Item>().getID(),
                                           e->getComponent<Item>().getAmount());
-            e->destroy();
+            if(success == 0)
+                e->destroy();
         }
     }
 

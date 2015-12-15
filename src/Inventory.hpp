@@ -24,6 +24,9 @@
 #include "LuaInterface.hpp"
 #include "ItemManager.hpp"
 
+#define INVENTORY_WIDTH 5
+#define INVENTORY_HEIGHT 4
+
 using namespace EntitySystem;
 
 /*
@@ -40,7 +43,7 @@ public:
     void loadInventory();
 
     int addItem(int id, int amount, int x, int y);
-    void addItem(int id, int amount);
+    int addItem(int id, int amount);
     void deleteItem(int id, int amount, int x, int y);
 
     void saveInventory();

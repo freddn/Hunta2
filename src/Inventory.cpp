@@ -56,33 +56,42 @@ void Inventory::loadInventory() {
     l_interface.loadFile(inventoryLocation.c_str());
 }
 
-void Inventory::addItem(int id, int amount) {
+int Inventory::addItem(int id, int amount) {
     ItemData data = game::getItemManager()->getItem(id);
 
-    for(int i=0;i<12;i++) {
-        if(items.find(i) != items.end()) {
-            if(items.at(i).id >= 200 && items.at(i).id == id) {
-                int amt = 1;
-                if(stackedItems.find(i) != stackedItems.end()) {
-                    amt = stackedItems.at(i);
-                    stackedItems.erase(i);
-                } else {
-                    items.emplace(std::pair<int,ItemData>(i, data));
+    for(int y=0;y<INVENTORY_HEIGHT;y++) {
+        for(int x=0;x<INVENTORY_WIDTH;x++) {
+            int index = x+(y*INVENTORY_WIDTH);
+            if (items.find(index) != items.end()) {
+                if (items.at(index).id >= 200 && items.at(index).id == id) {//TODO check stacksize?
+                    int amt = 1;
+                    if (stackedItems.find(index) != stackedItems.end()) {
+                        amt = stackedItems.at(index);
+                        stackedItems.erase(index);
+                    } else {
+                        items.emplace(std::pair<int, ItemData>(index, data));
+                    }
+                    /* Increase the stack by 1. */
+                    stackedItems.emplace(std::pair<int, int>(index, amt + amount));
+                    return 0;
                 }
-
-                /* Increase the stack by 1. */
-                stackedItems.emplace(std::pair<int,int>(i, amt+1));
-                return;
             }
         }
     }
 
-    for(int i=0;i<12;i++) {
-        if (items.find(i) == items.end()) {
-            items.emplace(std::pair<int,ItemData>(i, data));
-            return;
+
+    for(int y=0;y<INVENTORY_HEIGHT;y++) {
+        for(int x=0;x<INVENTORY_WIDTH;x++) {
+            int index = x + (y * INVENTORY_WIDTH);
+            if (items.find(index) == items.end()) {
+                items.emplace(std::pair<int, ItemData>(index, data));
+                if(amount > 1) // TODO Check stacksize?
+                    stackedItems.emplace(std::pair<int, int>(index, amount));
+                return 0;
+            }
         }
     }
+    return -1;
 }
 
 int Inventory::addItem(int id, int amount, int x, int y) {
@@ -92,31 +101,33 @@ int Inventory::addItem(int id, int amount, int x, int y) {
     }
 
     ItemData data = game::getItemManager()->getItem(id);
-
-    if(items.find(x+(y*3)) != items.end()) {
-        if(items.at(x+(y*3)).id >= 200 && items.at(x+(y*3)).id ==id) {
+    int index = x + (y*INVENTORY_WIDTH);
+    if(items.find(index) != items.end()) {
+        if(items.at(index).id >= 200 && items.at(index).id ==id) {
             int amt = 1;
 
-            if(stackedItems.find(x+(y*3)) != stackedItems.end()) {
-                amt = stackedItems.at(x+(y*3));
-                stackedItems.erase(x+(y*3));
+            if(stackedItems.find(index) != stackedItems.end()) {
+                amt = stackedItems.at(index);
+                stackedItems.erase(index);
             } else {
-                items.emplace(std::pair<int,ItemData>(x+(y*3), data));
+                items.emplace(std::pair<int,ItemData>(index, data));
             }
 
             /* Increase the stack by 1. */
-            stackedItems.emplace(std::pair<int,int>(x+(y*3), amt+1));
+            stackedItems.emplace(std::pair<int,int>(index, amt+amount));
+            return 0;
         }
     } else {
-        items.emplace(std::pair<int,ItemData>(x+(y*3), data));
+        items.emplace(std::pair<int,ItemData>(index, data));
+        return 0;
     }
     
-    return 0;
+    return -1;
 }
 
 void Inventory::deleteItem(int id,int amount,int x,int y) {
     l_interface.deleteItem(inventoryLocation.c_str(), id,amount,x,y);
-    items.erase(y*6+x);
+    items.erase(y*INVENTORY_WIDTH+x);
 }
 
 /*
@@ -132,9 +143,11 @@ void Inventory::renderItems() {
     SDL_Rect srcRect{0, 0, 32, 32};
 
     for(auto item : items) {
-        SDL_Rect itemRect{16+inventoryRect.x+((item.first%3)*32)+(item.first%3)*2,
-                          170+inventoryRect.y+(((item.first-item.first%3)/3)*32)+
-                                  ((item.first-item.first%3)/3)*2,
+        SDL_Rect itemRect{16+inventoryRect.x+((item.first%INVENTORY_WIDTH)*32)+
+                          (item.first%INVENTORY_WIDTH)*2,
+                          170+inventoryRect.y+
+                          (((item.first-item.first%INVENTORY_WIDTH)/INVENTORY_WIDTH)*32)+
+                          ((item.first-item.first%INVENTORY_WIDTH)/INVENTORY_WIDTH)*2,
                           32, 32};
 
         SDL_RenderCopy(game::getRenderer(),

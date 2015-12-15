@@ -19,6 +19,7 @@
 #include "Enemy.hpp"
 
 #include "Game.hpp"
+#include "HelperFunctions.hpp"
 
 Enemy::Enemy(EntityManager &m, int id) : manager(&m){
     enemyID = id;
@@ -201,7 +202,20 @@ void Enemy::onDeath() {
     /// Drop?
     /// Death animation?
     /// Corpse??
-    game::getTextureMapController()->getMap(1)->loadItem(200,position->getX(),position->getY(),3);
+    int rgn = HelperFunctions::random(1,9,game::getTimer()->getTicks());
+    if(rgn < 5)
+        game::getTextureMapController()->getMap(1)->loadItem(rgn,position->getX(),position->getY(),1);
+    else if(rgn == 5)
+        game::getTextureMapController()->getMap(1)->loadItem(100,position->getX(),position->getY(),1);
+    else if(rgn == 6)
+        game::getTextureMapController()->getMap(1)->loadItem(101,position->getX(),position->getY(),1);
+    else if(rgn == 7)
+        game::getTextureMapController()->getMap(1)->loadItem(200,position->getX(),position->getY(),1);
+    else if(rgn == 8)
+        game::getTextureMapController()->getMap(1)->loadItem(201,position->getX(),position->getY(),1);
+    else if(rgn == 9)
+        game::getTextureMapController()->getMap(1)->loadItem(300,position->getX(),position->getY(),1);
+
     alive = false;
     game::getPlayerController()->increaseExperience(experienceGain);
     knockBackTimer.stop();

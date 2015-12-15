@@ -122,7 +122,7 @@ void Map::loadItem(int id, int x, int y, int amount) {
     ItemData data = game::getItemManager()->getItem(id);
     if(item != nullptr) {
         item->addComponent<Position>(x+ mapX*MAP_WIDTH,y+ mapY*MAP_HEIGHT);
-        item->addComponent<Texture>(data.img,false);
+        item->addComponent<Texture>(data.img,true);
         item->addComponent<Item>(id);
         item->addGroup(game::ITEM);
     }
