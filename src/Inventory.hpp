@@ -16,8 +16,8 @@
  * along with Hunta2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INVENTORY_H
-#define INVENTORY_H
+#ifndef INVENTORY_HPP
+#define INVENTORY_HPP
 
 #include "Texture.hpp"
 #include "EntitySystem.hpp"
@@ -29,22 +29,23 @@ using namespace EntitySystem;
 /*
  * Inventory. Load items from file. Save items to file.
  */
-struct Inventory : Component {
+class Inventory : Component {
 public:
     Inventory(int x, int y);
+    ~Inventory();
+
     void init();
     void update();
     void draw();
     void loadInventory();
 
-    int addItem(int id,int amount,int x, int y);
-    void addItem(int id,int amount);
-    void deleteItem(int id,int amount,int x, int y);
+    int addItem(int id, int amount, int x, int y);
+    void addItem(int id, int amount);
+    void deleteItem(int id, int amount, int x, int y);
 
     void saveInventory();
     void renderItems();
-    //void buildInventory();
-    ~Inventory();
+
 private:
     LuaInterface l_interface;
     SDL_Texture *inv_bg{nullptr};
@@ -56,8 +57,8 @@ private:
     SDL_Rect inventoryRect;
     Texture amount;
     std::string inventoryLocation;
-    std::map<int, ItemData> items;
-    std::map<int, int> stackedItems;
+    std::map<int,ItemData> items;
+    std::map<int,int> stackedItems;
 };
 
-#endif // INVENTORY_H
+#endif /* INVENTORY_HPP */

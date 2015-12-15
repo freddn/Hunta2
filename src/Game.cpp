@@ -53,7 +53,7 @@ namespace game {
     ItemManager itemManager;
     UIController uiController;
     CharacterCreationScreen creationScreen;
-    Inventory inventory(400,160);
+    Inventory inventory(580, 260);
     std::shared_ptr<Map> textureMap;
     int width = 800;
     int t_width = width/32;
