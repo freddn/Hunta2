@@ -9,7 +9,7 @@ loadWeaponData(4, "sword", 20, "data/items/weapons/sword_black.png", "A mysterio
 -- ARMOR
 -- id name level image desc sell atk def hp
 loadArmorData(100, "hat", 1, "data/stick.png", "A leather hat", 10, 0, 2, 0)
-loadArmorData(101, "pants", 1, "data/stick.png", "Lether pants", 4, 0, 4, 0)
+loadArmorData(101, "pants", 1, "data/leather_pants.png", "Leather pants", 4, 0, 4, 0)
 
 -- USABLES
 -- id name level stack image description value heal
