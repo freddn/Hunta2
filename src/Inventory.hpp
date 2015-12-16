@@ -20,19 +20,16 @@
 #define INVENTORY_HPP
 
 #include "Texture.hpp"
-#include "EntitySystem.hpp"
 #include "LuaInterface.hpp"
 #include "ItemManager.hpp"
 
 #define INVENTORY_WIDTH 5
 #define INVENTORY_HEIGHT 4
 
-using namespace EntitySystem;
-
 /*
  * Inventory. Load items from file. Save items to file.
  */
-class Inventory : Component {
+class Inventory {
 public:
     Inventory(int x, int y);
     ~Inventory();

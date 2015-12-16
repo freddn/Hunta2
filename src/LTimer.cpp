@@ -19,8 +19,7 @@
 #include "LTimer.hpp"
 
 
-LTimer::LTimer()
-{
+LTimer::LTimer() {
     mStartTicks = 0;
     mPausedTicks = 0;
 
@@ -28,8 +27,7 @@ LTimer::LTimer()
     mStarted = false;
 }
 
-void LTimer::start()
-{
+void LTimer::start() {
     mStarted = true;
     mPaused = false;
 
@@ -37,8 +35,7 @@ void LTimer::start()
     mPausedTicks = 0;
 }
 
-void LTimer::stop()
-{
+void LTimer::stop() {
     mStarted = false;
     mPaused = false;
 
@@ -46,10 +43,8 @@ void LTimer::stop()
     mPausedTicks = 0;
 }
 
-void LTimer::pause()
-{
-    if(mStarted && !mPaused)
-    {
+void LTimer::pause() {
+    if(mStarted && !mPaused) {
         mPaused = true;
 
         mPausedTicks = SDL_GetTicks() - mStartTicks;
@@ -57,44 +52,35 @@ void LTimer::pause()
     }
 }
 
-void LTimer::unpause()
-{
+void LTimer::unpause() {
     mPaused = false;
 
     mStartTicks = SDL_GetTicks() - mPausedTicks;
     mPausedTicks = 0;
 }
 
-Uint32 LTimer::getTicks()
-{
+Uint32 LTimer::getTicks() {
     Uint32 time = 0;
 
-    if(mStarted)
-    {
-        if(mPaused)
-        {
+    if(mStarted) {
+        if(mPaused) {
             time = mPausedTicks;
-        }
-        else
-        {
+        } else {
             time = SDL_GetTicks() - mStartTicks;
         }
     }
     return time;
 }
 
-bool LTimer::isStarted()
-{
+bool LTimer::isStarted() {
     return mStarted;
 }
 
-bool LTimer::isPaused()
-{
+bool LTimer::isPaused() {
     return mPaused;
 }
 
-LTimer::~LTimer()
-{
+LTimer::~LTimer() {
     //dtor
 }
 

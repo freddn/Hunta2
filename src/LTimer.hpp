@@ -22,29 +22,28 @@
 #include <SDL2/SDL.h>
 
 /* A timer class. Can be used as stopwatch or clock.*/
-class LTimer
-{
-    public:
-        LTimer();
+class LTimer {
+public:
+    LTimer();
 
-        void start();
-        void stop();
-        void pause();
-        void unpause();
+    void start();
+    void stop();
+    void pause();
+    void unpause();
 
-        Uint32 getTicks();
+    Uint32 getTicks();
 
-        bool isStarted();
-        bool isPaused();
+    bool isStarted();
+    bool isPaused();
 
-        virtual ~LTimer();
-    protected:
-    private:
-        Uint32 mStartTicks;
-        Uint32 mPausedTicks;
+    virtual ~LTimer();
+protected:
+private:
+    Uint32 mStartTicks;
+    Uint32 mPausedTicks;
 
-        bool mPaused;
-        bool mStarted;
+    bool mPaused;
+    bool mStarted;
 };
 
 #endif

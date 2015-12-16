@@ -20,8 +20,6 @@
 #ifndef MOUSECONTROLLER_HPP
 #define MOUSECONTROLLER_HPP
 
-#include "EntitySystem.hpp"
-#include "Position.hpp"
 #include <SDL2/SDL.h>
 
 enum {
@@ -30,7 +28,7 @@ enum {
     STATE_UP
 };
 
-class MouseController : EntitySystem::Component {
+class MouseController {
 public:
     MouseController();
     MouseController(bool x, bool y);
@@ -57,14 +55,11 @@ public:
     void setCenteredY(bool c);
 
 private:
-    Position *position = nullptr;
 
     int state = STATE_NONE;
 
     bool rMouseBtn = false;
     bool lMouseBtn = false;
-    bool controllX = true;
-    bool controllY = true;
 
     int width = 32;
     int height = 32;

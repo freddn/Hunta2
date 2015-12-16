@@ -24,24 +24,7 @@
 MouseController::MouseController() {
 }
 
-MouseController::MouseController(bool x, bool y) {
-    controllX = x;
-    controllY = y;
-}
-
 MouseController::~MouseController() {
-}
-
-void MouseController::init() {
-    position = &entity->getComponent<Position>();
-    if(entity->hasComponent<Texture>()) {
-        width = entity->getComponent<Texture>().getWidth();
-        height = entity->getComponent<Texture>().getHeight();
-    } else if(entity->hasComponent<Shape>()) {
-        width = entity->getComponent<Shape>().getWidth();
-        height = entity->getComponent<Shape>().getHeight();
-    }
-    setCenteredX(true);
 }
 
 /*
@@ -114,14 +97,4 @@ void MouseController::setRMouseBtn(bool rMouse) {
 
 void MouseController::setLMouseBtn(bool lMouse) {
     lMouseBtn = lMouse;
-}
-
-void MouseController::setCenteredX(bool c) {
-    if(!c)
-        width = 0;
-}
-
-void MouseController::setCenteredY(bool c) {
-    if(!c)
-        height = 0;
 }

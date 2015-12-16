@@ -1,9 +1,7 @@
 #ifndef KEYBOARDCONTROLLER_H
 #define KEYBOARDCONTROLLER_H
 
-#include "EntitySystem.hpp"
-
-struct KeyboardController : EntitySystem::Component {
+struct KeyboardController {
 public:
     KeyboardController();
     virtual ~KeyboardController();

@@ -23,8 +23,6 @@
 
 #include <iostream>
 
-using namespace EntitySystem;
-
 Inventory::Inventory(int x, int y) {
     inventoryRect.x = x;
     inventoryRect.y = y;

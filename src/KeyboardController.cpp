@@ -1,11 +1,7 @@
 #include "KeyboardController.hpp"
 
-KeyboardController::KeyboardController()
-{
-    //ctor
+KeyboardController::KeyboardController() {
 }
 
-KeyboardController::~KeyboardController()
-{
-    //dtor
+KeyboardController::~KeyboardController() {
 }
