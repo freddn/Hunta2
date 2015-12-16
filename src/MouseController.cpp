@@ -1,11 +1,27 @@
-#include "MouseController.hpp"
-#include "SDL2/SDL.h"
+/* Copyright (C) 2015  Fredrik Mörtberg <fredrikmo@hotmail.com>
+ * Copyright (C) 2015  Lucas Sköldqvist <frusen@gungre.ch>
+ *
+ * This file is a part of the Hunta2 project.
+ *
+ * Hunta2 is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Hunta2 is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Hunta2.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
+#include "MouseController.hpp"
 #include "Texture.hpp"
 #include "Shape.hpp"
-MouseController::MouseController()
-{
-    //ctor
+
+MouseController::MouseController() {
 }
 
 MouseController::MouseController(bool x, bool y) {
@@ -13,9 +29,7 @@ MouseController::MouseController(bool x, bool y) {
     controllY = y;
 }
 
-MouseController::~MouseController()
-{
-    //dtor
+MouseController::~MouseController() {
 }
 
 void MouseController::init() {
@@ -30,16 +44,39 @@ void MouseController::init() {
     setCenteredX(true);
 }
 
-void MouseController::update() {
-    int tempX = mouseX;
-    int tempY = mouseY;
-    SDL_GetMouseState(&mouseX,&mouseY);
-    if(tempX != mouseX && controllX)
-        position->setX(mouseX - (width/2));
-    if(tempY != mouseY && controllY)
-        position->setY(mouseY - (height/2));
+/*
+ * Update mouse related variables.
+ */
+void MouseController::update(SDL_Event event) {
+    /* If the mouse is moved, update the variables tracking the position. */
+    if(event.type == SDL_MOUSEMOTION) {
+        mouseX = event.motion.x;
+        mouseY = event.motion.y;
+    }
+
+    /* If the mouse button is held down, set the state to STATE_DOWN.
+     * When the mouse button is released, set the state to STATE_UP if it has
+     * previously been STATE_DOWN. */
+    if(event.type == SDL_MOUSEBUTTONDOWN) {
+        state = STATE_DOWN;
+    } else if(event.type == SDL_MOUSEBUTTONUP) {
+        if(state == STATE_DOWN) {
+            state = STATE_UP;
+        }
+    }
 }
 
+/*
+ * Clear the mouse state.
+ *
+ * We only want the STATE_UP to be valid for one update because it is supposed
+ * to represent a button release.
+ */
+void MouseController::clear() {
+    if(state == STATE_UP) {
+        state = STATE_NONE;
+    }
+}
 
 void MouseController::setMouseX(int x) {
     mouseX = x;
@@ -55,6 +92,12 @@ int MouseController::getMouseX() {
 
 int MouseController::getMouseY() {
     return mouseY;
+}
+
+bool MouseController::leftReleased() {
+    if(state == STATE_UP)
+        return true;
+    return false;
 }
 
 bool MouseController::rightMouseButton() {
@@ -82,6 +125,3 @@ void MouseController::setCenteredY(bool c) {
     if(!c)
         height = 0;
 }
-
-
-

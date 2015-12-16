@@ -1,4 +1,5 @@
 /* Copyright (C) 2015  Fredrik Mörtberg <fredrikmo@hotmail.com>
+ * Copyright (C) 2015  Lucas Sköldqvist <frusen@gungre.ch>
  *
  * This file is a part of the Hunta2 project.
  *
@@ -121,7 +122,7 @@ int Inventory::addItem(int id, int amount, int x, int y) {
         items.emplace(std::pair<int,ItemData>(index, data));
         return 0;
     }
-    
+
     return -1;
 }
 
@@ -170,4 +171,13 @@ void Inventory::renderItems() {
  * Check if items are dropped or if new items are picked up.
  */
 void Inventory::update() {
+    /*if (game::getMouseController()->leftReleased()) {
+        std::cout << "Mouse released at " <<
+                     game::getMouseController()->getMouseX()-inventoryRect.x <<
+                     "," <<
+                     game::getMouseController()->getMouseY()-inventoryRect.y << std::endl;
+    }
+    */
+    /* TODO: Check if the mouse has been released above an item, if so,
+     * perhaps use the item. */
 }

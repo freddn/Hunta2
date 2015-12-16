@@ -1,4 +1,5 @@
 /* Copyright (C) 2015  Fredrik Mörtberg <fredrikmo@hotmail.com>
+ * Copyright (C) 2015  Lucas Sköldqvist <frusen@gungre.ch>
  *
  * This file is a part of the Hunta2 project.
  *
@@ -34,6 +35,7 @@
 #include "PlayerController.hpp"
 #include "UIController.hpp"
 #include "EnemyDataController.hpp"
+#include "MouseController.hpp"
 
 /**
  * Game class. Contains game-loop. State of the game. Init of map/data.
@@ -99,6 +101,7 @@ namespace game {
     PlayerController *getPlayerController();
     MapController *getTextureMapController();
     EnemyDataController *getEnemyDataController();
+    MouseController *getMouseController();
     ItemManager *getItemManager();
     TextureManager *getTextureManager();
     Inventory *getInventory();

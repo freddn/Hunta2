@@ -1,4 +1,5 @@
 /* Copyright (C) 2015  Fredrik Mörtberg <fredrikmo@hotmail.com>
+ * Copyright (C) 2015  Lucas Sköldqvist <frusen@gungre.ch>
  *
  * This file is a part of the Hunta2 project.
  *
@@ -52,6 +53,7 @@ namespace game {
     EnemyDataController enemyController;
     ItemManager itemManager;
     UIController uiController;
+    MouseController mouseController;
     CharacterCreationScreen creationScreen;
     Inventory inventory(580, 260);
     std::shared_ptr<Map> textureMap;
@@ -155,8 +157,11 @@ namespace game {
 
     void pollEvents() {
         const Uint8 *key = SDL_GetKeyboardState(NULL);
+        mouseController.clear();
 
         while(SDL_PollEvent(&event) != 0) {
+            mouseController.update(event);
+
             if(current_state == MAINMENU)
                 mMenu.update();
             if(event.type == SDL_QUIT)
@@ -385,6 +390,10 @@ namespace game {
 
     EnemyDataController *getEnemyDataController() {
         return &enemyController;
+    }
+
+    MouseController *getMouseController() {
+        return &mouseController;
     }
 
     ItemManager *getItemManager() {
