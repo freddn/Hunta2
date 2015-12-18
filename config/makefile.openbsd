@@ -1,0 +1,35 @@
+include config/sources
+
+INCS = `freetype-config --cflags; sdl2-config --cflags` -I/usr/local/include/lua-5.1
+LIBS = `freetype-config --libs; sdl2-config --libs` -llua5.1 -lGL -lGLU -lSDL2_ttf \
+    -lSDL2_image -lSDL2_mixer
+
+CFLAGS += -g -Wall -O0 -std=c++11 ${INCS} ${CPPFLAGS}
+LDFLAGS += -g ${LIBS}
+
+CC = eg++
+
+OBJ = ${SRC:.cpp=.o}
+
+all: options hunta2
+
+options:
+	@echo hunta2 build options:
+	@echo "CFLAGS   = ${CFLAGS}"
+	@echo "LDFLAGS  = ${LDFLAGS}"
+	@echo "CC       = ${CC}"
+
+.cpp.o:
+	@echo CC $<
+	@${CC} -c ${CFLAGS} $< -o $@
+
+hunta2: ${OBJ}
+	@echo runnin CC -o $@
+	@${CC} -o $@ ${OBJ} ${CFLAGS} ${LDFLAGS}
+
+clean:
+	@echo cleaning
+	@rm -f hunta2
+	@rm src/*.o
+
+.PHONY: all hunta2 options clean

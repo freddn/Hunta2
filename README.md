@@ -28,7 +28,8 @@ Either use the Code::Blocks project file or run `make system', where system is o
  - linux
  - slackware
  - freebsd
- - dragonfly 
+ - dragonfly
+ - openbsd
 
 ## How to build on Windows
 Use the Code::Blocks project file. In Code::Blocks, change the build target to "Debug Windows" when compiling.

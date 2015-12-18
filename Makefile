@@ -5,6 +5,7 @@ all:
 	@echo slackware
 	@echo freebsd
 	@echo dragonfly
+	@echo openbsd
 	@echo Building linux by default
 	$(MAKE) -f config/makefile.linux
 
@@ -19,6 +20,9 @@ freebsd:
 
 dragonfly:
 	$(MAKE) -f config/makefile.dragonfly
+
+openbsd:
+	$(MAKE) -f config/makefile.openbsd
 
 travis:
 	$(MAKE) -f config/makefile.travis
