@@ -28,6 +28,11 @@ enum {
     STATE_UP
 };
 
+enum {
+    LEFT_BTN,
+    RIGHT_BTN
+};
+
 class MouseController {
 public:
     MouseController();
@@ -45,24 +50,14 @@ public:
     int getMouseY();
 
     bool leftReleased();
+    bool rightReleased();
 
-    bool rightMouseButton();
-    bool leftMouseButton();
-
-    void setRMouseBtn(bool rMouse);
-    void setLMouseBtn(bool lMouse);
     void setCenteredX(bool c);
     void setCenteredY(bool c);
 
 private:
-
-    int state = STATE_NONE;
-
-    bool rMouseBtn = false;
-    bool lMouseBtn = false;
-
-    int width = 32;
-    int height = 32;
+    /* For left and right button. */
+    int btn_state[2];
 
     int mouseX = 0;
     int mouseY = 0;

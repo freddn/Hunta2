@@ -22,6 +22,8 @@
 #include "Shape.hpp"
 
 MouseController::MouseController() {
+    btn_state[LEFT_BTN] = STATE_NONE;
+    btn_state[RIGHT_BTN] = STATE_NONE;
 }
 
 MouseController::~MouseController() {
@@ -41,10 +43,20 @@ void MouseController::update(SDL_Event event) {
      * When the mouse button is released, set the state to STATE_UP if it has
      * previously been STATE_DOWN. */
     if(event.type == SDL_MOUSEBUTTONDOWN) {
-        state = STATE_DOWN;
+        if(event.button.button == SDL_BUTTON_LEFT) {
+            btn_state[LEFT_BTN] = STATE_DOWN;
+        } else if(event.button.button == SDL_BUTTON_RIGHT) {
+            btn_state[RIGHT_BTN] = STATE_DOWN;
+        }
     } else if(event.type == SDL_MOUSEBUTTONUP) {
-        if(state == STATE_DOWN) {
-            state = STATE_UP;
+        if(event.button.button == SDL_BUTTON_LEFT) {
+            if(btn_state[LEFT_BTN] == STATE_DOWN) {
+                btn_state[LEFT_BTN] = STATE_UP;
+            }
+        } else if(event.button.button == SDL_BUTTON_RIGHT) {
+            if(btn_state[RIGHT_BTN] == STATE_DOWN) {
+                btn_state[RIGHT_BTN] = STATE_UP;
+            }
         }
     }
 }
@@ -56,8 +68,12 @@ void MouseController::update(SDL_Event event) {
  * to represent a button release.
  */
 void MouseController::clear() {
-    if(state == STATE_UP) {
-        state = STATE_NONE;
+    if(btn_state[LEFT_BTN] == STATE_UP) {
+        btn_state[LEFT_BTN] = STATE_NONE;
+    }
+
+    if(btn_state[RIGHT_BTN] == STATE_UP) {
+        btn_state[RIGHT_BTN] = STATE_NONE;
     }
 }
 
@@ -78,23 +94,13 @@ int MouseController::getMouseY() {
 }
 
 bool MouseController::leftReleased() {
-    if(state == STATE_UP)
+    if(btn_state[LEFT_BTN] == STATE_UP)
         return true;
     return false;
 }
 
-bool MouseController::rightMouseButton() {
-    return rMouseBtn;
-}
-
-bool MouseController::leftMouseButton() {
-    return lMouseBtn;
-}
-
-void MouseController::setRMouseBtn(bool rMouse) {
-    rMouseBtn = rMouse;
-}
-
-void MouseController::setLMouseBtn(bool lMouse) {
-    lMouseBtn = lMouse;
+bool MouseController::rightReleased() {
+    if(btn_state[RIGHT_BTN] == STATE_UP)
+        return true;
+    return false;
 }
