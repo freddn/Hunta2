@@ -30,6 +30,7 @@ public:
     int getPosY();
     std::string getName();
     int getMaxExperience(int lv);
+    bool getHealthChanged();
 
     /** --------------- Setters --------------- */
     void increaseExperience(int e);
@@ -42,6 +43,8 @@ public:
     void setPosX(int x);
     void setPosY(int y);
     void setName(std::string name);
+    void setHealthChanged(bool flag);
+    void increaseHp(int h);
 
     virtual ~PlayerController();
 protected:
@@ -62,6 +65,8 @@ private:
     int currentHp = hp;
     int posX = 50;
     int posY = 50;
+
+    bool healthChanged;
 };
 
 #endif // PLAYERCONTROLLER_H

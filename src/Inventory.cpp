@@ -169,13 +169,34 @@ void Inventory::renderItems() {
  * Check if items are dropped or if new items are picked up.
  */
 void Inventory::update() {
-    /*if (game::getMouseController()->leftReleased()) {
-        std::cout << "Mouse released at " <<
-                     game::getMouseController()->getMouseX()-inventoryRect.x <<
-                     "," <<
-                     game::getMouseController()->getMouseY()-inventoryRect.y << std::endl;
+    if(game::getMouseController()->leftReleased()) {
+        /* Mouse pointer. */
+        SDL_Rect mrect{game::getMouseController()->getMouseX(),
+                       game::getMouseController()->getMouseY(),
+                       1, 1};
+        for(auto item : items) {
+            SDL_Rect itemRect{16+inventoryRect.x+((item.first%INVENTORY_WIDTH)*32)+
+                              (item.first%INVENTORY_WIDTH)*2,
+                              170+inventoryRect.y+
+                              (((item.first-item.first%INVENTORY_WIDTH)/INVENTORY_WIDTH)*32)+
+                              ((item.first-item.first%INVENTORY_WIDTH)/INVENTORY_WIDTH)*2,
+                              32, 32};
+
+            /* Is the mouse above an item? */
+            if(SDL_HasIntersection(&mrect, &itemRect) == SDL_TRUE) {
+                UsableItem it;
+                try {
+                    it = game::getItemManager()->getUsable(item.second.id);
+                } catch(const std::out_of_range &oor) {
+                    /* The selected item was not an usable item. */
+                    return;
+                }
+
+                l_interface.loadFile(it.script.c_str());
+                /* FIXME */
+                items.erase(item.first);
+                break;
+            }
+        }
     }
-    */
-    /* TODO: Check if the mouse has been released above an item, if so,
-     * perhaps use the item. */
 }

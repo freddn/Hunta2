@@ -99,9 +99,9 @@ void PlayerController::setExperience(int e) {
         currentHp = hp;
         atk+=2;
         def++;
-        if(inc > 0) 
+        if(inc > 0)
             setExperience(inc);
-    } else 
+    } else
         experience = e;
 }
 
@@ -137,4 +137,18 @@ void PlayerController::setName(std::string name) {
     playerName = name;
 }
 
+bool PlayerController::getHealthChanged() {
+    return healthChanged;
+}
 
+void PlayerController::setHealthChanged(bool flag) {
+    healthChanged = flag;
+}
+
+void PlayerController::increaseHp(int h) {
+    currentHp += h;
+    if(currentHp > hp) {
+        currentHp = hp;
+    }
+    healthChanged = true;
+}

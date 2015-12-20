@@ -149,7 +149,7 @@ namespace lua_functions {
 
     int loadUsablesData(lua_State *l_state) {
         int argc = lua_gettop(l_state);
-        if(argc == 8) {
+        if(argc == 9) {
             int id = lua_tonumber(l_state,1); // id
             std::string name = lua_tostring(l_state,2); // name
             int level = lua_tonumber(l_state,3);
@@ -158,8 +158,9 @@ namespace lua_functions {
             std::string desc = lua_tostring(l_state,6); // desc
             int price = lua_tonumber(l_state,7); // price
             int heal = lua_tonumber(l_state,8); // atk
+            std::string script = lua_tostring(l_state,9);
             game::getTextureManager()->loadTexture(img);
-            game::getItemManager()->loadUsable(id,name,level,maxStack,img,desc,price,heal);
+            game::getItemManager()->loadUsable(id,name,level,maxStack,img,desc,price,heal,script);
         }
         return 0;
     }
@@ -232,6 +233,14 @@ namespace lua_functions {
         }
         return 0;
     }
+
+    int playerAddHp(lua_State *l_state) {
+        int argc = lua_gettop(l_state);
+        if(argc == 1) {
+            game::getPlayerController()->increaseHp(lua_tonumber(l_state,1));
+        }
+        return 0;
+    }
 }
 
 LuaInterface::LuaInterface() { }
@@ -263,6 +272,7 @@ void LuaInterface::initLua() {
     lua_register(l_state, "loadWeaponData", lua_functions::loadWeaponsData);
     lua_register(l_state, "loadEnemyData", lua_functions::loadEnemiesData);
     lua_register(l_state, "loadMiscItemData", lua_functions::loadMiscItemData);
+    lua_register(l_state, "playerAddHp", lua_functions::playerAddHp);
 
     lua_register(l_state, "loadCharacter", lua_functions::loadCharacter);
 }

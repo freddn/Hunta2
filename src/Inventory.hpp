@@ -51,8 +51,6 @@ private:
     SDL_Texture *inv_bg{nullptr};
     Texture frame;
     Texture text;
-    int sizeX = 6;
-    int sizeY = 9;
     int itemCount = 0;
     SDL_Rect inventoryRect;
     Texture amount;

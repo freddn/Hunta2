@@ -48,8 +48,10 @@ void ItemManager::loadWeapon(int id, const std::string &name, int levelReq, cons
 
     weapons.emplace(std::pair<int, WeaponItem>(id, weaponItem));
 }
-void ItemManager::loadUsable(int id, const std::string &name, int levelReq, int stackSize,
-                             const std::string &img, const std::string &desc, int price, int heal) {
+void ItemManager::loadUsable(int id, const std::string &name, int levelReq,
+                             int stackSize, const std::string &img,
+                             const std::string &desc, int price, int heal,
+                             const std::string &script) {
     UsableItem usableItem;
     usableItem.id = id;
     usableItem.name = name;
@@ -59,6 +61,7 @@ void ItemManager::loadUsable(int id, const std::string &name, int levelReq, int 
     usableItem.desc = desc;
     usableItem.price = price;
     usableItem.heal = heal;
+    usableItem.script = script;
 
     usables.emplace(std::pair<int, UsableItem>(id, usableItem));
 }

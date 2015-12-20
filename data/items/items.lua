@@ -13,8 +13,8 @@ loadArmorData(101, "pants", 1, "data/leather_pants.png", "Leather pants", 4, 0, 
 
 -- USABLES
 -- id name level stack image description value heal
-loadUsablesData(200, "potion", 1, 20, "data/red-potion.png", "Gives hp", 10, 20)
-loadUsablesData(201, "apple", 1, 20, "data/apple.png", "Looking fresh", 6, 10)
+loadUsablesData(200, "potion", 1, 20, "data/red-potion.png", "Gives hp", 10, 20, "data/items/usables/red-potion.lua")
+loadUsablesData(201, "apple", 1, 20, "data/apple.png", "Looking fresh", 6, 10, "data/items/usables/apple.lua")
 
 -- MISC
 -- id name stack img desc value

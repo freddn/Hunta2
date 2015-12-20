@@ -34,6 +34,7 @@ struct UsableItem : ItemData {
     int stackSize;
     int heal;
     int price;
+    std::string script;
 };
 
 struct MiscItem : ItemData {
@@ -51,8 +52,10 @@ public:
                    const std::string &desc, int price, int atk, int def,int hp);
     void loadWeapon(int id, const std::string &name, int levelReq, const std::string &img,
                     const std::string &desc, int price, int atk, int def, int hp);
-    void loadUsable(int id, const std::string &name, int levelReq, int stackSize,
-                    const std::string &img, const std::string &desc, int price, int heal);
+    void loadUsable(int id, const std::string &name, int levelReq,
+                    int stackSize, const std::string &img,
+                    const std::string &desc, int price, int heal,
+                    const std::string &script);
     void loadMisc(int id, const std::string &name, int stackSize, const std::string &img,
                   const std::string &desc, int price);
 

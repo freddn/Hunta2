@@ -1,0 +1,1 @@
+playerAddHp(10)
