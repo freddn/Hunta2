@@ -1,4 +1,3 @@
-
 -- WEAPONS
 -- id name level img desc sellprice atk def hp
 loadWeaponData(1, "sword", 1, "data/items/weapons/sword.png", "A weak sword", 20, 5, 0, 0)
@@ -8,7 +7,7 @@ loadWeaponData(4, "sword", 20, "data/items/weapons/sword_black.png", "A mysterio
 
 -- ARMOR
 -- id name level image desc sell atk def hp
-loadArmorData(100, "hat", 1, "data/stick.png", "A leather hat", 10, 0, 2, 0)
+loadArmorData(100, "hat", 1, "data/hat.png", "A leather hat", 10, 0, 2, 0)
 loadArmorData(101, "pants", 1, "data/leather_pants.png", "Leather pants", 4, 0, 4, 0)
 
 -- USABLES
@@ -19,8 +18,3 @@ loadUsablesData(201, "apple", 1, 20, "data/apple.png", "Looking fresh", 6, 10, "
 -- MISC
 -- id name stack img desc value
 loadMiscItemData(300, "stick", 20, "data/stick.png", "A stick", 4)
-
-
-
-
-

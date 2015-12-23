@@ -55,6 +55,9 @@ void Inventory::loadInventory() {
     l_interface.loadFile(inventoryLocation.c_str());
 }
 
+/*
+ * Used when picking up items.
+ */
 int Inventory::addItem(int id, int amount) {
     ItemData data = game::getItemManager()->getItem(id);
 
@@ -93,6 +96,9 @@ int Inventory::addItem(int id, int amount) {
     return -1;
 }
 
+/*
+ * Used when starting a new game or loading a game.
+ */
 int Inventory::addItem(int id, int amount, int x, int y) {
     /* We can only carry less than 20 items. */
     if(itemCount >= 20) {
@@ -124,9 +130,31 @@ int Inventory::addItem(int id, int amount, int x, int y) {
     return -1;
 }
 
-void Inventory::deleteItem(int id,int amount,int x,int y) {
-    l_interface.deleteItem(inventoryLocation.c_str(), id,amount,x,y);
-    items.erase(y*INVENTORY_WIDTH+x);
+void Inventory::deleteItem(int id, int amount, int x, int y) {
+    //l_interface.deleteItem(inventoryLocation.c_str(), id, amount, x, y);
+    //items.erase(y*INVENTORY_WIDTH+x);
+
+    ItemData data = game::getItemManager()->getItem(id);
+    int index = x+(y*INVENTORY_WIDTH);
+
+    if(items.at(index).id >= 200 && items.at(index).id == id) {
+        int amt = 1;
+
+        if(stackedItems.find(index) != stackedItems.end()) {
+            amt = stackedItems.at(index);
+            stackedItems.erase(index);
+        } else {
+            /* Only one item (no stack), so erase it. */
+            items.erase(index);
+        }
+
+        /* When there are more than 2 items display the stack size decreased by 1.
+         * This means that when there is 2 items in the stack and we are deleting one,
+         * there will only be one left and we won't initialise a stack. */
+        if(amt > 2) {
+            stackedItems.emplace(std::pair<int,int>(index, amt-amount));
+        }
+    }
 }
 
 /*
@@ -193,8 +221,9 @@ void Inventory::update() {
                 }
 
                 l_interface.loadFile(it.script.c_str());
-                /* FIXME */
-                items.erase(item.first);
+                deleteItem(item.second.id, 1,
+                           item.first%INVENTORY_WIDTH,
+                           (item.first-item.first%INVENTORY_WIDTH)/INVENTORY_WIDTH);
                 break;
             }
         }
