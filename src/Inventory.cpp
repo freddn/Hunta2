@@ -31,20 +31,27 @@ Inventory::Inventory(int x, int y) {
 Inventory::~Inventory() {}
 
 void Inventory::init() {
+    /* Load inventory background image. */
     frame.loadFromFile("data/inventory.png");
 
+    /* Load inventory save file. */
     inventoryLocation = "data/savedata/" +
         game::getPlayerController()->getName() + "_inventory.lua";
 
+    /* Load text (TODO This is maby unneccesary, we can put tex in the image) */
     text.loadFromText("Inventory", *game::getTextColor(), game::getFont());
 
+    /* We need the lua interface to access the inventory as the inventory
+     * is made with lua. */
     l_interface.initLua();
 
+    /* Load player inventory */
     if(!l_interface.loadFile(inventoryLocation.c_str())) {
         HelperFunctions::log(HelperFunctions::ERROR,
                              "Failed to Load LoadInventory.lua");
     }
 
+    /* Load inventory-file helper functions */
     if(!l_interface.loadFile("src/InventoryFunctions.lua")) {
         HelperFunctions::log(HelperFunctions::ERROR,
                              "Failed to Load InventoryFunctions.lua");
@@ -130,10 +137,10 @@ int Inventory::addItem(int id, int amount, int x, int y) {
     return -1;
 }
 
+/**
+ * Delete one or more items with id = id and at position (x,y) in inventory.
+ */
 void Inventory::deleteItem(int id, int amount, int x, int y) {
-    //l_interface.deleteItem(inventoryLocation.c_str(), id, amount, x, y);
-    //items.erase(y*INVENTORY_WIDTH+x);
-
     ItemData data = game::getItemManager()->getItem(id);
     int index = x+(y*INVENTORY_WIDTH);
 
@@ -166,6 +173,9 @@ void Inventory::draw() {
     renderItems();
 }
 
+/**
+ * Render all items currently in inventory.
+ */
 void Inventory::renderItems() {
     SDL_Rect srcRect{0, 0, 32, 32};
 
@@ -188,7 +198,6 @@ void Inventory::renderItems() {
             amount.loadFromText(amt.str(), *game::getTextColor(),
                                 game::getDmgFont());
             amount.render(itemRect.x,itemRect.y,nullptr);
-            // TODO Print amt of items
         }
     }
 }

@@ -8,12 +8,32 @@
 
 using namespace EntitySystem;
 
+
+/**
+ * A projectile component.
+ */
 struct Projectile : Component {
 public:
+    /**
+     * Create a projectile whith the target position (relX,relY)
+     */
     Projectile(int x, int y,int relX,int relY);
+
+    /**
+     * Move the projectile if it doesn't has reached its maximum range.
+     */
     void update();
+
+    /**
+     * Give the destination position to the physics component, i.e., start the projectile.
+     */
     void init();
+
+    /**
+     * Change the range of the projectile.
+     */
     void setRange(int r);
+
     ~Projectile();
 private:
     int destX;

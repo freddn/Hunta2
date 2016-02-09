@@ -63,6 +63,11 @@ void MainMenu::draw() {
     else
         buttonBg.setClipY(0);
     buttonBg.render(newGame.x, newGame.y,nullptr);
+
+    // TODO Separate so we dont need to load text every time we render.. OR
+    // TODO Implement a loadFromText function that takes a bool at the end ..
+    // TODO which decides that we will save a text that is used often.. (maby both)
+
     text.loadFromText("New Game" ,
                         *game::getTextColor(),game::getFont());
     text.render(newGame.x+20,newGame.y+18,(SDL_Rect*)nullptr);

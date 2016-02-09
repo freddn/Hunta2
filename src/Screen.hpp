@@ -24,25 +24,22 @@
 #include "Texture.hpp"
 
 /*
- * Screen class. Can render items ontop of underlaying screens.
+ * Screen class. Can render on top of underlaying screens.
  */
-struct Screen
-{
-    public:
-        void init();// override;
-        void update();// override;
-        void draw();// override;
-        void renderStart();
-        void renderEnd();
-        int getSelected();
-        virtual ~Screen();// override;
-    private:
-        const Uint8 *key = NULL;
-        std::stringstream tempText;
-        int x = 0;
-        int y = 0;
-        //int selected = 0;
-        Texture fpsText;
+struct Screen {
+public:
+    virtual void init();
+    virtual void update();
+    virtual void draw();
+    void renderStart();
+    void renderEnd();
+    virtual ~Screen();
+private:
+    const Uint8 *key = NULL;
+    std::stringstream tempText;
+    int x = 0;
+    int y = 0;
+    Texture fpsText;
 };
 
 #endif // SCREEN_H

@@ -2,16 +2,11 @@
 #include <iostream>
 #include "HelperFunctions.hpp"
 
-ItemManager::ItemManager() {
-    //ctor
-}
+ItemManager::ItemManager() {}
 
-ItemManager::~ItemManager() {
-    //dtor
-}
+ItemManager::~ItemManager() {}
 
 void ItemManager::init(LuaInterface *lInterface) {
-
     this->lInterface = lInterface;
     HelperFunctions::log("Loading item data ...");
     lInterface->loadFile("data/items/items.lua");

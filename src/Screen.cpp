@@ -19,7 +19,6 @@
 #include "Screen.hpp"
 #include "Game.hpp"
 
-
 Screen::~Screen() {}
 
 void Screen::init() {}
@@ -41,6 +40,4 @@ void Screen::renderEnd() {
 
     SDL_RenderPresent(game::getRenderer());
 }
-
-
 

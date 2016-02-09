@@ -37,30 +37,38 @@ public:
     InGame();
 
     /**
-     *
+     * Not so much here at the moment, maby init charater/load player data and such..
+     * Will call Screen::init()
      */
     void init();
 
     /**
-     *
+     * Update maps and everything ingame.
+     * Will call Screen::update()
      */
     void update();
 
     /**
-     *
+     * Draw maps and everything ingame.
+     * Will call Screen::draw()
      */
     void draw();
 
+    /**
+     * A temporary user interface with some player information(hp, level, exp ..)
+     * Drawn in the function draw() and the text is updated here.
+     * TODO Implement a user interface with buttons and images.
+     */
     void update_interface();
 
     /**
-     *
+     * TODO Remove? Called in another location
      */
     void displayInventory(bool);
+
     ~InGame();
 private:
     bool showInventory = false;
-
 
     int buf = 0;
     Texture tInterface;

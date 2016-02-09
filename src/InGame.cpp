@@ -25,11 +25,11 @@ InGame::InGame() {}
 InGame::~InGame() {}
 
 void InGame::init() {
-    inGameManager.reserveEntities(300);
+    inGameManager.reserveEntities(300); // TODO Remove? Check if needed (spam loads of objects in the game)
 }
 
 void InGame::draw() {
-    game::getTextureMapController()->draw();
+    game::getTextureMapController()->draw(); // Draw the map
     if(updateFreq%10 == 0) {
         update_interface();
         updateFreq = 1;
@@ -76,8 +76,5 @@ void InGame::update_interface() {
     tempText.str("");
     tempText << "DEF:    "<<game::getPlayerController()->getDef();
     defText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
-
-
 }
-
 

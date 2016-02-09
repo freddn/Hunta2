@@ -202,17 +202,16 @@ void Enemy::onDeath() {
     /// Drop?
     /// Death animation?
     /// Corpse??
+    /**
+     * TODO Implement a lootManager and enemy loot tables with drop rates.
+     */
     int rgn = HelperFunctions::random(1,9,game::getTimer()->getTicks());
-    if(rgn < 5)
+    if(rgn < 3)
         game::getTextureMapController()->getMap(1)->loadItem(rgn,position->getX(),position->getY(),1);
     else if(rgn == 5)
         game::getTextureMapController()->getMap(1)->loadItem(100,position->getX(),position->getY(),1);
-    else if(rgn == 6)
-        game::getTextureMapController()->getMap(1)->loadItem(101,position->getX(),position->getY(),1);
     else if(rgn == 7)
         game::getTextureMapController()->getMap(1)->loadItem(200,position->getX(),position->getY(),1);
-    else if(rgn == 8)
-        game::getTextureMapController()->getMap(1)->loadItem(201,position->getX(),position->getY(),1);
     else if(rgn == 9)
         game::getTextureMapController()->getMap(1)->loadItem(300,position->getX(),position->getY(),1);
 

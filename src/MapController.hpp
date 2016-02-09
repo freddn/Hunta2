@@ -33,7 +33,7 @@
 #include "Map.hpp"
 
 /**
- * Load a map, save a map, change a map.
+ * Load maps, save maps, change map.
  */
 class MapController {
 public:
@@ -43,7 +43,15 @@ public:
      * Loads tiles and set up lua-scripts.
      */
     void init(LuaInterface *lInterface);
+
+    /**
+     * Used to draw the map currently on screen.
+     */
     void draw();
+
+    /**
+     * Updates the map and everything on it.
+     */
     void update();
     /**
      * Make a call to the script that loads the tiles. Then we get the map from
@@ -52,7 +60,7 @@ public:
     bool loadMap(int id);
 
     /**
-     * Will erase and delete all tiles of the map.
+     * Will erase and delete all tiles of the map. TODO Remove?
      */
     void clearCurrentMap();
 
@@ -60,53 +68,101 @@ public:
      * Will create a new map and replace existing ones with same name.
      */
     void saveMap(std::map<int,std::shared_ptr<Texture>> *loadedMap,
-                int mapID, int width, int height);
+                int mapID, int width, int height); // TODO Implement this? (got saveMaps)
 
     /**
-     * Saves all maps to files.
+     * Saves all maps and their data to files.
      */
     void saveMaps();
 
     /**
-     * Sets the current map.
+     * Sets the current map. TODO Remove or use?
      */
     void setMap(std::shared_ptr<Map> tempMap);
-    void clearMap(int mapID);
+    void clearMap(int mapID); // TODO Remove or fix?
+
+    /**
+     * Check if map exists.
+     */
     bool mapExists(int mapID);
+
+    /**
+     * Returns a pointer to the map with given id.
+     */
     std::shared_ptr<Map> getMap(int mapID);
 
+    /**
+     * Loads a tile with given id on given map at position (x,y)
+     */
     void loadTile(int mapID, int id, int index, int x,int y);
+
+    /**
+     * Load environmental stuff on given map at position (x,y)
+     */
     void loadEnvironment(int mapID, int id, int index, int x,int y);
+
+    /**
+     * Loads an enemy on given map at position (x,y)
+     */
     void loadEnemy(int mapID, int id, int index, int x,int y);
 
-    void loadTileTexture(std::string img);
+    void loadTileTexture(std::string img); // TODO Use this?
+
+    /**
+     * Load tile data.
+     */
     void loadTileData(int id, std::string img, bool solid);
 
-    void loadEnvironmentTexture(std::string img);
+    void loadEnvironmentTexture(std::string img); // TODO Use this?
+
+    /**
+     * Load environment data.
+     */
     void loadEnvironmentData(int id, std::string img, bool solid);
 
-    void loadEnemyTexture(std::string img);
-    void loadEnemyData(int id, std::string img);
+    void loadEnemyTexture(std::string img); // TODO Use this?
 
+    /**
+     * Load enemy data.
+     */
+    void loadEnemyData(int id, std::string img); // TODO Maby move away from map mechanics
+
+    /**
+     * Loads a map and register neighbour maps.
+     */
     void loadMapData(int id, int x,int y, int n,int e, int s, int w);
-    void saveMap(int id, int x,int y, int n, int e, int s, int w);
+
+    void saveMap(int id, int x,int y, int n, int e, int s, int w); // TODO Use this?
+
+    /**
+     * Returns the map id of the current map.
+     */
     int getCurrentMap();
+
+    /**
+     * Used when changing map.
+     */
     void setCurrentMap(int id);
+
+    /**
+     * Returns a map id which correspond to the given position.
+     */
     int getMapID(int x, int y);
 
-    Texture *tileAtIndex();
-    void changeMap(const char *mapName);
+    Texture *tileAtIndex(); // TODO Remove?
+
+    void changeMap(const char *mapName); // TODO Implement
+
     ~MapController();
 private:
     std::map<int,std::shared_ptr<Map>> mapContainer;
     LuaInterface *lInterface{nullptr};
-    //std::map<int,std::shared_ptr<Texture>> *currentMap;
     std::shared_ptr<Map> currentMap;
     int currentMapID = 1;
     std::map<std::string, std::shared_ptr<Texture>> loadedTextures;
-    std::map<int, std::string> tiles;
-    std::map<int, std::string> environment;
-    std::map<int, std::string> enemies;
+    std::map<int, std::string> tiles; // Here we store image names to all tiles.
+    std::map<int, std::string> environment; // Image names for environment.
+    std::map<int, std::string> enemies; // Image names for enemies.
 };
 
 #endif // MAPCLASS_H

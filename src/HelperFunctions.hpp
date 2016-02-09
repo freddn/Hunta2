@@ -15,6 +15,12 @@
 #define DEBUG
 //#define DEBUG_LESS
 
+/**
+ * Some HelperFunctions. Here we have a random function used mostly in
+ * game mechanics and the log function used to debug and print messages in
+ * the terminal.
+ * TODO A function that can print messages inside the game.
+ */
 namespace HelperFunctions {
     enum types {
         ERROR,
