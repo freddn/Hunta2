@@ -17,6 +17,7 @@ public:
     void draw();
     void init();
     void save(LuaInterface *lInterface);
+    void save(LuaInterface *lInterface, int slot);
     void load(std::string name, LuaInterface *lInterface);
 
     /** --------------- Getters --------------- */

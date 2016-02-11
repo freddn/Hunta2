@@ -2,6 +2,7 @@
 #include "PlayerController.hpp"
 #include <cmath>
 #include <iostream>
+#include "Game.hpp"
 
 PlayerController::PlayerController() {
     //ctor
@@ -26,7 +27,11 @@ void PlayerController::init() {
 }
 
 void PlayerController::save(LuaInterface *lInterface) {
-    lInterface->saveCharacter(playerName.c_str(),level,experience,hp,currentHp,atk,def,posX,posY);
+    lInterface->saveCharacter(game::getCharacterCreationScreen()->getSaveSlot(playerName), playerName.c_str(),level,experience,hp,currentHp,atk,def,posX,posY);
+}
+
+void PlayerController::save(LuaInterface *lInterface, int slot) {
+    lInterface->saveCharacter(slot, playerName.c_str(),level,experience,hp,currentHp,atk,def,posX,posY);
 }
 
 void PlayerController::load(std::string name, LuaInterface *lInterface) {

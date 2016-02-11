@@ -1,12 +1,14 @@
 
 #include "CharacterCreationScreen.hpp"
 #include "Game.hpp"
+#include "HelperFunctions.hpp"
 #include <iostream>
 CharacterCreationScreen::CharacterCreationScreen() {}
 
 CharacterCreationScreen::~CharacterCreationScreen() {}
 
 void CharacterCreationScreen::init() {
+
 
 }
 
@@ -19,6 +21,7 @@ void CharacterCreationScreen::update() {
 
 }
 
+// TODO Add save slot selection..
 // TODO add background
 // TODO class selection
 // TODO start game button
@@ -29,6 +32,8 @@ void CharacterCreationScreen::createCharacter() {
     unsigned int maxlen = 14;
     SDL_Event e;
     SDL_Color textColor = {0xFF,0xFF,0xFF,0xFF};
+
+
 
     std::string inputText = "wolfhunter";
     Texture text;
@@ -78,7 +83,7 @@ void CharacterCreationScreen::createCharacter() {
                 text.loadFromText(inputText.c_str(),textColor,game::getFont());
 
             } else
-                text.loadFromText(" ", textColor,game::getFont());
+                text.loadFromText("noname"+HelperFunctions::random(0,9999,game::getTimer()->getTicks()), textColor,game::getFont());
         }
         //SDL_SetRenderDrawColor(game::getRenderer())
         SDL_RenderClear(game::getRenderer());
@@ -91,4 +96,36 @@ void CharacterCreationScreen::createCharacter() {
     }
     SDL_StopTextInput();
 
+}
+
+int CharacterCreationScreen::getSaveSlot(std::string string) {
+    if(saveSlots.find(string) != saveSlots.end())
+        return saveSlots.at(string);
+    else
+        return -1;
+}
+
+void CharacterCreationScreen::saveSlot(int slot, std::string name, int level) {
+    switch (slot) {
+        case 1:
+            name1 = name;
+            level1 = level;
+            saveslot1 = true;
+            HelperFunctions::log(HelperFunctions::MESSAGE, "Saveslot 1 is used by "+name);
+            break;
+        case 2:
+            name2 = name;
+            level2 = level;
+            saveslot2 = true;
+            HelperFunctions::log(HelperFunctions::MESSAGE, "Saveslot 2 is used by "+name);
+            break;
+        case 3:
+            name3 = name;
+            level3 = level;
+            saveslot3 = true;
+            HelperFunctions::log(HelperFunctions::MESSAGE, "Saveslot 3 is used by "+name);
+            break;
+        default:
+            break;
+    }
 }

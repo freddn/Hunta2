@@ -23,6 +23,17 @@
 
 namespace lua_functions {
 
+    int playerSavegame(lua_State *lua_state) {
+        int argc = lua_gettop(lua_state);
+        if(argc == 3) {
+            int slot = lua_tonumber(lua_state, 1);
+            std::string playerName = lua_tostring(lua_state, 2);
+            int level = lua_tonumber(lua_state, 3);
+            game::getCharacterCreationScreen()->saveSlot(slot, playerName, level);
+        }
+        return 0;
+    }
+
     int loadTile(lua_State *l_state) {
         int argc = lua_gettop(l_state);
         if(argc == 5) {
@@ -31,9 +42,7 @@ namespace lua_functions {
             int index = lua_tonumber(l_state,3); // index
             int x = lua_tonumber(l_state,4); // x
             int y = lua_tonumber(l_state,5); // y
-
             game::getTextureMapController()->loadTile(mapID,id,index,x,y);
-            return 0;
         }
         return 0;
     }
@@ -47,7 +56,6 @@ namespace lua_functions {
             int x = lua_tonumber(l_state,4); // x
             int y = lua_tonumber(l_state,5); // y
             game::getTextureMapController()->loadEnemy(mapID,id,index,x,y);
-            return 0;
         }
         return 0;
     }
@@ -61,7 +69,6 @@ namespace lua_functions {
             int x = lua_tonumber(l_state,4); // x
             int y = lua_tonumber(l_state,5); // y
             game::getTextureMapController()->loadEnvironment(mapID,id,index,x,y);
-            return 0;
         }
         return 0;
     }
@@ -255,7 +262,8 @@ void LuaInterface::initLua() {
     loadFile("src/CreateMap.lua");
     loadFile("src/SaveChar.lua");
 
-    /// functions for loading saved data (maps, inventory)
+    /* functions for loading saved data (maps, inventory, saved games, etc) */
+    lua_register(l_state, "playerSavegame", lua_functions::playerSavegame);
     lua_register(l_state, "loadTile", lua_functions::loadTile);
     lua_register(l_state, "loadEnemy", lua_functions::loadEnemy);
     lua_register(l_state, "loadEnvironment", lua_functions::loadEnvironment);
@@ -305,13 +313,14 @@ bool LuaInterface::loadFile(const char *filename) {
     return success;
 }
 
-void LuaInterface::saveCharacter(const char* charName, int level, int exp, int hp,
+void LuaInterface::saveCharacter(int saveslot, const char* charName, int level, int exp, int hp,
                                 int currentHp, int atk, int def, int x, int y) {
     lua_pushstring(l_state,"SaveCharacter");
 
     lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1
     //lua_getglobal(l_state,"_G"); // lua5.2 not working
     //lua_pushglobaltable(l_state); // lua5.2 not working
+    lua_pushnumber(l_state, saveslot);
     lua_pushstring(l_state, charName);
     lua_pushnumber(l_state, level);
     lua_pushnumber(l_state, exp);
@@ -321,9 +330,19 @@ void LuaInterface::saveCharacter(const char* charName, int level, int exp, int h
     lua_pushnumber(l_state, def);
     lua_pushnumber(l_state, x);
     lua_pushnumber(l_state, y);
-    int p = lua_pcall(l_state,9,0,0);
+    int p = lua_pcall(l_state,10,0,0);
     report_errors(l_state,p);
 
+}
+
+void LuaInterface::clearSaveslots() {
+    lua_pushstring(l_state,"ClearSaveSlots");
+
+    lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1
+    //lua_getglobal(l_state,"_G"); // lua5.2 not working
+    //lua_pushglobaltable(l_state); // lua5.2 not working
+    int p = lua_pcall(l_state,0,0,0);
+    report_errors(l_state,p);
 }
 
 void LuaInterface::appendMapData(const char* loadFunc, int mapId, const char* filename,int id,

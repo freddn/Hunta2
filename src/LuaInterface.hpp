@@ -30,9 +30,9 @@ public:
     void report_errors(lua_State *l_State, int status);
     lua_State *getLua_State();
     bool loadFile(const char *filename);
-    bool loadFile(const char *path, const char *filename);
-    void saveCharacter(const char* charName, int level, int exp, int hp,
+    void saveCharacter(int saveslot, const char* charName, int level, int exp, int hp,
                                 int currentHp, int atk, int def, int x, int y);
+    void clearSaveslots();
     void appendMapData(const char* loadFunc, int mapId, const char* filename,
                         int id, int index, int x, int y);
     void appendMapDataInfo(const char* filename,int mapID,int x,int y,int n,int e,int s,int w);

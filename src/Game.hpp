@@ -36,6 +36,7 @@
 #include "UIController.hpp"
 #include "EnemyDataController.hpp"
 #include "MouseController.hpp"
+#include "CharacterCreationScreen.hpp"
 
 /**
  * Game class. Contains game-loop. State of the game. Init of map/data.
@@ -106,6 +107,7 @@ namespace game {
     TextureManager *getTextureManager();
     Inventory *getInventory();
     std::shared_ptr<Map> getTextureMap();
+    CharacterCreationScreen *getCharacterCreationScreen();
     int getWidth();
     int getTWidth();
     int getHeight();

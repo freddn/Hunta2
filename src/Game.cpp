@@ -21,7 +21,6 @@
 
 #include "InGame.hpp"
 #include "MainMenu.hpp"
-#include "CharacterCreationScreen.hpp"
 #include "HelperFunctions.hpp"
 #include <unistd.h>
 
@@ -55,6 +54,7 @@ namespace game {
     UIController uiController;
     MouseController mouseController;
     CharacterCreationScreen creationScreen;
+
     Inventory inventory(580, 260);
     std::shared_ptr<Map> textureMap;
     int width = 800;
@@ -78,6 +78,7 @@ namespace game {
     void start() {
         HelperFunctions::log("game::start()");
         lInterface.initLua();
+        lInterface.loadFile("data/savedata/saveslots.lua");
         playerController.setName("assdd");
         //playerController.save(&lInterface);
         playerController.load("nooobn", &lInterface);
@@ -96,6 +97,8 @@ namespace game {
         mMenu.init();
         uiController.init();
         inventory.init();
+
+
         //textureMap = mapController.getMap(1);
         if(current_state == INGAME)
             mapController.getMap(1)->loadPlayer(100,100);
@@ -201,7 +204,12 @@ namespace game {
         }
     }
     void newGame(std::string nick) {
+
         playerController.load(nick,&lInterface);
+
+        playerController.save(&lInterface, 1);
+        playerController.save(&lInterface, 2);
+
         mapController.loadMap(1);
         mapController.getMap(1)->loadPlayer(100,100);
         game::setCurrent_state(game::INGAME);
@@ -414,6 +422,10 @@ namespace game {
 
     TextureManager *getTextureManager() {
         return &textureManager;
+    }
+
+    CharacterCreationScreen *getCharacterCreationScreen() {
+        return &creationScreen;
     }
 
     int getWidth() {
