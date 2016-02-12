@@ -49,11 +49,12 @@ namespace game {
     MapController mapController;
     TextureManager textureManager;
     PlayerController playerController;
-    EnemyDataController enemyController;
+    EnemyManager enemyManager;
     ItemManager itemManager;
     UIController uiController;
     MouseController mouseController;
     CharacterCreationScreen creationScreen;
+    SaveSlotSelection saveSlotSelection;
 
     Inventory inventory(580, 260);
     std::shared_ptr<Map> textureMap;
@@ -76,6 +77,7 @@ namespace game {
     bool running = true;
 
     void start() {
+        saveSlotSelection.init();
         HelperFunctions::log("game::start()");
         lInterface.initLua();
         lInterface.loadFile("data/savedata/saveslots.lua");
@@ -97,6 +99,8 @@ namespace game {
         mMenu.init();
         uiController.init();
         inventory.init();
+
+
 
 
         //textureMap = mapController.getMap(1);
@@ -396,8 +400,8 @@ namespace game {
         return &mapController;
     }
 
-    EnemyDataController *getEnemyDataController() {
-        return &enemyController;
+    EnemyManager *getEnemyDataController() {
+        return &enemyManager;
     }
 
     MouseController *getMouseController() {
@@ -426,6 +430,10 @@ namespace game {
 
     CharacterCreationScreen *getCharacterCreationScreen() {
         return &creationScreen;
+    }
+
+    SaveSlotSelection *getSaveSlotSelection() {
+        return &saveSlotSelection;
     }
 
     int getWidth() {

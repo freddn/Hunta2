@@ -29,20 +29,30 @@ void MainMenu::init() {
     HelperFunctions::log("MainMenu::init() ...");
     frame.loadFromFile("data/frame.png");
 
-    button.x = 0;
-    button.y = 0;
-    button.h = 64;
-    button.w = 256;
+    newGame.setImg("data/button.png", true, 256, 64);
+    newGame.setRect(32*6, 120, 256, 64);
+    newGame.setButtonText("New Game", *game::getTextColor(), game::getFont());
+    newGame.onClick([]() {
+        game::setCurrent_state(game::CHARCREATION);
+    });
 
-    newGame =  {32*6, 120,button.w,button.h};
-    loadGame = {32*6, 200,button.w,button.h};
-    settings = {32*6, 280,button.w,button.h};
-    quitGame = {32*6, 360,button.w,button.h};
+    loadGame.setImg("data/button.png", true, 256, 64);
+    loadGame.setRect(32*6, 200, 256, 64);
+    loadGame.setButtonText("Load Game", *game::getTextColor(), game::getFont());
+    loadGame.onClick([]() {
+        game::getTextureMapController()->getMap(1)->loadPlayer(100, 100);
+        game::setCurrent_state(game::INGAME);
+    });
 
-    buttonBg.setClipped(true);
-    buttonBg.setClipW(256);
-    buttonBg.setClipH(64);
-    buttonBg.loadFromFile("data/button.png");
+    settings.setImg("data/button.png", true, 256, 64);
+    settings.setRect(32*6, 280, 256, 64);
+    settings.setButtonText("Settings", *game::getTextColor(), game::getFont());
+    settings.onClick([](/* TODO goto Settings */) { });
+
+    quit.setImg("data/button.png", true, 256, 64);
+    quit.setRect(32*6, 360, 256, 64);
+    quit.setButtonText("Quit Game", *game::getTextColor(), game::getFont());
+    quit.onClick([]() { game::setRunning(false); });
 
     background.loadFromFile("data/wolf.png");
     backgroundRect = {0,0,game::getWidth(),game::getHeight()};
@@ -54,137 +64,27 @@ void MainMenu::draw() {
 
     background.render(0,0,nullptr);
 
-    /* Render the menu */
-
-    if(newGamePressed)
-        buttonBg.setClipY(2);
-    else if(newGameHoover)
-        buttonBg.setClipY(1);
-    else
-        buttonBg.setClipY(0);
-    buttonBg.render(newGame.x, newGame.y,nullptr);
-
-    // TODO Separate so we dont need to load text every time we render.. OR
-    // TODO Implement a loadFromText function that takes a bool at the end ..
-    // TODO which decides that we will save a text that is used often.. (maby both)
-
-    text.loadFromText("New Game" ,
-                        *game::getTextColor(),game::getFont());
-    text.render(newGame.x+20,newGame.y+18,(SDL_Rect*)nullptr);
-
-    if(loadGamePressed)
-        buttonBg.setClipY(2);
-    else if(loadGameHoover)
-        buttonBg.setClipY(1);
-    else
-        buttonBg.setClipY(0);
-    buttonBg.render(loadGame.x,loadGame.y, nullptr);
-    text.loadFromText("Load Game" ,
-                        *game::getTextColor(),game::getFont());
-    text.render(loadGame.x+20,loadGame.y+18,(SDL_Rect*)nullptr);
-
-    if(settingsPressed)
-        buttonBg.setClipY(2);
-    else if(settingsHoover)
-        buttonBg.setClipY(1);
-    else
-        buttonBg.setClipY(0);
-    buttonBg.render(settings.x,settings.y,nullptr);
-    text.loadFromText("Settings" ,
-                        *game::getTextColor(),game::getFont());
-    text.render(settings.x+20,settings.y+18,(SDL_Rect*)nullptr);
-
-    if(quitGamePressed)
-        buttonBg.setClipY(2);
-    else if(quitGameHoover)
-        buttonBg.setClipY(1);
-    else
-        buttonBg.setClipY(0);
-    buttonBg.render(quitGame.x,quitGame.y,nullptr);
-    text.loadFromText("Quit game" ,
-                        *game::getTextColor(),game::getFont());
-    text.render(quitGame.x+20,quitGame.y+18,(SDL_Rect*)nullptr);
+    /* Render the menu items */
+    newGame.draw();
+    loadGame.draw();
+    settings.draw();
+    quit.draw();
 
     Screen::renderEnd();
 }
 
 void MainMenu::update() {
-    /* Check if button is pressed. */
-    if(mouseOverRect(newGame))
-        newGameHoover = true;
-    else {
-        newGameHoover = false;
-        newGamePressed = false;
-    }
-    if(mouseOverRect(loadGame))
-        loadGameHoover = true;
-    else {
-        loadGameHoover = false;
-        loadGamePressed = false;
-    }
-    if(mouseOverRect(settings))
-        settingsHoover = true;
-    else {
-        settingsHoover = false;
-        settingsPressed = false;
-    }
-    if(mouseOverRect(quitGame))
-        quitGameHoover = true;
-    else {
-        quitGameHoover = false;
-        quitGamePressed = false;
-    }
 
-    if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
-        if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-            if(mouseOverRect(newGame))
-                newGamePressed = true;
-            else
-                newGamePressed = false;
-            if(mouseOverRect(loadGame))
-                loadGamePressed = true;
-            else
-                loadGamePressed = false;
-            if(mouseOverRect(settings))
-                settingsPressed = true;
-            else
-                settingsPressed = false;
-            if(mouseOverRect(quitGame))
-                quitGamePressed = true;
-            else
-                quitGamePressed = false;
-        }
-    }
-    if(game::getEvent()->type == SDL_MOUSEBUTTONUP) {
-        if(SDL_BUTTON(SDL_BUTTON_LEFT)) {
-            if(mouseOverRect(newGame)) {
-                // TODO Add character selection screen
-                game::setCurrent_state(game::CHARCREATION);
-                //game::getTextureMapController()->getMap(1)->loadPlayer(100,100);
+    SDL_Event *e = game::getEvent();
+    int mX = game::getMouseX();
+    int mY = game::getMouseY();
 
-            } else
-                newGamePressed = false;
-            if(mouseOverRect(loadGame)) {
-                // TODO Add saved game screen
-                game::getTextureMapController()->getMap(1)->loadPlayer(100,100);
-                game::setCurrent_state(game::INGAME);
-            } else
-                loadGamePressed = false;
-            if(mouseOverRect(settings)) {
-                // TODO Add settings panel
-            } else
-                settingsPressed = false;
-            if(mouseOverRect(quitGame)) {
-                game::setRunning(false);
-            } else
-                quitGamePressed = false;
-        }
-    }
+    /* Update the buttons. */
+    newGame.update(e,mX,mY);
+    loadGame.update(e,mX,mY);
+    settings.update(e,mX,mY);
+    quit.update(e,mX,mY);
 
     Screen::update();
 }
 
-bool MainMenu::mouseOverRect(SDL_Rect r) {
-    return game::getMouseX() < r.x+r.w && game::getMouseX() > r.x &&
-     game::getMouseY() < r.y+r.h && game::getMouseY() > r.y;
-}

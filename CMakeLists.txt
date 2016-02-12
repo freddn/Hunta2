@@ -85,7 +85,7 @@ set(SOURCE_FILES
     src/UIController.cpp
     src/UIController.hpp
     src/Weapon.cpp
-    src/Weapon.hpp src/EnemyDataController.cpp src/EnemyDataController.hpp src/CharacterCreationScreen.cpp src/CharacterCreationScreen.hpp src/HelperFunctions.cpp src/HelperFunctions.hpp)
+    src/Weapon.hpp src/EnemyManager.cpp src/EnemyManager.hpp src/CharacterCreationScreen.cpp src/CharacterCreationScreen.hpp src/HelperFunctions.cpp src/HelperFunctions.hpp src/SaveSlotSelection.cpp src/SaveSlotSelection.hpp src/Button.cpp src/Button.hpp src/TextInputField.cpp src/TextInputField.hpp)
 
 add_executable(Hunta2 ${SOURCE_FILES})
 target_link_libraries(Hunta2 ${FREETYPE_LIBRARIES})

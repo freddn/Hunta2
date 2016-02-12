@@ -29,6 +29,7 @@ namespace lua_functions {
             int slot = lua_tonumber(lua_state, 1);
             std::string playerName = lua_tostring(lua_state, 2);
             int level = lua_tonumber(lua_state, 3);
+            game::getSaveSlotSelection()->setSlot(slot,playerName,level);
             game::getCharacterCreationScreen()->saveSlot(slot, playerName, level);
         }
         return 0;

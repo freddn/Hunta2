@@ -1,0 +1,11 @@
+
+#ifndef HUNTA2_TEXTINPUTFIELD_HPP
+#define HUNTA2_TEXTINPUTFIELD_HPP
+
+// TODO Implement
+class TextInputField {
+
+};
+
+
+#endif //HUNTA2_TEXTINPUTFIELD_HPP

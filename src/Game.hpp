@@ -34,9 +34,10 @@
 #include "ItemManager.hpp"
 #include "PlayerController.hpp"
 #include "UIController.hpp"
-#include "EnemyDataController.hpp"
+#include "EnemyManager.hpp"
 #include "MouseController.hpp"
 #include "CharacterCreationScreen.hpp"
+#include "SaveSlotSelection.hpp"
 
 /**
  * Game class. Contains game-loop. State of the game. Init of map/data.
@@ -101,13 +102,14 @@ namespace game {
     int getCurrentState();
     PlayerController *getPlayerController();
     MapController *getTextureMapController();
-    EnemyDataController *getEnemyDataController();
+    EnemyManager *getEnemyDataController();
     MouseController *getMouseController();
     ItemManager *getItemManager();
     TextureManager *getTextureManager();
     Inventory *getInventory();
     std::shared_ptr<Map> getTextureMap();
     CharacterCreationScreen *getCharacterCreationScreen();
+    SaveSlotSelection *getSaveSlotSelection();
     int getWidth();
     int getTWidth();
     int getHeight();

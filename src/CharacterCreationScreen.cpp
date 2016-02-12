@@ -44,10 +44,12 @@ void CharacterCreationScreen::createCharacter() {
 
     SDL_StartTextInput();
     bool running = true;
+    // TODO IMPORTANT fix so that this loop sleeps..
     while(running) {
         bool renderText = false;
 
         while(SDL_PollEvent(&e) != 0) {
+            game::getSaveSlotSelection()->update(e);
             if(e.type == SDL_KEYDOWN) {
                 if(e.key.keysym.sym == SDLK_ESCAPE) {
                     running = false;
@@ -85,14 +87,16 @@ void CharacterCreationScreen::createCharacter() {
             } else
                 text.loadFromText("noname"+HelperFunctions::random(0,9999,game::getTimer()->getTicks()), textColor,game::getFont());
         }
+
+
         //SDL_SetRenderDrawColor(game::getRenderer())
         SDL_RenderClear(game::getRenderer());
-
-        desc.render(50,200,nullptr);
-        text.render(200,200,nullptr);
+        game::getSaveSlotSelection()->draw();
+        desc.render(200,200,nullptr);
+        text.render(350,200,nullptr);
 
         SDL_RenderPresent(game::getRenderer());
-
+        SDL_Delay(5);
     }
     SDL_StopTextInput();
 

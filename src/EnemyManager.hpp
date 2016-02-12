@@ -21,12 +21,12 @@ struct EnemyData {
 };
 
 /**
- * Handles the characters data.
+ * Handles the enemy information.
  */
-class EnemyDataController {
+class EnemyManager {
 public:
-    EnemyDataController();
-    EnemyDataController(std::string n);
+    EnemyManager();
+    EnemyManager(std::string n);
 
     void draw();
     void init();
@@ -57,7 +57,7 @@ public:
     void setPosY(int y);
     void setName(std::string name);
 
-    virtual ~EnemyDataController();
+    virtual ~EnemyManager();
 protected:
 private:
     std::map<int, EnemyData> enemies;

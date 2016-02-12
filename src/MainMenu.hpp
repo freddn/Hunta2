@@ -20,6 +20,7 @@
 #define MAINMENU_H
 
 #include "Screen.hpp"
+#include "Button.hpp"
 
 /* This class represents the main menu.
  * TODO Implement a settings screen, save game, and load game screen.
@@ -30,12 +31,12 @@ public:
     MainMenu();
 
     /**
-     * Will load all textures
+     * Initiate all buttons and textures.
      */
     void init();
 
     /**
-     * Check for mouse movement and clicks on the menu items.
+     * Update menu items.
      */
     void update();
 
@@ -44,34 +45,17 @@ public:
      */
     void draw();
 
-    bool mouseOverRect(SDL_Rect r);
     ~MainMenu();
 private:
     /* Textures of the main menu */
     Texture frame;
-    Texture text;
-    Texture buttonBg;
     Texture background;
-
     SDL_Rect backgroundRect;
-    SDL_Rect button;
-
     /* Button specific rect and booleans */
-    SDL_Rect newGame;
-    bool newGameHoover = false;
-    bool newGamePressed = false;
-
-    SDL_Rect loadGame;
-    bool loadGameHoover = false;
-    bool loadGamePressed = false;
-
-    SDL_Rect settings;
-    bool settingsHoover = false;
-    bool settingsPressed = false;
-
-    SDL_Rect quitGame;
-    bool quitGameHoover = false;
-    bool quitGamePressed = false;
+    Button newGame;
+    Button loadGame;
+    Button settings;
+    Button quit;
 };
 
 #endif // MAINMENU_H
