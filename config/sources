@@ -32,6 +32,10 @@ SRC = src/Character.cpp \
       src/ItemManager.cpp \
       src/PlayerController.cpp \
       src/UIController.cpp \
-      src/EnemyDataController.cpp \
+      src/EnemyManager.cpp \
       src/CharacterCreationScreen.cpp \
-      src/HelperFunctions.cpp
+      src/HelperFunctions.cpp \
+      src/Button.cpp \
+      src/CharacterCreationScreen.cpp \
+      src/SaveSlotSelection.cpp \
+      src/TextInputField.cpp
