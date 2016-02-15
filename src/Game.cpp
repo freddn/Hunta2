@@ -122,7 +122,7 @@ namespace game {
                 mMenu.draw();
                 break;
             case(CHARCREATION):
-                creationScreen.createCharacter();
+                creationScreen.draw();
                 break;
             case(INGAME):
                 inGame.renderStart();
@@ -167,13 +167,23 @@ namespace game {
         mouseController.clear();
 
         while(SDL_PollEvent(&event) != 0) {
+
+
+            if(event.type == SDL_QUIT) {
+                running = false;
+                break;
+            }
+
             mouseController.update(event);
 
             if(current_state == MAINMENU)
                 mMenu.update();
-            if(event.type == SDL_QUIT)
-                running = false;
-            else if(current_state == EDITOR && SDL_GetMouseState(NULL,NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
+            if(current_state == CHARCREATION) {
+                saveSlotSelection.update(event);
+                creationScreen.update(event);
+            }
+
+            if(current_state == EDITOR && SDL_GetMouseState(NULL,NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
                 editor.place();
             else if(event.type == SDL_KEYDOWN) {
                 if(key[SDL_SCANCODE_T]) {

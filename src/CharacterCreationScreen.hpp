@@ -12,7 +12,7 @@ struct CharacterCreationScreen : public Screen {
 public:
     CharacterCreationScreen();
     void init();
-    void update();
+    void update(SDL_Event e);
     void draw();
 
     int getSaveSlot(std::string);
@@ -22,6 +22,13 @@ public:
     void createCharacter();
     virtual ~CharacterCreationScreen();
 private:
+    std::string inputText;
+    SDL_Color textColor;
+    unsigned int maxlen = 14;
+
+    Texture text;
+    Texture desc;
+
     bool saveslot1 = false;
     bool saveslot2 = false;
     bool saveslot3 = false;
@@ -34,7 +41,7 @@ private:
     int level2 = 0;
     int level3 = 0;
 
-    std::map<std::string, int> saveSlots;
+    std::map<std::string, int> nameOnSlot;
 };
 
 

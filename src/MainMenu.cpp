@@ -34,6 +34,7 @@ void MainMenu::init() {
     newGame.setButtonText("New Game", *game::getTextColor(), game::getFont());
     newGame.onClick([]() {
         game::setCurrent_state(game::CHARCREATION);
+        game::getCharacterCreationScreen()->init();
     });
 
     loadGame.setImg("data/button.png", true, 256, 64);
