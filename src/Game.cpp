@@ -109,6 +109,7 @@ namespace game {
         fpsTimer.start();
         timer.start();
         HelperFunctions::log("game::start() (main loop)");
+
         while(running) {
             /* Get current time */
             currentTick = fpsTimer.getTicks();
@@ -125,6 +126,9 @@ namespace game {
                 creationScreen.draw();
                 break;
             case(INGAME):
+
+                lInterface.runLuaMain();
+
                 inGame.renderStart();
                 inGame.draw();
                 uiController.draw();

@@ -68,7 +68,8 @@ void Character::update() {
     //SDL_PumpEvents();
     const Uint8 *key = SDL_GetKeyboardState(NULL);
     moveChar(key);
-
+    game::getPlayerController()->setPosX((int)position->getX());
+    game::getPlayerController()->setPosY((int)position->getY());
     /* FIXME */
     if(game::getPlayerController()->getLevel() != level ||
        game::getPlayerController()->getHealthChanged()) {

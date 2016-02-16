@@ -249,6 +249,25 @@ namespace lua_functions {
         }
         return 0;
     }
+
+    int getPlayerX(lua_State *l_state) {
+        int argc = lua_gettop(l_state);
+        if(argc == 0) {
+            lua_pushinteger(l_state, game::getPlayerController()->getPosX());
+            return 1;
+        }
+        return 0;
+    }
+
+    int getPlayerY(lua_State *l_state) {
+        int argc = lua_gettop(l_state);
+        if(argc == 0) {
+            lua_pushinteger(l_state, game::getPlayerController()->getPosY());
+            return 1;
+        }
+
+        return 0;
+    }
 }
 
 LuaInterface::LuaInterface() { }
@@ -262,6 +281,9 @@ void LuaInterface::initLua() {
     loadFile("src/LoadMap.lua");
     loadFile("src/CreateMap.lua");
     loadFile("src/SaveChar.lua");
+
+    thread = lua_newthread(l_state);
+    luaL_dofile(thread, "data/maps/1/map.lua");
 
     /* functions for loading saved data (maps, inventory, saved games, etc) */
     lua_register(l_state, "playerSavegame", lua_functions::playerSavegame);
@@ -284,6 +306,9 @@ void LuaInterface::initLua() {
     lua_register(l_state, "playerAddHp", lua_functions::playerAddHp);
 
     lua_register(l_state, "loadCharacter", lua_functions::loadCharacter);
+
+    lua_register(thread, "getPlayerY", lua_functions::getPlayerY);
+    lua_register(thread, "getPlayerX", lua_functions::getPlayerX);
 }
 
 void LuaInterface::report_errors(lua_State *l_state, int status) {
@@ -317,7 +342,6 @@ bool LuaInterface::loadFile(const char *filename) {
 void LuaInterface::saveCharacter(int saveslot, const char* charName, int level, int exp, int hp,
                                 int currentHp, int atk, int def, int x, int y) {
     lua_pushstring(l_state,"SaveCharacter");
-
     lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1
     //lua_getglobal(l_state,"_G"); // lua5.2 not working
     //lua_pushglobaltable(l_state); // lua5.2 not working
@@ -500,4 +524,9 @@ void LuaInterface::loadInventory(const char *filename) {
 
 LuaInterface::~LuaInterface() {
     lua_close(l_state);
+}
+
+void LuaInterface::runLuaMain() {
+    lua_getglobal(thread, "Main");
+    lua_call(thread,0,0);
 }
