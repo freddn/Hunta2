@@ -7,7 +7,7 @@
  - Attack, space
  - Move, arrow keys
  
-## Keys debug
+## Keys debug/tools
  - Main Menu, 2
  - Leveleditor, 4
  - Back to game/save, 1
