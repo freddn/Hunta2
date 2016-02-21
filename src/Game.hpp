@@ -110,6 +110,7 @@ namespace game {
     std::shared_ptr<Map> getTextureMap();
     CharacterCreationScreen *getCharacterCreationScreen();
     SaveSlotSelection *getSaveSlotSelection();
+    LuaInterface *getLuaInterface();
     int getWidth();
     int getTWidth();
     int getHeight();
@@ -125,7 +126,7 @@ namespace game {
     void setHasChanged(bool boolean);
     void setTextureMap(std::shared_ptr<Map> temp_map);
     void setBuffer(SDL_Texture *temp);
-    void setCurrent_state(int temp);
+    void setCurrentState(int temp);
     void setMouseX(int x);
     void setMouseY(int y);
     void setRunning(bool boolean);

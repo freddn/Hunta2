@@ -22,7 +22,7 @@
 #include <memory>
 #include <vector>
 
-
+#include "TextInputBox.hpp"
 #include "Screen.hpp"
 #include "EntitySystem.hpp"
 
@@ -47,6 +47,8 @@ public:
      * Will call Screen::update()
      */
     void update();
+    void updateEvents(SDL_Event *event);
+    bool takingInput();
 
     /**
      * Draw maps and everything ingame.
@@ -74,6 +76,8 @@ private:
     Texture tInterface;
     EntityManager inGameManager;
     std::stringstream tempText;
+    TextInputBox textBox;
+    Texture prompt;
     Texture nameText;
     Texture lvText;
     Texture hpText;

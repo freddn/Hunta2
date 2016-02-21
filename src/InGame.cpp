@@ -19,6 +19,7 @@
 #include "InGame.hpp"
 
 #include "Game.hpp"
+#include "HelperFunctions.hpp"
 
 InGame::InGame() {}
 
@@ -26,6 +27,15 @@ InGame::~InGame() {}
 
 void InGame::init() {
     inGameManager.reserveEntities(300); // TODO Remove? Check if needed (spam loads of objects in the game)
+
+    prompt.loadFromText("> ", *game::getTextColor(),game::getFont());
+    textBox.init();
+    textBox.setPos(100,400);
+    textBox.setOnEnter([](std::string msg){
+        HelperFunctions::log(HelperFunctions::MESSAGE,msg);
+        game::getLuaInterface()->loadString(msg.c_str());
+        //game::getLuaInterface()->loadFile(msg.c_str()); // TODO Load lua scripts?
+    });
 }
 
 void InGame::draw() {
@@ -34,6 +44,12 @@ void InGame::draw() {
         update_interface();
         updateFreq = 1;
     }
+
+    if(textBox.takingInput()) {
+        prompt.render(80,400);
+        textBox.draw();
+    }
+
     nameText.render(450,30,nullptr);
     lvText.render(450,50,nullptr);
     hpText.render(450,70,nullptr);
@@ -47,6 +63,10 @@ void InGame::update() {
     game::getTextureMapController()->update();
 
     Screen::update();
+}
+
+void InGame::updateEvents(SDL_Event *event) {
+    textBox.update(*event);
 }
 
 void InGame::update_interface() {
@@ -78,3 +98,6 @@ void InGame::update_interface() {
     defText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
 }
 
+bool InGame::takingInput() {
+    return textBox.takingInput();
+}

@@ -47,7 +47,7 @@ public:
     void renderItems();
 
 private:
-    LuaInterface l_interface;
+    LuaInterface *l_interface;
     SDL_Texture *inv_bg{nullptr};
     Texture frame;
     Texture text;

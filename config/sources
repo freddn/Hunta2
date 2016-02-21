@@ -37,4 +37,4 @@ SRC = src/Character.cpp \
       src/HelperFunctions.cpp \
       src/Button.cpp \
       src/SaveSlotSelection.cpp \
-      src/TextInputField.cpp
+      src/TextInputBox.cpp

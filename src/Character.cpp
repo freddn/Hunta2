@@ -113,11 +113,11 @@ void Character::update() {
 
     //if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
     /// Check if left mouse button is pressed.
-    if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+    /*if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
         //std::cerr << selected;
         if(!attacking) {
             attacking = true;
-            /* Fire a projectile.. */
+            // Fire a projectile..
             if(manager->canAdd()) {
                 auto &projectile(manager->addEntity());
                 projectile.addComponent<Position>(position->getX(),
@@ -133,7 +133,7 @@ void Character::update() {
             }
         }
     } else
-        attacking = false;
+        attacking = false;*/
 }
 
 void Character::moveChar(const Uint8 *key) {

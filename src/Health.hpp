@@ -16,9 +16,7 @@ using namespace EntitySystem;
  * to an entity. The hpbar contains some textures created from rectangles and
  * the green rectangle will shrink in size accordingly to current hp/max hp.
  *
- * This class represents the entitys health and is responsible for destroying the
- * entity when the hp is 0, it is not supposed to be like this and more components
- * will be added, or if the Character/Enemy component will be responsible. (TODO)
+ * TODO Send event to EventQueue that the entity has died.
  */
 struct Health : Component {
 public:

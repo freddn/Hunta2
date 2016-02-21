@@ -43,23 +43,23 @@ void Inventory::init() {
 
     /* We need the lua interface to access the inventory as the inventory
      * is made with lua. */
-    l_interface.initLua();
+    l_interface = game::getLuaInterface();
 
     /* Load player inventory */
-    if(!l_interface.loadFile(inventoryLocation.c_str())) {
+    if(!l_interface->loadFile(inventoryLocation.c_str())) {
         HelperFunctions::log(HelperFunctions::ERROR,
                              "Failed to Load LoadInventory.lua");
     }
 
     /* Load inventory-file helper functions */
-    if(!l_interface.loadFile("src/InventoryFunctions.lua")) {
+    if(!l_interface->loadFile("src/InventoryFunctions.lua")) {
         HelperFunctions::log(HelperFunctions::ERROR,
                              "Failed to Load InventoryFunctions.lua");
     }
 }
 
 void Inventory::loadInventory() {
-    l_interface.loadFile(inventoryLocation.c_str());
+    l_interface->loadFile(inventoryLocation.c_str());
 }
 
 /*
@@ -229,7 +229,7 @@ void Inventory::update() {
                     return;
                 }
 
-                l_interface.loadFile(it.script.c_str());
+                l_interface->loadFile(it.script.c_str());
                 deleteItem(item.second.id, 1,
                            item.first%INVENTORY_WIDTH,
                            (item.first-item.first%INVENTORY_WIDTH)/INVENTORY_WIDTH);

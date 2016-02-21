@@ -33,9 +33,9 @@ void CharacterCreationScreen::update(SDL_Event e) {
     // game::getSaveSlotSelection()->update(e);
     if(e.type == SDL_KEYDOWN) {
         if(e.key.keysym.sym == SDLK_ESCAPE) {
-            game::setCurrent_state(game::MAINMENU);
+            game::setCurrentState(game::MAINMENU);
         } else if(e.key.keysym.sym == SDLK_RETURN) {
-            game::setCurrent_state(game::INGAME);
+            game::setCurrentState(game::INGAME);
             SDL_StopTextInput();
             game::newGame(inputText);
         } else if(e.key.keysym.sym == SDLK_BACKSPACE && inputText.length()>0) {

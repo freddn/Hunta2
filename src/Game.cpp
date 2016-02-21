@@ -133,9 +133,10 @@ namespace game {
                 inGame.draw();
                 uiController.draw();
                 inGame.renderEnd();
-
+                if(!inGame.takingInput())
+                    inGame.update();
                 uiController.update();
-                inGame.update();
+
                 break;
             case(PAUSED):
                 screen.update();
@@ -171,8 +172,6 @@ namespace game {
         mouseController.clear();
 
         while(SDL_PollEvent(&event) != 0) {
-
-
             if(event.type == SDL_QUIT) {
                 running = false;
                 break;
@@ -182,9 +181,15 @@ namespace game {
 
             if(current_state == MAINMENU)
                 mMenu.update();
-            if(current_state == CHARCREATION) {
+            else if(current_state == CHARCREATION) {
                 saveSlotSelection.update(event);
                 creationScreen.update(event);
+            } else if(current_state == INGAME) {
+                if(inGame.takingInput()) {
+                    inGame.updateEvents(&event);
+                    continue;
+                } else
+                    inGame.updateEvents(&event);
             }
 
             if(current_state == EDITOR && SDL_GetMouseState(NULL,NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
@@ -205,7 +210,7 @@ namespace game {
                         mapController.loadMap(1);
                     }
                     mapController.getMap(1)->loadPlayer(100,100);
-                    game::setCurrent_state(game::INGAME);
+                    game::setCurrentState(game::INGAME);
                 } else if(key[SDL_SCANCODE_3])
                     current_state = game::PAUSED;
                 else if(key[SDL_SCANCODE_0])
@@ -221,16 +226,17 @@ namespace game {
                 SDL_GetMouseState(&mouseX,&mouseY);
         }
     }
+
     void newGame(std::string nick) {
 
-        playerController.load(nick,&lInterface);
+        //playerController.load(nick,&lInterface);
 
-        playerController.save(&lInterface, 1);
-        playerController.save(&lInterface, 2);
+        //playerController.save(&lInterface, 1);
+        //playerController.save(&lInterface, 2);
 
         mapController.loadMap(1);
         mapController.getMap(1)->loadPlayer(100,100);
-        game::setCurrent_state(game::INGAME);
+        game::setCurrentState(game::INGAME);
     }
 
     bool init_game(bool fullscreen) {
@@ -402,7 +408,7 @@ namespace game {
         return current_state;
     }
 
-    void setCurrent_state(int temp) {
+    void setCurrentState(int temp) {
         current_state = temp;
     }
 
@@ -432,6 +438,10 @@ namespace game {
 
     std::shared_ptr<Map> getTextureMap() {
         return textureMap;
+    }
+
+    LuaInterface *getLuaInterface() {
+        return &lInterface;
     }
 
     void setTextureMap(std::shared_ptr<Map> tempMap) {

@@ -14,9 +14,14 @@ UIController::~UIController() {
 void UIController::init() {
     HelperFunctions::log("UIController.init()");
     tInterface.loadFromFile("data/interface.png"); /// Sample interface
+    SDL_Rect r = *game::getOffset();
+    r.x = 0;
+    r.y = 0;
+    tInterface.setDestRect(r);
 }
 
 void UIController::draw() {
+    //tInterface.render();
     if (showInventory) {
         game::getInventory()->draw();
     }

@@ -101,7 +101,7 @@ void Health::setHp(int hp) {
         if(entity->hasComponent<Enemy>())
             entity->getComponent<Enemy>().onDeath();
         else
-            game::setCurrent_state(game::MAINMENU);
+            game::setCurrentState(game::MAINMENU);
     }
 }
 

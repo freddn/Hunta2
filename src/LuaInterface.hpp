@@ -29,6 +29,7 @@ public:
     void initLua();
     void report_errors(lua_State *l_State, int status);
     lua_State *getLua_State();
+    void loadString(const char *code);
     bool loadFile(const char *filename);
     void saveCharacter(int saveslot, const char* charName, int level, int exp, int hp,
                                 int currentHp, int atk, int def, int x, int y);
@@ -55,6 +56,7 @@ public:
     lua_State *l_state{nullptr};
     virtual ~LuaInterface();
 private:
+    bool startedMain = false;
     //std::vector<std::pair<int,Texture*>> texture_map;
 
 };

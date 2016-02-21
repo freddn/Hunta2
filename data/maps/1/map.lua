@@ -4,15 +4,18 @@ playerXPos = 0
 playerYPos = 0
 
 
+
 function Main()
-    checkEvents()
+    --while true do
+        checkEvents()
+        --yield()
+    --end
+
 end
 
 function checkEvents()
-
     playerXPos = getPlayerX()
     playerYPos = getPlayerY()
-
     x = x + 1
     if x > 400 then
         if playerXPos > 400 then

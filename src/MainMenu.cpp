@@ -33,7 +33,7 @@ void MainMenu::init() {
     newGame.setRect(32*6, 120, 256, 64);
     newGame.setButtonText("New Game", *game::getTextColor(), game::getFont());
     newGame.onClick([]() {
-        game::setCurrent_state(game::CHARCREATION);
+        game::setCurrentState(game::CHARCREATION);
         game::getCharacterCreationScreen()->init();
     });
 
@@ -42,7 +42,7 @@ void MainMenu::init() {
     loadGame.setButtonText("Load Game", *game::getTextColor(), game::getFont());
     loadGame.onClick([]() {
         game::getTextureMapController()->getMap(1)->loadPlayer(100, 100);
-        game::setCurrent_state(game::INGAME);
+        game::setCurrentState(game::INGAME);
     });
 
     settings.setImg("data/button.png", true, 256, 64);
@@ -57,7 +57,7 @@ void MainMenu::init() {
 
     background.loadFromFile("data/wolf.png");
     backgroundRect = {0,0,game::getWidth(),game::getHeight()};
-    background.setDestRect(&backgroundRect);
+    background.setDestRect(backgroundRect);
 }
 
 void MainMenu::draw() {

@@ -268,6 +268,11 @@ namespace lua_functions {
 
         return 0;
     }
+
+    int yield(lua_State *l_state) {
+        lua_yield(l_state, 0);
+        return 0;
+    }
 }
 
 LuaInterface::LuaInterface() { }
@@ -283,7 +288,8 @@ void LuaInterface::initLua() {
     loadFile("src/SaveChar.lua");
 
     thread = lua_newthread(l_state);
-    luaL_dofile(thread, "data/maps/1/map.lua");
+    int s = luaL_dofile(thread, "data/maps/1/map.lua");
+    report_errors(thread, s);
 
     /* functions for loading saved data (maps, inventory, saved games, etc) */
     lua_register(l_state, "playerSavegame", lua_functions::playerSavegame);
@@ -309,6 +315,7 @@ void LuaInterface::initLua() {
 
     lua_register(thread, "getPlayerY", lua_functions::getPlayerY);
     lua_register(thread, "getPlayerX", lua_functions::getPlayerX);
+    lua_register(thread, "yield", lua_functions::yield);
 }
 
 void LuaInterface::report_errors(lua_State *l_state, int status) {
@@ -320,6 +327,18 @@ void LuaInterface::report_errors(lua_State *l_state, int status) {
 
 lua_State *LuaInterface::getLua_State() {
     return l_state;
+}
+
+void LuaInterface::loadString(const char *code) {
+    int s = luaL_loadstring(l_state, code);
+    if(s == 0) {
+        if((s = lua_pcall(l_state,0,LUA_MULTRET,0)) != 0) {
+            std::stringstream err;
+            err << "Could not execute lua-script: " << code;
+            HelperFunctions::log(HelperFunctions::ERROR,err.str());
+        }
+    }
+    report_errors(l_state,s);
 }
 
 bool LuaInterface::loadFile(const char *filename) {
@@ -527,6 +546,11 @@ LuaInterface::~LuaInterface() {
 }
 
 void LuaInterface::runLuaMain() {
-    lua_getglobal(thread, "Main");
-    lua_call(thread,0,0);
+    /*if(startedMain) {
+        lua_resume(thread, 0);
+    } else {*/
+        //startedMain = true;
+        lua_getglobal(thread, "Main");
+        lua_call(thread,0,0);
+    //}
 }
