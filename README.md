@@ -1,16 +1,19 @@
 # Hunta v0.1
 [![Build Status](https://travis-ci.org/freddn/Hunta2.svg)](https://travis-ci.org/freddn/Hunta2)
 
-## Keys
+## Keys ingame
+ - Inventory, i
+ - Shoot, left mouse button (TODO)
+ - Attack, space
+ - Move, arrow keys
+ 
+## Keys debug
  - Main Menu, 2
  - Leveleditor, 4
  - Back to game/save, 1
- - Inventory, i
- - Shoot, left mouse button
- - Attack, space
  - Change tile in editor, mousescroll
  - Place tile, left mouse button
- - Move, arrow keys
+ - Ingame lua prompt, enter (can use functions registered to lua such as playerAddHp)
 
 ## Using
  - Lua 5.1
