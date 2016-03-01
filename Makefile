@@ -6,11 +6,12 @@ all:
 	@echo freebsd
 	@echo dragonfly
 	@echo openbsd
+	@echo htests (linux)
 	@echo Building linux by default
 	$(MAKE) -f config/makefile.linux
 
 linux:
-	$(MAKE) -f config/makefile.tests
+	$(MAKE) -f config/makefile.linux
 	@echo done
 
 htests:

@@ -18,7 +18,7 @@
 ## Using
  - Lua 5.1
  - SDL2
- - C++11
+ - GCC Version 4.9.2 (or other compilers that support C++11)
 
 ## Requirements
 On Debian-derived systems make sure you have `build-essential` installed.
@@ -27,12 +27,21 @@ On Debian-derived systems make sure you have `build-essential` installed.
 `liblua5.1-dev libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev libfreetype6-dev`
 
 ## How to build on BSD/Linux
-Either use the Code::Blocks project file or run `make system', where system is one of the following:
+Either use the Code::Blocks project file or run `make system`, where system is one of the following:
  - linux
  - slackware
  - freebsd
  - dragonfly
  - openbsd
+ - htests (linux)
 
 ## How to build on Windows
 Use the Code::Blocks project file. In Code::Blocks, change the build target to "Debug Windows" when compiling.
+
+## Runnning the game
+Run `./hunta2` in the terminal. For fullscreen, run `./hunta2 f` (not stable)
+
+## Running tests
+Build using `make htests` and run `./test`
+
+
