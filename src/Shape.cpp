@@ -1,6 +1,6 @@
 #include "Shape.hpp"
 
-#include "Game.hpp"
+#include "Global.hpp"
 
 Shape::Shape() {}
 

@@ -20,25 +20,18 @@
 
 #include <iostream>
 
-#include "Game.hpp"
+#include "Global.hpp"
 
 namespace EntitySystem {
 
     void Entity::draw() {
-        for(auto& c : components) {
-
+        for(auto& c : components)
             c->draw();
-        }
     }
 
     void Entity::update() {
-        //std::cerr << components.size() << std::endl;
-
-        for(auto& c : components) {
-            //if(c != nullptr && c->entity->isAlive())
+        for(auto& c : components)
             c->update();
-        }
-
     }
 
     bool Entity::isAlive() const {
@@ -105,14 +98,12 @@ namespace EntitySystem {
                         return !mEntity->isAlive();
                     }),
                     std::end(vec->second));
-            //std::cerr << entities.size()<< std::endl;
 
                 for(auto& ent : vec->second) {
                     if(ent != nullptr) {
                         if(ent->isMoved())
                             ent->setMoved(false);
                         else {
-
                             ent->update();
                             ent->updateY();
                         }
@@ -133,7 +124,6 @@ namespace EntitySystem {
                 x += offsetX;
                 int y = 32*(index)/64;
                 y += offsetY;
-                //std::cerr << y << std::endl;
                 if(x+96 >= game::getOffset()->x &&
                     x < game::getOffset()->x + game::getOffset()->w &&
                     y+96 >= game::getOffset()->y &&
@@ -156,7 +146,8 @@ namespace EntitySystem {
     }
 
     void EntityManager::addToGroup(Entity *mEntity,Group mGroup) {
-        groupedEntities[mGroup].emplace_back(mEntity);
+        //groupedEntities[mGroup].emplace_back(mEntity);
+        groupedEntities[mGroup].push_back(mEntity);
     }
 
     std::vector<Entity*>& EntityManager::getEntitiesByGroup(Group mGroup) {
@@ -236,7 +227,8 @@ namespace EntitySystem {
                     newPtr->setMoved(true);
 
                 /// Place the new entity in the right "z" position.
-                entities[destPos].emplace_back(newPtr);
+                //entities[destPos].emplace_back(newPtr);
+                entities[destPos].push_back(newPtr);
                 //entities->at(y).emplace_back(**e);
 
                 /// Remove the old (now empty) shared_ptr from the vector.
@@ -292,7 +284,8 @@ namespace EntitySystem {
             std::shared_ptr<Entity> sPtr{e};
 
             /// Place the entity in a vector at the right "z-position".
-            entities[0].emplace_back(sPtr);
+            //entities[0].emplace_back(sPtr);
+            entities[0].push_back(sPtr);
             indexes.push_back(index);
             return e;
         }
@@ -307,7 +300,7 @@ namespace EntitySystem {
         std::shared_ptr<Entity> sPtr{e};
 
         /// Place the entity in a vector at the right "z-position".
-        entities[0].emplace_back(sPtr);
+        entities[0].push_back(sPtr);
         //indexes.push_back(index);
 
         return *e;
@@ -355,8 +348,13 @@ namespace EntitySystem {
         indexes.clear();
         entitiesByIndex.clear();
         entities.clear();
-        for(unsigned int i = 0;i < groupedEntities.size();i++)
-            groupedEntities.at(i).clear();
+        for(auto vec = groupedEntities.begin(); vec != groupedEntities.end();vec++) {
+            vec->clear();
+        /*for(unsigned int i = 0;i < groupedEntities.size();i++) {
+            if(groupedEntities.)
+            groupedEntities.at(i).clear();*/
+        }
+
     }
 }
 

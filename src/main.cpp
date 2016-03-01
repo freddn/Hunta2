@@ -31,10 +31,14 @@ int main(int argc, char *argv[]) {
             fullscreen = true;
     }
 
-    if(!game::init_game(fullscreen)) {
-        HelperFunctions::log(HelperFunctions::ERROR,"Init failed.");
+    if(!game::initVideo(fullscreen)) {
+        HelperFunctions::log(HelperFunctions::ERROR,"Initializing of video failed.");
         game::close();
-        return 0;
+        return 1;
+    } else if(!game::initTextureHandling()) {
+        HelperFunctions::log(HelperFunctions::ERROR,"Initializing of texture handling failed.");
+        game::close();
+        return 1;
     }
 
     game::start();

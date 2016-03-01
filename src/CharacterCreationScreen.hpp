@@ -12,7 +12,7 @@ struct CharacterCreationScreen : public Screen {
 public:
     CharacterCreationScreen();
     void init();
-    void update(SDL_Event e);
+    void update(SDL_Event *e);
     void draw();
 
     int getSaveSlot(std::string);

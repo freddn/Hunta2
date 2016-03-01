@@ -17,7 +17,8 @@
  */
 
 #include "Editor.hpp"
-#include "Game.hpp"
+#include "Global.hpp"
+#include "Enums.hpp"
 
 Editor::Editor() {
 }

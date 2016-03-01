@@ -18,7 +18,7 @@
  */
 
 #include "Inventory.hpp"
-#include "Game.hpp"
+#include "Global.hpp"
 #include "HelperFunctions.hpp"
 
 #include <iostream>

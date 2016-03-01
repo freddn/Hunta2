@@ -1,6 +1,6 @@
 #include "Icon.hpp"
 
-#include "Game.hpp"
+#include "Global.hpp"
 
 Icon::Icon(std::string img) {
     iconImage.setClipped(true);

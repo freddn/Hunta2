@@ -18,7 +18,8 @@
 
 #include "Enemy.hpp"
 
-#include "Game.hpp"
+#include "Global.hpp"
+#include "Enums.hpp"
 #include "HelperFunctions.hpp"
 
 Enemy::Enemy(EntityManager &m, int id) : manager(&m){

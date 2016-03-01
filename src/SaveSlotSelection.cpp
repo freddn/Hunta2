@@ -1,7 +1,7 @@
 #include <iostream>
 #include "SaveSlotSelection.hpp"
 
-#include "Game.hpp"
+#include "Global.hpp"
 
 
 SaveSlotSelection::SaveSlotSelection() {}
@@ -26,14 +26,14 @@ void SaveSlotSelection::init() {
     slot3.onClick([](/* TODO Select */) { });
 }
 
-void SaveSlotSelection::update(SDL_Event e) {
+void SaveSlotSelection::update(SDL_Event *e) {
     int mX = game::getMouseX();
     int mY = game::getMouseY();
 
     /* Update the buttons. */
-    slot1.update(&e,mX,mY);
-    slot2.update(&e,mX,mY);
-    slot3.update(&e,mX,mY);
+    slot1.update(e,mX,mY);
+    slot2.update(e,mX,mY);
+    slot3.update(e,mX,mY);
 }
 
 void SaveSlotSelection::draw() {

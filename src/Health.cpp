@@ -1,6 +1,7 @@
 #include "Health.hpp"
 
-#include "Game.hpp"
+#include "Global.hpp"
+#include "Enums.hpp"
 #include <stdlib.h>
 #include "Enemy.hpp"
 

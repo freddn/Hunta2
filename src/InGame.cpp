@@ -18,7 +18,7 @@
 
 #include "InGame.hpp"
 
-#include "Game.hpp"
+#include "Global.hpp"
 #include "HelperFunctions.hpp"
 
 InGame::InGame() {}

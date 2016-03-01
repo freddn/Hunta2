@@ -19,7 +19,7 @@
 #ifndef LUAINTERFACE_H
 #define LUAINTERFACE_H
 
-#include "lua.hpp"
+#include "../include/lua.hpp"
 
 /* Functions that will execute lua-scripts. */
 class LuaInterface {

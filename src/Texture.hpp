@@ -34,22 +34,22 @@ public:
     Texture();
     Texture(int w, int h);
     /** Create a texture and choose if it is clipped, clip = 32 x 32 px. */
-    Texture(std::string img,bool clip);
+    Texture(const std::string &img,bool clip);
 
     /** Create a texture and choose if it is clipped, clip = w x h px. */
-    Texture(std::string img, bool clip, int w, int h);
+    Texture(const std::string &img, bool clip, int w, int h);
 
     /** Create a text that can be drawn to the screen. */
-    Texture(std::string text, SDL_Color textcolor, TTF_Font* font);
+    Texture(const std::string &text, const SDL_Color &textcolor, TTF_Font *font);
 
     void init();
     void draw();
 
     /** Loads an image to the texture. */
-    bool loadFromFile(std::string path);
+    bool loadFromFile(const std::string &path);
 
     /** Loads a text string to the texture. */
-    bool loadFromText(std::string text, SDL_Color textcolor,TTF_Font *font);
+    bool loadFromText(const std::string &text, const SDL_Color &textcolor,TTF_Font *font);
     void free();
     // (
     void setColor(Uint8 red, Uint8 green, Uint8 blue);

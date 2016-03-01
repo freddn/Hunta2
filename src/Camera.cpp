@@ -1,7 +1,8 @@
 
 #include "Camera.hpp"
 
-#include "Game.hpp"
+#include "Global.hpp"
+#include "Enums.hpp"
 
 Camera::Camera() {
     //ctor

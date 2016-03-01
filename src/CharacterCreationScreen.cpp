@@ -1,6 +1,8 @@
 
 #include "CharacterCreationScreen.hpp"
 #include "Game.hpp"
+#include "Global.hpp"
+#include "Enums.hpp"
 #include "HelperFunctions.hpp"
 #include <iostream>
 CharacterCreationScreen::CharacterCreationScreen() {}
@@ -28,34 +30,34 @@ void CharacterCreationScreen::draw() {
     Screen::renderEnd();
 }
 
-void CharacterCreationScreen::update(SDL_Event e) {
+void CharacterCreationScreen::update(SDL_Event *e) {
     bool renderText = false;
     // game::getSaveSlotSelection()->update(e);
-    if(e.type == SDL_KEYDOWN) {
-        if(e.key.keysym.sym == SDLK_ESCAPE) {
+    if(e->type == SDL_KEYDOWN) {
+        if(e->key.keysym.sym == SDLK_ESCAPE) {
             game::setCurrentState(game::MAINMENU);
-        } else if(e.key.keysym.sym == SDLK_RETURN) {
+        } else if(e->key.keysym.sym == SDLK_RETURN) {
             game::setCurrentState(game::INGAME);
             SDL_StopTextInput();
             game::newGame(inputText);
-        } else if(e.key.keysym.sym == SDLK_BACKSPACE && inputText.length()>0) {
+        } else if(e->key.keysym.sym == SDLK_BACKSPACE && inputText.length()>0) {
             inputText.pop_back();
             renderText = true;
-        } else if(e.key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL)
+        } else if(e->key.keysym.sym == SDLK_c && SDL_GetModState() & KMOD_CTRL)
             SDL_SetClipboardText(inputText.c_str());
-        else if(e.key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL) {
+        else if(e->key.keysym.sym == SDLK_v && SDL_GetModState() & KMOD_CTRL) {
             std::string temp = SDL_GetClipboardText();
             inputText.append(temp,0,maxlen-inputText.length());
             renderText = true;
         }
     }
 
-    if(e.type == SDL_TEXTINPUT) {
-        if(!( (e.text.text[0] == 'c' || e.text.text[0] == 'C') &&
-              (e.text.text[0] == 'v' || e.text.text[0] == 'V') &&
+    if(e->type == SDL_TEXTINPUT) {
+        if(!( (e->text.text[0] == 'c' || e->text.text[0] == 'C') &&
+              (e->text.text[0] == 'v' || e->text.text[0] == 'V') &&
               SDL_GetModState() & KMOD_CTRL) &&
            inputText.length() < maxlen) {
-            inputText += e.text.text;
+            inputText += e->text.text;
             renderText = true;
         }
     }

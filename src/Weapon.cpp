@@ -1,6 +1,7 @@
 #include "Weapon.hpp"
 
-#include "Game.hpp"
+#include "Global.hpp"
+#include "Enums.hpp"
 #include "Health.hpp"
 #include "Enemy.hpp"
 

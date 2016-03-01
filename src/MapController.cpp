@@ -17,7 +17,8 @@
  */
 
 #include "MapController.hpp"
-#include "Game.hpp"
+#include "Global.hpp"
+#include "Enums.hpp"
 #include "EntitySystem.hpp"
 #include "HelperFunctions.hpp"
 

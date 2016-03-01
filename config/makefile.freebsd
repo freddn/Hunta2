@@ -1,4 +1,5 @@
 include config/sources
+SRC += src/main.cpp
 
 INCS = `freetype-config --cflags; sdl2-config --cflags` -I/usr/local/include/lua51
 LIBS = `freetype-config --libs; sdl2-config --libs` -llua-5.1 -lGL -lGLU -lSDL2_ttf \

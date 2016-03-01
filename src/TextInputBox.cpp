@@ -4,7 +4,7 @@
 
 #include <SDL2/SDL_events.h>
 #include "TextInputBox.hpp"
-#include "Game.hpp"
+#include "Global.hpp"
 
 TextInputBox::TextInputBox() {
 

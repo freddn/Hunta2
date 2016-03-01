@@ -11,7 +11,7 @@ public:
     void init();
     void draw();
 
-    void update(SDL_Event e);
+    void update(SDL_Event *e);
 
     void setSlot(int slot, std::string name, int level);
 

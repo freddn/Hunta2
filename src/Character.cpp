@@ -17,11 +17,13 @@
 */
 
 #include "Character.hpp"
-#include "Game.hpp"
+
 #include "Projectile.hpp"
 #include "Item.hpp"
 #include "HelperFunctions.hpp"
 
+#include "Global.hpp"
+#include "Enums.hpp"
 #include <iostream>
 
 Character::Character() {

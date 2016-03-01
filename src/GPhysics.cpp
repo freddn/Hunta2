@@ -20,7 +20,8 @@
 
 #include <cmath>
 
-#include "Game.hpp"
+#include "Global.hpp"
+#include "Enums.hpp"
 
 /** TODO Add collision rect.
  * (Setters and getters and change in collision management)*/

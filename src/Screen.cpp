@@ -17,7 +17,7 @@
  */
 
 #include "Screen.hpp"
-#include "Game.hpp"
+#include "Global.hpp"
 
 Screen::~Screen() {}
 

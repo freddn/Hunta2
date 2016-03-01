@@ -1,7 +1,9 @@
 #include "UIController.hpp"
-#include "Game.hpp"
+#include "Global.hpp"
 #include "HelperFunctions.hpp"
 #include <iostream>
+
+
 UIController::UIController() {
 }
 

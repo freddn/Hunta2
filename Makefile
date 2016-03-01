@@ -10,24 +10,37 @@ all:
 	$(MAKE) -f config/makefile.linux
 
 linux:
-	$(MAKE) -f config/makefile.linux
+	$(MAKE) -f config/makefile.tests
+	@echo done
+
+htests:
+	$(MAKE) -f config/makefile.tests
+	@echo done
 
 slackware:
 	$(MAKE) -f config/makefile.slackware
+	@echo done
 
 freebsd:
 	$(MAKE) -f config/makefile.freebsd
+	@echo done
 
 dragonfly:
 	$(MAKE) -f config/makefile.dragonfly
+	@echo done
 
 openbsd:
 	$(MAKE) -f config/makefile.openbsd
+	@echo done
 
 travis:
 	$(MAKE) -f config/makefile.travis
+	@echo done
 
 clean:
 	@echo cleaning
 	@rm -f hunta2
+	@rm -f test
 	@rm -f src/*.o
+	@rm -f tests/*.o
+	@echo done

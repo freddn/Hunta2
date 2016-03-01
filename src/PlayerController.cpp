@@ -2,7 +2,7 @@
 #include "PlayerController.hpp"
 #include <cmath>
 #include <iostream>
-#include "Game.hpp"
+#include "Global.hpp"
 
 PlayerController::PlayerController() {
     //ctor

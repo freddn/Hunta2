@@ -19,142 +19,113 @@
 
 #include "Game.hpp"
 
-#include "InGame.hpp"
-#include "MainMenu.hpp"
+
 #include "HelperFunctions.hpp"
 #include <unistd.h>
-
 #include <iostream>
 
+#include "Global.hpp"
+#include "Enums.hpp"
+
 namespace game {
-    SDL_Event event;
-    SDL_Rect offset;
-    SDL_Rect rect;
-    SDL_Rect background;
-    int mouseX = 0;
-    int mouseY = 0;
-    SDL_Window *gWindow = nullptr;
-    SDL_Renderer *renderer = nullptr;
-    SDL_Texture *buffer = nullptr;
-    TTF_Font *font = nullptr;
-    TTF_Font *dmgFont = nullptr;
-    Screen screen;
-    Editor editor;
-    InGame inGame;
-    MainMenu mMenu;
 
-    //int current_state = INGAME;
-    int current_state = MAINMENU;
-    LuaInterface lInterface;
-    MapController mapController;
-    TextureManager textureManager;
-    PlayerController playerController;
-    EnemyManager enemyManager;
-    ItemManager itemManager;
-    UIController uiController;
-    MouseController mouseController;
-    CharacterCreationScreen creationScreen;
-    SaveSlotSelection saveSlotSelection;
-
-    Inventory inventory(580, 260);
-    std::shared_ptr<Map> textureMap;
-    int width = 800;
-    int t_width = width/32;
-    int height = 600;
-    int t_height = height/32;
-    int maxFPS = 45;
-    bool hasChanged = true;
-
-    int countedFrames = 1;
-    float currentFPS = 0.f;
-    float avgFPS = 0.f;
-    LTimer timer;
-    LTimer fpsTimer;
-    int currentTick = 0;
-    int selected;
-
-    SDL_Color textColor = {255,255,255,0};
-    bool running = true;
 
     void start() {
-        saveSlotSelection.init();
+
+        getOffset()->x = getWidth() / 2;
+        getOffset()->y = getHeight() / 2;
+        getOffset()->w = getWidth();
+        getOffset()->h = getHeight();
+
+        getBackground()->x = 0;
+        getBackground()->y = 0;
+        getBackground()->w = 2048;
+        getBackground()->h = 2048;
+
+        int currentTick = 0;
+        int countedFrames = 1;
+        setCurrentState(MAINMENU);
+
+        LTimer fpsTimer;
+
+        getSaveSlotSelection()->init();
+
         HelperFunctions::log("game::start()");
-        lInterface.initLua();
-        lInterface.loadFile("data/savedata/saveslots.lua");
-        playerController.setName("assdd");
+        getLuaInterface()->initLua();
+        getLuaInterface()->loadFile("data/savedata/saveslots.lua");
+        getPlayerController()->setName("assdd");
         //playerController.save(&lInterface);
-        playerController.load("nooobn", &lInterface);
+        getPlayerController()->load("nooobn", getLuaInterface());
         std::stringstream temp;
-        temp << "Saved game '" <<playerController.getName() << "' Loaded!";
+        temp << "Saved game '" <<getPlayerController()->getName() << "' Loaded!";
         HelperFunctions::log(temp.str());
 
         HelperFunctions::log("game::start() (load map)");
-        mapController.init(&lInterface);
-        itemManager.init(&lInterface);
-        //playerController.load("Freddun", &lInterface);
+        getTextureMapController()->init(getLuaInterface());
+        getItemManager()->init(getLuaInterface());
 
         HelperFunctions::log("game::start() (creating states)");
-        editor.init();
-        inGame.init();
-        mMenu.init();
-        uiController.init();
-        inventory.init();
 
+        getEditor()->init();
+        getInGame()->init();
+        getMainMenu()->init();
+        getUIController()->init();
 
+        getInventory()->init();
 
-
-        //textureMap = mapController.getMap(1);
-        if(current_state == INGAME)
-            mapController.getMap(1)->loadPlayer(100,100);
+        if(getCurrentState() == INGAME)
+            getTextureMapController()->getMap(1)->loadPlayer(100,100);
         fpsTimer.start();
-        timer.start();
+        getTimer()->start();
         HelperFunctions::log("game::start() (main loop)");
 
-        while(running) {
+        while(isRunning()) {
             /* Get current time */
             currentTick = fpsTimer.getTicks();
 
             pollEvents();
 
-            switch(current_state) {
+            switch(getCurrentState()) {
             case(MAINMENU):
                 /* Show the main menu */
-                //mMenu.update();
-                mMenu.draw();
+                getMainMenu()->draw();
                 break;
             case(CHARCREATION):
-                creationScreen.draw();
+                getCharacterCreationScreen()->draw();
                 break;
             case(INGAME):
 
-                lInterface.runLuaMain();
+                getLuaInterface()->runLuaMain();
 
-                inGame.renderStart();
-                inGame.draw();
-                uiController.draw();
-                inGame.renderEnd();
-                if(!inGame.takingInput())
-                    inGame.update();
-                uiController.update();
+                getInGame()->renderStart();
+                getInGame()->draw();
+                getUIController()->draw();
+                getInGame()->renderEnd();
+                if(!getInGame()->takingInput())
+                    getInGame()->update();
+                getUIController()->update();
 
                 break;
             case(PAUSED):
-                screen.update();
+                getScreen()->update();
                 /* GAME IS PAUSED */
                 /* Show menu */
                 break;
             case(GAMEOVER):
-                screen.update();
+                getScreen()->update();
                 /* Show a menu */
                 break;
             case(EDITOR):
-                editor.update();
-                editor.draw(); // SELECTED
+                getEditor()->update();
+                getEditor()->draw(); // SELECTED
+                break;
+            default:
+                setCurrentState(MAINMENU);
                 break;
             }
-            avgFPS = countedFrames / (fpsTimer.getTicks() / 1000.f);
+            setAvgFPS(countedFrames / (fpsTimer.getTicks() / 1000.f));
             if(countedFrames > 500) {
-                avgFPS = 0;
+                setAvgFPS(0);
                 countedFrames = 0;
                 fpsTimer.stop();
                 fpsTimer.start();
@@ -169,118 +140,120 @@ namespace game {
 
     void pollEvents() {
         const Uint8 *key = SDL_GetKeyboardState(NULL);
-        mouseController.clear();
-
-        while(SDL_PollEvent(&event) != 0) {
-            if(event.type == SDL_QUIT) {
-                running = false;
+        getMouseController()->clear();
+        while(SDL_PollEvent(getEvent()) != 0) {
+            if(getEvent()->type == SDL_QUIT) {
+                setRunning(false);
                 break;
             }
 
-            mouseController.update(event);
+            getMouseController()->update(getEvent());
 
-            if(current_state == MAINMENU)
-                mMenu.update();
-            else if(current_state == CHARCREATION) {
-                saveSlotSelection.update(event);
-                creationScreen.update(event);
-            } else if(current_state == INGAME) {
-                if(inGame.takingInput()) {
-                    inGame.updateEvents(&event);
+            if(getCurrentState() == MAINMENU)
+                getMainMenu()->update();
+            else if(getCurrentState() == CHARCREATION) {
+
+                getSaveSlotSelection()->update(getEvent());
+                getCharacterCreationScreen()->update(getEvent());
+            } else if(getCurrentState() == INGAME) {
+                if(getInGame()->takingInput()) {
+                    getInGame()->updateEvents(getEvent());
                     continue;
                 } else
-                    inGame.updateEvents(&event);
+                    getInGame()->updateEvents(getEvent());
             }
 
-            if(current_state == EDITOR && SDL_GetMouseState(NULL,NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
-                editor.place();
-            else if(event.type == SDL_KEYDOWN) {
+            if(getCurrentState() == EDITOR && SDL_GetMouseState(NULL,NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
+                getEditor()->place();
+            else if(getEvent()->type == SDL_KEYDOWN) {
                 if(key[SDL_SCANCODE_T]) {
-                    mapController.getMap(1)->clear();
+                    getTextureMapController()->getMap(1)->clear();
                 } else if(key[SDL_SCANCODE_ESCAPE]) {
-                    if(uiController.inventoryIsDisplayed()) {
-                        uiController.setInventoryDisplayed(false);
+                    if(getUIController()->inventoryIsDisplayed()) {
+                        getUIController()->setInventoryDisplayed(false);
                     } else
-                        current_state = MAINMENU;
+                        setCurrentState(MAINMENU);
                 } else if(key[SDL_SCANCODE_2])
-                    current_state = MAINMENU;
+                    setCurrentState(MAINMENU);
                 else if(key[SDL_SCANCODE_1]) {
-                    if(current_state == EDITOR) {
-                        mapController.saveMaps();
-                        mapController.loadMap(1);
+                    if(getCurrentState() == EDITOR) {
+                        getTextureMapController()->saveMaps();
+                        getTextureMapController()->loadMap(1);
                     }
-                    mapController.getMap(1)->loadPlayer(100,100);
+                    getTextureMapController()->getMap(1)->loadPlayer(100,100);
                     game::setCurrentState(game::INGAME);
                 } else if(key[SDL_SCANCODE_3])
-                    current_state = game::PAUSED;
+                    setCurrentState(PAUSED);
                 else if(key[SDL_SCANCODE_0])
-                    current_state = game::GAMEOVER;
+                    setCurrentState(GAMEOVER);
                 else if(key[SDL_SCANCODE_4]) {
-                    mapController.getMap(1)->destroyPlayer();
-                    mapController.getMap(1)->update();
-                    current_state = game::EDITOR;
+                    getTextureMapController()->getMap(1)->destroyPlayer();
+                    getTextureMapController()->getMap(1)->update();
+                    setCurrentState(EDITOR);
                 }
-            } else if(event.type == SDL_MOUSEWHEEL && current_state == EDITOR)
-                editor.setSelected(editor.getSelected()+event.wheel.y);
-            else if(event.type == SDL_MOUSEMOTION)
-                SDL_GetMouseState(&mouseX,&mouseY);
+            } else if(getEvent()->type == SDL_MOUSEWHEEL && getCurrentState() == EDITOR)
+                getEditor()->setSelected(getEditor()->getSelected()+getEvent()->wheel.y);
+            else if(getEvent()->type == SDL_MOUSEMOTION) {
+                int mx;
+                int my;
+                SDL_GetMouseState(&mx, &my);
+                setMouseX(mx);
+                setMouseY(my);
+            }
         }
     }
 
     void newGame(std::string nick) {
-
+        getPlayerController()->setName(nick);
         //playerController.load(nick,&lInterface);
 
         //playerController.save(&lInterface, 1);
         //playerController.save(&lInterface, 2);
 
-        mapController.loadMap(1);
-        mapController.getMap(1)->loadPlayer(100,100);
-        game::setCurrentState(game::INGAME);
+        getTextureMapController()->loadMap(1);
+        getTextureMapController()->getMap(1)->loadPlayer(100,100);
+        game::setCurrentState(INGAME);
     }
 
-    bool init_game(bool fullscreen) {
-        offset.x = width/2;
-        offset.y = height/2;
-        offset.w = width;
-        offset.h = height;
-        background.x = 0;
-        background.y = 0;
-        background.w = 2048;
-        background.h = 2048;
-        rect.x = 400;
-        rect.y = 400;
-        rect.h = 32;
-        rect.w = 32;
+    bool initVideo(bool fullscreen) {
 
-        if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-            HelperFunctions::log(HelperFunctions::ERROR, "Init video failed." );
+        if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+            HelperFunctions::log(HelperFunctions::ERROR, "Init video failed.");
             return false;
         }
-        if(fullscreen) {
-            gWindow = SDL_CreateWindow("Hunta",SDL_WINDOWPOS_UNDEFINED,
-                                   SDL_WINDOWPOS_UNDEFINED,
-                                   width,height,SDL_WINDOW_OPENGL |
-                                   SDL_WINDOW_FULLSCREEN);
+        if (fullscreen) {
+            setWindow(SDL_CreateWindow("Hunta", SDL_WINDOWPOS_UNDEFINED,
+                                       SDL_WINDOWPOS_UNDEFINED,
+                                       getWidth(), getHeight(), SDL_WINDOW_OPENGL |
+                                                                SDL_WINDOW_FULLSCREEN));
         } else
-            gWindow = SDL_CreateWindow("Hunta",SDL_WINDOWPOS_UNDEFINED,
-                                   SDL_WINDOWPOS_UNDEFINED,
-                                   width,height,SDL_WINDOW_OPENGL |
-                                   SDL_WINDOW_RESIZABLE); //SDL_WINDOW_SHOWN);
+            setWindow(SDL_CreateWindow("Hunta", SDL_WINDOWPOS_UNDEFINED,
+                                       SDL_WINDOWPOS_UNDEFINED,
+                                       getWidth(), getHeight(), SDL_WINDOW_OPENGL |
+                                                                SDL_WINDOW_RESIZABLE)); //SDL_WINDOW_SHOWN);
 
-        if(gWindow == nullptr) {
-            HelperFunctions::log(HelperFunctions::ERROR,"Window could not be created.");
+        if (getGWindow() == nullptr) {
+            HelperFunctions::log(HelperFunctions::ERROR, "Window could not be created.");
+            return false;
+        }
+        return true;
+    }
+
+    bool initTextureHandling() {
+        if(getGWindow() == nullptr) {
+            HelperFunctions::log(HelperFunctions::ERROR,
+                                 "No window has been created!");
             return false;
         }
 
-        renderer = SDL_CreateRenderer(gWindow,-1,SDL_RENDERER_ACCELERATED);
+        setRenderer(SDL_CreateRenderer(getGWindow(),-1,SDL_RENDERER_ACCELERATED));
 
-        if(renderer == nullptr) {
+        if(getRenderer() == nullptr) {
             HelperFunctions::log(HelperFunctions::WARNING,
                                  "Could not initiate hardware rendered.");
             /* Testing software rendering instead.. */
-            renderer = SDL_CreateRenderer(gWindow,-1,SDL_RENDERER_SOFTWARE);
-            if(renderer == nullptr) {
+            setRenderer(SDL_CreateRenderer(getGWindow(),-1,SDL_RENDERER_SOFTWARE));
+            if(getRenderer() == nullptr) {
                 HelperFunctions::log(HelperFunctions::ERROR,
                                      "Could not initiate software renderer.");
                 return false;
@@ -299,21 +272,22 @@ namespace game {
             return false;
         }
 
-        font = TTF_OpenFont("freefont/FreeSans.ttf",24);
-        dmgFont = TTF_OpenFont("freefont/FreeMonoBold.ttf",9);
-        if(font == nullptr || dmgFont == nullptr) {
+        setFont(TTF_OpenFont("freefont/FreeSans.ttf",24));
+        setDmgFont(TTF_OpenFont("freefont/FreeMonoBold.ttf",9));
+        if(getFont() == nullptr || getDmgFont() == nullptr) {
             char buf[255];
             getcwd(buf,255);
-            printf("path: %s\n",buf);
-            perror("NOFONT ");
+            printf("path: %s\n%s\n",buf, SDL_GetError());
+            perror("NOFONT");
             HelperFunctions::log(HelperFunctions::ERROR, "No font");
             return false;
         }
 
-        buffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
-                                   SDL_TEXTUREACCESS_TARGET, width*2, height*2);
+        setBuffer(SDL_CreateTexture(getRenderer(), SDL_PIXELFORMAT_RGBA8888,
+                                   SDL_TEXTUREACCESS_TARGET,
+                                   getWidth()*2, getHeight()*2));
 
-        if(buffer == 0) {
+        if(getBuffer() == 0) {
             HelperFunctions::log(HelperFunctions::ERROR,
                                  "Failed to create texture buffer");
             return false;
@@ -324,180 +298,24 @@ namespace game {
     }
 
     void close() {
-        game::getTextureMapController()->getMap(1)->clear();
+        //game::getTextureMapController()->getMap(1)->clear();
 
-        SDL_DestroyTexture(buffer);
-        buffer = nullptr;
+        SDL_DestroyTexture(getBuffer());
+        setBuffer(nullptr);
 
-        SDL_RenderClear(renderer);
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(gWindow);
-        renderer = nullptr;
-        gWindow = nullptr;
-        TTF_CloseFont(font);
-        TTF_CloseFont(dmgFont);
-        font = nullptr;
-        dmgFont = nullptr;
+        SDL_RenderClear(getRenderer());
+        SDL_DestroyRenderer(getRenderer());
+        SDL_DestroyWindow(getGWindow());
+        setRenderer(nullptr);
+        setWindow(nullptr);
+        TTF_CloseFont(getFont());
+        TTF_CloseFont(getDmgFont());
+        setFont(nullptr);
+        setDmgFont(nullptr);
 
         TTF_Quit();
         IMG_Quit();
         SDL_Quit();
-    }
-
-    Editor *getEditor() {
-        return &editor;
-    }
-
-    SDL_Event *getEvent() {
-        return &event;
-    }
-
-    SDL_Rect *getOffset() {
-        return &offset;
-    }
-
-    SDL_Rect *getBackground() {
-        return &background;
-    }
-
-    SDL_Color *getTextColor() {
-        return &textColor;
-    }
-
-    int getMouseX() {
-        return mouseX;
-    }
-
-    void setMouseX(int x) {
-        mouseX = x;
-    }
-
-    int getMouseY() {
-        return mouseY;
-    }
-
-    void setMouseY(int y) {
-        mouseY = y;
-    }
-
-    SDL_Window *getGWindow() {
-        return gWindow;
-    }
-
-    SDL_Renderer *getRenderer() {
-        return renderer;
-    }
-
-    SDL_Texture *getBuffer() {
-        return buffer;
-    }
-
-    void setBuffer(SDL_Texture * temp) {
-        buffer = temp;
-    }
-
-    TTF_Font * getFont() {
-        return font;
-    }
-
-    TTF_Font * getDmgFont() {
-        return dmgFont;
-    }
-
-    int getCurrentState() {
-        return current_state;
-    }
-
-    void setCurrentState(int temp) {
-        current_state = temp;
-    }
-
-    PlayerController *getPlayerController() {
-        return &playerController;
-    }
-
-    MapController *getTextureMapController()  {
-        return &mapController;
-    }
-
-    EnemyManager *getEnemyDataController() {
-        return &enemyManager;
-    }
-
-    MouseController *getMouseController() {
-        return &mouseController;
-    }
-
-    ItemManager *getItemManager() {
-        return &itemManager;
-    }
-
-    Inventory *getInventory() {
-        return &inventory;
-    }
-
-    std::shared_ptr<Map> getTextureMap() {
-        return textureMap;
-    }
-
-    LuaInterface *getLuaInterface() {
-        return &lInterface;
-    }
-
-    void setTextureMap(std::shared_ptr<Map> tempMap) {
-        textureMap = tempMap;
-    }
-
-    TextureManager *getTextureManager() {
-        return &textureManager;
-    }
-
-    CharacterCreationScreen *getCharacterCreationScreen() {
-        return &creationScreen;
-    }
-
-    SaveSlotSelection *getSaveSlotSelection() {
-        return &saveSlotSelection;
-    }
-
-    int getWidth() {
-        return width;
-    }
-
-    int getTWidth() {
-        return t_width;
-    }
-
-    int getHeight() {
-        return height;
-    }
-
-    int getTHeight() {
-        return t_height;
-    }
-
-    int getMaxFPS() {
-        return maxFPS;
-    }
-
-    bool getHasChanged() {
-        return hasChanged;
-    }
-
-    void setHasChanged(bool boolean) {
-        hasChanged = boolean;
-    }
-
-    float getAvgFPS() {
-        return avgFPS;
-    }
-
-    LTimer* getTimer() {
-        return &timer;
-    }
-
-    void setRunning(bool boolean) {
-        running = boolean;
     }
 }
 

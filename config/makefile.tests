@@ -1,5 +1,5 @@
 include config/sources
-SRC += src/main.cpp
+SRC += tests/test1.cpp
 
 INCS = `freetype-config --cflags` -I/usr/include/lua5.1 -I/usr/include/GL
 LIBS = `freetype-config --libs` -llua5.1 -lGL -lGLU \
@@ -12,10 +12,10 @@ CC = g++
 
 OBJ = ${SRC:.cpp=.o}
 
-all: options hunta2
+all: options test
 
 options:
-	@echo hunta2 build options:
+	@echo tests build options:
 	@echo "CFLAGS   = ${CFLAGS}"
 	@echo "LDFLAGS  = ${LDFLAGS}"
 	@echo "CC       = ${CC}"
@@ -24,13 +24,13 @@ options:
 	@echo CC $<
 	@${CC} -c ${CFLAGS} $< -o $@
 
-hunta2: ${OBJ}
+test: ${OBJ}
 	@echo runnin CC -o $@
 	@${CC} -o $@ ${OBJ} ${CFLAGS} ${LDFLAGS}
 
 clean:
 	@echo cleaning
-	@rm -f hunta2
+	@rm -f test
 	@rm -f src/*.o
 
-.PHONY: all hunta2 options clean
+.PHONY: all test options clean

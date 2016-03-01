@@ -40,14 +40,16 @@ public:
     void save(LuaInterface *lInterface);
     void loadNeighbors(LuaInterface *lInterface);
 
-    void loadTile(int id, int index, int x,int y, std::string img);
-    void loadEnvironment(int id, int index, int x,int y, std::string img);
-    void loadEnemy(int id, int index, int x,int y, std::string img, int width = 0, int height = 0);
+    void loadTile(int id, int index, int x,int y, const std::string &img);
+    void loadEnvironment(int id, int index, int x,int y, const std::string &img);
+    void loadEnemy(int id, int index, int x,int y, const std::string &img, int width = 0, int height = 0);
     void loadItem(int id, int x, int y, int amount);
 
     void loadPlayer(int x,int y);
     void destroyPlayer();
     void setEditMode(bool mode);
+
+    unsigned long getTileCount();
 
     void removeEntity(int index, int x,int y);
 

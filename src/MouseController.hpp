@@ -40,7 +40,7 @@ public:
     virtual ~MouseController();
 
     void init();
-    void update(SDL_Event event);
+    void update(SDL_Event *e);
     void clear();
 
     void setMouseX(int x);

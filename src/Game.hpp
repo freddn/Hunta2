@@ -23,21 +23,7 @@
 #define SCREEN_FPS 60
 #define TICKS_PER_FRAME (1000 / SCREEN_FPS)
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-
-#include "LTimer.hpp"
-#include "MapController.hpp"
-#include "Editor.hpp"
-#include "TextureManager.hpp"
-#include "ItemManager.hpp"
-#include "PlayerController.hpp"
-#include "UIController.hpp"
-#include "EnemyManager.hpp"
-#include "MouseController.hpp"
-#include "CharacterCreationScreen.hpp"
-#include "SaveSlotSelection.hpp"
+#include <string>
 
 /**
  * Game class. Contains game-loop. State of the game. Init of map/data.
@@ -55,81 +41,11 @@ namespace game {
     void newGame(std::string nick);
 
     /** Initiates SDL, creates a window, buffer and so on. */
-    bool init_game(bool fullscreen);
+    bool initVideo(bool fullscreen);
+    bool initTextureHandling();
 
     /** Quit SDL and deallocate stuff. */
     void close();
-
-    /** The different states of the game. */
-    enum State {    MAINMENU,
-                    CHARCREATION,
-                    INGAME,
-                    PAUSED,
-                    GAMEOVER,
-                    EDITOR };
-
-    /** Some directions the character can have. */
-    enum Direction {    NORTH,
-                        SOUTH,
-                        WEST,
-                        EAST };
-
-    /** Different tiles used by the Editor. */
-    enum Selected { GRASS,
-                    GROUND,
-                    WATER };
-
-    /** Different entity types. */
-    enum EntityGroup : std::size_t {    PLAYER,
-                                        ITEM,
-                                        ENEMY,
-                                        ENVIRONMENT,
-                                        PROJECTILE,
-                                        TILE,
-                                        X };
-
-    /** Getters for important game variables/objects. */
-    Editor *getEditor();
-    SDL_Event *getEvent();
-    SDL_Rect *getOffset();
-    SDL_Rect *getBackground();
-    SDL_Window *getGWindow();
-    SDL_Renderer *getRenderer();
-    SDL_Texture *getBuffer();
-    SDL_Color *getTextColor();
-    TTF_Font *getFont();
-    TTF_Font * getDmgFont();
-    int getCurrentState();
-    PlayerController *getPlayerController();
-    MapController *getTextureMapController();
-    EnemyManager *getEnemyDataController();
-    MouseController *getMouseController();
-    ItemManager *getItemManager();
-    TextureManager *getTextureManager();
-    Inventory *getInventory();
-    std::shared_ptr<Map> getTextureMap();
-    CharacterCreationScreen *getCharacterCreationScreen();
-    SaveSlotSelection *getSaveSlotSelection();
-    LuaInterface *getLuaInterface();
-    int getWidth();
-    int getTWidth();
-    int getHeight();
-    int getTHeight();
-    int getMouseX();
-    int getMouseY();
-    int getMaxFPS();
-    bool getHasChanged();
-    float getAvgFPS();
-    LTimer* getTimer();
-
-    /** Setters. */
-    void setHasChanged(bool boolean);
-    void setTextureMap(std::shared_ptr<Map> temp_map);
-    void setBuffer(SDL_Texture *temp);
-    void setCurrentState(int temp);
-    void setMouseX(int x);
-    void setMouseY(int y);
-    void setRunning(bool boolean);
 }
 
 

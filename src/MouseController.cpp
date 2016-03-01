@@ -32,28 +32,28 @@ MouseController::~MouseController() {
 /*
  * Update mouse related variables.
  */
-void MouseController::update(SDL_Event event) {
+void MouseController::update(SDL_Event *e) {
     /* If the mouse is moved, update the variables tracking the position. */
-    if(event.type == SDL_MOUSEMOTION) {
-        mouseX = event.motion.x;
-        mouseY = event.motion.y;
+    if(e->type == SDL_MOUSEMOTION) {
+        mouseX = e->motion.x;
+        mouseY = e->motion.y;
     }
 
     /* If the mouse button is held down, set the state to STATE_DOWN.
      * When the mouse button is released, set the state to STATE_UP if it has
      * previously been STATE_DOWN. */
-    if(event.type == SDL_MOUSEBUTTONDOWN) {
-        if(event.button.button == SDL_BUTTON_LEFT) {
+    if(e->type == SDL_MOUSEBUTTONDOWN) {
+        if(e->button.button == SDL_BUTTON_LEFT) {
             btn_state[LEFT_BTN] = STATE_DOWN;
-        } else if(event.button.button == SDL_BUTTON_RIGHT) {
+        } else if(e->button.button == SDL_BUTTON_RIGHT) {
             btn_state[RIGHT_BTN] = STATE_DOWN;
         }
-    } else if(event.type == SDL_MOUSEBUTTONUP) {
-        if(event.button.button == SDL_BUTTON_LEFT) {
+    } else if(e->type == SDL_MOUSEBUTTONUP) {
+        if(e->button.button == SDL_BUTTON_LEFT) {
             if(btn_state[LEFT_BTN] == STATE_DOWN) {
                 btn_state[LEFT_BTN] = STATE_UP;
             }
-        } else if(event.button.button == SDL_BUTTON_RIGHT) {
+        } else if(e->button.button == SDL_BUTTON_RIGHT) {
             if(btn_state[RIGHT_BTN] == STATE_DOWN) {
                 btn_state[RIGHT_BTN] = STATE_UP;
             }

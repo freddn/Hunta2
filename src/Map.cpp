@@ -1,6 +1,7 @@
 #include "Map.hpp"
 
-#include "Game.hpp"
+#include "Enums.hpp"
+#include "Global.hpp"
 
 #include "Position.hpp"
 #include "Texture.hpp"
@@ -15,6 +16,7 @@
 #include "Environment.hpp"
 #include "Enemy.hpp"
 #include "Item.hpp"
+
 
 Map::Map() {}
 
@@ -83,14 +85,14 @@ bool Map::hasEntities() {
     return entities;
 }
 
-void Map::loadTile(int id, int index, int x,int y, std::string img) {
+void Map::loadTile(int id, int index, int x,int y, const std::string &img) {
     Entity *tile = &tiles.addEntity(index);
     tile->addComponent<Position>(x + mapX*MAP_WIDTH, y + mapY*MAP_HEIGHT);
     tile->addComponent<Texture>(img,false);
     tile->addComponent<Tile>(id);
 }
 
-void Map::loadEnvironment(int id, int index, int x,int y, std::string img) {
+void Map::loadEnvironment(int id, int index, int x,int y, const std::string &img) {
     Entity *env = manager.addEntity(index,false);
     if(env != nullptr) {
         env->addComponent<Position>(x + mapX*MAP_WIDTH,y + mapY*MAP_HEIGHT);
@@ -101,7 +103,7 @@ void Map::loadEnvironment(int id, int index, int x,int y, std::string img) {
     }
 }
 
-void Map::loadEnemy(int id, int index, int x,int y, std::string img, int width, int height) {
+void Map::loadEnemy(int id, int index, int x,int y, const std::string &img, int width, int height) {
     Entity *enemy = manager.addEntity(index,false);
     EnemyData data = game::getEnemyDataController()->getEnemyData(id);
     if(enemy != nullptr) {
@@ -135,10 +137,12 @@ void Map::loadPlayer(int x,int y) {
     Entity *player = &manager.addEntity();
     if(player != nullptr) {
         player->addComponent<Position>(x + mapX*MAP_WIDTH,y + mapY*MAP_HEIGHT);
-        player->addComponent<Texture>("data/gubbenew.png",true); // 32x32 clip
+        const std::string c("data/gubbenew.png");
+        player->addComponent<Texture>(c.c_str(),true); // 32x32 clip
         player->addComponent<GPhysics>();
         player->addComponent<Health>(game::getPlayerController()->getHp());
-        player->addComponent<Weapon>("data/sword.png", manager);
+        const std::string s("data/sword.png");
+        player->addComponent<Weapon>(s.c_str(), manager);
         player->addComponent<Camera>();
         player->addComponent<Character>(manager);
         player->addGroup(game::PLAYER);
@@ -208,6 +212,8 @@ void Map::loadNeighbors(LuaInterface *lInterface) {
         if(neighbors[i] != 0)
             lInterface->loadMap(neighbors[i]);
     }
-
 }
 
+unsigned long Map::getTileCount() {
+    return tiles.getEntitiesByIndex()->size();
+}

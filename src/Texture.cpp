@@ -17,7 +17,7 @@
  */
 
 #include "Texture.hpp"
-#include "Game.hpp"
+#include "Global.hpp"
 
 #include <iostream>
 
@@ -32,7 +32,7 @@ Texture::Texture(int w, int h) {
     isClipped = true;
 }
 
-Texture::Texture(std::string img,bool clip) : imageName(img) {
+Texture::Texture(const std::string &img,bool clip) : imageName(img) {
     isClipped = clip;
     isText = false;
     //currentTexture = nullptr;
@@ -40,14 +40,14 @@ Texture::Texture(std::string img,bool clip) : imageName(img) {
     tclip.h = 32;
 }
 
-Texture::Texture(std::string img,bool clip, int w,int h) : imageName(img) {
+Texture::Texture(const std::string &img,bool clip, int w,int h) : imageName(img) {
     isClipped = clip;
     isText = false;
     tclip.w = w;
     tclip.h = h;
 }
 
-Texture::Texture(std::string text,SDL_Color textcolor,TTF_Font* font) :
+Texture::Texture(const std::string &text, const SDL_Color &textcolor, TTF_Font* font) :
                                         textFont(font),
                                         textColor(textcolor),
                                         textString(text) {
@@ -83,7 +83,7 @@ void Texture::draw() {
                 position->getY()-(game::getOffset()->y),(SDL_Rect*)nullptr);
 }
 
-bool Texture::loadFromFile(std::string path) {
+bool Texture::loadFromFile(const std::string &path) {
     free();
     if(!game::getTextureManager()->hasTexture(path)) {
         SDL_Renderer *renderer = game::getRenderer();
@@ -122,7 +122,7 @@ bool Texture::loadFromFile(std::string path) {
     return true;
 }
 
-bool Texture::loadFromText(std::string textureText, SDL_Color textcolor,
+bool Texture::loadFromText(const std::string &textureText, const SDL_Color &textcolor,
                             TTF_Font * font) {
     free();
     SDL_Renderer *renderer = game::getRenderer();

@@ -36,7 +36,7 @@ struct Character: Component {
 public:
     Character();
     Character(EntityManager &m);
-    Character(EntityManager &m, std::string name);
+    Character(EntityManager &m, const std::string &name);
 
     /**
      * Init the player component. Gets the entity's other components.
