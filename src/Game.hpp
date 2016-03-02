@@ -21,13 +21,11 @@
 #define GAME_H
 
 #define SCREEN_FPS 60
-#define TICKS_PER_FRAME (1000 / SCREEN_FPS)
 
 #include <string>
 
 /**
- * Game class. Contains game-loop. State of the game. Init of map/data.
- * This class holds alot of important game related objects.
+ * Game namespace. Contains game-loop. Init of map/data.
  */
 namespace game {
     /**

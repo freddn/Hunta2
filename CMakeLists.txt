@@ -50,7 +50,7 @@ set(SOURCE_FILES
     src/LTimer.hpp
     src/LuaInterface.cpp
     src/LuaInterface.hpp
-    src/main.cpp
+    src/Main.cpp
     src/MainMenu.cpp
     src/MainMenu.hpp
     src/Map.cpp

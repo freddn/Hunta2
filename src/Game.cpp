@@ -29,9 +29,7 @@
 
 namespace game {
 
-
     void start() {
-
         getOffset()->x = getWidth() / 2;
         getOffset()->y = getHeight() / 2;
         getOffset()->w = getWidth();
@@ -42,11 +40,12 @@ namespace game {
         getBackground()->w = 2048;
         getBackground()->h = 2048;
 
-        int currentTick = 0;
-        int countedFrames = 1;
+        int countedFrames = 0;
         setCurrentState(MAINMENU);
 
         LTimer fpsTimer;
+        LTimer delayTimer;
+        LTimer update;
 
         getSaveSlotSelection()->init();
 
@@ -75,13 +74,16 @@ namespace game {
 
         if(getCurrentState() == INGAME)
             getTextureMapController()->getMap(1)->loadPlayer(100,100);
+
         fpsTimer.start();
+        update.start();
         getTimer()->start();
+
         HelperFunctions::log("game::start() (main loop)");
 
         while(isRunning()) {
-            /* Get current time */
-            currentTick = fpsTimer.getTicks();
+            /* Start the delay timer */
+            delayTimer.start();
 
             pollEvents();
 
@@ -94,7 +96,6 @@ namespace game {
                 getCharacterCreationScreen()->draw();
                 break;
             case(INGAME):
-
                 getLuaInterface()->runLuaMain();
 
                 getInGame()->renderStart();
@@ -109,11 +110,11 @@ namespace game {
             case(PAUSED):
                 getScreen()->update();
                 /* GAME IS PAUSED */
-                /* Show menu */
+                /* TODO Show menu */
                 break;
             case(GAMEOVER):
                 getScreen()->update();
-                /* Show a menu */
+                /* TODO Show a menu */
                 break;
             case(EDITOR):
                 getEditor()->update();
@@ -123,18 +124,15 @@ namespace game {
                 setCurrentState(MAINMENU);
                 break;
             }
-            setAvgFPS(countedFrames / (fpsTimer.getTicks() / 1000.f));
-            if(countedFrames > 500) {
-                setAvgFPS(0);
-                countedFrames = 0;
-                fpsTimer.stop();
-                fpsTimer.start();
+            countedFrames++;
+            if(delayTimer.getTicks() < 1000 / SCREEN_FPS) {
+                SDL_Delay((1000/SCREEN_FPS) - delayTimer.getTicks());
             }
 
-            if((fpsTimer.getTicks() - currentTick) < TICKS_PER_FRAME) {
-                SDL_Delay((TICKS_PER_FRAME-(fpsTimer.getTicks()-currentTick)));
+            if(update.getTicks() > 1000) {
+                setAvgFPS(countedFrames / (fpsTimer.getTicks() / 1000.f));
+                update.start();
             }
-            ++countedFrames;
         }
     }
 
@@ -216,7 +214,6 @@ namespace game {
     }
 
     bool initVideo(bool fullscreen) {
-
         if (SDL_Init(SDL_INIT_VIDEO) < 0) {
             HelperFunctions::log(HelperFunctions::ERROR, "Init video failed.");
             return false;

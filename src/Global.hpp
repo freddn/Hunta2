@@ -19,6 +19,9 @@
 #include "InGame.hpp"
 #include "MainMenu.hpp"
 
+/**
+ * This namespace holds alot of important game related objects.
+ */
 namespace game {
     /** Getters for important game variables/objects. */
     Editor *getEditor();

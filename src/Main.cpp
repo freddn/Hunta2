@@ -18,7 +18,6 @@
 
 #include "Game.hpp"
 #include "HelperFunctions.hpp"
-#include <iostream>
 
 int main(int argc, char *argv[]) {
     bool fullscreen = false;

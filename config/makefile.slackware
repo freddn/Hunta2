@@ -1,5 +1,5 @@
 include config/sources
-SRC += src/main.cpp
+SRC += src/Main.cpp
 
 INCS = `freetype-config --cflags` -I/usr/include/lua5.1 -I/usr/include/GL
 LIBS = `freetype-config --libs` -llua -lGL -lGLU \
