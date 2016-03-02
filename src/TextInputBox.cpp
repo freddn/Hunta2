@@ -17,7 +17,7 @@ TextInputBox::~TextInputBox() {
 
 
 void TextInputBox::init() {
-    textColor = {0xFF,0xFF,0xFF,0xFF};
+    textColor = game::getTextColor();
     inputText = "";
 
    // desc.loadFromText("> ",textColor,game::getFont());
@@ -75,7 +75,7 @@ void TextInputBox::update(SDL_Event e) {
     }
 }
 
-void TextInputBox::setColor(SDL_Color color) {
+void TextInputBox::setColor(SDL_Color *color) {
     textColor = color;
 }
 

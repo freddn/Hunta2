@@ -26,9 +26,11 @@
 
 #include "Global.hpp"
 #include "Enums.hpp"
+#include "TextBox.hpp"
 
 namespace game {
-
+    TextBox textBox(200,0,200,80,"TEST");
+    TextBox dialog(100,500, 520,80,"Hello there!\nWelcome to the world of hunters and gatherers.");
     void start() {
         getOffset()->x = getWidth() / 2;
         getOffset()->y = getHeight() / 2;
@@ -81,6 +83,9 @@ namespace game {
 
         HelperFunctions::log("game::start() (main loop)");
 
+        textBox.init(getRenderer(), getTextColor(),getFont());
+        dialog.init(getRenderer(), getTextColor(),getFont());
+
         while(isRunning()) {
             /* Start the delay timer */
             delayTimer.start();
@@ -101,6 +106,8 @@ namespace game {
                 getInGame()->renderStart();
                 getInGame()->draw();
                 getUIController()->draw();
+                dialog.draw();
+                textBox.draw();
                 getInGame()->renderEnd();
                 if(!getInGame()->takingInput())
                     getInGame()->update();
@@ -154,6 +161,14 @@ namespace game {
                 getSaveSlotSelection()->update(getEvent());
                 getCharacterCreationScreen()->update(getEvent());
             } else if(getCurrentState() == INGAME) {
+                if(getEvent()->type == SDL_KEYDOWN) {
+                    if (key[SDL_SCANCODE_TAB]) {
+                        if(dialog.isActive())
+                            dialog.setActive(false);
+                        else
+                            dialog.setActive(true);
+                    }
+                }
                 if(getInGame()->takingInput()) {
                     getInGame()->updateEvents(getEvent());
                     continue;

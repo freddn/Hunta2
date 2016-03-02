@@ -10,7 +10,7 @@ CharacterCreationScreen::CharacterCreationScreen() {}
 CharacterCreationScreen::~CharacterCreationScreen() {}
 
 void CharacterCreationScreen::init() {
-    textColor = {0xFF,0xFF,0xFF,0xFF};
+    textColor = game::getTextColor();
     inputText = "wolfhunter";
 
     desc.loadFromText("Enter name:  _____________________",textColor,game::getFont());

@@ -92,7 +92,7 @@ void Button::setWidth(int w) {
     buttonRect.w = w;
 }
 
-void Button::setButtonText(std::string text, SDL_Color color, TTF_Font *font) {
+void Button::setButtonText(std::string text, SDL_Color *color, TTF_Font *font) {
     buttonText.loadFromText(text, color, font);
 }
 

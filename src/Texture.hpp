@@ -40,7 +40,7 @@ public:
     Texture(const std::string &img, bool clip, int w, int h);
 
     /** Create a text that can be drawn to the screen. */
-    Texture(const std::string &text, const SDL_Color &textcolor, TTF_Font *font);
+    Texture(const std::string &text, SDL_Color *textcolor, TTF_Font *font);
 
     void init();
     void draw();
@@ -49,7 +49,7 @@ public:
     bool loadFromFile(const std::string &path);
 
     /** Loads a text string to the texture. */
-    bool loadFromText(const std::string &text, const SDL_Color &textcolor,TTF_Font *font);
+    bool loadFromText(const std::string &text, SDL_Color *textcolor,TTF_Font *font);
     void free();
     // (
     void setColor(Uint8 red, Uint8 green, Uint8 blue);
@@ -105,7 +105,7 @@ private:
     SDL_Rect tclip;
 
     TTF_Font* textFont{nullptr};
-    SDL_Color textColor;
+    SDL_Color *textColor;
 
     bool isClipped = false;
     bool isText = false;

@@ -19,7 +19,7 @@ public:
     void inputDone();
     void clear();
     bool takingInput();
-    void setColor(SDL_Color color);
+    void setColor(SDL_Color *color);
     void setMaxlen(unsigned int max);
     void setPos(int x, int y);
     void setOnEnter(std::function<void(std::string)> funct);
@@ -28,7 +28,7 @@ public:
 
 private:
     std::string inputText;
-    SDL_Color textColor;
+    SDL_Color *textColor;
     unsigned int maxlen = 250;
     Texture text;
     Texture desc;

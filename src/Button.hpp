@@ -16,7 +16,7 @@ public:
      */
     void onClick(std::function<void()> func);
 
-    void setButtonText(std::string text, SDL_Color color, TTF_Font *font);
+    void setButtonText(std::string text, SDL_Color *color, TTF_Font *font);
     void setImg(std::string img);
     void setImg(std::string img, bool clipped, int cw, int ch);
     void setWidth(int w);

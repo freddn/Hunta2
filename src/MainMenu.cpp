@@ -32,7 +32,7 @@ void MainMenu::init() {
 
     newGame.setImg("data/button.png", true, 256, 64);
     newGame.setRect(32*6, 120, 256, 64);
-    newGame.setButtonText("New Game", *game::getTextColor(), game::getFont());
+    newGame.setButtonText("New Game", game::getTextColor(), game::getFont());
     newGame.onClick([]() {
         game::setCurrentState(game::CHARCREATION);
         game::getCharacterCreationScreen()->init();
@@ -40,7 +40,7 @@ void MainMenu::init() {
 
     loadGame.setImg("data/button.png", true, 256, 64);
     loadGame.setRect(32*6, 200, 256, 64);
-    loadGame.setButtonText("Load Game", *game::getTextColor(), game::getFont());
+    loadGame.setButtonText("Load Game", game::getTextColor(), game::getFont());
     loadGame.onClick([]() {
         game::getTextureMapController()->getMap(1)->loadPlayer(100, 100);
         game::setCurrentState(game::INGAME);
@@ -48,12 +48,12 @@ void MainMenu::init() {
 
     settings.setImg("data/button.png", true, 256, 64);
     settings.setRect(32*6, 280, 256, 64);
-    settings.setButtonText("Settings", *game::getTextColor(), game::getFont());
+    settings.setButtonText("Settings", game::getTextColor(), game::getFont());
     settings.onClick([](/* TODO goto Settings */) { });
 
     quit.setImg("data/button.png", true, 256, 64);
     quit.setRect(32*6, 360, 256, 64);
-    quit.setButtonText("Quit Game", *game::getTextColor(), game::getFont());
+    quit.setButtonText("Quit Game", game::getTextColor(), game::getFont());
     quit.onClick([]() { game::setRunning(false); });
 
     background.loadFromFile("data/wolf.png");

@@ -85,7 +85,7 @@ set(SOURCE_FILES
     src/UIController.cpp
     src/UIController.hpp
     src/Weapon.cpp
-    src/Weapon.hpp src/EnemyManager.cpp src/EnemyManager.hpp src/CharacterCreationScreen.cpp src/CharacterCreationScreen.hpp src/HelperFunctions.cpp src/HelperFunctions.hpp src/SaveSlotSelection.cpp src/SaveSlotSelection.hpp src/Button.cpp src/Button.hpp src/TextInputField.cpp src/TextInputField.hpp src/TextInputBox.cpp src/TextInputBox.hpp src/LuaLoadFunctions.hpp src/LuaInGameFunctions.hpp src/LuaGeneralFunctions.hpp src/Enums.hpp)
+    src/Weapon.hpp src/EnemyManager.cpp src/EnemyManager.hpp src/CharacterCreationScreen.cpp src/CharacterCreationScreen.hpp src/HelperFunctions.cpp src/HelperFunctions.hpp src/SaveSlotSelection.cpp src/SaveSlotSelection.hpp src/Button.cpp src/Button.hpp src/TextInputField.cpp src/TextInputField.hpp src/TextInputBox.cpp src/TextInputBox.hpp src/LuaLoadFunctions.hpp src/LuaInGameFunctions.hpp src/LuaGeneralFunctions.hpp src/Enums.hpp src/TextBox.cpp src/TextBox.hpp)
 
 add_executable(Hunta2 ${SOURCE_FILES})
 target_link_libraries(Hunta2 ${FREETYPE_LIBRARIES})

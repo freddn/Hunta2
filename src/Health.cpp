@@ -130,7 +130,7 @@ void Health::displayDamage(int damage) {
     else
         dmgColor = {255,255,255,0};
 
-    dmgDisplay.loadFromText(dmgText.str(),dmgColor,game::getDmgFont());
+    dmgDisplay.loadFromText(dmgText.str(),&dmgColor,game::getDmgFont());
     hpTimer.start();
 }
 

@@ -39,7 +39,7 @@ void Inventory::init() {
         game::getPlayerController()->getName() + "_inventory.lua";
 
     /* Load text (TODO This is maby unneccesary, we can put tex in the image) */
-    text.loadFromText("Inventory", *game::getTextColor(), game::getFont());
+    text.loadFromText("Inventory", game::getTextColor(), game::getFont());
 
     /* We need the lua interface to access the inventory as the inventory
      * is made with lua. */
@@ -195,7 +195,7 @@ void Inventory::renderItems() {
             std::stringstream amt;
             amt.str("");
             amt << stackedItems.at(item.first);
-            amount.loadFromText(amt.str(), *game::getTextColor(),
+            amount.loadFromText(amt.str(), game::getTextColor(),
                                 game::getDmgFont());
             amount.render(itemRect.x,itemRect.y,nullptr);
         }

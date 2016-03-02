@@ -34,7 +34,7 @@ void Screen::renderStart() {
 void Screen::renderEnd() {
     tempText.str("");
     tempText << "FPS: " << (int)game::getAvgFPS();
-    fpsText.loadFromText(tempText.str(), *game::getTextColor(),game::getFont());
+    fpsText.loadFromText(tempText.str(), game::getTextColor(),game::getFont());
 
     fpsText.render(10,30,nullptr);
 

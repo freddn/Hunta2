@@ -23,7 +23,7 @@ public:
     virtual ~CharacterCreationScreen();
 private:
     std::string inputText;
-    SDL_Color textColor;
+    SDL_Color *textColor;
     unsigned int maxlen = 14;
 
     Texture text;

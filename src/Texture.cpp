@@ -47,7 +47,7 @@ Texture::Texture(const std::string &img,bool clip, int w,int h) : imageName(img)
     tclip.h = h;
 }
 
-Texture::Texture(const std::string &text, const SDL_Color &textcolor, TTF_Font* font) :
+Texture::Texture(const std::string &text, SDL_Color *textcolor, TTF_Font* font) :
                                         textFont(font),
                                         textColor(textcolor),
                                         textString(text) {
@@ -122,11 +122,11 @@ bool Texture::loadFromFile(const std::string &path) {
     return true;
 }
 
-bool Texture::loadFromText(const std::string &textureText, const SDL_Color &textcolor,
+bool Texture::loadFromText(const std::string &textureText, SDL_Color *textcolor,
                             TTF_Font * font) {
     free();
     SDL_Renderer *renderer = game::getRenderer();
-    SDL_Surface *tempSurface = TTF_RenderText_Solid(font,textureText.c_str(), textcolor);
+    SDL_Surface *tempSurface = TTF_RenderText_Solid(font,textureText.c_str(), *textcolor);
 
     if(tempSurface == nullptr)
         std::cerr << "TTF_RenderText_Solid() failed" << std::endl;
