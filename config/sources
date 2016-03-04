@@ -20,7 +20,6 @@ SRC = src/Character.cpp \
       src/Health.cpp \
       src/Weapon.cpp \
       src/Map.cpp \
-      src/Shape.cpp \
       src/Global.cpp \
       src/KeyboardController.cpp \
       src/MouseController.cpp \
@@ -37,4 +36,9 @@ SRC = src/Character.cpp \
       src/Button.cpp \
       src/SaveSlotSelection.cpp \
       src/TextInputBox.cpp \
-      src/TextBox.cpp
+      src/TextBox.cpp \
+      src/physics/PhysicsEngine.cpp \
+      src/physics/Manifold.cpp \
+      src/physics/Body.cpp \
+      src/physics/Collision.cpp
+      

@@ -23,6 +23,9 @@
 #include "Position.hpp"
 #include "Texture.hpp"
 
+#include "physics/Vec2.hpp"
+#include "physics/Shape.hpp"
+
 /**
  * The physics of an entity. This class is a component and will
  * give an entity collision detection, velocity and movement.
@@ -41,9 +44,8 @@ public:
     void clearCol();
 
     /** Check for collision */
-    bool isColliding(float x, float y); /// Current entity is inside this position?
     bool isColliding(EntitySystem::Entity *e); /// Current entity is colliding with given one?
-    bool isColliding(SDL_Rect src, SDL_Rect dest); /// TODO Implement
+
 
     /** Getters. */
     SDL_Rect getColRect(); /// TODO Implement
@@ -78,9 +80,12 @@ private:
     float destY = 0;
     Position *position{nullptr};
     Texture *texture{nullptr};
+    Body *body{nullptr};
+    Circle circle;
+    AABB aabb;
     float xVel{0.0f};
     float yVel{0.0f};
-    float vel{4};
+    float vel{2};
     int north = 0;
     int south = 1;
     int west = 2;

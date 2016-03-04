@@ -25,14 +25,12 @@
 #include "Health.hpp"
 #include "EntitySystem.hpp"
 
-using namespace EntitySystem;
-
 /**
  * Character class.
  * Character is a component. Need a position and physics
  * component aswell to function.
  */
-struct Character: Component {
+struct Character: EntitySystem::Component {
 public:
     Character();
     Character(EntityManager &m);

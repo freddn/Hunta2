@@ -2,8 +2,6 @@
 
 
 namespace game {
-
-
     SDL_Event event;
     SDL_Rect offset;
     SDL_Rect background;
@@ -31,6 +29,8 @@ namespace game {
     MouseController mouseController;
     CharacterCreationScreen creationScreen;
     SaveSlotSelection saveSlotSelection;
+
+    physics::PhysicsEngine physicsEngine(1000.0f/60.0f,10);
 
     Inventory inventory(580, 260);
     std::shared_ptr<Map> textureMap;
@@ -99,6 +99,8 @@ namespace game {
     InGame *getInGame() { return &inGame; }
     MainMenu *getMainMenu() { return &mMenu; }
     UIController *getUIController() { return &uiController; }
+
+    physics::PhysicsEngine *getPhysicsEngine() { return &physicsEngine; }
 
     int getWidth() { return width; }
     int getTWidth() { return t_width; }

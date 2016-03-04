@@ -18,6 +18,7 @@
 #include "SaveSlotSelection.hpp"
 #include "InGame.hpp"
 #include "MainMenu.hpp"
+#include "physics/PhysicsEngine.hpp"
 
 /**
  * This namespace holds alot of important game related objects.
@@ -57,6 +58,8 @@ namespace game {
     InGame *getInGame();
     MainMenu *getMainMenu();
     Screen *getScreen();
+
+    physics::PhysicsEngine *getPhysicsEngine();
 
     int getWidth();
     int getTWidth();

@@ -18,10 +18,13 @@
 
 #include "GPhysics.hpp"
 
-#include <cmath>
 
 #include "Global.hpp"
+
 #include "Enums.hpp"
+#include "Environment.hpp"
+#include "Enemy.hpp"
+#include <iostream>
 
 /** TODO Add collision rect.
  * (Setters and getters and change in collision management)*/
@@ -42,23 +45,45 @@ void GPhysics::update() {
     }*/
     setYVelocity();
     setXVelocity();
-    if(xVel != 0)
+    //body->velocity.x = xVel;
+    //body->velocity.y = yVel;
+
+    //body->force.x = -xVel;
+    //body->force.y = -yVel;
+    body->applyForce(Vec2(xVel,yVel));
+
+    position->setX(body->position.x-(texture->getWidth()/2));
+    position->setY(body->position.y-texture->getHeight()+5);
+    /*if(xVel != 0)
         position->setX(position->getX()+xVel);
     if(yVel != 0)
         position->setY(position->getY()+yVel);
-
-    clearCol();
+*/
+    //clearCol();
 }
 
 void GPhysics::init() {
     //std::cout << " - GPhysics::init() ..."<<std::endl;
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
+
     currentDir = game::SOUTH;
     north = game::NORTH;
     south = game::SOUTH;
     west = game::WEST;
     east = game::EAST;
+
+    Vec2 min(position->getX(), position->getY());
+    Vec2 max(position->getX()+texture->getWidth(), position->getY()+texture->getHeight());
+    aabb.min = min;
+    aabb.max = max;
+
+    circle.radius = 8;
+    body = game::getPhysicsEngine()->add(&circle,position->getX(), position->getY()-32);
+    if(entity->hasComponent<Environment>()) {
+        body->setStatic();
+    }
+
 }
 
 /*bool GPhysics::isColliding(int x, int y) {
@@ -133,6 +158,7 @@ bool GPhysics::isColliding(EntitySystem::Entity *e) {
     }
     return colliding;
 }
+
 
 inline void GPhysics::clearCol() {
     colDown = false;

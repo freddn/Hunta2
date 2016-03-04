@@ -44,5 +44,6 @@ clean:
 	@rm -f hunta2
 	@rm -f test
 	@rm -f src/*.o
+	@rm -f src/physics/*.o
 	@rm -f tests/*.o
 	@echo done

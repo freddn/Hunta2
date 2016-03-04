@@ -112,6 +112,7 @@ namespace game {
                 if(!getInGame()->takingInput())
                     getInGame()->update();
                 getUIController()->update();
+                getPhysicsEngine()->step();
 
                 break;
             case(PAUSED):

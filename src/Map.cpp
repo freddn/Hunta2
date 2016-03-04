@@ -95,10 +95,10 @@ void Map::loadTile(int id, int index, int x,int y, const std::string &img) {
 void Map::loadEnvironment(int id, int index, int x,int y, const std::string &img) {
     Entity *env = manager.addEntity(index,false);
     if(env != nullptr) {
+        env->addComponent<Environment>(id);
         env->addComponent<Position>(x + mapX*MAP_WIDTH,y + mapY*MAP_HEIGHT);
         env->addComponent<Texture>(img,false);
         env->addComponent<GPhysics>();
-        env->addComponent<Environment>(id);
         env->addGroup(game::ENVIRONMENT);
     }
 }
@@ -138,10 +138,13 @@ void Map::loadPlayer(int x,int y) {
     if(player != nullptr) {
         player->addComponent<Position>(x + mapX*MAP_WIDTH,y + mapY*MAP_HEIGHT);
         const std::string c("data/gubbenew.png");
+        //const std::string c("data/character.png");
         player->addComponent<Texture>(c.c_str(),true); // 32x32 clip
         player->addComponent<GPhysics>();
         player->addComponent<Health>(game::getPlayerController()->getHp());
+        
         const std::string s("data/sword.png");
+        //
         player->addComponent<Weapon>(s.c_str(), manager);
         player->addComponent<Camera>();
         player->addComponent<Character>(manager);

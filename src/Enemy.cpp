@@ -47,7 +47,7 @@ void Enemy::init() {
     ySpawnPos = position->getY();
 
     physics = &entity->getComponent<GPhysics>();
-    physics->setVelocity(2);
+    physics->setVelocity(1);
 
     aggro = false;
 }
@@ -67,16 +67,16 @@ void Enemy::update() {
             }
             switch(knockBackDir) {
             case game::NORTH:
-                position->setY(position->getY()-4);
+                physics->setDestY(-4);
                 break;
             case game::SOUTH:
-                position->setY(position->getY()+4);
+                physics->setDestY(4);
                 break;
             case game::WEST:
-                position->setX(position->getX()-4);
+                physics->setDestX(-4);
                 break;
             case game::EAST:
-                position->setX(position->getX()+4);
+                physics->setDestX(4);
                 break;
             }
         } else if(isAggressive) {
@@ -162,20 +162,20 @@ void Enemy::update() {
             } else {        /* Return home */
                 aggroX = true;
                 aggroY = true;
-                physics->setDestX(0.f);
-                physics->setDestY(0.f);
+                physics->setDestX(0);
+                physics->setDestY(0);
 
-                if(position->getX() < xSpawnPos-1) {
-                    position->setX(position->getX() + 1);
+                if(position->getX() < xSpawnPos-10) {
+                    physics->setDestX(2);
                     texture->setClipX(1);
-                } else if(position->getX() > xSpawnPos+1) {
-                    position->setX(position->getX() - 1);
+                } else if(position->getX() > xSpawnPos+10) {
+                    physics->setDestX(-2);
                     texture->setClipX(0);
                 }
-                if(position->getY() < ySpawnPos-1) {
-                    position->setY(position->getY() + 1);
-                } else if(position->getY() > ySpawnPos+1) {
-                    position->setY(position->getY() - 1);
+                if(position->getY() < ySpawnPos-10) {
+                    physics->setDestY(2);
+                } else if(position->getY() > ySpawnPos+10) {
+                    physics->setDestY(-2);
                 }
             }
         }

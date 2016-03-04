@@ -72,8 +72,6 @@ set(SOURCE_FILES
     src/SaveChar.lua
     src/Screen.cpp
     src/Screen.hpp
-    src/Shape.cpp
-    src/Shape.hpp
     src/Sound.cpp
     src/Sound.hpp
     src/Texture.cpp
@@ -85,7 +83,7 @@ set(SOURCE_FILES
     src/UIController.cpp
     src/UIController.hpp
     src/Weapon.cpp
-    src/Weapon.hpp src/EnemyManager.cpp src/EnemyManager.hpp src/CharacterCreationScreen.cpp src/CharacterCreationScreen.hpp src/HelperFunctions.cpp src/HelperFunctions.hpp src/SaveSlotSelection.cpp src/SaveSlotSelection.hpp src/Button.cpp src/Button.hpp src/TextInputField.cpp src/TextInputField.hpp src/TextInputBox.cpp src/TextInputBox.hpp src/LuaLoadFunctions.hpp src/LuaInGameFunctions.hpp src/LuaGeneralFunctions.hpp src/Enums.hpp src/TextBox.cpp src/TextBox.hpp)
+    src/Weapon.hpp src/EnemyManager.cpp src/EnemyManager.hpp src/CharacterCreationScreen.cpp src/CharacterCreationScreen.hpp src/HelperFunctions.cpp src/HelperFunctions.hpp src/SaveSlotSelection.cpp src/SaveSlotSelection.hpp src/Button.cpp src/Button.hpp src/TextInputField.cpp src/TextInputField.hpp src/TextInputBox.cpp src/TextInputBox.hpp src/LuaLoadFunctions.hpp src/LuaInGameFunctions.hpp src/LuaGeneralFunctions.hpp src/Enums.hpp src/TextBox.cpp src/TextBox.hpp src/physics/Body.cpp src/physics/Body.hpp src/physics/PhysicsEngine.cpp src/physics/PhysicsEngine.hpp src/physics/Manifold.cpp src/physics/Manifold.hpp src/physics/Shape.hpp src/physics/Vec2.hpp src/physics/Math.h src/physics/Collision.cpp src/physics/Collision.hpp)
 
 add_executable(Hunta2 ${SOURCE_FILES})
 target_link_libraries(Hunta2 ${FREETYPE_LIBRARIES})

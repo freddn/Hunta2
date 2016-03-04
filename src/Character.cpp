@@ -82,7 +82,7 @@ void Character::update() {
     }
 
     /// Get all environment entities and check collision of the ones nearby.
-    for(auto& e: manager->getEntitiesByGroup(game::ENVIRONMENT)) {
+    /*for(auto& e: manager->getEntitiesByGroup(game::ENVIRONMENT)) {
         Position temp = e->getComponent<Position>();
         int width = e->getComponent<Texture>().getWidth();
         int height = e->getComponent<Texture>().getHeight();
@@ -93,7 +93,7 @@ void Character::update() {
                  position->getY()+42 > temp.getY())) {
             physics->isColliding(e);
         }
-    }
+    }*/
 
     /// Look for items to pick up.
     for(auto& e: manager->getEntitiesByGroup(game::ITEM)) {
@@ -142,7 +142,7 @@ void Character::moveChar(const Uint8 *key) {
     /// Walk downwards
     if(key[SDL_SCANCODE_DOWN]) {
         physics->setDir(game::SOUTH,true); /// Set this walking direction true.
-        texture->setClipX(0);
+        //texture->setClipX(0);
         texture->setClipY(0);
     } else
         physics->setDir(game::SOUTH,false); /// Set this walking direction false.
@@ -150,7 +150,7 @@ void Character::moveChar(const Uint8 *key) {
     /// Walk upwards
     if(key[SDL_SCANCODE_UP]) {
         physics->setDir(game::NORTH,true); /// Set this walking direction true.
-        texture->setClipX(1);
+        //texture->setClipX(1);
         texture->setClipY(0);
     } else
         physics->setDir(game::NORTH,false); /// Set this walking direction false.
