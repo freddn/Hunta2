@@ -1,4 +1,4 @@
-# Hunta v0.1
+# Hunta v0.2
 [![Build Status](https://travis-ci.org/freddn/Hunta2.svg)](https://travis-ci.org/freddn/Hunta2)
 
 ## Keys ingame
