@@ -115,15 +115,15 @@ void Character::update() {
 
     //if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
     /// Check if left mouse button is pressed.
-    /*if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+    if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
         //std::cerr << selected;
         if(!attacking) {
             attacking = true;
             // Fire a projectile..
             if(manager->canAdd()) {
                 auto &projectile(manager->addEntity());
-                projectile.addComponent<Position>(position->getX(),
-                                                  position->getY());
+                projectile.addComponent<Position>(position->getX()+20,
+                                                  position->getY()+40);
                 projectile.addComponent<Texture>("data/fireball.png",false);
                 projectile.addComponent<GPhysics>();
                 projectile.addComponent<Projectile>(
@@ -132,10 +132,11 @@ void Character::update() {
                         game::getMouseX()+game::getOffset()->x-position->getX(),
                         game::getMouseY()+game::getOffset()->y-position->getY());
                 projectile.addGroup(game::PROJECTILE);
+                projectile.getComponent<GPhysics>().setVelocity(20);
             }
         }
     } else
-        attacking = false;*/
+        attacking = false;
 }
 
 void Character::moveChar(const Uint8 *key) {

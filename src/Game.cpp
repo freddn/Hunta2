@@ -101,18 +101,21 @@ namespace game {
                 getCharacterCreationScreen()->draw();
                 break;
             case(INGAME):
-                getLuaInterface()->runLuaMain();
-
+                //getLuaInterface()->runLuaMain();                
+                if(!getInGame()->takingInput()) {
+                    getInGame()->update();
+                    getPhysicsEngine()->step();
+                 }
+                
                 getInGame()->renderStart();
                 getInGame()->draw();
                 getUIController()->draw();
                 dialog.draw();
                 textBox.draw();
                 getInGame()->renderEnd();
-                if(!getInGame()->takingInput())
-                    getInGame()->update();
+
                 getUIController()->update();
-                getPhysicsEngine()->step();
+                
 
                 break;
             case(PAUSED):
