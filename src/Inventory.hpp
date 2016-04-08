@@ -19,8 +19,8 @@
 #ifndef INVENTORY_HPP
 #define INVENTORY_HPP
 
-#include "Texture.hpp"
-#include "LuaInterface.hpp"
+#include "components/Texture.hpp"
+#include "lua/LuaInterface.hpp"
 #include "ItemManager.hpp"
 
 #define INVENTORY_WIDTH 5

@@ -1,42 +1,42 @@
-SRC = src/Character.cpp \
-      src/Editor.cpp \
-      src/Enemy.cpp \
+SRC = src/components/Character.cpp \
+      src/tools/Editor.cpp \
+      src/components/Enemy.cpp \
       src/EntitySystem.cpp \
-      src/Environment.cpp \
+      src/components/Environment.cpp \
       src/Game.cpp \
-      src/GPhysics.cpp \
-      src/InGame.cpp \
+      src/components/GPhysics.cpp \
+      src/ui/InGame.cpp \
       src/Inventory.cpp \
-      src/Item.cpp \
+      src/components/Item.cpp \
       src/LTimer.cpp \
-      src/LuaInterface.cpp \
-      src/MainMenu.cpp \
+      src/lua/LuaInterface.cpp \
+      src/ui/MainMenu.cpp \
       src/MapController.cpp \
-      src/Position.cpp \
-      src/Screen.cpp \
-      src/Texture.cpp \
-      src/Tile.cpp \
-      src/Projectile.cpp \
-      src/Health.cpp \
-      src/Weapon.cpp \
+      src/components/Position.cpp \
+      src/ui/Screen.cpp \
+      src/components/Texture.cpp \
+      src/components/Tile.cpp \
+      src/components/Projectile.cpp \
+      src/components/Health.cpp \
+      src/components/Weapon.cpp \
       src/Map.cpp \
       src/Global.cpp \
       src/KeyboardController.cpp \
       src/MouseController.cpp \
       src/Sound.cpp \
-      src/Camera.cpp \
-      src/Icon.cpp \
+      src/components/Camera.cpp \
+      src/ui/Icon.cpp \
       src/TextureManager.cpp \
       src/ItemManager.cpp \
       src/PlayerController.cpp \
-      src/UIController.cpp \
+      src/ui/UIController.cpp \
       src/EnemyManager.cpp \
-      src/CharacterCreationScreen.cpp \
+      src/ui/CharacterCreationScreen.cpp \
       src/HelperFunctions.cpp \
-      src/Button.cpp \
-      src/SaveSlotSelection.cpp \
-      src/TextInputBox.cpp \
-      src/TextBox.cpp \
+      src/ui/Button.cpp \
+      src/ui/SaveSlotSelection.cpp \
+      src/ui/TextInputBox.cpp \
+      src/ui/TextBox.cpp \
       src/physics/PhysicsEngine.cpp \
       src/physics/Manifold.cpp \
       src/physics/Body.cpp \

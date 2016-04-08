@@ -18,6 +18,7 @@ Body::Body(Shape *shape_, int x, int y)
     dynamicFriction = 0.3f;
     restitution = 0.2f;
     shape->init();
+    alive = true;
     r = Random( 0.2f, 1.0f );
     g = Random( 0.2f, 1.0f );
     b = Random( 0.2f, 1.0f );
@@ -27,3 +28,12 @@ void Body::setOrient(float radians) {
     orient = radians;
     shape->setOrient(radians);
 }
+
+bool Body::isAlive() const {
+    return alive;
+}
+
+void Body::destroy() {
+    alive = false;
+}
+

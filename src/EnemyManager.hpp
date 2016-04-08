@@ -4,9 +4,9 @@
 
 #include <string>
 
-#include "Health.hpp"
-#include "Character.hpp"
-#include "LuaInterface.hpp"
+#include "components/Health.hpp"
+#include "components/Character.hpp"
+#include "lua/LuaInterface.hpp"
 
 struct EnemyData {
     int id;

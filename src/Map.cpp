@@ -3,19 +3,20 @@
 #include "Enums.hpp"
 #include "Global.hpp"
 
-#include "Position.hpp"
-#include "Texture.hpp"
-#include "GPhysics.hpp"
-#include "Enemy.hpp"
-#include "Health.hpp"
-#include "Character.hpp"
-#include "Weapon.hpp"
-#include "Camera.hpp"
+#include "components/Position.hpp"
+#include "components/Texture.hpp"
+#include "components/GPhysics.hpp"
+#include "components/Enemy.hpp"
+#include "components/Health.hpp"
+#include "components/Character.hpp"
+#include "components/Weapon.hpp"
+#include "components/Camera.hpp"
 
-#include "Tile.hpp"
-#include "Environment.hpp"
-#include "Enemy.hpp"
-#include "Item.hpp"
+#include "components/Tile.hpp"
+#include "components/Environment.hpp"
+#include "components/Enemy.hpp"
+#include "components/Item.hpp"
+#include "components/Environment.hpp"
 
 
 Map::Map() {}

@@ -228,4 +228,11 @@ namespace physics {
         b->position = b->position + (correction * b->inv_mass);
     }*/
 
+    void PhysicsEngine::refresh() {
+        bodies.erase(std::remove_if(bodies.begin(), bodies.end(),
+           [](const Body *b) {
+               return !b->isAlive();
+           }), bodies.end());
+
+    }
 }

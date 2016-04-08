@@ -17,6 +17,8 @@ namespace physics {
 
         void step();
         void clear();
+        void refresh();
+
         Body *add(Shape *shape, int x, int y);
 
         float dt_;

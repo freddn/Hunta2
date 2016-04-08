@@ -18,7 +18,7 @@
  */
 
 #include "MouseController.hpp"
-#include "Texture.hpp"
+#include "components/Texture.hpp"
 
 
 MouseController::MouseController() {

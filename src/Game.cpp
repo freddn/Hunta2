@@ -26,7 +26,7 @@
 
 #include "Global.hpp"
 #include "Enums.hpp"
-#include "TextBox.hpp"
+#include "ui/TextBox.hpp"
 
 namespace game {
     TextBox textBox(200,0,200,80,"TEST");
@@ -104,6 +104,7 @@ namespace game {
                 //getLuaInterface()->runLuaMain();                
                 if(!getInGame()->takingInput()) {
                     getInGame()->update();
+                    getPhysicsEngine()->refresh();
                     getPhysicsEngine()->step();
                  }
                 

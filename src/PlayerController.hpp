@@ -2,9 +2,8 @@
 #define PLAYERCONTROLLER_H
 #include <string>
 
-#include "Health.hpp"
-#include "Character.hpp"
-#include "LuaInterface.hpp"
+#include "components/Health.hpp"
+#include "lua/LuaInterface.hpp"
 
 /**
  * Handles the characters data.

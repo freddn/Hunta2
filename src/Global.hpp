@@ -7,17 +7,17 @@
 
 #include "LTimer.hpp"
 #include "MapController.hpp"
-#include "Editor.hpp"
+#include "tools/Editor.hpp"
 #include "TextureManager.hpp"
 #include "ItemManager.hpp"
 #include "PlayerController.hpp"
-#include "UIController.hpp"
+#include "ui/UIController.hpp"
 #include "EnemyManager.hpp"
 #include "MouseController.hpp"
-#include "CharacterCreationScreen.hpp"
-#include "SaveSlotSelection.hpp"
-#include "InGame.hpp"
-#include "MainMenu.hpp"
+#include "ui/CharacterCreationScreen.hpp"
+#include "ui/SaveSlotSelection.hpp"
+#include "ui/InGame.hpp"
+#include "ui/MainMenu.hpp"
 #include "physics/PhysicsEngine.hpp"
 
 /**
