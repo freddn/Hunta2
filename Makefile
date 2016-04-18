@@ -15,6 +15,10 @@ linux:
 	$(MAKE) -f config/makefile.linux
 	@echo done
 
+school:
+	$(MAKE) -f config/makefile.school
+	@echo done
+
 htests:
 	$(MAKE) -f config/makefile.tests
 	@echo done
