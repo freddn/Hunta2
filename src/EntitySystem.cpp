@@ -45,16 +45,6 @@ namespace EntitySystem {
     bool Entity::hasGroup(Group mGroup) const noexcept {
         return groupBitset[mGroup];
     }
-    void Entity::delGroup(Group mGroup) noexcept {
-        groupBitset[mGroup] = false;
-    }
-
-    void Entity::setY(int y) {
-        y = y + getComponent<Texture>().getHeight();
-        manager.moveEntity(entityId, yPos, y);
-
-        yPos = y;
-    }
 
     bool Entity::isMoved() {
         return moved;
@@ -71,7 +61,7 @@ namespace EntitySystem {
     void Entity::updateY() {
         if(hasComponent<Position>() && hasComponent<Texture>()) {
 
-            int y = getComponent<Position>().getY();
+            int y = (int)getComponent<Position>().getY();
             y += getComponent<Texture>().getHeight();
             if(y != yPos) {
                 manager.moveEntity(entityId, yPos, y);
@@ -132,10 +122,9 @@ namespace EntitySystem {
             }
         } else {
             for(int i = game::getOffset()->y; i < game::getHeight()+game::getOffset()->y+96;i++) {
-            //for(auto vec = entities.begin(); vec != entities.end(); vec++) {
                 for(auto& e : entities[i]) {
                     if(e->hasComponent<Position>()) {
-                        int x = e->getComponent<Position>().getX();
+                        float x = e->getComponent<Position>().getX();
                         if(x+96 >= game::getOffset()->x &&
                             x < game::getWidth()+game::getOffset()->x)
                             e->draw();
@@ -146,7 +135,6 @@ namespace EntitySystem {
     }
 
     void EntityManager::addToGroup(Entity *mEntity,Group mGroup) {
-        //groupedEntities[mGroup].emplace_back(mEntity);
         groupedEntities[mGroup].push_back(mEntity);
     }
 
@@ -200,11 +188,6 @@ namespace EntitySystem {
         return true;
     }
 
-    void EntityManager::reserveEntities(int amount) {
-        //entities.reserve(amount);
-        entitiesReserved = amount;
-    }
-
     void EntityManager::moveEntity(int entityId, int srcPos, int destPos) {
 
         /// Loop through all entitys in the vector at srcPos = z-pos. Stop when
@@ -227,19 +210,13 @@ namespace EntitySystem {
                     newPtr->setMoved(true);
 
                 /// Place the new entity in the right "z" position.
-                //entities[destPos].emplace_back(newPtr);
                 entities[destPos].push_back(newPtr);
-                //entities->at(y).emplace_back(**e);
 
                 /// Remove the old (now empty) shared_ptr from the vector.
                 entities.at(srcPos).erase(e);
                 break;
             }
         }
-    }
-
-    void EntityManager::setEntitiesByIndex(bool entByIndex) {
-        byIndex = entByIndex;
     }
 
     Entity& EntityManager::addEntity(int index) {
@@ -278,13 +255,12 @@ namespace EntitySystem {
                 }
             }
             Entity* e(new Entity(*this));
-            //std::cerr << entities.size() << std::endl;
+
             /// All entities get a unique id.
             e->setEntityId(id++);
             std::shared_ptr<Entity> sPtr{e};
 
             /// Place the entity in a vector at the right "z-position".
-            //entities[0].emplace_back(sPtr);
             entities[0].push_back(sPtr);
             indexes.push_back(index);
             return e;
@@ -292,16 +268,14 @@ namespace EntitySystem {
     }
 
     Entity& EntityManager::addEntity() {
-
         Entity* e(new Entity(*this));
-        //std::cerr << entities.size() << std::endl;
+
         /// All entities get a unique id.
         e->setEntityId(id++);
         std::shared_ptr<Entity> sPtr{e};
 
         /// Place the entity in a vector at the right "z-position".
         entities[0].push_back(sPtr);
-        //indexes.push_back(index);
 
         return *e;
     }
@@ -344,17 +318,11 @@ namespace EntitySystem {
         id = 0;
         offsetX = 0;
         offsetY = 0;
-        entitiesReserved = 32;
         indexes.clear();
         entitiesByIndex.clear();
         entities.clear();
-        for(auto vec = groupedEntities.begin(); vec != groupedEntities.end();vec++) {
+        for(auto vec = groupedEntities.begin(); vec != groupedEntities.end();vec++)
             vec->clear();
-        /*for(unsigned int i = 0;i < groupedEntities.size();i++) {
-            if(groupedEntities.)
-            groupedEntities.at(i).clear();*/
-        }
-
     }
 }
 

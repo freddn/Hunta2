@@ -1,11 +1,7 @@
-//
-// Created by fredrik on 3/2/16.
-//
-
 #include "Body.hpp"
 #include "Shape.hpp"
 
-Body::Body(Shape *shape_, int x, int y)
+Body::Body(Shape *shape_, float x, float y)
         : shape( shape_->clone() ) {
     shape->body = this;
     position.setVec2(x, y);
@@ -19,9 +15,6 @@ Body::Body(Shape *shape_, int x, int y)
     restitution = 0.2f;
     shape->init();
     alive = true;
-    r = Random( 0.2f, 1.0f );
-    g = Random( 0.2f, 1.0f );
-    b = Random( 0.2f, 1.0f );
 }
 
 void Body::setOrient(float radians) {
@@ -37,3 +30,6 @@ void Body::destroy() {
     alive = false;
 }
 
+Body::~Body() {
+    delete shape;
+}

@@ -19,7 +19,6 @@ public:
 
     void saveSlot(int slot, std::string name, int level);
 
-    void createCharacter();
     virtual ~CharacterCreationScreen();
 private:
     std::string inputText;

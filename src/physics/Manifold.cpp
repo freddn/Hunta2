@@ -1,7 +1,3 @@
-//
-// Created by fredrik on 3/2/16.
-//
-
 #include "Manifold.hpp"
 #include "Collision.hpp"
 

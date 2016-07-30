@@ -20,7 +20,6 @@
 #include "../Global.hpp"
 #include "../Enums.hpp"
 #include "../HelperFunctions.hpp"
-#include <iostream>
 
 MainMenu::MainMenu() {}
 
@@ -78,8 +77,8 @@ void MainMenu::draw() {
 void MainMenu::update() {
 
     SDL_Event *e = game::getEvent();
-    int mX = game::getMouseX();
-    int mY = game::getMouseY();
+    int mX = (int)game::getMouseX();
+    int mY = (int)game::getMouseY();
 
     /* Update the buttons. */
     newGame.update(e,mX,mY);

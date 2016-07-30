@@ -1,7 +1,3 @@
-//
-// Created by fredrik on 3/3/16.
-//
-
 #ifndef HUNTA2_COLLISION_HPP
 #define HUNTA2_COLLISION_HPP
 

@@ -63,18 +63,8 @@ public:
      */
     void update_interface();
 
-    /**
-     * TODO Remove? Called in another location
-     */
-    void displayInventory(bool);
-
     ~InGame();
 private:
-    bool showInventory = false;
-
-    int buf = 0;
-    Texture tInterface;
-    EntityManager inGameManager;
     std::stringstream tempText;
     TextInputBox textBox;
     Texture prompt;

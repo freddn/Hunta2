@@ -40,20 +40,8 @@ public:
     /** Gets the needed components. */
     void init();
 
-    /** Clears all collision booleans. */
-    void clearCol();
-
-    /** Check for collision */
-    bool isColliding(EntitySystem::Entity *e); /// Current entity is colliding with given one?
-
-
     /** Getters. */
-    SDL_Rect getColRect(); /// TODO Implement
     int getDir();
-    float getXVel();
-    float getYVel();
-    int getDestX();
-    int getDestY();
 
     /** Setters. */
     void setDir(int dir, bool isMoving);
@@ -61,8 +49,8 @@ public:
     void setXVelocity();
     void setYVelocity();
     void setKeyControlled(bool keyControlled);
-    void setDestX(int x);
-    void setDestY(int y);
+    void setDestX(float x);
+    void setDestY(float y);
 
     virtual ~GPhysics();
 private:

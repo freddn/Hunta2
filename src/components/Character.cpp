@@ -24,7 +24,6 @@
 
 #include "../Global.hpp"
 #include "../Enums.hpp"
-#include <iostream>
 
 Character::Character() {
 }
@@ -52,14 +51,14 @@ void Character::init() {
     else if(position->getX()+(game::getWidth()/2) > game::getWidth()*2)
         game::getOffset()->x = game::getWidth();
     else
-        game::getOffset()->x = position->getX() - (game::getWidth()/2);
+        game::getOffset()->x = (int)position->getX() - (game::getWidth()/2);
 
     if(position->getY()-(game::getHeight()/2) < 0)
         game::getOffset()->y = 0;
     else if(position->getY()+(game::getHeight()/2) > game::getHeight()*2)
         game::getOffset()->y = game::getHeight();
     else
-        game::getOffset()->y = position->getY() - (game::getHeight()/2);
+        game::getOffset()->y = (int)position->getY() - (game::getHeight()/2);
 
     /// Set the position of the texture.
     texture->setXRect(game::getWidth()-game::getOffset()->x);
@@ -81,20 +80,6 @@ void Character::update() {
         level = game::getPlayerController()->getLevel();
     }
 
-    /// Get all environment entities and check collision of the ones nearby.
-    /*for(auto& e: manager->getEntitiesByGroup(game::ENVIRONMENT)) {
-        Position temp = e->getComponent<Position>();
-        int width = e->getComponent<Texture>().getWidth();
-        int height = e->getComponent<Texture>().getHeight();
-
-        if((position->getX()-10 < temp.getX()+width &&
-                position->getX()+42 > temp.getX()) &&
-                (position->getY()-10 < temp.getY()+height &&
-                 position->getY()+42 > temp.getY())) {
-            physics->isColliding(e);
-        }
-    }*/
-
     /// Look for items to pick up.
     for(auto& e: manager->getEntitiesByGroup(game::ITEM)) {
         Position temp = e->getComponent<Position>();
@@ -113,10 +98,8 @@ void Character::update() {
         }
     }
 
-    //if(game::getEvent()->type == SDL_MOUSEBUTTONDOWN) {
     /// Check if left mouse button is pressed.
     if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-        //std::cerr << selected;
         if(!attacking) {
             attacking = true;
             // Fire a projectile..
@@ -172,5 +155,4 @@ void Character::moveChar(const Uint8 *key) {
     } else
         physics->setDir(game::WEST,false); /// Set this walking direction false.
 }
-
 

@@ -1,7 +1,3 @@
-//
-// Created by fredrik on 3/2/16.
-//
-
 #ifndef HUNTA2_SHAPE_HPP
 #define HUNTA2_SHAPE_HPP
 
@@ -14,6 +10,7 @@ struct Shape {
         sCount
     };
     Shape() {}
+    virtual ~Shape() {};
     virtual Shape *clone( void ) const = 0;
     virtual void init( void ) = 0;
     virtual void computeMass( float density ) = 0;
@@ -28,7 +25,7 @@ struct Shape {
 struct Circle : public Shape {
     Circle(float r) {radius = r;}
     Circle() {radius = 10;}
-
+    ~Circle() {};
     Shape *clone() const {
         return new Circle(radius);
     }
@@ -55,7 +52,7 @@ struct Circle : public Shape {
 struct AABB : public Shape {
     AABB() {}
     AABB(const Vec2 &min_, const Vec2 &max_) : min(min_), max(max_) {}
-
+    ~AABB() {};
 
     Shape *clone() const {
         return new AABB();

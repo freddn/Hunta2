@@ -26,66 +26,90 @@
 namespace game {
     /** Getters for important game variables/objects. */
     Editor *getEditor();
+
     SDL_Event *getEvent();
+
     SDL_Rect *getOffset();
+
     SDL_Rect *getBackground();
 
     SDL_Window *getGWindow();
 
     SDL_Renderer *getRenderer();
+
     SDL_Texture *getBuffer();
 
     SDL_Color *getTextColor();
+
     TTF_Font *getFont();
-    TTF_Font * getDmgFont();
+
+    TTF_Font *getDmgFont();
 
     int getCurrentState();
 
     PlayerController *getPlayerController();
+
     UIController *getUIController();
+
     MapController *getTextureMapController();
+
     MouseController *getMouseController();
 
     ItemManager *getItemManager();
+
     EnemyManager *getEnemyDataController();
+
     TextureManager *getTextureManager();
 
     Inventory *getInventory();
 
     CharacterCreationScreen *getCharacterCreationScreen();
+
     SaveSlotSelection *getSaveSlotSelection();
+
     LuaInterface *getLuaInterface();
+
     InGame *getInGame();
+
     MainMenu *getMainMenu();
+
     Screen *getScreen();
 
     physics::PhysicsEngine *getPhysicsEngine();
 
     int getWidth();
-    int getTWidth();
+
     int getHeight();
-    int getTHeight();
-    int getMouseX();
-    int getMouseY();
-    int getMaxFPS();
-    bool getHasChanged();
+
+    float getMouseX();
+
+    float getMouseY();
+
     float getAvgFPS();
-    LTimer* getTimer();
-    LTimer* getFPSTimer();
+
+    LTimer *getTimer();
+
     bool isRunning();
 
     /** Setters. */
-    void setHasChanged(bool boolean);
-    void setTextureMap(std::shared_ptr<Map> temp_map);
     void setBuffer(SDL_Texture *temp);
+
     void setRenderer(SDL_Renderer *r);
-    void setFont(TTF_Font * f);
-    void setDmgFont(TTF_Font * f);
+
+    void setFont(TTF_Font *f);
+
+    void setDmgFont(TTF_Font *f);
+
     void setCurrentState(int temp);
-    void setWindow(SDL_Window* window);
-    void setMouseX(int x);
-    void setMouseY(int y);
+
+    void setWindow(SDL_Window *window);
+
+    void setMouseX(float x);
+
+    void setMouseY(float y);
+
     void setAvgFPS(float a);
+
     void setRunning(bool boolean);
 }
 

@@ -103,11 +103,9 @@ namespace EntitySystem {
         bool isAlive() const;
         void destroy();
         void updateY();
-        void setY(int y);
         bool isMoved();
         void setMoved(bool mov);
         void setEntityId(int id);
-        //int getY();
         int getEntityId();
 
         template<typename T, typename... TArgs> T& addComponent(TArgs&&... mArgs) {
@@ -138,7 +136,6 @@ namespace EntitySystem {
 
         bool hasGroup(Group mGroup) const noexcept;
         void addGroup(Group mGroup) noexcept;
-        void delGroup(Group mGroup) noexcept;
     private:
         EntityManager &manager;
         int yPos = 0;
@@ -167,11 +164,6 @@ namespace EntitySystem {
          * Call draw of all entities. Will go from top of the screen to bottom.
          */
         void draw();
-
-        /**
-         * Reserve an amount of entities that later can be added.
-         */
-        void reserveEntities(int amount);
 
         /**
          * Will move an entity from one position in the entity-map to another.
@@ -205,8 +197,6 @@ namespace EntitySystem {
          */
         void refresh();
 
-        void setEntitiesByIndex(bool entitiesByInd);
-
         /**
          * Adds a new entity. Will put this entity in a vector that is placed
          * inside a map with y-position as key. Here y-position is the same
@@ -225,7 +215,6 @@ namespace EntitySystem {
         int id = 0;
         int offsetX = 0;
         int offsetY = 0;
-        unsigned int entitiesReserved = 32;
         std::vector<int> indexes;
         std::map<int,std::shared_ptr<Entity>> entitiesByIndex;
         std::map<int, std::vector<std::shared_ptr<Entity>>> entities;

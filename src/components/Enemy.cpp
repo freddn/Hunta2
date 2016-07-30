@@ -78,13 +78,15 @@ void Enemy::update() {
             case game::EAST:
                 physics->setDestX(4);
                 break;
+            default:
+                break;
             }
         } else if(isAggressive) {
             auto& player(manager->getEntitiesByGroup(game::PLAYER));
-            int px = 0;
-            int py = 0;
-            int pw = 0;
-            int ph = 0;
+            float px = 0;
+            float py = 0;
+            float pw = 0;
+            float ph = 0;
             if(!player.empty()) {
                 px = player[0]->getComponent<Position>().getX();
                 py = player[0]->getComponent<Position>().getY();
@@ -92,16 +94,11 @@ void Enemy::update() {
                 ph = player[0]->getComponent<Texture>().getHeight();
             }
             /* Check if player is near */
-            if(position->getX() < px+100+pw &&
-                position->getX()+enemyWidth > px-100 &&
-                position->getY() < py+100+ph &&
-                position->getY()+enemyHeight > py-100) {
-                if(aggro == false)
-                    aggro = true;
-            } else {
-                if(aggro == true)
-                    aggro = false;
-            }
+            if(!aggro)
+                aggro = position->getX() < px + 100 + pw &&
+                        position->getX()+enemyWidth > px-100 &&
+                        position->getY() < py+100+ph &&
+                        position->getY()+enemyHeight > py-100;
 
             if(aggro) {     /* Follow player */
                 if((position->getY()-5 > py &&
@@ -185,10 +182,6 @@ void Enemy::update() {
     }
 }
 
-void Enemy::setAggressive(bool aggressive) {
-    isAggressive = aggressive;
-}
-
 void Enemy::knockBack(int dir) {
     knockBackDir = dir;
     isKnockedBack = true;
@@ -221,8 +214,4 @@ void Enemy::onDeath() {
     knockBackTimer.stop();
     isKnockedBack = false;
     deathTimer.start();
-}
-
-void Enemy::setExpGain(int xp) {
-    experienceGain = xp;
 }

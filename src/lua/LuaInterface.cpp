@@ -32,9 +32,9 @@ void LuaInterface::initLua() {
     l_state = luaL_newstate();
     luaL_openlibs(l_state);
 
-    loadFile("src/LoadMap.lua");
-    loadFile("src/CreateMap.lua");
-    loadFile("src/SaveChar.lua");
+    loadFile("src/lua/LoadMap.lua");
+    loadFile("src/lua/CreateMap.lua");
+    loadFile("src/lua/SaveChar.lua");
 
     thread = lua_newthread(l_state);
     int s = luaL_dofile(thread, "data/maps/1/map.lua");

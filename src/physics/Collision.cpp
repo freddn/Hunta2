@@ -49,11 +49,11 @@ void CircletoCircle(Manifold *m, Body *b1, Body *b2) {
 }
 
 
-void CircletoPolygon(Manifold *m, Body *a, Body *b) {
+void CircletoPolygon(Manifold *, Body *, Body *) {
 
 }
 
-void PolygontoCircle(Manifold *m, Body *a, Body *b) {
+void PolygontoCircle(Manifold *, Body *, Body *) {
 
 }
 
@@ -65,19 +65,19 @@ void PolygontoPolygon(Manifold *m, Body *b1, Body *b2) {
     Vec2 n = b2->position - b1->position;
 
     // Calculate half extents along x axis
-    float a_extent = (abox->max.x - abox->min.x) / 2;
-    float b_extent = (bbox->max.x - bbox->min.x) / 2;
+    float a_extent_x = (abox->max.x - abox->min.x) / 2;
+    float b_extent_x = (bbox->max.x - bbox->min.x) / 2;
 
     // Overlap on x axis
-    float x_overlap = a_extent + b_extent - std::abs(n.x);
+    float x_overlap = a_extent_x + b_extent_x - std::abs(n.x);
 
     // SAT test
     if(x_overlap > 0) {
         // same for y
-        float a_extent = (abox->max.y - abox->min.y) / 2;
-        float b_extent = (bbox->max.y - bbox->min.y) / 2;
+        float a_extent_y = (abox->max.y - abox->min.y) / 2;
+        float b_extent_y = (bbox->max.y - bbox->min.y) / 2;
 
-        float y_overlap = a_extent + b_extent - std::abs(n.y);
+        float y_overlap = a_extent_y + b_extent_y - std::abs(n.y);
 
         if(y_overlap > 0) {
             // Which axis is axis of least penetration
@@ -99,9 +99,4 @@ void PolygontoPolygon(Manifold *m, Body *b1, Body *b2) {
            // m->contactCount ++;
         }
     }
-}
-
-void AABBtoCircle(Manifold *m, Body *a, Body *b) {
-
-
 }

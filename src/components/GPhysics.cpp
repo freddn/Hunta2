@@ -27,41 +27,23 @@
  * (Setters and getters and change in collision management)*/
 
 
-GPhysics::GPhysics() {
-    //ctor
-}
+GPhysics::GPhysics() { }
 
 GPhysics::~GPhysics() {
-    body->destroy();
-    //dtor
+    if(body)
+        body->destroy();
 }
 
 void GPhysics::update() {
-   /* for(auto &e : &entity->manager->getEntitiesByGroup(game::ENVIRONMENT))
-    {
-        e->getComponent<Position>();
-    }*/
     setYVelocity();
     setXVelocity();
-    //body->velocity.x = xVel;
-    //body->velocity.y = yVel;
-
-    //body->force.x = -xVel;
-    //body->force.y = -yVel;
     body->applyForce(Vec2(xVel,yVel));
 
     position->setX(body->position.x-(texture->getWidth()/2));
     position->setY(body->position.y-texture->getHeight()+5);
-    /*if(xVel != 0)
-        position->setX(position->getX()+xVel);
-    if(yVel != 0)
-        position->setY(position->getY()+yVel);
-*/
-    //clearCol();
 }
 
 void GPhysics::init() {
-    //std::cout << " - GPhysics::init() ..."<<std::endl;
     position = &entity->getComponent<Position>();
     texture = &entity->getComponent<Texture>();
 
@@ -77,92 +59,10 @@ void GPhysics::init() {
     aabb.max = max;
 
     circle.radius = 8;
-    body = game::getPhysicsEngine()->add(&circle,position->getX(), position->getY()-32);
+    body = game::getPhysicsEngine()->add(&circle, position->getX(), position->getY()-32);
     if(entity->hasComponent<Environment>()) {
         body->setStatic();
     }
-
-}
-
-/*bool GPhysics::isColliding(int x, int y) {
-
-    return false;
-}*/
-
-bool GPhysics::isColliding(EntitySystem::Entity *e) {
-    int posX = position->getX();
-    int posY = position->getY();
-
-    /// TODO sourceCol = physics->getColRect();
-
-    int entPosX = e->getComponent<Position>().getX();
-    int entPosY = e->getComponent<Position>().getY();
-
-    /// TODO targetCol = e->getComponent<GPhysics>().getColRect();
-    //Texture *tempTexture = &e->getComponent<Texture>();
-
-    int entW = e->getComponent<Texture>().getWidth();
-    int entH = e->getComponent<Texture>().getHeight();
-
-    bool colliding = false;
-
-    if(dirRight) {
-        if(posX+33 > entPosX &&
-            posX+16 < entPosX &&
-            (posY+22+(vel) > entPosY ||
-            posY+14-(vel) < entPosY+entH) &&
-            !(posY+14-(vel) < entPosY ||
-            posY+22+(vel) > entPosY+entH)) {
-            colRight = true;
-            colliding = true;
-        }
-    }
-
-    if(dirLeft) {
-        if(posX-1 < entPosX+entW &&
-            posX+16 > entPosX &&
-            (posY+22+(vel) > entPosY ||
-            posY+14-(vel) < entPosY+entH) &&
-            !(posY+14-(vel) < entPosY ||
-            posY+22+(vel) > entPosY+entH)) {
-
-            colLeft = true;
-            colliding = true;
-        }
-    }
-
-    if(dirDown) {
-        if(posY+14 > entPosY &&
-            (posY < entPosY) &&
-            (posX+(vel) > entPosX ||
-            posX+32-(vel) < entPosX+entW) &&
-            !(posX+32-(vel) < entPosX ||
-            posX+(vel) > entPosX+entW)) {
-            colDown = true;
-            colliding = true;
-        }
-    }
-
-    if(dirUp) {
-        if(posY+22 < entPosY+entH &&
-            (posY > entPosY+16) &&
-            (posX+(vel) > entPosX ||
-            posX+32-(vel) < entPosX+entW) &&
-            !(posX+32-(vel) < entPosX ||
-            posX+(vel) > entPosX+entW)) {
-            colUp = true;
-            colliding = true;
-        }
-    }
-    return colliding;
-}
-
-
-inline void GPhysics::clearCol() {
-    colDown = false;
-    colUp = false;
-    colLeft = false;
-    colRight = false;
 }
 
 void GPhysics::setDir(int dir, bool isMoving) {
@@ -212,9 +112,9 @@ inline void GPhysics::setXVelocity() {
                 xVel = 0;
         } else if(dirUp || dirDown) {
             if(dirLeft && !colLeft)
-                xVel = -sqrt(pow(vel,2.0) / 2);
+                xVel = -(float)sqrt(pow(vel,2.0) / 2);
             else if(dirRight && !colRight)
-                xVel = sqrt(pow(vel,2.0) / 2);
+                xVel = (float)sqrt(pow(vel,2.0) / 2);
             else
                 xVel = 0;
         }
@@ -245,37 +145,21 @@ inline void GPhysics::setYVelocity() {
                 yVel = 0;
         } else if(dirLeft || dirRight) {
             if(dirUp && !colUp)
-                yVel = -sqrt(pow(vel,2.0) / 2);
+                yVel = -(float)sqrt(pow(vel,2.0) / 2);
             else if(dirDown && !colDown)
-                yVel = sqrt(pow(vel,2.0) / 2);
+                yVel = (float)sqrt(pow(vel,2.0) / 2);
             else
                 yVel = 0;
         }
     }
 }
 
-float GPhysics::getXVel() {
-    return xVel;
-}
-
-float GPhysics::getYVel() {
-    return yVel;
-}
-
-void GPhysics::setDestX(int x) {
+void GPhysics::setDestX(float x) {
     destX = x;
 }
 
-void GPhysics::setDestY(int y) {
+void GPhysics::setDestY(float y) {
     destY = y;
-}
-
-int GPhysics::getDestX() {
-    return destX;
-}
-
-int GPhysics::getDestY() {
-    return destY;
 }
 
 void GPhysics::setKeyControlled(bool keyControlled) {

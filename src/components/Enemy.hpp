@@ -36,8 +36,6 @@ public:
     void draw();
     void update();
     void knockBack(int dir);
-    void setExpGain(int xp);
-    void setAggressive(bool aggressive);
     int getID();
     void onDeath();
     virtual ~Enemy();
@@ -50,10 +48,8 @@ private:
 
     EntityManager *manager{nullptr};
     std::string enemyName = "-";
-    int xPos = 0; // x-position of the enemy.
-    int yPos = 0; // y-position of the enemy.
-    int xSpawnPos = 0;
-    int ySpawnPos = 0;
+    float xSpawnPos = 0;
+    float ySpawnPos = 0;
 
     int enemyWidth = 0;
     int enemyHeight = 0;

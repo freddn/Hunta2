@@ -27,8 +27,8 @@ private:
 
     SDL_Texture *background{nullptr};
     SDL_Texture *backgroundOutline{nullptr};
-    SDL_Rect *boxRect{nullptr};
-    SDL_Rect *backgroundOutlineRect{nullptr};
+    SDL_Rect boxRect;
+    SDL_Rect backgroundOutlineRect;
 
     SDL_Renderer *renderer{nullptr};
     bool active = true;

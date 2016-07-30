@@ -30,7 +30,6 @@ public:
     void setHp(int health);
     int damage(int atk, int seed);
     void setMaxHp(int maxhealth);
-    void setDisplay(bool display);
     int getHp();
     void displayDamage(int damage);
     virtual ~Health();

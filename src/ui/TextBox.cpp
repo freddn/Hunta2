@@ -1,57 +1,39 @@
-//
-// Created by fredrik on 3/2/16.
-//
-
 #include <iostream>
 #include "TextBox.hpp"
-
 
 TextBox::TextBox(int x, int y, int w, int h, const std::string &str) :
         xPos(x), yPos(y), width(w), height(h), str(str) {
 }
 
 TextBox::~TextBox() {
-    if(background != nullptr)
-        SDL_DestroyTexture(background);
-    if(boxRect != nullptr)
-        delete boxRect;
+    background = nullptr;
+    backgroundOutline = nullptr;
 }
-
 
 void TextBox::draw() {
     if (active) {
         if (background != nullptr)
-            SDL_RenderCopy(renderer, background, NULL, boxRect);
+            SDL_RenderCopy(renderer, background, NULL, &boxRect);
         for(auto texture = text.begin();texture!=text.end();++texture)
             (*texture)->render((*texture)->getX(), (*texture)->getY(), NULL);
     }
 }
 
-void TextBox::remove() {
-    active = false;
-}
-
-
 void TextBox::setActive(bool active) {
     this->active = active;
 }
 
-void TextBox::setText(const std::string &str) {
-    this->str = str;
-}
-
 void TextBox::init(SDL_Renderer *renderer, SDL_Color *color, TTF_Font *font) {
     this->renderer = renderer;
-    boxRect = new SDL_Rect;
-    boxRect->x = xPos;
-    boxRect->y = yPos;
-    boxRect->w = width;
-    boxRect->h = height;
-    SDL_Surface *temp = SDL_CreateRGBSurface(0,boxRect->w,boxRect->h,32,0,0,0,0);
-    SDL_FillRect(temp,NULL,SDL_MapRGB(temp->format,0,100,100));
-    background = SDL_CreateTextureFromSurface(renderer,temp);
+    boxRect.x = xPos;
+    boxRect.y = yPos;
+    boxRect.w = width;
+    boxRect.h = height;
+    SDL_Surface *backgroundSurface = SDL_CreateRGBSurface(0,boxRect.w,boxRect.h,32,0,0,0,0);
+    SDL_FillRect(backgroundSurface,NULL,SDL_MapRGB(backgroundSurface->format,0,100,100));
+    background = SDL_CreateTextureFromSurface(renderer,backgroundSurface);
 
-    SDL_FreeSurface(temp);
+    SDL_FreeSurface(backgroundSurface);
 
     std::string newStr = str;
     std::string tempStr = str;
@@ -60,28 +42,28 @@ void TextBox::init(SDL_Renderer *renderer, SDL_Color *color, TTF_Font *font) {
         if(newStr.length() <= 0) {
             break;
         }
-        Texture *temp = new Texture;
-        temp->setXRect(xPos+10);
-        temp->setYRect(yPos+10+(text.size()*32));
+        Texture *textTexture = new Texture;
+        textTexture->setXRect(xPos+10);
+        textTexture->setYRect(yPos+10+((int)text.size()*32));
 
-        if(temp->loadFromText(newStr,color,font)) {
-            unsigned long newLength = (int)((newStr.length() * ((float)boxRect->w / (float)temp->getWidth())) - 1);
+        if(textTexture->loadFromText(newStr,color,font)) {
+            int newLength = (int)((newStr.length() * ((float)boxRect.w / (float)textTexture->getWidth())) - 1);
             std::size_t found = newStr.find('\n', 0);
-            if(found != std::string::npos && found <= newLength) {
+            if(found != std::string::npos && found <= (unsigned int)newLength) {
                 tempStr = newStr;
                 newStr = newStr.substr(0,found);
-                temp->loadFromText(newStr, color, font);
+                textTexture->loadFromText(newStr, color, font);
                 newStr = tempStr.substr(found+1);
-            } else if(newStr.length() > newLength) {
+            } else if(newStr.length() > (unsigned int)newLength) {
                 tempStr = newStr;
-                newStr = newStr.substr(0, newLength);
+                newStr = newStr.substr(0, (unsigned int)newLength);
                 if(newStr.length() == 0) {
                     std::cerr << "string ended.\n";
                     break;
                 }
-                temp->loadFromText(newStr, color, font);
-                std::cerr << "prev '" << newStr << "' next '" << tempStr.substr(newLength) << "'\n";
-                newStr = tempStr.substr(newLength);
+                textTexture->loadFromText(newStr, color, font);
+                std::cerr << "prev '" << newStr << "' next '" << tempStr.substr((unsigned long)newLength) << "'\n";
+                newStr = tempStr.substr((unsigned long)newLength);
 
                 if(newStr.length() == 0) {
                     std::cerr << "string ended.\n";
@@ -91,7 +73,7 @@ void TextBox::init(SDL_Renderer *renderer, SDL_Color *color, TTF_Font *font) {
                 wrapped = true;
             }
             std::cerr << "text added to container..\n";
-            std::unique_ptr<Texture> uPtr{temp};
+            std::unique_ptr<Texture> uPtr{textTexture};
             text.emplace_back(std::move(uPtr));
 
         } else

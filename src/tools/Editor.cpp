@@ -96,8 +96,8 @@ void Editor::update() {
     Screen::update();
 }
 
-void Editor::setSelected(int n) {
-    icons.at(selected)->setSelected(false);
+void Editor::setSelected(unsigned long n) {
+    icons.at((int)selected)->setSelected(false);
     if(n < 0)
         selected = 0;
     else
@@ -114,10 +114,10 @@ void Editor::setSelected(int n) {
     if(selected == icons.size())
         selected = icons.size()-1;
 
-    icons.at(selected)->setSelected(true);
+    icons.at((int)selected)->setSelected(true);
 }
 
-int Editor::getSelected() {
+unsigned long Editor::getSelected() {
     return selected;
 }
 
@@ -190,21 +190,26 @@ void Editor::place() {
     index = (relX/32)+((relY/32)*64);
 
     /// Load the entity onto the map
-    switch(icons.at(selected)->getType()) {
+    int iconID = icons.at((int)selected)->getID();
+    switch(icons.at((int)selected)->getType()) {
     case game::TILE:
-        mapController->loadTile(mapID,icons.at(selected)->getID(), index, relX,relY);
+        mapController->loadTile(mapID,iconID, index, relX,relY);
         break;
     case game::ENVIRONMENT:
-        mapController->loadEnvironment(mapID,icons.at(selected)->getID(), index, relX,relY);
+        mapController->loadEnvironment(mapID,iconID, index, relX,relY);
         break;
     case game::ENEMY:
-        mapController->loadEnemy(mapID, icons.at(selected)->getID(),index, relX,relY);
+        mapController->loadEnemy(mapID, iconID,index, relX,relY);
         break;
     case game::X:
         mapController->getMap(mapID)->removeEntity(index, tempX,tempY);
+    default:
+        break;
     }
 
     mapUpdated = true;
-    game::setHasChanged(true);
 }
 
+void Editor::save() {
+
+}

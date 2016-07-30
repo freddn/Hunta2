@@ -1,11 +1,5 @@
-//
-// Created by fredrik on 3/2/16.
-//
-
 #ifndef HUNTA2_MATH_H
 #define HUNTA2_MATH_H
-
-
 
 #include <cmath> // abs, sqrt
 #include <cassert> // assert

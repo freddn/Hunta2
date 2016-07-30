@@ -51,11 +51,11 @@ void Icon::draw() {
     iconImage.render(posX,posY,nullptr);
 }
 
-std::size_t Icon::getType() {
+int Icon::getType() {
     return type;
 }
 
-void Icon::setType(std::size_t t) {
+void Icon::setType(int t) {
     type = t;
 }
 
@@ -65,10 +65,6 @@ int Icon::getID() {
 
 void Icon::setID(int id) {
     iconID = id;
-}
-
-std::string Icon::getImagePath() {
-    return iconImage.getImgPath();
 }
 
 void Icon::setX(int x) {

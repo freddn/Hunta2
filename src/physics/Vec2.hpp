@@ -1,7 +1,3 @@
-//
-// Created by fredrik on 3/2/16.
-//
-
 #ifndef HUNTA2_VEC2_HPP
 #define HUNTA2_VEC2_HPP
 

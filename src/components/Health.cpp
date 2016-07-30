@@ -2,7 +2,6 @@
 
 #include "../Global.hpp"
 #include "../Enums.hpp"
-#include <stdlib.h>
 #include "Enemy.hpp"
 
 Health::Health(int hp) {
@@ -43,25 +42,25 @@ void Health::initHpBar() {
 
 void Health::init() {
     position = &entity->getComponent<Position>();
-    hpBarRect.y = position->getY()-10;
-    hpBarRect.x = position->getX();
+    hpBarRect.y = (int)position->getY()-10;
+    hpBarRect.x = (int)position->getX();
 
-    hpBarBGRect.y = position->getY()-10;
-    hpBarBGRect.x = position->getX();
+    hpBarBGRect.y = (int)position->getY()-10;
+    hpBarBGRect.x = (int)position->getX();
 
-    hpBarOutlineRect.y = position->getY() - 11;
-    hpBarOutlineRect.x = position->getX()- 1;
+    hpBarOutlineRect.y = (int)position->getY() - 11;
+    hpBarOutlineRect.x = (int)position->getX()- 1;
 }
 
 void Health::draw() {
     if(isDisplayed) {
-        hpBarBGRect.x = position->getX() - game::getOffset()->x;
-        hpBarRect.x = position->getX() - game::getOffset()->x;
-        hpBarOutlineRect.x = position->getX() - game::getOffset()->x - 1;
+        hpBarBGRect.x = (int)position->getX() - game::getOffset()->x;
+        hpBarRect.x = (int)position->getX() - game::getOffset()->x;
+        hpBarOutlineRect.x = (int)position->getX() - game::getOffset()->x - 1;
 
-        hpBarBGRect.y = position->getY() - 10 - game::getOffset()->y;
-        hpBarRect.y = position->getY()- 10 - game::getOffset()->y;
-        hpBarOutlineRect.y = position->getY() - 11 - game::getOffset()->y;
+        hpBarBGRect.y = (int)position->getY() - 10 - game::getOffset()->y;
+        hpBarRect.y = (int)position->getY()- 10 - game::getOffset()->y;
+        hpBarOutlineRect.y = (int)position->getY() - 11 - game::getOffset()->y;
 
         SDL_RenderCopy(game::getRenderer(),hpBarOutline,NULL,&hpBarOutlineRect);
 
@@ -78,12 +77,12 @@ void Health::draw() {
             hpTimer.stop();
         }
         if(dmgDone < 0)
-            dmgBg.render(position->getX() +9- game::getOffset()->x,position->getY() -33 - game::getOffset()->y,nullptr);
+            dmgBg.render((int)position->getX() +9- game::getOffset()->x,(int)position->getY() -33 - game::getOffset()->y,nullptr);
         else if(dmgDone > 0)
-            healBg.render(position->getX() +9- game::getOffset()->x,position->getY() -33 - game::getOffset()->y,nullptr);
+            healBg.render((int)position->getX() +9- game::getOffset()->x,(int)position->getY() -33 - game::getOffset()->y,nullptr);
         else
-            defBg.render(position->getX() +9- game::getOffset()->x,position->getY() -33 - game::getOffset()->y,nullptr);
-        dmgDisplay.render(position->getX() +14 - game::getOffset()->x,position->getY() -30 - game::getOffset()->y,nullptr);
+            defBg.render((int)position->getX() +9- game::getOffset()->x,(int)position->getY() -33 - game::getOffset()->y,nullptr);
+        dmgDisplay.render((int)position->getX() +14 - game::getOffset()->x,(int)position->getY() -30 - game::getOffset()->y,nullptr);
     }
 }
 
@@ -96,7 +95,7 @@ void Health::update() {
 void Health::setHp(int hp) {
     displayDamage(hp - health);
     health = hp;
-    hpBarRect.w = 32 * ((float)health/(float)maxHP);
+    hpBarRect.w = 32 * (int)((float)health/(float)maxHP);
     if(health < 1) {
         alive = false;
         if(entity->hasComponent<Enemy>())
@@ -110,7 +109,7 @@ int Health::damage(int atk, int seed) {
     int atkVal = 0;
     if(alive) {
         isDisplayed = true;
-        srand(seed);
+        srand((unsigned int)seed);
         atkVal = rand() % atk;
         setHp(health-atkVal);
     }
@@ -136,10 +135,6 @@ void Health::displayDamage(int damage) {
 
 void Health::setMaxHp(int maxhealth) {
     maxHP = maxhealth;
-}
-
-void Health::setDisplay(bool display) {
-    isDisplayed = display;
 }
 
 int Health::getHp() {

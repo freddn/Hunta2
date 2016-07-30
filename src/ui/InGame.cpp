@@ -26,15 +26,12 @@ InGame::InGame() {}
 InGame::~InGame() {}
 
 void InGame::init() {
-    inGameManager.reserveEntities(300); // TODO Remove? Check if needed (spam loads of objects in the game)
-
     prompt.loadFromText("> ", game::getTextColor(),game::getFont());
     textBox.init();
     textBox.setPos(100,400);
     textBox.setOnEnter([](std::string msg){
         HelperFunctions::log(HelperFunctions::MESSAGE,msg);
         game::getLuaInterface()->loadString(msg.c_str());
-        //game::getLuaInterface()->loadFile(msg.c_str()); // TODO Load lua scripts?
     });
 }
 

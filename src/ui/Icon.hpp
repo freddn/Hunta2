@@ -10,17 +10,13 @@ public:
     Icon(std::string img, int width, int height);
     void init();
     void draw();
-
-    bool isSelected();
     void setSelected(bool);
 
-    std::size_t getType();
-    void setType(std::size_t t);
+    int getType();
+    void setType(int t);
 
     int getID();
     void setID(int id);
-
-    std::string getImagePath();
 
     void setX(int x);
     void setY(int y);
@@ -29,7 +25,7 @@ public:
 protected:
 private:
     bool selected = false;
-    std::size_t type = -1;
+    int type = -1;
     int iconID = -1;
     int posX = 0;
     int posY = 0;

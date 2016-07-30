@@ -1,7 +1,3 @@
-//
-// Created by fredrik on 3/2/16.
-//
-
 #ifndef HUNTA2_BODY_HPP
 #define HUNTA2_BODY_HPP
 
@@ -14,8 +10,8 @@ struct Shape;
  * A body has weight, velocity, position and other physical variables.
  */
 struct Body {
-    Body(Shape *shape, int x, int y);
-
+    Body(Shape *shape, float x, float y);
+    ~Body();
 
     /**
      * Apply a force to the body. Can be if the body should be moved or if another body collides with this body.
@@ -70,8 +66,6 @@ struct Body {
     Shape *shape;
 
     bool alive;
-
-    float r, g, b;
 };
 
 

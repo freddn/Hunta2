@@ -1,13 +1,7 @@
-//
-// Created by fredrik on 3/2/16.
-//
-
 #ifndef HUNTA2_MANIFOLD_HPP
 #define HUNTA2_MANIFOLD_HPP
 
 #include <SDL2/SDL_stdinc.h>
-
-//#include "PhysicsHelper.hpp"
 
 struct Body;
 

@@ -22,8 +22,6 @@
 #define MAP_WIDTH 2048
 #define MAP_HEIGHT 2048
 
-//#include <map>
-//#include <memory>
 #include "../ui/Screen.hpp"
 
 #include "../EntitySystem.hpp"
@@ -56,12 +54,12 @@ public:
     /**
      * Change which icon/tile/entity is selected.
      */
-    void setSelected(int n);
+    void setSelected(unsigned long n);
 
     /**
      * Returns selected number.
      */
-    int getSelected();
+    unsigned long getSelected();
 
     /**
      * Place an entitiy on the map.
@@ -73,29 +71,18 @@ public:
      */
     void save();
 
-    void wheelUp();
-    void wheelDown();
-
     ~Editor();
 private:
-    EntitySystem::EntityManager tileManager; /// TODO implement adding to manager
-    EntitySystem::EntityManager environmentManager;
-    EntitySystem::EntityManager itemManager;
-    EntitySystem::EntityManager enemyManager;
-
     std::map<int, std::shared_ptr<Icon>> icons;
-    unsigned int selected = 0;
+    unsigned long selected = 0;
 
     unsigned int firstIcon = 0;
     unsigned int lastIcon = 8;
     int selectedCount = 0;
     bool mapUpdated = false;
 
-    int currentMap = 0;
-
     int mapX = 0;
     int mapY = 0;
-
 };
 
 #endif // EDITOR_H
