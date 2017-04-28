@@ -2,6 +2,7 @@
 #define HUNTA2_PHYSICSHELPER_HPP
 
 #include <memory>
+#include <vector>
 
 #include "Vec2.hpp"
 #include "Shape.hpp"

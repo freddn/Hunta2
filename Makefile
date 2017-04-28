@@ -27,6 +27,10 @@ slackware:
 	$(MAKE) -f config/makefile.slackware
 	@echo done
 
+fedora:
+	$(MAKE) -f config/makefile.fedora
+	@echo done
+
 freebsd:
 	$(MAKE) -f config/makefile.freebsd
 	@echo done

@@ -2,6 +2,7 @@
 #define HUNTA2_VEC2_HPP
 
 #include <algorithm> // max, min
+#include <cmath>
 
 const float EPSILON = 0.0001f;
 
