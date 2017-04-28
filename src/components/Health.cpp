@@ -95,7 +95,7 @@ void Health::update() {
 void Health::setHp(int hp) {
     displayDamage(hp - health);
     health = hp;
-    hpBarRect.w = 32 * (int)((float)health/(float)maxHP);
+    hpBarRect.w = (int)(32 * (float)health/(float)maxHP);
     if(health < 1) {
         alive = false;
         if(entity->hasComponent<Enemy>())
