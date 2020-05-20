@@ -29,7 +29,6 @@ On Debian-derived systems make sure you have `build-essential` installed.
 ## How to build on BSD/Linux
 Either use the Code::Blocks project file or run `make system`, where system is one of the following:
  - linux
- - school
  - slackware
  - freebsd
  - dragonfly
