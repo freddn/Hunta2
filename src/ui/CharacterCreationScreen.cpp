@@ -4,7 +4,7 @@
 #include "../Global.hpp"
 #include "../Enums.hpp"
 #include "../HelperFunctions.hpp"
-#include <iostream>
+
 CharacterCreationScreen::CharacterCreationScreen() {}
 
 CharacterCreationScreen::~CharacterCreationScreen() {}
@@ -13,9 +13,9 @@ void CharacterCreationScreen::init() {
     textColor = game::getTextColor();
     inputText = "wolfhunter";
 
-    desc.loadFromText("Enter name:  _____________________",textColor,game::getFont());
+    desc.setText("Enter name:  _____________________",textColor,game::getFont());
 
-    text.loadFromText(inputText.c_str(),textColor,game::getFont());
+    text.setText(inputText.c_str(),textColor,game::getFont());
 
     SDL_StartTextInput();
 }
@@ -64,10 +64,10 @@ void CharacterCreationScreen::update(SDL_Event *e) {
 
     if(renderText) {
         if(inputText != "") {
-            text.loadFromText(inputText.c_str(),textColor,game::getFont());
+            text.setText(inputText.c_str(),textColor,game::getFont());
 
         } else
-            text.loadFromText(" ", textColor,game::getFont());
+            text.setText(" ", textColor,game::getFont());
     }
 }
 

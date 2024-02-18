@@ -22,11 +22,11 @@
 #include "../Enums.hpp"
 #include "../HelperFunctions.hpp"
 
-Enemy::Enemy(EntityManager &m, int id) : manager(&m){
+Enemy::Enemy(EntitySystem::EntityManager &m, int id) : manager(&m){
     enemyID = id;
 }
 
-Enemy::Enemy(EntityManager &m, int id, int exp, std::string name, int atk) :
+Enemy::Enemy(EntitySystem::EntityManager &m, int id, int exp, std::string name, int atk) :
                         manager(&m), enemyName(name){
     enemyID = id;
     experienceGain = exp;

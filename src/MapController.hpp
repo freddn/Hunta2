@@ -29,7 +29,7 @@
 #include <map>
 
 #include "components/Tile.hpp"
-#include "lua/LuaInterface.hpp"
+#include "scripting/LuaInterface.hpp"
 #include "Map.hpp"
 
 /**

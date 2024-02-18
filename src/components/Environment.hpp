@@ -19,7 +19,7 @@
 #ifndef ENVIRONMENT_H
 #define ENVIRONMENT_H
 
-#include "../EntitySystem.hpp"
+#include "EntitySystem.hpp"
 #include "Position.hpp"
 #include "GPhysics.hpp"
 

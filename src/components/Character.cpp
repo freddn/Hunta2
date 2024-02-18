@@ -28,7 +28,7 @@
 Character::Character() {
 }
 
-Character::Character(EntityManager &m) {
+Character::Character(EntitySystem::EntityManager &m) {
     manager = &m;
 }
 

@@ -20,15 +20,14 @@
 #define ITEM_HPP
 
 #include "Texture.hpp"
-#include "../EntitySystem.hpp"
+#include "EntitySystem.hpp"
 
-using namespace EntitySystem;
 
 /**
  * The item-class. An item can be picked up if it's on the ground. It will go
  * to the inventory if picked up.
  */
-struct Item : Component {
+struct Item : EntitySystem::Component {
 public:
     Item(int id);
     Item(int id, bool ground, int amount);

@@ -7,18 +7,25 @@
 
 #include "LTimer.hpp"
 #include "MapController.hpp"
-#include "tools/Editor.hpp"
 #include "TextureManager.hpp"
 #include "ItemManager.hpp"
 #include "PlayerController.hpp"
-#include "ui/UIController.hpp"
 #include "EnemyManager.hpp"
 #include "MouseController.hpp"
+#include "HelperFunctions.hpp"
+
+// Physics
+#include "physics/PhysicsEngine.hpp"
+
+// Editor
+#include "tools/Editor.hpp"
+
+// UI
+#include "ui/UIController.hpp"
 #include "ui/CharacterCreationScreen.hpp"
 #include "ui/SaveSlotSelection.hpp"
 #include "ui/InGame.hpp"
 #include "ui/MainMenu.hpp"
-#include "physics/PhysicsEngine.hpp"
 
 /**
  * This namespace holds alot of important game related objects.

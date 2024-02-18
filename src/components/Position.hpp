@@ -19,7 +19,7 @@
 #ifndef POSITION_H
 #define POSITION_H
 
-#include "../EntitySystem.hpp"
+#include "EntitySystem.hpp"
 
 /*
  * This class is a component and will give entitys a position.

@@ -26,7 +26,7 @@ InGame::InGame() {}
 InGame::~InGame() {}
 
 void InGame::init() {
-    prompt.loadFromText("> ", game::getTextColor(),game::getFont());
+    prompt.setText("> ", game::getTextColor(),game::getFont());
     textBox.init();
     textBox.setPos(100,400);
     textBox.setOnEnter([](std::string msg){
@@ -69,30 +69,30 @@ void InGame::updateEvents(SDL_Event *event) {
 void InGame::update_interface() {
     tempText.str("");
     tempText << "Name: "<<game::getPlayerController()->getName();
-    nameText.loadFromText(tempText.str(), game::getTextColor(),game::getFont());
+    nameText.setText(tempText.str(), game::getTextColor(),game::getFont());
 
     tempText.str("");
     tempText << "LV:      "<<game::getPlayerController()->getLevel();
-    lvText.loadFromText(tempText.str(), game::getTextColor(),game::getFont());
+    lvText.setText(tempText.str(), game::getTextColor(),game::getFont());
 
     tempText.str("");
     tempText << "HP:      "<<game::getPlayerController()->getCurrentHp()
             << "/"<<game::getPlayerController()->getHp();
-    hpText.loadFromText(tempText.str(), game::getTextColor(),game::getFont());
+    hpText.setText(tempText.str(), game::getTextColor(),game::getFont());
 
     tempText.str("");
     tempText << "EXP:    "<<game::getPlayerController()->getExperience()
                 << "/"<<game::getPlayerController()->getMaxExperience(
                     game::getPlayerController()->getLevel());
-    expText.loadFromText(tempText.str(), game::getTextColor(),game::getFont());
+    expText.setText(tempText.str(), game::getTextColor(),game::getFont());
 
     tempText.str("");
     tempText << "ATK:    "<<game::getPlayerController()->getAtk();
-    atkText.loadFromText(tempText.str(), game::getTextColor(),game::getFont());
+    atkText.setText(tempText.str(), game::getTextColor(),game::getFont());
 
     tempText.str("");
     tempText << "DEF:    "<<game::getPlayerController()->getDef();
-    defText.loadFromText(tempText.str(), game::getTextColor(),game::getFont());
+    defText.setText(tempText.str(), game::getTextColor(),game::getFont());
 }
 
 bool InGame::takingInput() {

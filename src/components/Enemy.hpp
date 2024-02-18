@@ -22,15 +22,14 @@
 #include "Texture.hpp"
 #include "GPhysics.hpp"
 #include "Position.hpp"
-#include "../EntitySystem.hpp"
+#include "EntitySystem.hpp"
 #include "../LTimer.hpp"
 
-using namespace EntitySystem;
 /* The enemy class. */
-struct Enemy : Component {
+struct Enemy : EntitySystem::Component {
 public:
-    Enemy(EntityManager &m, int id);
-    Enemy(EntityManager &m, int id, int exp, std::string name, int atk);
+    Enemy(EntitySystem::EntityManager &m, int id);
+    Enemy(EntitySystem::EntityManager &m, int id, int exp, std::string name, int atk);
 
     void init();
     void draw();
@@ -46,7 +45,7 @@ private:
     Texture *texture{nullptr};
     Position *position{nullptr};
 
-    EntityManager *manager{nullptr};
+    EntitySystem::EntityManager *manager{nullptr};
     std::string enemyName = "-";
     float xSpawnPos = 0;
     float ySpawnPos = 0;

@@ -20,9 +20,9 @@ void TextInputBox::init() {
     textColor = game::getTextColor();
     inputText = "";
 
-   // desc.loadFromText("> ",textColor,game::getFont());
+   // desc.setText("> ",textColor,game::getFont());
 
-    text.loadFromText(inputText.c_str(),textColor,game::getFont());
+    text.setText(inputText.c_str(),textColor,game::getFont());
 }
 
 void TextInputBox::draw() {
@@ -30,9 +30,9 @@ void TextInputBox::draw() {
     text.render(posX,posY,nullptr);
     if(renderText) {
         if(inputText != "") {
-            text.loadFromText(inputText.c_str(),textColor,game::getFont());
+            text.setText(inputText.c_str(),textColor,game::getFont());
         } else
-            text.loadFromText(" ", textColor,game::getFont());
+            text.setText(" ", textColor,game::getFont());
     }
 }
 
@@ -99,7 +99,7 @@ void TextInputBox::setMaxlen(unsigned int max) {
 }
 
 void TextInputBox::clear() {
-    text.loadFromText(" ", textColor,game::getFont());
+    text.setText(" ", textColor,game::getFont());
     inputText = "";
 }
 

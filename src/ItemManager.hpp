@@ -1,8 +1,9 @@
 #ifndef ITEMMANAGER_H
 #define ITEMMANAGER_H
 
-#include "lua/LuaInterface.hpp"
+#include "scripting/LuaInterface.hpp"
 #include <map>
+#include <string>
 
 /**
  * A general struct for item data.

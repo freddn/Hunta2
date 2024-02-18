@@ -24,9 +24,9 @@
 
 #include "TextInputBox.hpp"
 #include "Screen.hpp"
-#include "../EntitySystem.hpp"
+//#include "../EntitySystem.hpp"
 
-using namespace EntitySystem;
+//using namespace EntitySystem;
 
 /**
  * This is the game-state of the game. Here we draw all game-related things

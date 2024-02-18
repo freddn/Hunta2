@@ -1,5 +1,4 @@
 #include "ItemManager.hpp"
-#include <iostream>
 #include "HelperFunctions.hpp"
 
 ItemManager::ItemManager() {}

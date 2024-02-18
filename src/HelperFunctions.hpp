@@ -12,7 +12,7 @@
  * DEBUG_LESS = Print only errors and warnings.
  * NONE = Print nothing
  */
-#define DEBUG
+//#define DEBUG
 //#define DEBUG_LESS
 
 /**

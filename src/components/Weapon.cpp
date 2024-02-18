@@ -7,8 +7,9 @@
 
 Weapon::Weapon() {}
 
-Weapon::Weapon(std::string img,EntityManager &mgr) : manager(&mgr),
-                                                     imgPath(img) {
+Weapon::Weapon(std::string img, EntitySystem::EntityManager &mgr) :
+    manager(&mgr),
+    imgPath(img) {
 }
 
 Weapon::~Weapon() {}

@@ -8,13 +8,13 @@ void Button::draw() {
         buttonBackground.setClipY(1);
     else
         buttonBackground.setClipY(0);
-    buttonBackground.render(buttonRect.x, buttonRect.y, nullptr);
-    buttonText.render(buttonRect.x+20, buttonRect.y+18, nullptr);
+    buttonBackground.render(buttonX, buttonY, nullptr);
+    buttonText.render(buttonX+20, buttonY+18, nullptr);
 }
 
 void Button::update(SDL_Event *event, int mouseX, int mouseY) {
 
-    if (mouseOverRect(buttonRect, mouseX, mouseY))
+    if (mouseOverButton(mouseX, mouseY))
         hoover = true;
     else {
         hoover = false;
@@ -23,12 +23,12 @@ void Button::update(SDL_Event *event, int mouseX, int mouseY) {
 
     if(event->type == SDL_MOUSEBUTTONDOWN) {
         if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-            pressed = mouseOverRect(buttonRect, mouseX, mouseY);
+            pressed = mouseOverButton(mouseX, mouseY);
         }
     }
     if(event->type == SDL_MOUSEBUTTONUP) {
         if(SDL_BUTTON(SDL_BUTTON_LEFT)) {
-            if(mouseOverRect(buttonRect, mouseX, mouseY)) {
+            if(mouseOverButton(mouseX, mouseY)) {
                 if(function != nullptr)
                     function();
             } else
@@ -49,18 +49,18 @@ void Button::setImg(std::string img, bool clipped, int cw, int ch) {
 }
 
 void Button::setRect(int x, int y, int w, int h) {
-    buttonRect.x = x;
-    buttonRect.y = y;
-    buttonRect.w = w;
-    buttonRect.h = h;
+    buttonX = x;
+    buttonY = y;
+    buttonW = w;
+    buttonH = h;
 }
 
-void Button::setButtonText(std::string text, SDL_Color *color, TTF_Font *font) {
-    buttonText.loadFromText(text, color, font);
+Texture Button::getTextTexture() {
+    return buttonText;
 }
 
-bool Button::mouseOverRect(SDL_Rect r, int mouseX, int mouseY) {
-    return mouseX < r.x+r.w && mouseX > r.x &&
-            mouseY < r.y+r.h && mouseY > r.y;
+bool Button::mouseOverButton(int mouseX, int mouseY) {
+    return mouseX < buttonX+buttonW && mouseX > buttonX &&
+            mouseY < buttonY+buttonH && mouseY > buttonY;
 }
 

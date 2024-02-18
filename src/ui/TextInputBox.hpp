@@ -6,6 +6,7 @@
 #define HUNTA2_TEXTINPUTBOX_HPP
 
 #include "../components/Texture.hpp"
+#include <functional>
 
 class TextInputBox {
 public:

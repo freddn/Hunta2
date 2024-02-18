@@ -24,7 +24,6 @@
 
 #include "../ui/Screen.hpp"
 
-#include "../EntitySystem.hpp"
 #include "../ui/Icon.hpp"
 
 /**

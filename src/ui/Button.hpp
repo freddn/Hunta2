@@ -5,6 +5,7 @@
 
 #include <SDL2/SDL_rect.h>
 #include "../components/Texture.hpp"
+#include <functional>
 
 class Button {
 public:
@@ -15,16 +16,18 @@ public:
      * When the button is clicked this function will be executed.
      */
     void onClick(std::function<void()> func);
-
-    void setButtonText(std::string text, SDL_Color *color, TTF_Font *font);
     void setImg(std::string img, bool clipped, int cw, int ch);
     void setRect(int x, int y, int w, int h);
-    bool mouseOverRect(SDL_Rect r, int mouseX, int mouseY);
+    bool mouseOverButton(int mouseX, int mouseY);
+    Texture getTextTexture();
 private:
     Texture buttonText;
     Texture buttonBackground;
 
-    SDL_Rect buttonRect;
+    int buttonX;
+    int buttonY;
+    int buttonW;
+    int buttonH;
     std::function<void ()> function = nullptr;
 
     bool pressed = false;

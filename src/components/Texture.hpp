@@ -24,7 +24,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <string>
 
-#include "../EntitySystem.hpp"
+#include "EntitySystem.hpp"
 #include "Position.hpp"
 
 /** Texture class. Can load an image, render the texture and get texture data.*/
@@ -49,7 +49,7 @@ public:
     bool loadFromFile(const std::string &path);
 
     /** Loads a text string to the texture. */
-    bool loadFromText(const std::string &text, SDL_Color *textcolor,TTF_Font *font);
+    bool setText(const std::string &text, SDL_Color *textcolor,TTF_Font *font);
     void free();
     // (
     void setColor(Uint8 red, Uint8 green, Uint8 blue);

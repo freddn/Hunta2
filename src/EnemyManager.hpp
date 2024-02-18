@@ -6,7 +6,7 @@
 
 #include "components/Health.hpp"
 #include "components/Character.hpp"
-#include "lua/LuaInterface.hpp"
+#include "scripting/LuaInterface.hpp"
 
 struct EnemyData {
     int id;

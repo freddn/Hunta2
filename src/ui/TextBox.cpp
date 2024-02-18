@@ -1,5 +1,5 @@
-#include <iostream>
 #include "TextBox.hpp"
+#include "../HelperFunctions.hpp"
 
 TextBox::TextBox(int x, int y, int w, int h, const std::string &str) :
         xPos(x), yPos(y), width(w), height(h), str(str) {
@@ -46,33 +46,33 @@ void TextBox::init(SDL_Renderer *renderer, SDL_Color *color, TTF_Font *font) {
         textTexture->setXRect(xPos+10);
         textTexture->setYRect(yPos+10+((int)text.size()*32));
 
-        if(textTexture->loadFromText(newStr,color,font)) {
+        if(textTexture->setText(newStr,color,font)) {
             int newLength = (int)((newStr.length() * ((float)boxRect.w / (float)textTexture->getWidth())) - 1);
             std::size_t found = newStr.find('\n', 0);
             if(found != std::string::npos && found <= (unsigned int)newLength) {
                 tempStr = newStr;
                 newStr = newStr.substr(0,found);
-                textTexture->loadFromText(newStr, color, font);
+                textTexture->setText(newStr, color, font);
                 newStr = tempStr.substr(found+1);
             } else if(newStr.length() > (unsigned int)newLength) {
                 tempStr = newStr;
                 newStr = newStr.substr(0, (unsigned int)newLength);
                 if(newStr.length() == 0) {
-                    std::cerr << "string ended.\n";
+                    HelperFunctions::log("string ended.");
                     break;
                 }
-                textTexture->loadFromText(newStr, color, font);
-                std::cerr << "prev '" << newStr << "' next '" << tempStr.substr((unsigned long)newLength) << "'\n";
+                textTexture->setText(newStr, color, font);
+                HelperFunctions::log("prev '" + newStr + "' next '" + tempStr.substr((unsigned long)newLength));
                 newStr = tempStr.substr((unsigned long)newLength);
 
                 if(newStr.length() == 0) {
-                    std::cerr << "string ended.\n";
+                    HelperFunctions::log("string ended.");
                     break;
                 }
             } else {
                 wrapped = true;
             }
-            std::cerr << "text added to container..\n";
+            HelperFunctions::log("text added to container..");
             std::unique_ptr<Texture> uPtr{textTexture};
             text.emplace_back(std::move(uPtr));
 

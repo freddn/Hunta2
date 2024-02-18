@@ -17,8 +17,7 @@
  */
 
 #include "LuaInterface.hpp"
-#include "../HelperFunctions.hpp"
-#include <iostream>
+#include "HelperFunctions.hpp"
 
 #include "LuaLoadFunctions.hpp"
 #include "LuaGeneralFunctions.hpp"
@@ -32,9 +31,9 @@ void LuaInterface::initLua() {
     l_state = luaL_newstate();
     luaL_openlibs(l_state);
 
-    loadFile("src/lua/LoadMap.lua");
-    loadFile("src/lua/CreateMap.lua");
-    loadFile("src/lua/SaveChar.lua");
+    loadFile("src/scripting/LoadMap.lua");
+    loadFile("src/scripting/CreateMap.lua");
+    loadFile("src/scripting/SaveChar.lua");
 
     thread = lua_newthread(l_state);
     int s = luaL_dofile(thread, "data/maps/1/map.lua");
@@ -154,7 +153,6 @@ void LuaInterface::appendMapData(const char* loadFunc, int mapId, const char* fi
     lua_pushnumber(l_state, y);
     int p = lua_pcall(l_state,7,0,0);
     report_errors(l_state,p);
-    //std::cout << std::endl;
 }
 void LuaInterface::appendMapDataInfo(const char* filename, int mapId, int x,int y,
                                 int n, int e, int s, int w) {
@@ -173,7 +171,6 @@ void LuaInterface::appendMapDataInfo(const char* filename, int mapId, int x,int 
     lua_pushnumber(l_state, w);
     int p = lua_pcall(l_state,8,0,0);
     report_errors(l_state,p);
-    //std::cout << std::endl;
 }
 
 void LuaInterface::clearMapFile(int mapID, const char* filename) {
@@ -185,11 +182,10 @@ void LuaInterface::clearMapFile(int mapID, const char* filename) {
     lua_pushstring(l_state,filename);
     int p = lua_pcall(l_state,2,0,0);
     report_errors(l_state,p);
-    //std::cout << std::endl;
 }
 
 void LuaInterface::newMapFile(int mapId, const char* filename) {
-    std::cout << " - LuaInterface::newMapFile() ..."<<std::endl;
+    HelperFunctions::log(HelperFunctions::ERROR, " - LuaInterface::newMapFile() ...");
     lua_pushstring(l_state,"NewMapFile");
     lua_gettable(l_state,LUA_GLOBALSINDEX); // lua5.1 working
     //lua_getglobal(l_state,"_G"); // lua5.2 not working

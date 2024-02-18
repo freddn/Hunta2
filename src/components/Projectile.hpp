@@ -1,18 +1,16 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
 
-#include "../EntitySystem.hpp"
+#include "EntitySystem.hpp"
 #include "Position.hpp"
 #include "GPhysics.hpp"
 #include "../LTimer.hpp"
-
-using namespace EntitySystem;
 
 
 /**
  * A projectile component.
  */
-struct Projectile : Component {
+struct Projectile : EntitySystem::Component {
 public:
     /**
      * Create a projectile whith the target position (relX,relY)

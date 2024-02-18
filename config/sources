@@ -9,7 +9,7 @@ SRC = src/components/Character.cpp \
       src/Inventory.cpp \
       src/components/Item.cpp \
       src/LTimer.cpp \
-      src/lua/LuaInterface.cpp \
+      src/scripting/LuaInterface.cpp \
       src/ui/MainMenu.cpp \
       src/MapController.cpp \
       src/components/Position.cpp \

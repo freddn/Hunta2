@@ -1,4 +1,3 @@
-#include <iostream>
 #include "PhysicsEngine.hpp"
 
 namespace physics {

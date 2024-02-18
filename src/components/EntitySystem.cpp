@@ -18,9 +18,7 @@
 
 #include "EntitySystem.hpp"
 
-#include <iostream>
-
-#include "Global.hpp"
+#include "../Global.hpp"
 
 namespace EntitySystem {
 

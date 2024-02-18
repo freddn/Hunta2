@@ -19,7 +19,7 @@
 #ifndef TILE_H
 #define TILE_H
 
-#include "../EntitySystem.hpp"
+#include "EntitySystem.hpp"
 #include "Texture.hpp"
 
 /* Tile class. Images used in background environments. */
