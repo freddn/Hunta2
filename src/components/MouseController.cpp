@@ -18,8 +18,6 @@
  */
 
 #include "MouseController.hpp"
-#include "components/Texture.hpp"
-
 
 MouseController::MouseController() {
     btn_state[LEFT_BTN] = STATE_NONE;

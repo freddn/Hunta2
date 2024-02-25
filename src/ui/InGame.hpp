@@ -22,7 +22,7 @@
 #include <memory>
 #include <vector>
 
-#include "TextInputBox.hpp"
+#include "../components/TextInputBox.hpp"
 #include "Screen.hpp"
 //#include "../EntitySystem.hpp"
 

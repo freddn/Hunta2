@@ -13,7 +13,6 @@ void Button::draw() {
 }
 
 void Button::update(SDL_Event *event, int mouseX, int mouseY) {
-
     if (mouseOverButton(mouseX, mouseY))
         hoover = true;
     else {
@@ -22,17 +21,17 @@ void Button::update(SDL_Event *event, int mouseX, int mouseY) {
     }
 
     if(event->type == SDL_MOUSEBUTTONDOWN) {
-        if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-            pressed = mouseOverButton(mouseX, mouseY);
+        if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+            pressed = hoover;
         }
     }
     if(event->type == SDL_MOUSEBUTTONUP) {
         if(SDL_BUTTON(SDL_BUTTON_LEFT)) {
-            if(mouseOverButton(mouseX, mouseY)) {
-                if(function != nullptr)
-                    function();
-            } else
+            if(hoover && function != nullptr) {
+                function();
+            } else {
                 pressed = false;
+            }
         }
     }
 }
@@ -55,8 +54,8 @@ void Button::setRect(int x, int y, int w, int h) {
     buttonH = h;
 }
 
-Texture Button::getTextTexture() {
-    return buttonText;
+Texture* Button::getButtonTextField() {
+    return &buttonText;
 }
 
 bool Button::mouseOverButton(int mouseX, int mouseY) {

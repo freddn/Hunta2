@@ -6,7 +6,7 @@
 #define HUNTA2_LUAGENERALFUNCTIONS_HPP
 
 #include "../Game.hpp"
-#include "../HelperFunctions.hpp"
+#include "../common/HelperFunctions.hpp"
 
 namespace lua_functions {
 

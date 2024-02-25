@@ -20,13 +20,13 @@
 #include "Game.hpp"
 
 
-#include "HelperFunctions.hpp"
+#include "common/HelperFunctions.hpp"
 #include <unistd.h>
 //#include <iostream>
 
 #include "Global.hpp"
 #include "Enums.hpp"
-#include "ui/TextBox.hpp"
+#include "components/TextBox.hpp"
 
 namespace game {
     TextBox textBox(200,0,200,80,"TEST");

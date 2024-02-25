@@ -8,32 +8,40 @@
 namespace game {
 
     /** The different states of the game. */
-    enum State {    MAINMENU,
+    enum State {
+        MAINMENU,
         CHARCREATION,
         INGAME,
         PAUSED,
         GAMEOVER,
-        EDITOR };
+        EDITOR
+    };
 
     /** Some directions the character can have. */
-    enum Direction {    NORTH,
+    enum Direction {
+        NORTH,
         SOUTH,
         WEST,
-        EAST };
+        EAST
+    };
 
     /** Different tiles used by the Editor. */
-    enum Selected { GRASS,
+    enum Selected {
+        GRASS,
         GROUND,
-        WATER };
+        WATER
+    };
 
     /** Different entity types. */
-    enum EntityGroup : std::size_t {    PLAYER,
+    enum EntityGroup : std::size_t {
+        PLAYER,
         ITEM,
         ENEMY,
         ENVIRONMENT,
         PROJECTILE,
         TILE,
-        X };
+        X
+    };
 }
 
 #endif //HUNTA2_ENUMS_HPP

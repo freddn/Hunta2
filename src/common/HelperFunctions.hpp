@@ -1,7 +1,3 @@
-//
-// Created by fredrik on 12/13/15.
-//
-
 #ifndef HUNTA2_HELPERFUNCTIONS_HPP
 #define HUNTA2_HELPERFUNCTIONS_HPP
 
@@ -12,7 +8,7 @@
  * DEBUG_LESS = Print only errors and warnings.
  * NONE = Print nothing
  */
-//#define DEBUG
+#define DEBUG
 //#define DEBUG_LESS
 
 /**

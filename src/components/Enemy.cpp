@@ -20,7 +20,7 @@
 
 #include "../Global.hpp"
 #include "../Enums.hpp"
-#include "../HelperFunctions.hpp"
+#include "../common/HelperFunctions.hpp"
 
 Enemy::Enemy(EntitySystem::EntityManager &m, int id) : manager(&m){
     enemyID = id;

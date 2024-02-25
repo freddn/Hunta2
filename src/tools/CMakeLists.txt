@@ -11,4 +11,4 @@ set(EDITOR_SRC
     Editor.cpp
 )
 
-add_library(${EDITOR_LIB} ${EDITOR_SRC})
+#add_library(${EDITOR_LIB} ${EDITOR_SRC})

@@ -1,6 +1,6 @@
 #include "UIController.hpp"
 #include "../Global.hpp"
-#include "../HelperFunctions.hpp"
+#include "../common/HelperFunctions.hpp"
 
 UIController::UIController() {
 }

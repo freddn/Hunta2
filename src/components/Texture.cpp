@@ -97,7 +97,7 @@ bool Texture::loadFromFile(const std::string &path) {
         currentTexture = SDL_CreateTextureFromSurface(renderer,tempSurface);
         SDL_FreeSurface(tempSurface);
     } else {
-        currentTexture = game::getTextureManager()->getTexture(path);
+        currentTexture = game::getTextureManager()->getTexture(path)->getTexture();
     }
 
     if(currentTexture == nullptr) {

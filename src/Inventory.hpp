@@ -21,7 +21,7 @@
 
 #include "components/Texture.hpp"
 #include "scripting/LuaInterface.hpp"
-#include "ItemManager.hpp"
+#include "components/ItemManager.hpp"
 
 #define INVENTORY_WIDTH 5
 #define INVENTORY_HEIGHT 4

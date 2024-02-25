@@ -1,5 +1,5 @@
 #include "ItemManager.hpp"
-#include "HelperFunctions.hpp"
+#include "../common/HelperFunctions.hpp"
 
 ItemManager::ItemManager() {}
 

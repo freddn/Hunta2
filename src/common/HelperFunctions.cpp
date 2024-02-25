@@ -1,7 +1,3 @@
-//
-// Created by fredrik on 12/13/15.
-//
-
 #include "HelperFunctions.hpp"
 
 #include <time.h>

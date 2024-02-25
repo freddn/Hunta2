@@ -5,14 +5,16 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "LTimer.hpp"
 #include "MapController.hpp"
-#include "TextureManager.hpp"
-#include "ItemManager.hpp"
 #include "PlayerController.hpp"
 #include "EnemyManager.hpp"
-#include "MouseController.hpp"
-#include "HelperFunctions.hpp"
+
+#include "components/MouseController.hpp"
+#include "components/ItemManager.hpp"
+#include "components/TextureManager.hpp"
+
+#include "common/LTimer.hpp"
+#include "common/HelperFunctions.hpp"
 
 // Physics
 #include "physics/PhysicsEngine.hpp"

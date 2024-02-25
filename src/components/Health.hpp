@@ -7,7 +7,7 @@
 #include <SDL2/SDL.h>
 #include <sstream>
 #include <SDL2/SDL_ttf.h>
-#include "../LTimer.hpp"
+#include "../common/LTimer.hpp"
 
 /**
  * Represents the HP-bar of living things. This is a component that can be added

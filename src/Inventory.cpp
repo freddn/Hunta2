@@ -19,7 +19,7 @@
 
 #include "Inventory.hpp"
 #include "Global.hpp"
-#include "HelperFunctions.hpp"
+#include "common/HelperFunctions.hpp"
 
 Inventory::Inventory(int x, int y) {
     inventoryRect.x = x;
@@ -186,7 +186,7 @@ void Inventory::renderItems() {
                           32, 32};
 
         SDL_RenderCopy(game::getRenderer(),
-                       game::getTextureManager()->getTexture(item.second.img),
+                       game::getTextureManager()->getTexture(item.second.img)->getTexture(),
                        &srcRect, &itemRect);
 
         if(stackedItems.find(item.first) != stackedItems.end()) {

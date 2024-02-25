@@ -3,7 +3,7 @@
 #include "../Game.hpp"
 #include "../Global.hpp"
 #include "../Enums.hpp"
-#include "../HelperFunctions.hpp"
+#include "../common/HelperFunctions.hpp"
 
 CharacterCreationScreen::CharacterCreationScreen() {}
 

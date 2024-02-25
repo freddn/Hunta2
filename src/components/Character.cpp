@@ -20,7 +20,7 @@
 
 #include "Projectile.hpp"
 #include "Item.hpp"
-#include "../HelperFunctions.hpp"
+#include "../common/HelperFunctions.hpp"
 
 #include "../Global.hpp"
 #include "../Enums.hpp"

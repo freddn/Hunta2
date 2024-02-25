@@ -17,7 +17,7 @@
  */
 
 #include "LuaInterface.hpp"
-#include "HelperFunctions.hpp"
+#include "../common/HelperFunctions.hpp"
 
 #include "LuaLoadFunctions.hpp"
 #include "LuaGeneralFunctions.hpp"

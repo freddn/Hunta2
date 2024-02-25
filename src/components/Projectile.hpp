@@ -4,7 +4,7 @@
 #include "EntitySystem.hpp"
 #include "Position.hpp"
 #include "GPhysics.hpp"
-#include "../LTimer.hpp"
+#include "../common/LTimer.hpp"
 
 
 /**

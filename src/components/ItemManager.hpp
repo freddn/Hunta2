@@ -1,7 +1,7 @@
 #ifndef ITEMMANAGER_H
 #define ITEMMANAGER_H
 
-#include "scripting/LuaInterface.hpp"
+#include "../scripting/LuaInterface.hpp"
 #include <map>
 #include <string>
 

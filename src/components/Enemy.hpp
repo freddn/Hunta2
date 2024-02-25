@@ -23,7 +23,7 @@
 #include "GPhysics.hpp"
 #include "Position.hpp"
 #include "EntitySystem.hpp"
-#include "../LTimer.hpp"
+#include "../common/LTimer.hpp"
 
 /* The enemy class. */
 struct Enemy : EntitySystem::Component {

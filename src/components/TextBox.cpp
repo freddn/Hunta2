@@ -1,5 +1,5 @@
 #include "TextBox.hpp"
-#include "../HelperFunctions.hpp"
+#include "../common/HelperFunctions.hpp"
 
 TextBox::TextBox(int x, int y, int w, int h, const std::string &str) :
         xPos(x), yPos(y), width(w), height(h), str(str) {

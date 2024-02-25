@@ -2,9 +2,7 @@
 #ifndef HUNTA2_BUTTON_HPP
 #define HUNTA2_BUTTON_HPP
 
-
-#include <SDL2/SDL_rect.h>
-#include "../components/Texture.hpp"
+#include "Texture.hpp"
 #include <functional>
 
 class Button {
@@ -19,7 +17,7 @@ public:
     void setImg(std::string img, bool clipped, int cw, int ch);
     void setRect(int x, int y, int w, int h);
     bool mouseOverButton(int mouseX, int mouseY);
-    Texture getTextTexture();
+    Texture* getButtonTextField();
 private:
     Texture buttonText;
     Texture buttonBackground;

@@ -6,7 +6,7 @@
 #include "EntitySystem.hpp"
 #include "Texture.hpp"
 #include "GPhysics.hpp"
-#include "../LTimer.hpp"
+#include "../common/LTimer.hpp"
 
 /**
  * This class represents a weapon that enemys and players will have.

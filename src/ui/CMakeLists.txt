@@ -15,10 +15,6 @@ set(UI_SRC
     UIController.cpp
     CharacterCreationScreen.cpp
     SaveSlotSelection.cpp
-    Button.cpp
-    TextInputField.cpp
-    TextInputBox.cpp
-    TextBox.cpp
 )
 
-add_library(${UI_LIB} ${UI_SRC})
+#add_library(${UI_LIB} ${UI_SRC})
