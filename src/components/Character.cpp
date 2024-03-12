@@ -82,14 +82,15 @@ void Character::update() {
 
     /// Look for items to pick up.
     for(auto& e: manager->getEntitiesByGroup(game::ITEM)) {
-        Position temp = e->getComponent<Position>();
+        Position *temp = &e->getComponent<Position>();
+
         int width = e->getComponent<Texture>().getWidth();
         int height = e->getComponent<Texture>().getHeight();
 
-        if((position->getX()+10 < temp.getX()+width &&
-                position->getX()+22 > temp.getX()) &&
-                (position->getY()+10 < temp.getY()+height &&
-                 position->getY()+22 > temp.getY())) {
+        if((position->getX()+10 < temp->getX()+width &&
+                position->getX()+22 > temp->getX()) &&
+                (position->getY()+10 < temp->getY()+height &&
+                 position->getY()+22 > temp->getY())) {
 
             int success = game::getInventory()->addItem(e->getComponent<Item>().getID(),
                                           e->getComponent<Item>().getAmount());
@@ -126,7 +127,7 @@ void Character::moveChar(const Uint8 *key) {
     /// Walk downwards
     if(key[SDL_SCANCODE_DOWN]) {
         physics->setDir(game::SOUTH,true); /// Set this walking direction true.
-        //texture->setClipX(0);
+        texture->setClipX(0);
         texture->setClipY(0);
     } else
         physics->setDir(game::SOUTH,false); /// Set this walking direction false.
@@ -134,7 +135,7 @@ void Character::moveChar(const Uint8 *key) {
     /// Walk upwards
     if(key[SDL_SCANCODE_UP]) {
         physics->setDir(game::NORTH,true); /// Set this walking direction true.
-        //texture->setClipX(1);
+        texture->setClipX(1);
         texture->setClipY(0);
     } else
         physics->setDir(game::NORTH,false); /// Set this walking direction false.
