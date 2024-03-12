@@ -28,6 +28,7 @@
 #include <cassert>
 #include <type_traits>
 
+#include "../physics/Rect.h"
 
 /**
  * EntitySystem is a system where we have a managers that contains all the
@@ -155,6 +156,8 @@ namespace EntitySystem {
      */
     class EntityManager {
     public:
+
+        void init(Rect* offset);
         /**
          * Call update of all entities.
          */
@@ -215,6 +218,7 @@ namespace EntitySystem {
         int id = 0;
         int offsetX = 0;
         int offsetY = 0;
+        Rect* gameOffset;
         std::vector<int> indexes;
         std::map<int,std::shared_ptr<Entity>> entitiesByIndex;
         std::map<int, std::vector<std::shared_ptr<Entity>>> entities;

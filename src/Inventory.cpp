@@ -186,7 +186,7 @@ void Inventory::renderItems() {
                           32, 32};
 
         SDL_RenderCopy(game::getRenderer(),
-                       game::getTextureManager()->getTexture(item.second.img)->getTexture(),
+                       game::getTextureManager()->getTexture(item.second.img),
                        &srcRect, &itemRect);
 
         if(stackedItems.find(item.first) != stackedItems.end()) {

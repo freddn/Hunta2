@@ -17,8 +17,8 @@
  */
 
 #include "EntitySystem.hpp"
-
-#include "../Global.hpp"
+#include "Position.hpp"
+#include "Texture.hpp"
 
 namespace EntitySystem {
 
@@ -72,6 +72,10 @@ namespace EntitySystem {
         return entityId;
     }
 
+    void EntityManager::init(Rect* offset) {
+        gameOffset = offset;
+    }
+
     void EntityManager::update() {
         if(byIndex) {
             for(auto &ent : entitiesByIndex) {
@@ -112,19 +116,19 @@ namespace EntitySystem {
                 x += offsetX;
                 int y = 32*(index)/64;
                 y += offsetY;
-                if(x+96 >= game::getOffset()->x &&
-                    x < game::getOffset()->x + game::getOffset()->w &&
-                    y+96 >= game::getOffset()->y &&
-                    y-96 < game::getOffset()->y + game::getOffset()->h)
+                if(x+96 >= gameOffset->x &&
+                    x < gameOffset->x + gameOffset->w &&
+                    y+96 >= gameOffset->y &&
+                    y-96 < gameOffset->y + gameOffset->h)
                     ent.second->draw();
             }
         } else {
-            for(int i = game::getOffset()->y; i < game::getHeight()+game::getOffset()->y+96;i++) {
+            for(int i = gameOffset->y; i < gameOffset->h+gameOffset->y+96;i++) {
                 for(auto& e : entities[i]) {
                     if(e->hasComponent<Position>()) {
                         float x = e->getComponent<Position>().getX();
-                        if(x+96 >= game::getOffset()->x &&
-                            x < game::getWidth()+game::getOffset()->x)
+                        if(x+96 >= gameOffset->x &&
+                            x < gameOffset->w+gameOffset->x)
                             e->draw();
                     }
                 }

@@ -11,6 +11,10 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/freefont DESTINATION ${CMAKE_CURRENT_BINAR
 # Compiler flags
 set(CMAKE_CXX_FLAGS "-std=c++11 -I/usr/include/lua5.1 -Wall -pedantic")
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 add_subdirectory(src/physics)
 add_subdirectory(src/common)
 add_subdirectory(src/ui)

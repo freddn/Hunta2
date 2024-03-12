@@ -3,8 +3,8 @@
 
 namespace game {
     SDL_Event event;
-    SDL_Rect offset;
-    SDL_Rect background;
+    Rect offset;
+    Rect background;
     float mouseX = 0;
     float mouseY = 0;
     SDL_Window *gWindow = nullptr;
@@ -46,9 +46,9 @@ namespace game {
 
     SDL_Event *getEvent() { return &event; }
 
-    SDL_Rect *getOffset() { return &offset; }
+    Rect *getOffset() { return &offset; }
 
-    SDL_Rect *getBackground() { return &background; }
+    Rect *getBackground() { return &background; }
 
     SDL_Color *getTextColor() { return &textColor; }
 

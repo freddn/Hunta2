@@ -18,6 +18,7 @@
 
 // Physics
 #include "physics/PhysicsEngine.hpp"
+#include "physics/Rect.h"
 
 // Editor
 #include "tools/Editor.hpp"
@@ -38,9 +39,9 @@ namespace game {
 
     SDL_Event *getEvent();
 
-    SDL_Rect *getOffset();
+    Rect *getOffset();
 
-    SDL_Rect *getBackground();
+    Rect *getBackground();
 
     SDL_Window *getGWindow();
 
