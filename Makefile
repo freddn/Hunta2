@@ -50,7 +50,7 @@ clean:
 	@rm -f src/*.o
 	@rm -f src/physics/*.o
 	@rm -f src/components/*.o
-	@rm -f src/lua/*.o
+	@rm -f src/scripting/*.o
 	@rm -f src/tools/*.o
 	@rm -f src/ui/*.o
 	@rm -f tests/*.o

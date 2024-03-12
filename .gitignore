@@ -1,2 +1,5 @@
 *.o
 hunta2
+build/
+.vscode/
+

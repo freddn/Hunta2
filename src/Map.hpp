@@ -7,8 +7,8 @@
 
 #include <string>
 
-#include "EntitySystem.hpp"
-#include "lua/LuaInterface.hpp"
+#include "components/EntitySystem.hpp"
+#include "scripting/LuaInterface.hpp"
 
 using namespace EntitySystem;
 

@@ -20,8 +20,8 @@
 #define INVENTORY_HPP
 
 #include "components/Texture.hpp"
-#include "lua/LuaInterface.hpp"
-#include "ItemManager.hpp"
+#include "scripting/LuaInterface.hpp"
+#include "components/ItemManager.hpp"
 
 #define INVENTORY_WIDTH 5
 #define INVENTORY_HEIGHT 4
@@ -50,7 +50,7 @@ private:
     LuaInterface *l_interface;
     SDL_Texture *inv_bg{nullptr};
     Texture frame;
-    Texture text;
+    Texture textBox;
     int itemCount = 0;
     SDL_Rect inventoryRect;
     Texture amount;

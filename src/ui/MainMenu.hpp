@@ -20,7 +20,7 @@
 #define MAINMENU_H
 
 #include "Screen.hpp"
-#include "Button.hpp"
+#include "../components/Button.hpp"
 
 /* This class represents the main menu.
  * TODO Implement a settings screen, save game, and load game screen.

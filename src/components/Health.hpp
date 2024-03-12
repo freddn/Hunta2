@@ -1,15 +1,13 @@
 #ifndef HEALTHBAR_H
 #define HEALTHBAR_H
 
-#include "../EntitySystem.hpp"
+#include "EntitySystem.hpp"
 #include "Position.hpp"
 #include "Texture.hpp"
 #include <SDL2/SDL.h>
 #include <sstream>
 #include <SDL2/SDL_ttf.h>
-#include "../LTimer.hpp"
-
-using namespace EntitySystem;
+#include "../common/LTimer.hpp"
 
 /**
  * Represents the HP-bar of living things. This is a component that can be added
@@ -18,7 +16,7 @@ using namespace EntitySystem;
  *
  * TODO Send event to EventQueue that the entity has died.
  */
-struct Health : Component {
+struct Health : EntitySystem::Component {
 public:
     Health(int hp);
 

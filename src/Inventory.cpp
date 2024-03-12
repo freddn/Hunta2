@@ -19,9 +19,7 @@
 
 #include "Inventory.hpp"
 #include "Global.hpp"
-#include "HelperFunctions.hpp"
-
-#include <iostream>
+#include "common/HelperFunctions.hpp"
 
 Inventory::Inventory(int x, int y) {
     inventoryRect.x = x;
@@ -39,7 +37,7 @@ void Inventory::init() {
         game::getPlayerController()->getName() + "_inventory.lua";
 
     /* Load text (TODO This is maby unneccesary, we can put tex in the image) */
-    text.loadFromText("Inventory", game::getTextColor(), game::getFont());
+    textBox.setText("Inventory", game::getTextColor(), game::getFont());
 
     /* We need the lua interface to access the inventory as the inventory
      * is made with lua. */
@@ -169,7 +167,7 @@ void Inventory::deleteItem(int id, int amount, int x, int y) {
  */
 void Inventory::draw() {
     frame.render(inventoryRect.x, inventoryRect.y, nullptr);
-    text.render(inventoryRect.x+20, inventoryRect.y+20, nullptr);
+    textBox.render(inventoryRect.x+20, inventoryRect.y+20, nullptr);
     renderItems();
 }
 
@@ -195,7 +193,7 @@ void Inventory::renderItems() {
             std::stringstream amt;
             amt.str("");
             amt << stackedItems.at(item.first);
-            amount.loadFromText(amt.str(), game::getTextColor(),
+            amount.setText(amt.str(), game::getTextColor(),
                                 game::getDmgFont());
             amount.render(itemRect.x,itemRect.y,nullptr);
         }

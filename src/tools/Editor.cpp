@@ -70,7 +70,7 @@ void Editor::draw() {
 
 void Editor::update() {
     //SDL_PumpEvents();
-    SDL_Rect* offset = game::getOffset();
+    Rect* offset = game::getOffset();
     const Uint8 *key = SDL_GetKeyboardState(NULL);
 
     if(key[SDL_SCANCODE_UP]) {

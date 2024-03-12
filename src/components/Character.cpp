@@ -20,7 +20,7 @@
 
 #include "Projectile.hpp"
 #include "Item.hpp"
-#include "../HelperFunctions.hpp"
+#include "../common/HelperFunctions.hpp"
 
 #include "../Global.hpp"
 #include "../Enums.hpp"
@@ -28,7 +28,7 @@
 Character::Character() {
 }
 
-Character::Character(EntityManager &m) {
+Character::Character(EntitySystem::EntityManager &m) {
     manager = &m;
 }
 
@@ -46,23 +46,23 @@ void Character::init() {
 
     physics->setKeyControlled(true);
     /// Set the right offset.
-    if(position->getX()-(game::getWidth()/2) < 0)
+    if(position->getX()-(game::getOffset()->w/2) < 0)
         game::getOffset()->x = 0;
-    else if(position->getX()+(game::getWidth()/2) > game::getWidth()*2)
-        game::getOffset()->x = game::getWidth();
+    else if(position->getX()+(game::getOffset()->w/2) > game::getOffset()->w*2)
+        game::getOffset()->x = game::getOffset()->w;
     else
-        game::getOffset()->x = (int)position->getX() - (game::getWidth()/2);
+        game::getOffset()->x = (int)position->getX() - (game::getOffset()->w/2);
 
-    if(position->getY()-(game::getHeight()/2) < 0)
+    if(position->getY()-(game::getOffset()->h/2) < 0)
         game::getOffset()->y = 0;
-    else if(position->getY()+(game::getHeight()/2) > game::getHeight()*2)
-        game::getOffset()->y = game::getHeight();
+    else if(position->getY()+(game::getOffset()->h/2) > game::getOffset()->h*2)
+        game::getOffset()->y = game::getOffset()->h;
     else
-        game::getOffset()->y = (int)position->getY() - (game::getHeight()/2);
+        game::getOffset()->y = (int)position->getY() - (game::getOffset()->h/2);
 
     /// Set the position of the texture.
-    texture->setXRect(game::getWidth()-game::getOffset()->x);
-    texture->setYRect(game::getHeight()-game::getOffset()->y);
+    texture->setXRect(game::getOffset()->w-game::getOffset()->x);
+    texture->setYRect(game::getOffset()->h-game::getOffset()->y);
 }
 
 void Character::update() {

@@ -19,10 +19,8 @@
 #include "MapController.hpp"
 #include "Global.hpp"
 #include "Enums.hpp"
-#include "EntitySystem.hpp"
-#include "HelperFunctions.hpp"
-
-#include <iostream>
+#include "components/EntitySystem.hpp"
+#include "common/HelperFunctions.hpp"
 
 MapController::MapController() {}
 

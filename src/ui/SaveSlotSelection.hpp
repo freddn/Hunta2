@@ -3,7 +3,7 @@
 #define HUNTA2_SAVESLOTSELECTION_HPP
 
 
-#include "Button.hpp"
+#include "../components/Button.hpp"
 
 class SaveSlotSelection {
 public:

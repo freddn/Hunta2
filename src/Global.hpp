@@ -5,20 +5,30 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "LTimer.hpp"
 #include "MapController.hpp"
-#include "tools/Editor.hpp"
-#include "TextureManager.hpp"
-#include "ItemManager.hpp"
 #include "PlayerController.hpp"
-#include "ui/UIController.hpp"
 #include "EnemyManager.hpp"
-#include "MouseController.hpp"
+
+#include "components/MouseController.hpp"
+#include "components/ItemManager.hpp"
+#include "components/TextureManager.hpp"
+
+#include "common/LTimer.hpp"
+#include "common/HelperFunctions.hpp"
+
+// Physics
+#include "physics/PhysicsEngine.hpp"
+#include "physics/Rect.h"
+
+// Editor
+#include "tools/Editor.hpp"
+
+// UI
+#include "ui/UIController.hpp"
 #include "ui/CharacterCreationScreen.hpp"
 #include "ui/SaveSlotSelection.hpp"
 #include "ui/InGame.hpp"
 #include "ui/MainMenu.hpp"
-#include "physics/PhysicsEngine.hpp"
 
 /**
  * This namespace holds alot of important game related objects.
@@ -29,9 +39,9 @@ namespace game {
 
     SDL_Event *getEvent();
 
-    SDL_Rect *getOffset();
+    Rect *getOffset();
 
-    SDL_Rect *getBackground();
+    Rect *getBackground();
 
     SDL_Window *getGWindow();
 

@@ -19,8 +19,6 @@
 #include "Texture.hpp"
 #include "../Global.hpp"
 
-#include <iostream>
-
 Texture::Texture() {
     tclip.w = 32;
     tclip.h = 32;
@@ -68,7 +66,7 @@ void Texture::init() {
     if(!isText)
         loadFromFile(imageName);
     else
-        loadFromText(textString,textColor,textFont);
+        setText(textString,textColor,textFont);
 }
 
 void Texture::draw() {
@@ -91,7 +89,7 @@ bool Texture::loadFromFile(const std::string &path) {
         SDL_Surface *tempSurface = IMG_Load(imageName.c_str());
 
         if(tempSurface == nullptr) {
-            std::cerr << "IMG_Load() failed. Image: "<< path << std::endl;
+            HelperFunctions::log("IMG_Load() failed. Image: " + path);
             return false;
         }
         SDL_SetColorKey(tempSurface,SDL_TRUE,
@@ -103,7 +101,7 @@ bool Texture::loadFromFile(const std::string &path) {
     }
 
     if(currentTexture == nullptr) {
-        std::cerr << "SDL_CreateTextureFromSurface() failed" << std::endl;
+        HelperFunctions::log(HelperFunctions::ERROR, "SDL_CreateTextureFromSurface() failed");
         return false;
     }
 
@@ -122,19 +120,19 @@ bool Texture::loadFromFile(const std::string &path) {
     return true;
 }
 
-bool Texture::loadFromText(const std::string &textureText, SDL_Color *textcolor,
+bool Texture::setText(const std::string &textureText, SDL_Color *textcolor,
                             TTF_Font * font) {
     free();
     SDL_Renderer *renderer = game::getRenderer();
     SDL_Surface *tempSurface = TTF_RenderText_Solid(font,textureText.c_str(), *textcolor);
 
     if(tempSurface == nullptr)
-        std::cerr << "TTF_RenderText_Solid() failed" << std::endl;
+        HelperFunctions::log(HelperFunctions::ERROR, "TTF_RenderText_Solid() failed");
     else {
         currentTexture = SDL_CreateTextureFromSurface(renderer,tempSurface);
 
         if(currentTexture == nullptr)
-            std::cerr << "SDL_CreateTextureFromSurface() failed" << std::endl;
+            HelperFunctions::log(HelperFunctions::ERROR, "SDL_CreateTextureFromSurface() failed");
         else {
             tWidth = tempSurface->w;
             tHeight = tempSurface->h;

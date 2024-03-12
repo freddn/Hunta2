@@ -3,21 +3,18 @@
 
 #define INTERVALL 40
 
-#include "../EntitySystem.hpp"
+#include "EntitySystem.hpp"
 #include "Texture.hpp"
 #include "GPhysics.hpp"
-#include "../LTimer.hpp"
-
-using namespace EntitySystem;
-
+#include "../common/LTimer.hpp"
 
 /**
  * This class represents a weapon that enemys and players will have.
  */
-struct Weapon : Component {
+struct Weapon : EntitySystem::Component {
 public:
     Weapon();
-    Weapon(std::string img, EntityManager &mgr);
+    Weapon(std::string img, EntitySystem::EntityManager &mgr);
 
     /** Will draw the weapon texture. */
     void draw();
@@ -38,7 +35,7 @@ private:
     Position *playerPosition{nullptr};
     GPhysics *physics{nullptr};
 
-    EntityManager *manager{nullptr};
+    EntitySystem::EntityManager *manager{nullptr};
 
     int weaponX = 0;
     int weaponY = 0;

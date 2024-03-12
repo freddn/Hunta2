@@ -19,7 +19,7 @@
 #ifndef GPHYSICS_H
 #define GPHYSICS_H
 
-#include "../EntitySystem.hpp"
+#include "EntitySystem.hpp"
 #include "Position.hpp"
 #include "Texture.hpp"
 

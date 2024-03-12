@@ -2,7 +2,6 @@
 // Created by fredrik on 3/3/16.
 //
 
-#include <iostream>
 #include "Collision.hpp"
 #include "Manifold.hpp"
 

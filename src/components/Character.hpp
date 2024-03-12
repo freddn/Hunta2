@@ -23,7 +23,7 @@
 #include "Texture.hpp"
 #include "GPhysics.hpp"
 #include "Health.hpp"
-#include "../EntitySystem.hpp"
+#include "EntitySystem.hpp"
 
 /**
  * Character class.
@@ -33,7 +33,7 @@
 struct Character: EntitySystem::Component {
 public:
     Character();
-    Character(EntityManager &m);
+    Character(EntitySystem::EntityManager &m);
 
     /**
      * Init the player component. Gets the entity's other components.
@@ -59,7 +59,7 @@ private:
     Position *position{nullptr};
     Health *health{nullptr};
 
-    EntityManager *manager{nullptr}; // For (creating and) finding entitys.
+    EntitySystem::EntityManager *manager{nullptr}; // For (creating and) finding entitys.
     int level = 0;
     bool attacking = false;
 };

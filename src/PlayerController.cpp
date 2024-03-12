@@ -1,7 +1,6 @@
 
 #include "PlayerController.hpp"
 #include <cmath>
-#include <iostream>
 #include "Global.hpp"
 
 PlayerController::PlayerController() {

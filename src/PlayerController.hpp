@@ -3,7 +3,7 @@
 #include <string>
 
 #include "components/Health.hpp"
-#include "lua/LuaInterface.hpp"
+#include "scripting/LuaInterface.hpp"
 
 /**
  * Handles the characters data.

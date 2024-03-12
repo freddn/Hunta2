@@ -1,8 +1,6 @@
 #ifndef HUNTA2_MANIFOLD_HPP
 #define HUNTA2_MANIFOLD_HPP
 
-#include <SDL2/SDL_stdinc.h>
-
 struct Body;
 
 #include "Vec2.hpp"
@@ -22,7 +20,7 @@ struct Manifold {
     float penetration;
     Vec2 normal;
     Vec2 contacts[2];
-    Uint32 contactCount;
+    unsigned int contactCount;
     float e;
     float df;
     float sf;

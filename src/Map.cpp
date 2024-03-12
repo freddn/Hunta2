@@ -24,6 +24,10 @@ Map::Map() {}
 Map::~Map() {}
 
 void Map::init() {
+    items.init(game::getOffset());
+    tiles.init(game::getOffset());
+    manager.init(game::getOffset());
+
     tiles.setOffset(mapX*MAP_WIDTH,mapY*MAP_HEIGHT);
 }
 
@@ -66,9 +70,6 @@ void Map::clear() {
     tiles.clear();
     manager.clear();
     return;
-    EntityManager empty;
-    tiles = empty;
-    manager = empty;
 }
 
 /// Just to be safe..

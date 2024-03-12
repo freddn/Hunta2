@@ -21,7 +21,6 @@
 #include "Environment.hpp"
 #include "../Global.hpp"
 #include "../Enums.hpp"
-#include <iostream>
 
 /** TODO Add collision rect.
  * (Setters and getters and change in collision management)*/
